@@ -1,0 +1,62 @@
+---
+title: "presentation title use \n\n to break title onto different lines"
+format:
+  standard-revealjs: default
+  revealjs: default
+---
+
+## This is a standard slide
+
+ 
+
+-   Bullet 1
+
+    -   Sub-bullet
+
+-   Bullet 2
+
+-   Bullet 3
+
+## This slide has two columns and a sub-heading
+
+### Sub-heading
+
+ 
+
+::: columns
+::: {.column width="50%"}
+-   Content in column one [@Tsukahara2016]
+
+-   Note that references
+
+    -   Are automatically filled on
+
+-   The last slide
+:::
+
+::: {.column width="50%"}
+-   Content in column two
+
+-   Another bullet
+:::
+:::
+
+## This slide has code and a reference sub heading
+
+### @tsukahara2020
+
+ 
+
+``` {.r code-line-numbers="5-7"}
+a <- 3
+b <- 2
+name_variable <- "hello"
+
+name_function <- function(x, y) {
+  x + y
+}
+
+name_function(a, b)
+```
+
+## References

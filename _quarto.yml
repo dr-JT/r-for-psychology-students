@@ -1,0 +1,46 @@
+project:
+  type: website
+
+website:
+  title: "R for the Psychology Student"
+  page-navigation: true
+  description: "R for the Psychology Student"
+  site-url: ""
+  
+  sidebar:
+    background: "#4676a3"
+    font-color: "#ffffff"
+    pinned: true
+    align: center
+    style: "docked"
+    search: true
+    collapse-level: 2
+    
+    contents:
+      - section: "Course Information"
+        contents:
+          - href: index.qmd
+            text: "About"
+          - href: what-is-R.qmd
+            text: "What is R?"
+          - href: prerequisites.qmd
+            text: "Prerequisites"
+      - section: "Classes"
+        contents:
+          - href: classes/class-1.qmd
+            text: "Class 1"
+    
+format:
+  html:
+    css: styles.css
+    foreground: "#4676a3"
+    linkcolor: "#4676a3"
+    theme: 
+      light: [cosmo, theme.css]
+      dark: [cosmo, theme-dark.css]
+    mainfont: "Atkinson Hyperlegible"
+    code-copy: true
+    code-overflow: wrap
+    toc: true
+
+editor: visual

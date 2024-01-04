@@ -1,0 +1,124 @@
+---
+title: "Prerequisites"
+---
+
+If you do not have R or RStudio installed on your computer, then follow the install instructions below.
+
+If you already have R or RStudio intalled on your computer, then is it recommended to [Update Software](#sec-update-software) for this course.
+
+## Install Software {#sec-install-software}
+
+### Install R {#sec-install-r}
+
+First you need to download the latest version of **R** from their website <https://www.r-project.org>
+
+1.  Select **CRAN** on the left, just under **Download**
+
+2.  Select the first option under 0-Cloud
+
+3.  Select the download option depending on your computer
+
+4.  Select the **base** installation (for Windows) or the **Latest Release** (for Mac)
+
+5.  Open and Run the installation file
+
+### Install RStudio {#sec-install-r-studio}
+
+The easiest way to interact with R is through the RStudio environment. To do this you need to [download RStudio](https://www.rstudio.com/products/rstudio/download/#download){target="_blank"}
+
+1.  Select the **Free** version of **RStudio Desktop**
+2.  Select the download option depending on your computer
+
+## Update Software {#sec-update-software}
+
+### Update R {#sec-update-r}
+
+If you already have R installed, but want to update it to the most current version follow these steps.
+
+*Warning: When updating R (not RStudio), it may remove all packages you have installed*
+
+First check what version of R you have installed.
+
+1.  Open RStudio
+
+2.  In the console window you will see the R version you are running (e.g., R version 4.1.0)
+
+3.  If you have an R version older than 4.0.0 than you need to update R.
+
+4.  Run the following lines of code in your console window. This is an easy way to re-install all your currently installed packages. This step will save a list of packages to re-install later.
+
+```{r}
+#| eval: false
+
+# Save current packages and their versions to object called ip
+
+ip <- installed.packages()
+ip
+
+# Save the object as an .rds file
+
+saveRDS(ip, "CurrentPackages.rds")
+```
+
+5.  Exit out of all R or RStudio windows
+
+6.  Download and install the latest version of R (see the section on installing R above)
+
+7.  Open RStudio
+
+8.  Check if your previously installed packages are installed using the **Packages** tab in the bottom right window
+
+9.  If you need to re-install your previous packages, then run the following lines of code
+
+```{r}
+#| eval: false
+
+# After updating R, load the file and reinstall packages
+
+ip <- readRDS("CurrentPackages.rds")
+
+install.packages(ip[,1])
+```
+
+### Update RStudio {#sec-update-r-studio}
+
+Go to Help -\> Check for Updates
+
+## Getting to Know RStudio
+
+While R is the actual programming software that executes the code, RStudio is an environment for interacting with R, writing R scripts, managing and organizing projects, and much more. When you open RStudio, it will open a window to the R console within the RStudio environment.
+
+Go ahead an open the RStudio application on your computer.
+
+When you open a fresh session of RStudio there are 3 window panes open. The Console window, the Environment window, and the Files window. Go ahead and navigate to File -\> New File -\> R Script. You should now see something similar to the image below
+
+```{r}
+#| label: fig-rstudio-env
+#| echo: false
+#| fig-cap-location: top
+#| fig-cap: > 
+#|   RStudio window panes
+
+knitr::include_graphics("images/rstudio-environment.png")
+```
+
+There are 4 window panes and each one has it's own set of tabs associated with it:
+
+-   The **Console** window (the bottom left window pane) is where code is executed and output is displayed.
+
+-   The **Source** window (the top left window pane) is where you will write your code to create a script file. When you open a new script file you will see a blank sheet where you can start writing the script. When you execute lines of code from here you will see it being executed in the Console window.
+
+    The Source window is also where you can view data frames you have just imported or created. In the image above, notice the different tabs in the Source window. There are two "Untitled" script files open and one data frame called 'data'.
+
+-   The **Environment** window (top right window pane) is where you can see any data frames, variables, or functions you have created. Go ahead and type the following in your Console window and hit enter.
+
+```{r}
+#| eval: false
+welcome_message <- "hello"
+```
+
+You should now see the variable `welcome_message` in the Environment window pane
+
+-   The **Files** window (the bottom right window pane) is where you can see your computer's directories, plots you create, manage packages, and see help documentation.
+
+You can also Customize RStudio settings and appareance.

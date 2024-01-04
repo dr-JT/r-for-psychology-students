@@ -1,0 +1,5 @@
+---
+title: "R for the Psychology Student"
+---
+
+This 10-week course will provide you with the knowledge you need to reach a basic level of proficiency. Although it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.

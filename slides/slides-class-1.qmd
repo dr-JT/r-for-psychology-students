@@ -1,0 +1,150 @@
+---
+title: "Class 1"
+subtitle: "An Introduction to Working with Data in R"
+format:
+  standard-revealjs: default
+  revealjs: default
+---
+
+## Prepare
+
+Before starting this class:
+
+📖 Read the [Prerequisites](/prerequisites.html) page
+
+ 
+
+#### Outline
+
+::: nonincremental
+-   R Basics
+
+-   Data Frames
+
+-   Transformation, Visualization, and Statistics
+:::
+
+## The RStudio Environment
+
+ 
+
+::: columns
+::: {.column width="30%"}
+**Four** window panes
+
+-   Console
+
+-   Source
+
+-   Environment
+
+-   Files
+:::
+
+::: {.column width="70%"}
+![](/images/rstudio-environment.png){width="645"}
+:::
+:::
+
+## The RStudio Environment
+
+![](/images/rstudio-environment.png){fig-align="center" width="907"}
+
+## Customize RStudio Appearance
+
+ 
+
+some content here
+
+## New Script File {#sec-new-script-file}
+
+To create a new R script go to
+
+**File** -\> **New File** -\> **R Script**
+
+This should have opened a blank **Script** window called **Untitled.R**.
+
+The **Script** window is a file where you are saving your code. This is where you will write, edit, delete, and re-write your code. Save your empty script somewhere on your computer.
+
+## Running R Code {#sec-running-r-code}
+
+::: nonincremental
+1.  Typing code in an R script file and executing R code line-by-line `Cmd/Ctrl + Enter.`
+2.  Typing code directly in the console window
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+1 + 2
+3 * 9
+```
+
+## Creating R Objects {#sec-creating-r-objects}
+
+ 
+
+::: nonincremental
+-   Objects are created using the assignment operator, `<-`.
+
+-   Everything on the **left** hand side of the assignment operator `<-` is an **object**.
+
+-   Everything on the **right** hand side of `<-` are **functions** or **values**.
+:::
+
+Go ahead and type the following two lines of code in your script file and execute the lines of code.
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+my_first_object <- "hello"
+my_first_object
+```
+
+ 
+
+::: nonincremental
+-   You just assigned the value `"hello"` to an object named `my_first_object`.
+
+-   Note that R is case sensitive
+
+    ::: nonincremental
+    -   `my_first_object` would be considered a different object as `my_First_object.`
+    :::
+:::
+
+## Using Functions {#sec-using-functions}
+
+ 
+
+::: nonincremental
+-   Anything you do in R is by using functions.
+
+-   Learning R is learning what functions are available and how to use them.
+
+-   Example: there is a function to create a sequence of numbers, `seq()`.
+:::
+
+```{r}
+#| collapse: false
+#| eval: false
+#| echo: true
+
+seq(1, 100, by = 10)
+```
+
+ 
+
+# R Basics
+
+## Objects and Functions in R
+
+ 
+
+In R,
+
+everything that exists is an object and everything you do to objects are functions. You can define an object using the assignment operator `<-`.

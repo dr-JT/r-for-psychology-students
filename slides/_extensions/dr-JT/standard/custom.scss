@@ -1,0 +1,159 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-serif: 'Times New Roman', serif !default;
+$font-family-sans-serif: 'Atkinson Hyperlegible', sans-serif !default;
+$font-family-monospace: 'Roboto', monospace !default;
+$presentation-font-size-root: 1.5em !default;
+$presentation-font-smaller: 0.8 !default;
+$presentation-line-height: 1.3 !default;
+
+// color variables
+$color-primary: #4676a3 !default;
+$color-secondary: #4676a3 !default;
+$color-secondary-light: #4676a3 !default;
+$color-emphasis: #4676a3 !default;
+
+// main colors
+$heading-color: $color-primary !default;
+$link-color: $color-emphasis !default;
+
+// headings
+$presentation-heading-font: $font-family-sans-serif !default;
+$presentation-heading-color: $heading-color !default;
+$presentation-h3-font-size: 1em !default;
+
+/*-- scss:rules --*/
+
+// footer and progress bar
+.reveal .footer {
+  display: block !important;
+  bottom: 0px !important;
+  width: 100% !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+  background-color: $color-secondary;
+  height: 40px;
+}
+
+.reveal .footer > * {
+  vertical-align: middle !important;
+  text-align: center !important;
+  font-size: 1.2em !important;
+  font-weight: 300 !important;
+  font-style: $font-family-sans-serif;
+  color: #FFFFFF !important;
+}
+
+.reveal .progress {
+  background-color: transparent;
+	color: #6e9fcc;
+	height: 6px;
+	padding-bottom: 40px;
+}
+
+// Slide numbers to the bottom-left
+.slide-number, .reveal.has-logo .slide-number {
+  bottom: 0px !important;
+  right: 0px !important;
+  width: 30px !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
+  color: #FFFFFF !important;
+  text-align: center !important;
+  vertical-align: center !important;
+  background-color: $color-primary !important;
+  font-size: 1em;
+  font-weight: 600;
+  height: 35px;
+  line-height: 1.8 !important;
+}
+
+// title slide
+h1.title {
+	font-size: 1.9em;
+}
+
+.quarto-title-author-name {
+	text-shadow: none !important;
+	font-weight: 600 !important;
+	font-size: 1.25em !important;
+	//margin-left: 15px !important;
+	//margin-bottom: -10px !important;
+	//margin-top: 0px !important;
+}
+
+p.quarto-title-affiliation {
+	text-shadow: none !important;
+	font-weight: 300 !important;
+	font-size: 1em !important;
+	margin-top: 6px !important;
+	// margin-left: 15px;
+	// margin-bottom: -30px;
+}
+
+p.date {
+	color: #7F7F7F !important;
+	text-shadow: none !important;
+	font-weight: 300 !important;
+	font-size: .9em !important;
+	// margin-left: 15px;
+	// margin-bottom: -30px;
+}
+
+/*-- remove slide number from title slide
+.reveal .slide-number > a[href*='title-slide'] {
+  display: none;
+}
+--*/
+
+// slide heading and sub-heading
+.reveal .slides h2 {
+  text-align: center;
+}
+.reveal .slides h3 {
+  text-align: center;
+  color: #000000;
+  font-weight: 600;
+  font-style: $font-family-sans-serif;
+}
+
+// space between list items
+.reveal .slide ul li,
+  .reveal .slide ol li {
+    margin-block-end: 1.5em !important;
+  }
+
+.reveal .slide ul li ul > *:last-child,
+  .reveal .slide ol li ol > *:last-child {
+    margin-block-end: 1.5em !important;
+  }
+  
+.reveal .slide ul li ul > *:not(:last-child),
+  .reveal .slide ol li ol > *:not(:last-child) {
+    margin-block-end: 0 !important;
+  }
+  
+.reveal .slide ol li ul > *:last-child {
+    margin-block-end: 1.5em !important;
+  }
+  
+.reveal .slide ol li ul > *:not(:last-child) {
+    margin-block-end: 0 !important;
+  }
+
+// citations
+h3 .citation {
+  font-size: 1em;
+}
+
+.citation {
+  font-size: .8em;
+}
+
+// css classes
+
+.emphasis {
+  text-align: center !important;
+  color: $color-emphasis;
+}

@@ -1,0 +1,54 @@
+---
+title: "Class 1: The Basics of R"
+author: Jason S. Tsukahara
+date: date of presentation (e.g., 09/13/2023)
+format:
+  standard-revealjs: default
+  revealjs: default
+---
+
+## Outline
+
+ 
+
+## The RStudio Environment
+
+ 
+
+::: columns
+::: {.column width="30%"}
+**Four** window panes
+
+-   Console
+
+-   Source
+
+-   Environment
+
+-   Files
+:::
+
+::: {.column width="70%"}
+![](/images/rstudio-environment.png){width="645"}
+:::
+:::
+
+## The RStudio Environment
+
+![](/images/rstudio-environment.png){fig-align="center" width="907"}
+
+## Customize RStudio Appearance
+
+ 
+
+some content here
+
+# R Basics
+
+## Objects and Functions in R
+
+ 
+
+In R,
+
+everything that exists is an object and everything you do to objects are functions. You can define an object using the assignment operator `<-`.
