@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student - What is R</title>
+<title>R for the Psychology Student - What is R?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,12 +36,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -76,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Course Information</a></li><li class="breadcrumb-item"><a href="./what-is-R.html">What is R?</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./what-is-R.html">Course Information</a></li><li class="breadcrumb-item"><a href="./what-is-R.html">What is R?</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -92,9 +90,6 @@ ul.task-list li input[type="checkbox"] {
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for the Psychology Student</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -104,6 +99,12 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -113,12 +114,6 @@ ul.task-list li input[type="checkbox"] {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About</span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./what-is-R.html" class="sidebar-item-text sidebar-link active">
@@ -163,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">What is R</h1>
+<h1 class="title">What is R?</h1>
 </div>
 
 
@@ -185,17 +180,17 @@ ul.task-list li input[type="checkbox"] {
 <p>Let’s unpack this a bit.</p>
 <ul>
 <li><p>Free is nice!</p></li>
-<li><p>Statistical computing is a general term referring to a large class of techinques that involves statistics, machine learning, and more.</p></li>
+<li><p>Statistical computing is a general term referring to a large class of techniques that involves statistics, machine learning, and more.</p></li>
 <li><p>Graphics refers to creating visualizations of data and output from statistical computing.</p></li>
 </ul>
-<p>It’s really all about <strong>data</strong>! We live in a data rich world. Our personal lives, the media, and the workplace are inundiated with data. But data is often times obscure and not intuitive compared to how we interact with real-world objects. It is hidden behind numbers stored in columns, rows, and complex databases. There are also more units of data that we can realistically process and understand. As a result, data can easily be misleading and at worse be used to intentionaly deceive and lie (see <a href="https://www.amazon.com/How-Lie-Statistics-Darrell-Huff/dp/0393310728">How to Lie with Statistics</a>).</p>
-<p>A fundamental skill for the modern person, therefore, is to have some level of competency with working with and understanding data. Where it comes from, how it can be manipulated, basic concepts about statistics, and the graphical visualization of data.</p>
+<p>It’s really all about <strong>data</strong>! We live in a data rich world. Our personal lives, the media, and the workplace are inundated with data. But data is often times obscure and not intuitive compared to how we interact with real-world objects. It is hidden behind numbers stored in columns, rows, and complex databases. There are also more units of data that we can realistically process and understand. As a result, data can easily be misleading and at worse be used to intentionally deceive and lie (see <a href="https://www.amazon.com/How-Lie-Statistics-Darrell-Huff/dp/0393310728" target="_blank">How to Lie with Statistics</a>).</p>
+<p>A fundamental skill for the modern person, therefore, is to have some level of competency with working with and understanding data. Where it comes from, how it can be transformed, basic concepts about statistics and probability, and the graphical visualization of data.</p>
 <p>So where does R come in?</p>
 <p>R is only one of many tools that are available to learn about data, process it, understand it with statistics, and visualize it for the purpose of communication and understanding.</p>
-<p>R is a coding language. There are pros and cons to this. Any coding language requires a steep learning curve but the underlying logic of most coding languages is the same, and therefore; it can introduce you to a world that allows a powerful level of control and customization that goes beyond what we can achieve through the more clunky interface of real-world objects and graphical user interfaces (GUIs) on our monitors.</p>
-<p>Debates on which programming language you shoud learn and use are rampant on the internet and social media. For the basic undergraduate psychology student, R has a lot of advantages. Beyond that one may want to learn Python, Julia, or Matlab.</p>
-<p>Regardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of <strong>data</strong>. You will gain an appreciation for the level of mundaity and complexity that is involved in processing the vast amounts of data in this world. But more importantly, you will become proficient in working with data, statistical computation, and graphical visualization.</p>
-<p>It all starts with gaining a <u>basic</u> level of proficiency in 1) working with data, 2) data visualization, and 3) statistical computation. This course will cover these basics and from there you should be equiped to continue learning more.</p>
+<p>R is a coding language. There are pros and cons to this. Any coding language requires a steep learning curve but the underlying logic of most coding languages is the same, and therefore; it can introduce you to a world coding that allows a powerful level of control and customization that goes beyond what we can achieve through the more clunky interface of real-world objects and graphical user interfaces (GUI) on our monitors.</p>
+<p>Debates on which programming language you should learn and use are rampant on the internet and social media. For the basic undergraduate psychology student, R has a lot of advantages. Beyond that one may want to learn Python, Julia, or Matlab.</p>
+<p>Regardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of <strong>data</strong>. You will gain an appreciation for the level of mundanity and complexity that is involved in processing the vast amounts of data in this world. Through working with data yourself, you will also become a better consumer of data and information that you see in your own work, the news, and social media.</p>
+<p>It all starts with gaining a <u>basic</u> level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation. This course will cover the basics in each of these areas using R and from there you should be equipped to continue learning more on your own and from other courses.</p>
 
 
 
@@ -220,121 +215,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -551,7 +431,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About</span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Home</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

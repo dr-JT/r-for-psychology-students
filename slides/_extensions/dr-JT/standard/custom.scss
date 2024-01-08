@@ -109,10 +109,10 @@ p.date {
 
 // slide heading and sub-heading
 .reveal .slides h2 {
-  text-align: center;
+  text-align: left;
 }
 .reveal .slides h3 {
-  text-align: center;
+  text-align: left;
   color: #000000;
   font-weight: 600;
   font-style: $font-family-sans-serif;
@@ -142,6 +142,7 @@ p.date {
     margin-block-end: 0 !important;
   }
 
+
 // citations
 h3 .citation {
   font-size: 1em;
@@ -154,6 +155,13 @@ h3 .citation {
 // css classes
 
 .emphasis {
-  text-align: center !important;
+  text-align: left !important;
   color: $color-emphasis;
 }
+
+code.sourceCode {
+  font-size: 1.5em;
+  /* or try font-size: xx-large; */
+}
+
+

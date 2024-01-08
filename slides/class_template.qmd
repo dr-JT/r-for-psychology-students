@@ -1,5 +1,6 @@
 ---
-title: "presentation title use \n\n to break title onto different lines"
+title: "Title"
+subtitle: "Class X"
 format:
   standard-revealjs: default
   revealjs: default

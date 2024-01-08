@@ -1,5 +1,5 @@
 ---
-title: "What is R"
+title: "What is R?"
 ---
 
 According to the R website
@@ -10,22 +10,22 @@ Let's unpack this a bit.
 
 -   Free is nice!
 
--   Statistical computing is a general term referring to a large class of techinques that involves statistics, machine learning, and more.
+-   Statistical computing is a general term referring to a large class of techniques that involves statistics, machine learning, and more.
 
 -   Graphics refers to creating visualizations of data and output from statistical computing.
 
-It's really all about **data**! We live in a data rich world. Our personal lives, the media, and the workplace are inundiated with data. But data is often times obscure and not intuitive compared to how we interact with real-world objects. It is hidden behind numbers stored in columns, rows, and complex databases. There are also more units of data that we can realistically process and understand. As a result, data can easily be misleading and at worse be used to intentionaly deceive and lie (see [How to Lie with Statistics](https://www.amazon.com/How-Lie-Statistics-Darrell-Huff/dp/0393310728)).
+It's really all about **data**! We live in a data rich world. Our personal lives, the media, and the workplace are inundated with data. But data is often times obscure and not intuitive compared to how we interact with real-world objects. It is hidden behind numbers stored in columns, rows, and complex databases. There are also more units of data that we can realistically process and understand. As a result, data can easily be misleading and at worse be used to intentionally deceive and lie (see [How to Lie with Statistics](https://www.amazon.com/How-Lie-Statistics-Darrell-Huff/dp/0393310728){target="_blank"}).
 
-A fundamental skill for the modern person, therefore, is to have some level of competency with working with and understanding data. Where it comes from, how it can be manipulated, basic concepts about statistics, and the graphical visualization of data.
+A fundamental skill for the modern person, therefore, is to have some level of competency with working with and understanding data. Where it comes from, how it can be transformed, basic concepts about statistics and probability, and the graphical visualization of data.
 
 So where does R come in?
 
 R is only one of many tools that are available to learn about data, process it, understand it with statistics, and visualize it for the purpose of communication and understanding.
 
-R is a coding language. There are pros and cons to this. Any coding language requires a steep learning curve but the underlying logic of most coding languages is the same, and therefore; it can introduce you to a world that allows a powerful level of control and customization that goes beyond what we can achieve through the more clunky interface of real-world objects and graphical user interfaces (GUIs) on our monitors.
+R is a coding language. There are pros and cons to this. Any coding language requires a steep learning curve but the underlying logic of most coding languages is the same, and therefore; it can introduce you to a world coding that allows a powerful level of control and customization that goes beyond what we can achieve through the more clunky interface of real-world objects and graphical user interfaces (GUI) on our monitors.
 
-Debates on which programming language you shoud learn and use are rampant on the internet and social media. For the basic undergraduate psychology student, R has a lot of advantages. Beyond that one may want to learn Python, Julia, or Matlab.
+Debates on which programming language you should learn and use are rampant on the internet and social media. For the basic undergraduate psychology student, R has a lot of advantages. Beyond that one may want to learn Python, Julia, or Matlab.
 
-Regardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of **data**. You will gain an appreciation for the level of mundaity and complexity that is involved in processing the vast amounts of data in this world. But more importantly, you will become proficient in working with data, statistical computation, and graphical visualization.
+Regardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of **data**. You will gain an appreciation for the level of mundanity and complexity that is involved in processing the vast amounts of data in this world. Through working with data yourself, you will also become a better consumer of data and information that you see in your own work, the news, and social media.
 
-It all starts with gaining a [basic]{.underline} level of proficiency in 1) working with data, 2) data visualization, and 3) statistical computation. This course will cover these basics and from there you should be equiped to continue learning more.
+It all starts with gaining a [basic]{.underline} level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation. This course will cover the basics in each of these areas using R and from there you should be equipped to continue learning more on your own and from other courses.

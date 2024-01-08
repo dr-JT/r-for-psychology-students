@@ -4,7 +4,7 @@ title: "Prerequisites"
 
 If you do not have R or RStudio installed on your computer, then follow the install instructions below.
 
-If you already have R or RStudio intalled on your computer, then is it recommended to [Update Software](#sec-update-software) for this course.
+If you already have R or RStudio installed on your computer, then is it recommended to [Update Software](#sec-update-software) for this course.
 
 ## Install Software {#sec-install-software}
 
@@ -121,4 +121,8 @@ You should now see the variable `welcome_message` in the Environment window pane
 
 -   The **Files** window (the bottom right window pane) is where you can see your computer's directories, plots you create, manage packages, and see help documentation.
 
-You can also Customize RStudio settings and appareance.
+You can also Customize RStudio settings and appearances.
+
+### Customizing RStudio
+
+Coming soon...

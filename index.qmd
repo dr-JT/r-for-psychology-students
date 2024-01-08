@@ -1,5 +1,31 @@
 ---
-title: "R for the Psychology Student"
+title: "Welcome!"
 ---
 
-This 10-week course will provide you with the knowledge you need to reach a basic level of proficiency. Although it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.
+The purpose of this course is for you to gain a [basic]{.underline} level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.
+
+Although it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.
+
+## Course Format
+
+Before starting the course you should read the following sections
+
+📖 [What is R?](what-is-R.html)
+
+📖 [Prerequisites](prerequisites.html)
+
+You can navigate to different sections of the course on the left sidebar.
+
+Most pages will also have a page navigation on the right sidebar where you can navigate to different sections of the page you are currently on.
+
+### Classes
+
+The landing page for each class contains the class materials:
+
+📘 the actual content of the class
+
+🖥️ slides
+
+and more
+
+[Class 1](/classes/class-1.html) - An Introduction to Working with Data in R

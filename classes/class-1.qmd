@@ -13,13 +13,21 @@ Before starting this class:
 
 📖 Read the [Prerequisites](/prerequisites.html) page
 
-## Class Content
+## Outline
 
-📘 [Lecture](/lectures/lectures-class-1.html)
+-   Basics of using R
+
+-   Data Frames
+
+-   Brief intro to data transformation, graphical visualization, and staistical computation
+
+## Class Materials
+
+📘 [Class 1: An Introduction to Working with Data in R](/lectures/lectures-class-1.html){target="_blank"}
 
 🖥️ [Slides - Full Screen](/_site/slides/slides-class-1.html){target="_blank"}
 
-Press **M** on the slides to bring up the menu to access options such as printing
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 
 <div>
 

@@ -4,7 +4,7 @@ project:
 website:
   title: "R for the Psychology Student"
   page-navigation: true
-  description: "R for the Psychology Student"
+  description: "Intro to R Course"
   site-url: ""
   
   sidebar:
@@ -17,10 +17,10 @@ website:
     collapse-level: 2
     
     contents:
+      - href: index.qmd
+        text: "Home"
       - section: "Course Information"
         contents:
-          - href: index.qmd
-            text: "About"
           - href: what-is-R.qmd
             text: "What is R?"
           - href: prerequisites.qmd
@@ -37,7 +37,6 @@ format:
     linkcolor: "#4676a3"
     theme: 
       light: [cosmo, theme.css]
-      dark: [cosmo, theme-dark.css]
     mainfont: "Atkinson Hyperlegible"
     code-copy: true
     code-overflow: wrap
