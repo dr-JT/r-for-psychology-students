@@ -1,9 +1,21 @@
 ---
 title: "An Introduction to Working with Data in R"
 subtitle: "Class 1"
-format:
-  standard-revealjs: default
-  revealjs: default
+contributes:
+  formats:
+    revealjs:
+      theme: [default, slides.scss]
+      controls: true
+      embed-resources: true
+      incremental: true
+      smaller: false
+      slide-number: c
+      progress: true
+      preview-links: true
+      menu: false
+      auto-stretch: false
+      date-format: long
+      highlight-style: github
 ---
 
 ## Prepare
