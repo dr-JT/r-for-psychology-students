@@ -196,18 +196,11 @@
     ]
   },
   {
-    "objectID": "slides/slides-class-1.html",
-    "href": "slides/slides-class-1.html",
-    "title": "An Introduction to Working with Data in R",
-    "section": "",
-    "text": "Before starting this class:\n📖 Read the Prerequisites page\n \n\n\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
-  },
-  {
     "objectID": "slides/slides-class-1.html#prepare",
     "href": "slides/slides-class-1.html#prepare",
     "title": "An Introduction to Working with Data in R",
-    "section": "",
-    "text": "Before starting this class:\n📖 Read the Prerequisites page\n \n\n\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
+    "section": "Prepare",
+    "text": "Prepare\n \nBefore starting this class:\n📖 Read the Prerequisites page\n \nOutline\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
   },
   {
     "objectID": "slides/slides-class-1.html#script-files",
@@ -235,7 +228,7 @@
     "href": "slides/slides-class-1.html#sec-using-functions",
     "title": "An Introduction to Working with Data in R",
     "section": "Using Functions",
-    "text": "Using Functions\nAnything you do in R is by using functions\n \n\n\nLearning R is learning what functions are available and how to use them.\nExample: there is a function to create a sequence of numbers, seq().\n\n\n\nseq(1, 100, by = 10)\n\n \n. . .\n\n\nFunctions take arguments\nIf you don’t label argument names, then the order of arguments matters!\n\n\n\nseq(from = 1, to = 100, by = 10)\nseq(to = 100, by = 10, from = 1)\nseq(1, 100, 10)"
+    "text": "Using Functions\nAnything you do in R is by using functions\n \n\n\nLearning R is learning what functions are available and how to use them.\nExample: there is a function to create a sequence of numbers, seq().\n\n\n\nseq(1, 100, by = 10)\n\n \n\n\n\nFunctions take arguments\nIf you don’t label argument names, then the order of arguments matters!\n\n\n\nseq(from = 1, to = 100, by = 10)\nseq(to = 100, by = 10, from = 1)\nseq(1, 100, 10)"
   },
   {
     "objectID": "slides/slides-class-1.html#helper-function",
@@ -256,7 +249,7 @@
     "href": "slides/slides-class-1.html#install-and-load-packages",
     "title": "An Introduction to Working with Data in R",
     "section": "Install and Load Packages",
-    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n. . .\n\nlibrary(dplyr)"
+    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
   },
   {
     "objectID": "slides/slides-class-1.html#example-data-set",
@@ -270,7 +263,7 @@
     "href": "slides/slides-class-1.html#data-frames-1",
     "title": "An Introduction to Working with Data in R",
     "section": "Data Frames",
-    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\n## \n## Attaching package: 'dplyr'\n## The following objects are masked from 'package:stats':\n## \n##     filter, lag\n## The following objects are masked from 'package:base':\n## \n##     intersect, setdiff, setequal, union\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\nNote\n\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
+    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
   },
   {
     "objectID": "slides/slides-class-1.html#viewing-the-data",
@@ -333,7 +326,7 @@
     "href": "slides/slides-class-1.html#data-transformation-1",
     "title": "An Introduction to Working with Data in R",
     "section": "Data Transformation",
-    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n. . .\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n. . .\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
   },
   {
     "objectID": "slides/slides-class-1.html#data-transformation-2",
@@ -361,21 +354,21 @@
     "href": "slides/slides-class-1.html#ggplot2---geometries-layer",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2 - geometries layer",
-    "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()\n## Warning: Removed 2 rows containing missing values (`geom_point()`)."
+    "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2---theme",
     "href": "slides/slides-class-1.html#ggplot2---theme",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2 - theme",
-    "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()\n## Warning: Removed 2 rows containing missing values (`geom_point()`)."
+    "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2",
     "href": "slides/slides-class-1.html#ggplot2",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2",
-    "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n## Warning: Removed 2 rows containing missing values (`geom_point()`)."
+    "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
   },
   {
     "objectID": "slides/slides-class-1.html#correlation",
