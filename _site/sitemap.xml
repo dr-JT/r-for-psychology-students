@@ -1,55 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/slides/class_template.html</loc>
-    <lastmod>2024-01-06T23:44:05.219Z</lastmod>
-  </url>
-  <url>
-    <loc>/0-1-about.html</loc>
-    <lastmod>2024-01-03T22:49:05.301Z</lastmod>
-  </url>
-  <url>
-    <loc>/1-basics-r.html</loc>
-    <lastmod>2024-01-03T22:45:56.493Z</lastmod>
-  </url>
-  <url>
-    <loc>/0-2-what-is-R.html</loc>
-    <lastmod>2024-01-03T22:49:07.424Z</lastmod>
-  </url>
-  <url>
-    <loc>/0-3-prerequisites.html</loc>
-    <lastmod>2024-01-03T22:49:11.356Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/Class-1.html</loc>
-    <lastmod>2024-01-03T22:46:00.137Z</lastmod>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-    <lastmod>2024-01-09T01:30:50.813Z</lastmod>
-  </url>
-  <url>
     <loc>/lectures/lectures-class-1.html</loc>
-    <lastmod>2024-01-07T23:10:26.935Z</lastmod>
+    <lastmod>2024-01-09T17:37:50.432Z</lastmod>
   </url>
   <url>
     <loc>/slides/slides-class-1.html</loc>
-    <lastmod>2024-01-09T01:51:54.806Z</lastmod>
-  </url>
-  <url>
-    <loc>/classes/class-1.html</loc>
-    <lastmod>2024-01-09T01:30:55.410Z</lastmod>
-  </url>
-  <url>
-    <loc>/what-is-R.html</loc>
-    <lastmod>2024-01-06T23:39:23.851Z</lastmod>
+    <lastmod>2024-01-09T17:23:46.833Z</lastmod>
   </url>
   <url>
     <loc>/prerequisites.html</loc>
-    <lastmod>2024-01-09T01:30:54.121Z</lastmod>
+    <lastmod>2024-01-09T17:10:50.941Z</lastmod>
   </url>
   <url>
-    <loc>/about.html</loc>
-    <lastmod>2024-01-03T22:59:34.939Z</lastmod>
+    <loc>/what-is-R.html</loc>
+    <lastmod>2024-01-09T17:10:50.946Z</lastmod>
+  </url>
+  <url>
+    <loc>/classes/class-1.html</loc>
+    <lastmod>2024-01-09T17:10:50.931Z</lastmod>
+  </url>
+  <url>
+    <loc>/index.html</loc>
+    <lastmod>2024-01-09T17:58:14.502Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/class_template.html</loc>
+    <lastmod>2024-01-09T17:10:50.942Z</lastmod>
   </url>
 </urlset>

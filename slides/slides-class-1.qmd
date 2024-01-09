@@ -29,7 +29,7 @@ Before starting this class:
 
     -   Graphical visualization
 
-    -   Staistical analysis
+    -   Statistical analysis
 :::
 
 # R Basics
@@ -52,9 +52,8 @@ This course will refer to two types of R script files:
 
     -   Is commented and polished enough to share with others.
 
-```{=html}
 <!-- -->
-```
+
 -   **Scratchpad script file**: A script file for testing, debugging, and exploring your data.
 
     -   Often saved as **Untitled.R** or not saved at all
@@ -67,7 +66,7 @@ Two ways of executing R code
  
 
 ::: nonincremental
-1.  Typing code in an R script file and executing R code line-by-line `Cmd/Ctrl + Enter.`
+1.  Typing code in an R script file and executing R code line-by-line `Ctrl + Enter.`
 2.  Typing code directly in the console window
 :::
 

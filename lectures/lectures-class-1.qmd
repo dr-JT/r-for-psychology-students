@@ -14,20 +14,37 @@ To create a new R script go to
 
 This should have opened a blank **Script** window called **Untitled**.
 
-The **Script** window is a file where you are saving your code. This is where you will write, edit, delete, and re-write your code. Save your empty script somewhere on your computer.
+The **Script** window is a file where you are saving your code. This is where you will write, edit, delete, and re-write your code.
+
+This course will refer to two types of R script files:
+
+-   **Reproducible script file**: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.
+
+    -   The purpose of the **Reproducible script file** is to create a document, that can be saved on your computer and shared with others. It should only include code that is necessary to process your data. Therefore, you only want to type in code in the R script file that you intend to save and is necessary for processing your data.
+
+-   **Scratchpad script file**: A script file for testing, debugging, and exploring your data.
+
+    -   Often saved as **Untitled.R** or not saved at all
+    -   The purpose of the scratchpad script file is to write R code that is not intended to be saved and is not a necessary step for processing your data. For instance, you might want to view a data frame (more on that later), check what are the unique values in a column, get the names of all the columns in a data frame. These will help you to write your R code, but are not necessary steps for actually processing your data once you have the R code written. Therefore, you can just write the code directly in the R Console window and execute the code there - that way it won't clutter up your Reproducible script file.
+
+::: callout-tip
+Create two script files for this class.
+
+-   One will be a reproducible script file you can save at the end of the class to reproduce same data processing, visualization, and statistics we will do at the end.
+
+-   The other will be a scratchpad script file. You can choose whether you want to save that script or not.
+:::
 
 ## Running R Code {#sec-running-r-code}
 
 Throughout this course you will be introduced to several ways of executing or "running" R code. For now, you need to be aware of two ways of doing so.
 
-1.  Typing code in an R script file and executing R code line-by-line
+1.  Typing code in an R script file and executing R code line-by-line `Ctrl + Enter`
 2.  Typing code directly in the console window
-
-The purpose of the R script file is to create a document, that can be saved on your computer and shared with others, to execute only the necessary steps to process your data. Therefore, you only want to type in code in the R script file that you intend to save and is necessary for processing your data.
 
 To execute R code in an R script file line-by-line you just need to type in some R code, put the cursor anywhere on that line, and hit `Ctrl + Enter.`
 
-Type the following lines of code in your open R script file and run each line, one by one.
+In a scratchpad script file, run each line one-by-one.
 
 ```{r}
 #| eval: false
@@ -39,29 +56,25 @@ Type the following lines of code in your open R script file and run each line, o
 
 Notice how the lines of code and their output were printed to the Console window. No matter how you execute R code it gets passed to the Console window anyways.
 
-You will often need to execute some R code that is not intended to be saved and is not a necessary step for processing your data. For instance, you might want to view a data frame (more on that later), check what are the unique values in a column, get the names of all the columns in a data frame. These will help you to write your R code, but are not necessary steps for actaully processing your data once you have the R code written. Therefore, you can just write the code directly in the R Console window and execute the code there - that way it won't clutter up your R script file.
-
 Type the same lines of code as above but this time directly in the Console window, one at a time, and hit enter.
-
-Another option for code that does not need to be saved is to create a separate R script file that only serves as scratch paper. This can be more useful than just using the console window if you need to:
-
-1.  Write and execute multiple lines of R code to test something out
-2.  If you need to repeatedly execute the same or similar line of R code and don't want to keep typing it out and remembering the proper syntax each time
-
-You could even save this scratch paper R script file if you want to keep using it across multiple sessions. It is fairly common practice to just keep an "Untitled.R" script file in your project for this purpose.
 
 ## Creating R Objects {#sec-creating-r-objects}
 
 In R, you will create what are called **objects** that store some information. That could be a single value like `5`, an entire table of data with rows and columns, and even more complex objects. Objects are created using the assignment operator, `<-`.
 
-Everything on the left hand side of the assignment operator `<-` is an object. Everything on the right hand side of `<-` are functions or values. Go ahead and type the following two lines of code in your script file and execute the lines of code.
+Everything on the left hand side of the assignment operator `<-` is an object. Everything on the right hand side of `<-` are functions or values. Go ahead and execute the following lines of code.
 
 ```{r}
 my_first_object <- "hello"
 my_first_object
+
+my_second_object <- c(5,6,7,8)
+my_second_object
 ```
 
 You just assigned the value `"hello"` to an object named `my_first_object`. Note that R is case sensitive, `my_first_object` would be considered a different object as `my_First_object.`
+
+You also created `my_second_object` that stores a **vector** of four values: 5, 6, 7, and 8. The `c()` function can be used to create a vector of values.
 
 ## Using Functions {#sec-using-functions}
 
@@ -136,9 +149,11 @@ library(dplyr)
 
 The main type of R object that you will be working with are data frames. You are probably already familiar with data frames. Excel uses this type of data structure, it is just rows and columns of data.
 
-Many R packages come loaded with data sets. Let's take a look at a fun data set from the `palmerpenguins` package, do some simple transformations of the data, visualize, and do a simple statistical analysis.
+Many R packages come loaded with data sets. Let's take a look at a fun data set from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html){target="_blank"} package, do some simple transformations of the data, visualize, and do a simple statistical analysis.
 
-First, install the pacakge
+![](images/lter_penguins.png){fig-align="center" width="677"}
+
+First, install the package
 
 ```{r}
 #| eval: false
@@ -149,11 +164,12 @@ install.packages("palmerpenguins")
 
 The install function should just be typed into the Console because this is a step that you only need to perform once. Go ahead and install `dplyr` and `ggplot2` packages as well.
 
-The `library()` function to load packages, however, is a necessary step for processing the data, therefore, it needs to be included in the R script file.
+The `library()` function to load packages, however, is a necessary step for processing the data, therefore, it needs to be included in the reproducible script file.
 
 Load `palmerpenguins` , `dplyr` , and `ggplot2` packages. We will use `dplyr` to do some simple transformation of the data and `ggplot2` to visualize the data.
 
 ```{r}
+# load packages
 library(palmerpenguins)
 library(dplyr)
 library(ggplot2)
@@ -184,9 +200,11 @@ View(data_import)
 Do you think `View()` should be included in the R script or just typed directly into the Console?
 :::
 
-By viewing the data we can see that there are columns that contain information such as the species of the penguin, the island it belongs to, some size dimensions, and more. Notice how the column names are simple but also convey useful information for someone to easily understand this data. For instance, the the column `bill_length_mm` is not only straightforward but conveys the unit of measurement. It is not always possible to create both concise and information rich column names like these. When that is the case you can go on the side of being concise while providing documentation elsewhere that provides more detail.
+By viewing the data we can see that there are columns that contain information such as the species of the penguin, the island it belongs to, some size dimensions, and more.
 
 ::: callout-note
+Notice how the column names are simple but also convey useful information for someone to easily understand this data. For instance, the the column `bill_length_mm` is not only straightforward but conveys the unit of measurement. It is not always possible to create both concise and information rich column names like these. When that is the case you can go on the side of being concise while providing documentation elsewhere that provides more detail.
+
 This principle of **easy to understand** is important and something we will keep coming back to.
 :::
 
@@ -280,12 +298,12 @@ It is because we did not use the assignment operator. We simply printed the resu
 :::
 
 ::: callout-note
-How did I know how to use the argument name `levels =` in `factor()`? You can learn about arguments a function can take, and what they do using the helper functioin `?`. For instance type `?factor()` in the console. In the Help window, you can see there are a number of arguments that can be specified in `factor()`. For `levels`, it states that it is an optional vector of the unique values that x might have taken. This tells us we need to supply a vector of unique values. You can use the `c()` function to create a vector of values. Type `c(2007, 2008, 2009)` in the Console. You can see there are three elements in the vector for each year. We specifiy this vector in the `levels` argument to tell `factor()` that these are the unique values in the `data_import$year` column.
+How did I know how to use the argument name `levels =` in `factor()`? You can learn about arguments a function can take, and what they do using the helper function `?`. For instance type `?factor()` in the console. In the Help window, you can see there are a number of arguments that can be specified in `factor()`. For `levels`, it states that it is an optional vector of the unique values that x might have taken. This tells us we need to supply a vector of unique values. You can use the `c()` function to create a vector of values. Type `c(2007, 2008, 2009)` in the Console. You can see there are three elements in the vector for each year. We specify this vector in the `levels` argument to tell `factor()` that these are the unique values in the `data_import$year` column.
 :::
 
 ## Transforming Data
 
-Just for the fun of it, let's do a simple transformation on the data, visualize a relationship between three variables, and statistically test a relationshp between two variables. Three variables that we will look at are `species`, `flipper_length_mm` , and `body_mass_g`.
+Just for the fun of it, let's do a simple transformation on the data, visualize a relationship between three variables, and statistically test a relationship between two variables. Three variables that we will look at are `species`, `flipper_length_mm` , and `body_mass_g`.
 
 First, let's compute the mean **flipper length** and **body mass** for each species of penguin and store them in columns in the data frame. Because we are now changing the original data frame, let's go ahead and call it something different. Because this is the data frame we will eventually plot, why not call it `data_plot`
 
@@ -311,7 +329,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
                       color = species, shape = species))
 ```
 
-Note that this only creates the overal structure of the graphic, no data is plotted yet. That is because there are a lot of different ways to visualize the data and we need to specifiy these visual elements in the **geometries** or **geom** layer.
+Note that this only creates the overall structure of the graphic, no data is plotted yet. That is because there are a lot of different ways to visualize the data and we need to specify these visual elements in the **geometries** or **geom** layer.
 
 ```{r}
 ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
@@ -319,7 +337,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
   geom_point()
 ```
 
-Note how it mapped species onto the color and shpae of the data points.
+Note how it mapped species onto the color and shape of the data points.
 
 Let's make the plot a littler prettier by using a customized theme, `theme_classic()`
 
@@ -343,7 +361,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
 
 ## Statistical Analysis
 
-Based on the graphic visualization, it looks like there is a strong relationship between **body mass** and **flipper length**, perhaps unsurprinsingly. Let's calculate the correlation between these two variables and test whether it is statistically significant or not.
+Based on the graphic visualization, it looks like there is a strong relationship between **body mass** and **flipper length**, perhaps unsurprisingly. Let's calculate the correlation between these two variables and test whether it is statistically significant or not.
 
 ```{r}
 cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
@@ -353,6 +371,41 @@ cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
 
 That was easy!
 
+## Class 1: Reproducible Script
+
+ 
+
+```{r}
+#| eval: false
+#| echo: true
+
+# load packages
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+
+# import data
+data_import <- penguins
+
+# transform data
+data_plot <- data_import |>
+  mutate(.by = species,
+         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
+         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species)) +
+  geom_point() +
+  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +
+  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +
+  theme_classic()
+
+# statistical analysis
+cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
+
+```
+
 ------------------------------------------------------------------------
 
-In the rest of the course, we will go into greather depth on transforming data, graphical visualization, and statistical analysis. But hopefully for now this class gave you a starting foundation to working with data in R and a taste for what is possible.
+In the rest of the course, we will go into greater depth on transforming data, graphical visualization, and statistical analysis.
