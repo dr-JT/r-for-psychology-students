@@ -15,6 +15,7 @@ format:
     auto-stretch: false
     date-format: long
     highlight-style: github
+    code-line-numbers: false
 ---
 
 ## Prepare
