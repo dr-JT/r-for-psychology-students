@@ -42,13 +42,9 @@ To create a new R script go to
 
 **File** -\> **New File** -\> **R Script**
 
-This should have opened a blank **Script** window called **Untitled.R**.
-
  
 
--   **The scratchpad script file**: A script file for testing, debugging, and exploring your data.
-
-    -   Often saved as **Untitled.R** or not saved at all
+This course will refer to two types of R script files:
 
 -   **Reproducible script file**: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.
 
@@ -56,9 +52,17 @@ This should have opened a blank **Script** window called **Untitled.R**.
 
     -   Is commented and polished enough to share with others.
 
+```{=html}
+<!-- -->
+```
+-   **Scratchpad script file**: A script file for testing, debugging, and exploring your data.
+
+    -   Often saved as **Untitled.R** or not saved at all
+    -   Alternatively, you can just execute code directly in the console
+
 ## Running R Code {#sec-running-r-code}
 
-Two ways of executing R codes
+Two ways of executing R code
 
  
 
@@ -85,7 +89,7 @@ Two ways of executing R codes
 -   **object** \<- **functions** or **values**.
 :::
 
-Go ahead and type the following two lines of code in your scratchpad script file and execute the lines of code.
+Go ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.
 
  
 
@@ -196,7 +200,7 @@ install.packages("dplyr")
 
  
 
--   Installing the package just installs it on your computer
+-   Installing the package installs it on your computer
 
 -   When you want to use the functions in the package you need to **load** the package into your current environment
 
@@ -226,7 +230,7 @@ We will use a data set from the [palmerpenguins](https://allisonhorst.github.io/
  
 
 ::: nonincremental
--   Let's create a new script - a reproducible script for the rest of this class
+-   Let's create a new script - a reproducible script to use for this class
 
 -   You should always load packages at the top of the script
 :::
@@ -256,7 +260,7 @@ It is a good idea to comment your code to provide organization and clarity as to
 
 ## Viewing the Data
 
-In console / scratchpad script
+In scratchpad script / console
 
  
 
@@ -275,7 +279,7 @@ View(data_import)
 
 ## Viewing the Data
 
-In console / scratchpad script
+In scratchpad script / console
 
  
 
@@ -302,6 +306,8 @@ head(data_import)
 ```
 
 ## Viewing the Data
+
+In scratchpad script / console
 
  
 
@@ -337,6 +343,8 @@ Classes are types of values that exist in R. Here are a list of some common valu
 
 ## Types of Values
 
+In scratchpad script / console
+
  
 
 To evaluate the type of values in a column you can use `typeof()`
@@ -363,6 +371,8 @@ as.character(data_import$bill_depth_mm)
 
 ## Factors
 
+In scratchpad script / console
+
  
 
 ```{r}
@@ -386,6 +396,8 @@ is.factor(data_import$species)
 :::
 
 ## Creating Factors
+
+In scratchpad script / console
 
  
 
@@ -425,6 +437,7 @@ Let's take a look at three variables
 #| collapse: true
 #| echo: true
 
+# transform data
 data_plot <- data_import |>
   mutate(.by = species,
          flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
@@ -520,7 +533,7 @@ View(data_plot)
 #| fig-height: 4
 #| fig-width: 6
 
-
+# visualize data
 ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
                       color = species, shape = species))
 
@@ -536,7 +549,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
 #| fig-height: 4
 #| fig-width: 6
 
-
+# visualize data
 ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
                       color = species, shape = species)) +
   geom_point()
@@ -553,7 +566,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
 #| fig-height: 4
 #| fig-width: 6
 
-
+# visualize data
 ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
                       color = species, shape = species)) +
   geom_point() +
@@ -571,7 +584,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
 #| fig-height: 4
 #| fig-width: 6
 
-
+# visualize data
 ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
                       color = species, shape = species)) +
   geom_point() +
@@ -591,5 +604,41 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
 #| collapse: true
 #| echo: true
 
+# statistical analysis
 cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
+```
+
+## Class 1: Reproducible Script
+
+ 
+
+```{r}
+#| eval: false
+#| echo: true
+
+# load packages
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+
+# import data
+data_import <- penguins
+
+# transform data
+data_plot <- data_import |>
+  mutate(.by = species,
+         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
+         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species)) +
+  geom_point() +
+  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +
+  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +
+  theme_classic()
+
+# statistical analysis
+cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
+
 ```

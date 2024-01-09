@@ -368,14 +368,14 @@
     "href": "slides/slides-class-1.html#sec-running-r-code",
     "title": "An Introduction to Working with Data in R",
     "section": "Running R Code",
-    "text": "Running R Code\nTwo ways of executing R codes\n \n\n\nTyping code in an R script file and executing R code line-by-line Cmd/Ctrl + Enter.\nTyping code directly in the console window\n\n\n\n1 + 2\n3 * 9"
+    "text": "Running R Code\nTwo ways of executing R code\n \n\n\nTyping code in an R script file and executing R code line-by-line Cmd/Ctrl + Enter.\nTyping code directly in the console window\n\n\n\n1 + 2\n3 * 9"
   },
   {
     "objectID": "slides/slides-class-1.html#sec-creating-r-objects",
     "href": "slides/slides-class-1.html#sec-creating-r-objects",
     "title": "An Introduction to Working with Data in R",
     "section": "Creating R Objects",
-    "text": "Creating R Objects\n \n\n\nObjects are created using the assignment operator, &lt;-.\nobject &lt;- functions or values.\n\n\nGo ahead and type the following two lines of code in your scratchpad script file and execute the lines of code.\n \n\nmy_first_object &lt;- \"hello\"\nmy_second_object &lt;- c(5,6,7,8)\n\n \n\n\nYou should now see my_first_object and my_second_object in your Environment window\nNote that R is case sensitive"
+    "text": "Creating R Objects\n \n\n\nObjects are created using the assignment operator, &lt;-.\nobject &lt;- functions or values.\n\n\nGo ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.\n \n\nmy_first_object &lt;- \"hello\"\nmy_second_object &lt;- c(5,6,7,8)\n\n \n\n\nYou should now see my_first_object and my_second_object in your Environment window\nNote that R is case sensitive"
   },
   {
     "objectID": "slides/slides-class-1.html#sec-using-functions",
@@ -424,7 +424,7 @@
     "href": "slides/slides-class-1.html#script-files",
     "title": "An Introduction to Working with Data in R",
     "section": "Script Files",
-    "text": "Script Files\n \nTo create a new R script go to\nFile -&gt; New File -&gt; R Script\nThis should have opened a blank Script window called Untitled.R.\n \n\nThe scratchpad script file: A script file for testing, debugging, and exploring your data.\n\nOften saved as Untitled.R or not saved at all\n\nReproducible script file: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.\n\nThis is the file you actually save to process your data\nIs commented and polished enough to share with others."
+    "text": "Script Files\n \nTo create a new R script go to\nFile -&gt; New File -&gt; R Script\n \nThis course will refer to two types of R script files:\n\nReproducible script file: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.\n\nThis is the file you actually save to process your data\nIs commented and polished enough to share with others.\n\n\n\n\nScratchpad script file: A script file for testing, debugging, and exploring your data.\n\nOften saved as Untitled.R or not saved at all\nAlternatively, you can just execute code directly in the console"
   },
   {
     "objectID": "slides/slides-class-1.html#helper-function",
@@ -445,14 +445,14 @@
     "href": "slides/slides-class-1.html#install-and-load-packages",
     "title": "An Introduction to Working with Data in R",
     "section": "Install and Load Packages",
-    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package just installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
+    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
   },
   {
     "objectID": "slides/slides-class-1.html#data-frames-1",
     "href": "slides/slides-class-1.html#data-frames-1",
     "title": "An Introduction to Working with Data in R",
     "section": "Data Frames",
-    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script for the rest of this class\nYou should always load packages at the top of the script\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
+    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
   },
   {
     "objectID": "slides/slides-class-1.html#data-frames",
@@ -480,14 +480,14 @@
     "href": "slides/slides-class-1.html#viewing-the-data",
     "title": "An Introduction to Working with Data in R",
     "section": "Viewing the Data",
-    "text": "Viewing the Data\nIn console / scratchpad script\n \n\nView(data_import)"
+    "text": "Viewing the Data\nIn scratchpad script / console\n \n\nView(data_import)"
   },
   {
     "objectID": "slides/slides-class-1.html#viewing-the-data-1",
     "href": "slides/slides-class-1.html#viewing-the-data-1",
     "title": "An Introduction to Working with Data in R",
     "section": "Viewing the Data",
-    "text": "Viewing the Data\nIn console / scratchpad script\n \nGet columns names\n\ncolnames(data_import)\n## [1] \"species\"           \"island\"            \"bill_length_mm\"   \n## [4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n## [7] \"sex\"               \"year\"\n\n \nSneak peak of data\n\nhead(data_import)\n## # A tibble: 6 × 8\n##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n## 1 Adelie  Torgersen           39.1          18.7               181        3750\n## 2 Adelie  Torgersen           39.5          17.4               186        3800\n## 3 Adelie  Torgersen           40.3          18                 195        3250\n## 4 Adelie  Torgersen           NA            NA                  NA          NA\n## 5 Adelie  Torgersen           36.7          19.3               193        3450\n## 6 Adelie  Torgersen           39.3          20.6               190        3650\n## # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;"
+    "text": "Viewing the Data\nIn scratchpad script / console\n \nGet columns names\n\ncolnames(data_import)\n## [1] \"species\"           \"island\"            \"bill_length_mm\"   \n## [4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n## [7] \"sex\"               \"year\"\n\n \nSneak peak of data\n\nhead(data_import)\n## # A tibble: 6 × 8\n##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n## 1 Adelie  Torgersen           39.1          18.7               181        3750\n## 2 Adelie  Torgersen           39.5          17.4               186        3800\n## 3 Adelie  Torgersen           40.3          18                 195        3250\n## 4 Adelie  Torgersen           NA            NA                  NA          NA\n## 5 Adelie  Torgersen           36.7          19.3               193        3450\n## 6 Adelie  Torgersen           39.3          20.6               190        3650\n## # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;"
   },
   {
     "objectID": "slides/slides-class-1.html#test",
@@ -501,7 +501,7 @@
     "href": "slides/slides-class-1.html#viewing-the-data-2",
     "title": "An Introduction to Working with Data in R",
     "section": "Viewing the Data",
-    "text": "Viewing the Data\n \n\n\nUse $ to refer to a column in a data frame\n\n\nGet unique values in a column\n\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo"
+    "text": "Viewing the Data\nIn scratchpad script / console\n \n\n\nUse $ to refer to a column in a data frame\n\n\nGet unique values in a column\n\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo"
   },
   {
     "objectID": "slides/slides-class-1.html#types-of-values",
@@ -515,21 +515,21 @@
     "href": "slides/slides-class-1.html#types-of-values-1",
     "title": "An Introduction to Working with Data in R",
     "section": "Types of Values",
-    "text": "Types of Values\n \nTo evaluate the type of values in a column you can use typeof()\n\ntypeof(data_import$bill_depth_mm)\n## [1] \"double\"\ntypeof(data_import$flipper_length_mm)\n## [1] \"integer\"\n\n \nTo change the class of values in an object you can use as.character() , as.numeric() , as.double() , as.integer() , as.logical() functions.\n\nas.character(data_import$bill_depth_mm)\n##   [1] \"18.7\" \"17.4\" \"18\"   NA     \"19.3\" \"20.6\" \"17.8\" \"19.6\" \"18.1\" \"20.2\"\n##  [11] \"17.1\" \"17.3\" \"17.6\" \"21.2\" \"21.1\" \"17.8\" \"19\"   \"20.7\" \"18.4\" \"21.5\"\n##  [21] \"18.3\" \"18.7\" \"19.2\" \"18.1\" \"17.2\" \"18.9\" \"18.6\" \"17.9\" \"18.6\" \"18.9\"\n##  [31] \"16.7\" \"18.1\" \"17.8\" \"18.9\" \"17\"   \"21.1\" \"20\"   \"18.5\" \"19.3\" \"19.1\"\n##  [41] \"18\"   \"18.4\" \"18.5\" \"19.7\" \"16.9\" \"18.8\" \"19\"   \"18.9\" \"17.9\" \"21.2\"\n##  [51] \"17.7\" \"18.9\" \"17.9\" \"19.5\" \"18.1\" \"18.6\" \"17.5\" \"18.8\" \"16.6\" \"19.1\"\n##  [61] \"16.9\" \"21.1\" \"17\"   \"18.2\" \"17.1\" \"18\"   \"16.2\" \"19.1\" \"16.6\" \"19.4\"\n##  [71] \"19\"   \"18.4\" \"17.2\" \"18.9\" \"17.5\" \"18.5\" \"16.8\" \"19.4\" \"16.1\" \"19.1\"\n##  [81] \"17.2\" \"17.6\" \"18.8\" \"19.4\" \"17.8\" \"20.3\" \"19.5\" \"18.6\" \"19.2\" \"18.8\"\n##  [91] \"18\"   \"18.1\" \"17.1\" \"18.1\" \"17.3\" \"18.9\" \"18.6\" \"18.5\" \"16.1\" \"18.5\"\n## [101] \"17.9\" \"20\"   \"16\"   \"20\"   \"18.6\" \"18.9\" \"17.2\" \"20\"   \"17\"   \"19\"  \n## [111] \"16.5\" \"20.3\" \"17.7\" \"19.5\" \"20.7\" \"18.3\" \"17\"   \"20.5\" \"17\"   \"18.6\"\n## [121] \"17.2\" \"19.8\" \"17\"   \"18.5\" \"15.9\" \"19\"   \"17.6\" \"18.3\" \"17.1\" \"18\"  \n## [131] \"17.9\" \"19.2\" \"18.5\" \"18.5\" \"17.6\" \"17.5\" \"17.5\" \"20.1\" \"16.5\" \"17.9\"\n## [141] \"17.1\" \"17.2\" \"15.5\" \"17\"   \"16.8\" \"18.7\" \"18.6\" \"18.4\" \"17.8\" \"18.1\"\n## [151] \"17.1\" \"18.5\" \"13.2\" \"16.3\" \"14.1\" \"15.2\" \"14.5\" \"13.5\" \"14.6\" \"15.3\"\n## [161] \"13.4\" \"15.4\" \"13.7\" \"16.1\" \"13.7\" \"14.6\" \"14.6\" \"15.7\" \"13.5\" \"15.2\"\n## [171] \"14.5\" \"15.1\" \"14.3\" \"14.5\" \"14.5\" \"15.8\" \"13.1\" \"15.1\" \"14.3\" \"15\"  \n## [181] \"14.3\" \"15.3\" \"15.3\" \"14.2\" \"14.5\" \"17\"   \"14.8\" \"16.3\" \"13.7\" \"17.3\"\n## [191] \"13.6\" \"15.7\" \"13.7\" \"16\"   \"13.7\" \"15\"   \"15.9\" \"13.9\" \"13.9\" \"15.9\"\n## [201] \"13.3\" \"15.8\" \"14.2\" \"14.1\" \"14.4\" \"15\"   \"14.4\" \"15.4\" \"13.9\" \"15\"  \n## [211] \"14.5\" \"15.3\" \"13.8\" \"14.9\" \"13.9\" \"15.7\" \"14.2\" \"16.8\" \"14.4\" \"16.2\"\n## [221] \"14.2\" \"15\"   \"15\"   \"15.6\" \"15.6\" \"14.8\" \"15\"   \"16\"   \"14.2\" \"16.3\"\n## [231] \"13.8\" \"16.4\" \"14.5\" \"15.6\" \"14.6\" \"15.9\" \"13.8\" \"17.3\" \"14.4\" \"14.2\"\n## [241] \"14\"   \"17\"   \"15\"   \"17.1\" \"14.5\" \"16.1\" \"14.7\" \"15.7\" \"15.8\" \"14.6\"\n## [251] \"14.4\" \"16.5\" \"15\"   \"17\"   \"15.5\" \"15\"   \"13.8\" \"16.1\" \"14.7\" \"15.8\"\n## [261] \"14\"   \"15.1\" \"15.2\" \"15.9\" \"15.2\" \"16.3\" \"14.1\" \"16\"   \"15.7\" \"16.2\"\n## [271] \"13.7\" NA     \"14.3\" \"15.7\" \"14.8\" \"16.1\" \"17.9\" \"19.5\" \"19.2\" \"18.7\"\n## [281] \"19.8\" \"17.8\" \"18.2\" \"18.2\" \"18.9\" \"19.9\" \"17.8\" \"20.3\" \"17.3\" \"18.1\"\n## [291] \"17.1\" \"19.6\" \"20\"   \"17.8\" \"18.6\" \"18.2\" \"17.3\" \"17.5\" \"16.6\" \"19.4\"\n## [301] \"17.9\" \"19\"   \"18.4\" \"19\"   \"17.8\" \"20\"   \"16.6\" \"20.8\" \"16.7\" \"18.8\"\n## [311] \"18.6\" \"16.8\" \"18.3\" \"20.7\" \"16.6\" \"19.9\" \"19.5\" \"17.5\" \"19.1\" \"17\"  \n## [321] \"17.9\" \"18.5\" \"17.9\" \"19.6\" \"18.7\" \"17.3\" \"16.4\" \"19\"   \"17.3\" \"19.7\"\n## [331] \"17.3\" \"18.8\" \"16.6\" \"19.9\" \"18.8\" \"19.4\" \"19.5\" \"16.5\" \"17\"   \"19.8\"\n## [341] \"18.1\" \"18.2\" \"19\"   \"18.7\""
+    "text": "Types of Values\nIn scratchpad script / console\n \nTo evaluate the type of values in a column you can use typeof()\n\ntypeof(data_import$bill_depth_mm)\n## [1] \"double\"\ntypeof(data_import$flipper_length_mm)\n## [1] \"integer\"\n\n \nTo change the class of values in an object you can use as.character() , as.numeric() , as.double() , as.integer() , as.logical() functions.\n\nas.character(data_import$bill_depth_mm)\n##   [1] \"18.7\" \"17.4\" \"18\"   NA     \"19.3\" \"20.6\" \"17.8\" \"19.6\" \"18.1\" \"20.2\"\n##  [11] \"17.1\" \"17.3\" \"17.6\" \"21.2\" \"21.1\" \"17.8\" \"19\"   \"20.7\" \"18.4\" \"21.5\"\n##  [21] \"18.3\" \"18.7\" \"19.2\" \"18.1\" \"17.2\" \"18.9\" \"18.6\" \"17.9\" \"18.6\" \"18.9\"\n##  [31] \"16.7\" \"18.1\" \"17.8\" \"18.9\" \"17\"   \"21.1\" \"20\"   \"18.5\" \"19.3\" \"19.1\"\n##  [41] \"18\"   \"18.4\" \"18.5\" \"19.7\" \"16.9\" \"18.8\" \"19\"   \"18.9\" \"17.9\" \"21.2\"\n##  [51] \"17.7\" \"18.9\" \"17.9\" \"19.5\" \"18.1\" \"18.6\" \"17.5\" \"18.8\" \"16.6\" \"19.1\"\n##  [61] \"16.9\" \"21.1\" \"17\"   \"18.2\" \"17.1\" \"18\"   \"16.2\" \"19.1\" \"16.6\" \"19.4\"\n##  [71] \"19\"   \"18.4\" \"17.2\" \"18.9\" \"17.5\" \"18.5\" \"16.8\" \"19.4\" \"16.1\" \"19.1\"\n##  [81] \"17.2\" \"17.6\" \"18.8\" \"19.4\" \"17.8\" \"20.3\" \"19.5\" \"18.6\" \"19.2\" \"18.8\"\n##  [91] \"18\"   \"18.1\" \"17.1\" \"18.1\" \"17.3\" \"18.9\" \"18.6\" \"18.5\" \"16.1\" \"18.5\"\n## [101] \"17.9\" \"20\"   \"16\"   \"20\"   \"18.6\" \"18.9\" \"17.2\" \"20\"   \"17\"   \"19\"  \n## [111] \"16.5\" \"20.3\" \"17.7\" \"19.5\" \"20.7\" \"18.3\" \"17\"   \"20.5\" \"17\"   \"18.6\"\n## [121] \"17.2\" \"19.8\" \"17\"   \"18.5\" \"15.9\" \"19\"   \"17.6\" \"18.3\" \"17.1\" \"18\"  \n## [131] \"17.9\" \"19.2\" \"18.5\" \"18.5\" \"17.6\" \"17.5\" \"17.5\" \"20.1\" \"16.5\" \"17.9\"\n## [141] \"17.1\" \"17.2\" \"15.5\" \"17\"   \"16.8\" \"18.7\" \"18.6\" \"18.4\" \"17.8\" \"18.1\"\n## [151] \"17.1\" \"18.5\" \"13.2\" \"16.3\" \"14.1\" \"15.2\" \"14.5\" \"13.5\" \"14.6\" \"15.3\"\n## [161] \"13.4\" \"15.4\" \"13.7\" \"16.1\" \"13.7\" \"14.6\" \"14.6\" \"15.7\" \"13.5\" \"15.2\"\n## [171] \"14.5\" \"15.1\" \"14.3\" \"14.5\" \"14.5\" \"15.8\" \"13.1\" \"15.1\" \"14.3\" \"15\"  \n## [181] \"14.3\" \"15.3\" \"15.3\" \"14.2\" \"14.5\" \"17\"   \"14.8\" \"16.3\" \"13.7\" \"17.3\"\n## [191] \"13.6\" \"15.7\" \"13.7\" \"16\"   \"13.7\" \"15\"   \"15.9\" \"13.9\" \"13.9\" \"15.9\"\n## [201] \"13.3\" \"15.8\" \"14.2\" \"14.1\" \"14.4\" \"15\"   \"14.4\" \"15.4\" \"13.9\" \"15\"  \n## [211] \"14.5\" \"15.3\" \"13.8\" \"14.9\" \"13.9\" \"15.7\" \"14.2\" \"16.8\" \"14.4\" \"16.2\"\n## [221] \"14.2\" \"15\"   \"15\"   \"15.6\" \"15.6\" \"14.8\" \"15\"   \"16\"   \"14.2\" \"16.3\"\n## [231] \"13.8\" \"16.4\" \"14.5\" \"15.6\" \"14.6\" \"15.9\" \"13.8\" \"17.3\" \"14.4\" \"14.2\"\n## [241] \"14\"   \"17\"   \"15\"   \"17.1\" \"14.5\" \"16.1\" \"14.7\" \"15.7\" \"15.8\" \"14.6\"\n## [251] \"14.4\" \"16.5\" \"15\"   \"17\"   \"15.5\" \"15\"   \"13.8\" \"16.1\" \"14.7\" \"15.8\"\n## [261] \"14\"   \"15.1\" \"15.2\" \"15.9\" \"15.2\" \"16.3\" \"14.1\" \"16\"   \"15.7\" \"16.2\"\n## [271] \"13.7\" NA     \"14.3\" \"15.7\" \"14.8\" \"16.1\" \"17.9\" \"19.5\" \"19.2\" \"18.7\"\n## [281] \"19.8\" \"17.8\" \"18.2\" \"18.2\" \"18.9\" \"19.9\" \"17.8\" \"20.3\" \"17.3\" \"18.1\"\n## [291] \"17.1\" \"19.6\" \"20\"   \"17.8\" \"18.6\" \"18.2\" \"17.3\" \"17.5\" \"16.6\" \"19.4\"\n## [301] \"17.9\" \"19\"   \"18.4\" \"19\"   \"17.8\" \"20\"   \"16.6\" \"20.8\" \"16.7\" \"18.8\"\n## [311] \"18.6\" \"16.8\" \"18.3\" \"20.7\" \"16.6\" \"19.9\" \"19.5\" \"17.5\" \"19.1\" \"17\"  \n## [321] \"17.9\" \"18.5\" \"17.9\" \"19.6\" \"18.7\" \"17.3\" \"16.4\" \"19\"   \"17.3\" \"19.7\"\n## [331] \"17.3\" \"18.8\" \"16.6\" \"19.9\" \"18.8\" \"19.4\" \"19.5\" \"16.5\" \"17\"   \"19.8\"\n## [341] \"18.1\" \"18.2\" \"19\"   \"18.7\""
   },
   {
     "objectID": "slides/slides-class-1.html#factors",
     "href": "slides/slides-class-1.html#factors",
     "title": "An Introduction to Working with Data in R",
     "section": "Factors",
-    "text": "Factors\n \n\ntypeof(data_import$species)\n## [1] \"integer\"\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo\nis.factor(data_import$species)\n## [1] TRUE\n\n \n\n\nFactors are a special type of column that represent levels of a category with an order to those levels.\nThe actual values in Factors can be of type character, double, integer, or logical.\nFactors become especially important in data visualization and statistical analysis."
+    "text": "Factors\nIn scratchpad script / console\n \n\ntypeof(data_import$species)\n## [1] \"integer\"\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo\nis.factor(data_import$species)\n## [1] TRUE\n\n \n\n\nFactors are a special type of column that represent levels of a category with an order to those levels.\nThe actual values in Factors can be of type character, double, integer, or logical.\nFactors become especially important in data visualization and statistical analysis."
   },
   {
     "objectID": "slides/slides-class-1.html#creating-factors",
     "href": "slides/slides-class-1.html#creating-factors",
     "title": "An Introduction to Working with Data in R",
     "section": "Creating Factors",
-    "text": "Creating Factors\n \nYou can set a column of values as a factor by using factor()\n\nfactor(data_import$year, levels = c(2007, 2008, 2009))"
+    "text": "Creating Factors\nIn scratchpad script / console\n \nYou can set a column of values as a factor by using factor()\n\nfactor(data_import$year, levels = c(2007, 2008, 2009))"
   },
   {
     "objectID": "slides/slides-class-1.html#palmerpenguins",
@@ -543,7 +543,7 @@
     "href": "slides/slides-class-1.html#data-transformation-1",
     "title": "An Introduction to Working with Data in R",
     "section": "Data Transformation",
-    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
   },
   {
     "objectID": "slides/slides-class-1.html#data-transformation-2",
@@ -564,7 +564,7 @@
     "href": "slides/slides-class-1.html#ggplot2",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2",
-    "text": "ggplot2\n \n\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
+    "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2-1",
@@ -578,27 +578,34 @@
     "href": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2 - data and aesthetics layer",
-    "text": "ggplot2 - data and aesthetics layer\n \n\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))"
+    "text": "ggplot2 - data and aesthetics layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2---geometries-layer",
     "href": "slides/slides-class-1.html#ggplot2---geometries-layer",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2 - geometries layer",
-    "text": "ggplot2 - geometries layer\n \n\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
+    "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2---theme",
     "href": "slides/slides-class-1.html#ggplot2---theme",
     "title": "An Introduction to Working with Data in R",
     "section": "ggplot2 - theme",
-    "text": "ggplot2 - theme\n \n\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
+    "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
   },
   {
     "objectID": "slides/slides-class-1.html#correlation",
     "href": "slides/slides-class-1.html#correlation",
     "title": "An Introduction to Working with Data in R",
     "section": "Correlation",
-    "text": "Correlation\n \n\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n## \n##  Pearson's product-moment correlation\n## \n## data:  data_import$body_mass_g and data_import$flipper_length_mm\n## t = 32.722, df = 340, p-value &lt; 2.2e-16\n## alternative hypothesis: true correlation is not equal to 0\n## 95 percent confidence interval:\n##  0.843041 0.894599\n## sample estimates:\n##       cor \n## 0.8712018"
+    "text": "Correlation\n \n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n## \n##  Pearson's product-moment correlation\n## \n## data:  data_import$body_mass_g and data_import$flipper_length_mm\n## t = 32.722, df = 340, p-value &lt; 2.2e-16\n## alternative hypothesis: true correlation is not equal to 0\n## 95 percent confidence interval:\n##  0.843041 0.894599\n## sample estimates:\n##       cor \n## 0.8712018"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#class-1-reproducible-script",
+    "href": "slides/slides-class-1.html#class-1-reproducible-script",
+    "title": "An Introduction to Working with Data in R",
+    "section": "Class 1: Reproducible Script",
+    "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)"
   }
 ]
