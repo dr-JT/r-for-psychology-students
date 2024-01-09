@@ -25,14 +25,14 @@ Before starting this class:
 
 📘 [Class 1: An Introduction to Working with Data in R](/lectures/lectures-class-1.html){target="_blank"}
 
-🖥️ [Slides - Full Screen](/_site/slides/slides-class-1.html){target="_blank"}
+🖥️ [Slides - Full Screen](/slides/slides-class-1.html){target="_blank"}
 
 Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="/_site/slides/slides-class-1.html"></iframe>
+<iframe class="slide-deck" src="/slides/slides-class-1.html"></iframe>
 ```
 
 </div>
