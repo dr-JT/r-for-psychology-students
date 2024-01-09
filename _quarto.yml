@@ -6,7 +6,7 @@ website:
   title: "R for the Psychology Student"
   page-navigation: true
   description: "Intro to R Course"
-  site-url: ""
+  site-url: "https://dr-jt.github.io/r-for-psychology-students/"
   
   sidebar:
     background: "#4676a3"
