@@ -32,18 +32,14 @@ and more
 
 Class 2 - Importing and Restructuring Data
 
-Class 3 - Data Transformation I
+Class 3 - Data Transformation
 
-Class 4 - Data Transformation II
+Class 4 - Data Visualization
 
-Class 5 - Data Visualization I
+Class 5 - Projects and Reproducible Workflows
 
-Class 6 - Data Visualization II
+Class 6 - Quarto Documents
 
-Class 7 - Projects and Reproducible Workflows
+Class 7 - Statistical Analysis: Regression
 
-Class 8 - Quarto Documents, Descriptive Statistics, and Visualization
-
-Class 9 - Statistical Analysis: Regression
-
-Class 10 - Statistical Analysis: ANOVA
+Class 8 - Statistical Analysis: ANOVA
