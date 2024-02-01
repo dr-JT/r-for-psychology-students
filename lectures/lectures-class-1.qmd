@@ -169,6 +169,9 @@ The `library()` function to load packages, however, is a necessary step for proc
 Load `palmerpenguins` , `dplyr` , and `ggplot2` packages. We will use `dplyr` to do some simple transformation of the data and `ggplot2` to visualize the data.
 
 ```{r}
+#| warning: false
+#| message: false
+
 # load packages
 library(palmerpenguins)
 library(dplyr)
