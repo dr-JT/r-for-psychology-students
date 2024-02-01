@@ -178,7 +178,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-When you load `palmerpenguins` there is a data frame now available in your environment called `penguins`. However, it is not explicitly listed in your environment because it can from a package and not something you created. This is not required, but for the sake of being able to see the data frame in the Environment window, let's assign the `penguins` data frame to a new data frame called `data_import`.
+When you load `palmerpenguins` there is a data frame now available in your environment called `penguins`. However, it is not explicitly listed in your environment because it came from a package and not something you created. This is not required, but for the sake of being able to see the data frame in the Environment window, let's assign the `penguins` data frame to a new data frame called `data_import`.
 
 ```{r}
 data_import <- penguins
