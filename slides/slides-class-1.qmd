@@ -356,6 +356,8 @@ Classes are types of values that exist in R. Here are a list of some common valu
 -   integer `5`, `99`
 
 -   logical `TRUE`, `FALSE`
+
+-   missing `NA` `NaN`
 :::
 
 ## Types of Values

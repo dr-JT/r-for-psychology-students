@@ -262,6 +262,8 @@ Classes are types of values that exist in R. Here are a list of some common valu
 
 -   logical `TRUE`, `FALSE`
 
+-   missing `NA` `NaN`
+
 To evaluate the type of values in a column you can use `typeof()`
 
 ```{r}
