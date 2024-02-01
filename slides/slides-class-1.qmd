@@ -94,11 +94,13 @@ Two ways of executing R code
 
  
 
-::: nonincremental
+::: incremental
 -   Objects are created using the assignment operator, `<-`.
 
 -   **object** \<- **functions** or **values**.
 :::
+
+. . .
 
 Go ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.
 
@@ -240,11 +242,13 @@ We will use a data set from the [palmerpenguins](https://allisonhorst.github.io/
 
  
 
-::: nonincremental
+::: incremental
 -   Let's create a new script - a reproducible script to use for this class
 
 -   You should always load packages at the top of the script
 :::
+
+. . .
 
 ```{r}
 #| code-line-numbers: 1-4|6-7
@@ -262,6 +266,8 @@ data_import <- penguins
 ```
 
  
+
+. . .
 
 ::: callout-note
 Commenting
