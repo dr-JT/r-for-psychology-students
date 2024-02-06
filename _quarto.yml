@@ -30,6 +30,8 @@ website:
         contents:
           - href: classes/class-1.qmd
             text: "Class 1"
+          - href: classes/class-2.qmd
+            text: "Class 2"
     
 format:
   html:

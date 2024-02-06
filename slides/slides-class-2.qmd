@@ -1,0 +1,663 @@
+---
+title: "Class 2"
+subtitle: "Importing, Merging, and Restructuring Data"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    controls: true
+    embed-resources: true
+    incremental: true
+    smaller: false
+    slide-number: c
+    progress: true
+    preview-links: true
+    menu: false
+    auto-stretch: false
+    date-format: long
+    highlight-style: github
+    code-line-numbers: false
+---
+
+## Prepare
+
+ 
+
+Before starting this class
+
+📖 Read the [Prerequisites](/prerequisites.html){target="_blank"} page
+
+ 
+
+#### Outline
+
+::: nonincremental
+-   R Basics
+
+-   Data Frames
+
+-   Brief intro to
+
+    -   Data transformation
+
+    -   Graphical visualization
+
+    -   Statistical analysis
+:::
+
+# R Basics
+
+## Script Files
+
+ 
+
+To create a new R script go to
+
+**File** -\> **New File** -\> **R Script**
+
+ 
+
+This course will refer to two types of R script files:
+
+-   **Reproducible script file**: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.
+
+    -   This is the file you actually save to process your data
+
+    -   Is commented and polished enough to share with others.
+
+<!-- -->
+
+-   **Scratchpad script file**: A script file for testing, debugging, and exploring your data.
+
+    -   Often saved as **Untitled.R** or not saved at all
+    -   Alternatively, you can just execute code directly in the console
+
+## Running R Code {#sec-running-r-code}
+
+Two ways of executing R code
+
+ 
+
+::: nonincremental
+1.  Typing code in an R script file and executing R code line-by-line `Ctrl + Enter.`
+2.  Typing code directly in the console window
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+1 + 2
+3 * 9
+```
+
+## Creating R Objects {#sec-creating-r-objects}
+
+ 
+
+::: incremental
+-   Objects are created using the assignment operator, `<-`.
+
+-   **object** \<- **functions** or **values**.
+:::
+
+. . .
+
+Go ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+my_first_object <- "hello"
+my_second_object <- c(5,6,7,8)
+```
+
+ 
+
+::: nonincremental
+-   You should now see `my_first_object` and `my_second_object` in your Environment window
+
+-   Note that R is case sensitive
+:::
+
+## Using Functions {#sec-using-functions}
+
+Anything you do in R is by using functions
+
+ 
+
+::: nonincremental
+-   Learning R is learning what functions are available and how to use them.
+
+-   Example: there is a function to create a sequence of numbers, `seq()`.
+:::
+
+```{r}
+#| collapse: true
+#| eval: false
+#| echo: true
+
+seq(1, 100, by = 10)
+```
+
+ 
+
+. . .
+
+::: nonincremental
+-   Functions take arguments
+
+-   If you don't label argument names, then the order of arguments matters!
+:::
+
+```{r}
+#| collapse: true
+#| eval: false
+#| echo: true
+
+seq(from = 1, to = 100, by = 10)
+seq(to = 100, by = 10, from = 1)
+seq(1, 100, 10)
+```
+
+## Helper Function
+
+`?function_name()`
+
+ 
+
+-   You should make frequent use of the helper function `?`
+
+    -   e.g., `?seq()`
+
+-   The names of arguments
+
+-   What the arguments do
+
+-   Argument default values
+
+    -   You don't have to and you almost never will specify all the possible arguments.
+
+    -   In some cases it might be important to know what the default value of an argument is.
+
+## R Packages
+
+ 
+
+-   Functions are organized in R packages
+
+-   R comes with a set of R packages and functions
+
+-   Developers and other researchers have created a lot of R packages specifically for use in psychology research
+
+-   Most R packages are hosted on The Comprehensive R Archive Network - **CRAN**.
+
+    -   Others may be hosted on **GitHub**
+
+## Install and Load Packages
+
+ 
+
+To install packages from **CRAN** is easy
+
+```{r}
+#| collapse: true
+#| eval: false
+#| echo: true
+
+install.packages("dplyr")
+
+```
+
+ 
+
+-   Installing the package installs it on your computer
+
+-   When you want to use the functions in the package you need to **load** the package into your current environment
+
+. . .
+
+```{r}
+#| collapse: true
+#| eval: false
+#| echo: true
+
+library(dplyr)
+
+```
+
+# Data Frames
+
+## Example Data Set
+
+We will use a data set from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html) package
+
+ 
+
+![](images/lter_penguins.png){fig-align="center" width="849"}
+
+## Data Frames
+
+ 
+
+::: incremental
+-   Let's create a new script - a reproducible script to use for this class
+
+-   You should always load packages at the top of the script
+:::
+
+. . .
+
+```{r}
+#| code-line-numbers: 1-4|6-7
+#| collapse: true
+#| echo: true
+
+# load packages
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+
+# import data
+data_import <- penguins
+
+```
+
+ 
+
+. . .
+
+::: callout-note
+Commenting
+
+It is a good idea to comment your code to provide organization and clarity as to what the code is doing
+:::
+
+## Viewing the Data
+
+In scratchpad script / console
+
+ 
+
+```{r}
+#| collapse: true
+#| eval: false
+#| echo: true
+
+View(data_import)
+
+```
+
+ 
+
+![](images/data_frame_view.png){fig-align="center" width="714"}
+
+## Viewing the Data
+
+In scratchpad script / console
+
+ 
+
+Get columns names
+
+```{r}
+#| collapse: true
+#| echo: true
+
+colnames(data_import)
+
+```
+
+ 
+
+Sneak peak of data
+
+```{r}
+#| collapse: true
+#| echo: true
+
+head(data_import)
+
+```
+
+## Viewing the Data
+
+In scratchpad script / console
+
+ 
+
+::: nonincremental
+-   Use `$` to refer to a column in a data frame
+:::
+
+Get unique values in a column
+
+```{r}
+#| collapse: true
+#| echo: true
+
+unique(data_import$species)
+
+```
+
+## Types of Values
+
+ 
+
+Classes are types of values that exist in R. Here are a list of some common value types:
+
+::: nonincremental
+-   character (or non-numeric) `"hello"`, `"goodbye"`
+
+-   double (or numeric) `2`, `32.55`
+
+-   integer `5`, `99`
+
+-   logical `TRUE`, `FALSE`
+
+-   missing `NA` `NaN`
+:::
+
+## Types of Values
+
+In scratchpad script / console
+
+ 
+
+To evaluate the type of values in a column you can use `typeof()`
+
+```{r}
+#| collapse: true
+#| echo: true
+
+typeof(data_import$bill_depth_mm)
+typeof(data_import$flipper_length_mm)
+```
+
+ 
+
+To change the class of values in an object you can use `as.character()` , `as.numeric()` , `as.double()` , `as.integer()` , `as.logical()` functions.
+
+```{r}
+#| collapse: true
+#| echo: true
+
+as.character(data_import$bill_depth_mm)
+
+```
+
+## Factors
+
+In scratchpad script / console
+
+ 
+
+```{r}
+#| code-line-numbers: 1-2|3-5|6-7|3-5
+#| collapse: true
+#| echo: true
+
+typeof(data_import$species)
+unique(data_import$species)
+is.factor(data_import$species)
+```
+
+ 
+
+::: nonincremental
+-   Factors are a special type of column that represent levels of a category with an order to those levels.
+
+-   The actual values in Factors can be of type character, double, integer, or logical.
+
+-   Factors become especially important in data visualization and statistical analysis.
+:::
+
+## Creating Factors
+
+In scratchpad script / console
+
+ 
+
+You can set a column of values as a factor by using `factor()`
+
+```{r}
+#| collapse: true
+#| echo: true
+#| eval: false
+
+factor(data_import$year, levels = c(2007, 2008, 2009))
+```
+
+# Data Transformation
+
+## palmerpenguins
+
+ 
+
+Let's take a look at three variables
+
+-   species
+
+-   flipper length
+
+-   body mass
+
+## Data Transformation
+
+ 
+
+::: nonincremental
+-   Compute the mean **flipper length** and **body mass** for each **species** of penguin
+:::
+
+```{r}
+#| collapse: true
+#| echo: true
+
+# transform data
+data_plot <- data_import |>
+  mutate(.by = species,
+         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
+         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))
+```
+
+ 
+
+. . .
+
+::: nonincremental
+-   Strategy: Stay in the data frame!
+
+    -   Store variables and computations in columns in the data frame
+:::
+
+. . .
+
+Not advised
+
+```{r}
+#| collapse: true
+#| echo: true
+#| eval: false
+
+flipper_length_mm.mean <- mean(data_import$flipper_length_mm, na.rm = TRUE)
+body_mass_g.mean <- mean(data_import$body_mass_g, na.rm = TRUE)
+```
+
+## Data Transformation
+
+ 
+
+::: nonincremental
+-   Compute the mean **flipper length** and **body mass** for each **species** of penguin
+:::
+
+```{r}
+#| code-line-numbers: "1"
+#| collapse: true
+#| echo: true
+
+data_plot <- data_import |>
+  mutate(.by = species,
+         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
+         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))
+```
+
+ 
+
+-   The `|>` notation says pass `data_import` into the `mutate()` function
+
+-   Then the result of `mutate()` is assigned to a new object, `data_plot`
+
+## Data Transformation
+
+ 
+
+::: nonincremental
+-   Compute the mean **flipper length** and **body mass** for each **species** of penguin
+:::
+
+```{r}
+#| code-line-numbers: 2-4
+#| collapse: true
+#| echo: true
+
+data_plot <- data_import |>
+  mutate(.by = species,
+         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
+         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))
+```
+
+<br>
+
+```{r}
+#| collapse: true
+#| echo: true
+#| eval: false
+
+View(data_plot)
+```
+
+# Visualizing Data
+
+## ggplot2 - data and aesthetics layer
+
+ 
+
+```{r}
+#| collapse: true
+#| echo: true
+#| fig-height: 4
+#| fig-width: 6
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species))
+
+```
+
+## ggplot2 - geometries layer
+
+ 
+
+```{r}
+#| collapse: true
+#| echo: true
+#| fig-height: 4
+#| fig-width: 6
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species)) +
+  geom_point()
+
+```
+
+## ggplot2 - theme
+
+ 
+
+```{r}
+#| collapse: true
+#| echo: true
+#| fig-height: 4
+#| fig-width: 6
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species)) +
+  geom_point() +
+  theme_classic()
+
+```
+
+## ggplot2
+
+ 
+
+```{r}
+#| collapse: true
+#| echo: true
+#| fig-height: 4
+#| fig-width: 6
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species)) +
+  geom_point() +
+  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +
+  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +
+  theme_classic()
+
+```
+
+# Statistical Analysis
+
+## Correlation
+
+ 
+
+```{r}
+#| collapse: true
+#| echo: true
+
+# statistical analysis
+cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
+```
+
+## Class 1: Reproducible Script
+
+ 
+
+```{r}
+#| eval: false
+#| echo: true
+
+# load packages
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+
+# import data
+data_import <- penguins
+
+# transform data
+data_plot <- data_import |>
+  mutate(.by = species,
+         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),
+         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))
+
+# visualize data
+ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
+                      color = species, shape = species)) +
+  geom_point() +
+  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +
+  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +
+  theme_classic()
+
+# statistical analysis
+cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
+
+```

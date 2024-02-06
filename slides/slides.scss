@@ -74,6 +74,21 @@ h1.title {
 	font-size: 1.9em;
 }
 
+h1.title:after {
+    /* Styles for title's horizontal line when subtitle is absent */
+    content: "";
+    display: block;
+    border: none;
+    background-color: #808080;
+    color: #808080;
+    height: 1.5px;
+    margin: 30px 0 30px 0;
+}
+
+p.subtitle {
+	font-size: 1.2em;
+}
+
 .quarto-title-author-name {
 	text-shadow: none !important;
 	font-weight: 600 !important;

@@ -1,6 +1,6 @@
 ---
-title: "An Introduction to Working with Data in R"
-subtitle: "Class 1"
+title: "Class 1"
+subtitle: "An Introduction to Working with Data in R"
 format:
   revealjs:
     theme: [default, slides.scss]

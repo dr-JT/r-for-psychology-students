@@ -30,7 +30,7 @@ and more
 
 [Class 1](/classes/class-1.html) - An Introduction to Working with Data in R
 
-Class 2 - Importing, Merging, and Restructuring Data
+[Class 2](/classes/class-2.html) - Importing, Merging, and Restructuring Data
 
 Class 3 - Data Transformation
 

@@ -4,7 +4,7 @@
     "href": "lectures/lectures-class-2.html",
     "title": "Class 2: Importing, Merging, and Restructuring Data",
     "section": "",
-    "text": "Whenever you need to work with data in R, the first step is to import the data. This step requires knowing something about where the data file is stored on your computer, what format the data file is saved in, what kind of data it contains, and more. It can be more complicated than it seems. There are also big no-no’s for importing data when it comes to writing reproducible scripts that are used way too often. In this class, you will learn all this about importing data in addition to how to merge multiple sets of data and how to restructure the way the data is formatted.\nThis course does not require that you already have experience with R, but it would greatly benefit you to have at least a basic understanding of how R works. In this first class we will only cover the bare bones that will be needed to get you started. For a more complete intro to the basics of R see the page on R Basics.\nAs you go through the classes in this course, I encourage you to experiment. If you are curious what happens if you write the code slightly differently, go ahead and try it out. See what happens. If it is not what you expected spend some time figuring out why."
+    "text": "We will cover importing data, merging data frames, and restructuring data in this class.\nIf you did not do so already… download the sample data files\nSave them wherever. Open up two R scripts and save them wherever"
   },
   {
     "objectID": "lectures/lectures-class-2.html#sec-new-script-file",
@@ -79,189 +79,189 @@
   {
     "objectID": "slides/slides-class-1.html#prepare",
     "href": "slides/slides-class-1.html#prepare",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Prepare",
     "text": "Prepare\n \nBefore starting this class:\n📖 Read the Prerequisites page\n \nOutline\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
   },
   {
     "objectID": "slides/slides-class-1.html#script-files",
     "href": "slides/slides-class-1.html#script-files",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Script Files",
     "text": "Script Files\n \nTo create a new R script go to\nFile -&gt; New File -&gt; R Script\n \nThis course will refer to two types of R script files:\n\nReproducible script file: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.\n\nThis is the file you actually save to process your data\nIs commented and polished enough to share with others.\n\n\n\n\nScratchpad script file: A script file for testing, debugging, and exploring your data.\n\nOften saved as Untitled.R or not saved at all\nAlternatively, you can just execute code directly in the console"
   },
   {
     "objectID": "slides/slides-class-1.html#sec-running-r-code",
     "href": "slides/slides-class-1.html#sec-running-r-code",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Running R Code",
     "text": "Running R Code\nTwo ways of executing R code\n \n\n\nTyping code in an R script file and executing R code line-by-line Ctrl + Enter.\nTyping code directly in the console window\n\n\n\n1 + 2\n3 * 9"
   },
   {
     "objectID": "slides/slides-class-1.html#sec-creating-r-objects",
     "href": "slides/slides-class-1.html#sec-creating-r-objects",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Creating R Objects",
     "text": "Creating R Objects\n \n\n\nObjects are created using the assignment operator, &lt;-.\nobject &lt;- functions or values.\n\n\n\nGo ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.\n \n\nmy_first_object &lt;- \"hello\"\nmy_second_object &lt;- c(5,6,7,8)\n\n \n\n\nYou should now see my_first_object and my_second_object in your Environment window\nNote that R is case sensitive"
   },
   {
     "objectID": "slides/slides-class-1.html#sec-using-functions",
     "href": "slides/slides-class-1.html#sec-using-functions",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Using Functions",
     "text": "Using Functions\nAnything you do in R is by using functions\n \n\n\nLearning R is learning what functions are available and how to use them.\nExample: there is a function to create a sequence of numbers, seq().\n\n\n\nseq(1, 100, by = 10)\n\n \n\n\n\nFunctions take arguments\nIf you don’t label argument names, then the order of arguments matters!\n\n\n\nseq(from = 1, to = 100, by = 10)\nseq(to = 100, by = 10, from = 1)\nseq(1, 100, 10)"
   },
   {
     "objectID": "slides/slides-class-1.html#helper-function",
     "href": "slides/slides-class-1.html#helper-function",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Helper Function",
     "text": "Helper Function\n?function_name()\n \n\nYou should make frequent use of the helper function ?\n\ne.g., ?seq()\n\nThe names of arguments\nWhat the arguments do\nArgument default values\n\nYou don’t have to and you almost never will specify all the possible arguments.\nIn some cases it might be important to know what the default value of an argument is."
   },
   {
     "objectID": "slides/slides-class-1.html#r-packages",
     "href": "slides/slides-class-1.html#r-packages",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "R Packages",
     "text": "R Packages\n \n\nFunctions are organized in R packages\nR comes with a set of R packages and functions\nDevelopers and other researchers have created a lot of R packages specifically for use in psychology research\nMost R packages are hosted on The Comprehensive R Archive Network - CRAN.\n\nOthers may be hosted on GitHub"
   },
   {
     "objectID": "slides/slides-class-1.html#install-and-load-packages",
     "href": "slides/slides-class-1.html#install-and-load-packages",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Install and Load Packages",
     "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
   },
   {
     "objectID": "slides/slides-class-1.html#example-data-set",
     "href": "slides/slides-class-1.html#example-data-set",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Example Data Set",
     "text": "Example Data Set\nWe will use a data set from the palmerpenguins package"
   },
   {
     "objectID": "slides/slides-class-1.html#data-frames-1",
     "href": "slides/slides-class-1.html#data-frames-1",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Data Frames",
     "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
   },
   {
     "objectID": "slides/slides-class-1.html#viewing-the-data",
     "href": "slides/slides-class-1.html#viewing-the-data",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Viewing the Data",
     "text": "Viewing the Data\nIn scratchpad script / console\n \n\nView(data_import)"
   },
   {
     "objectID": "slides/slides-class-1.html#viewing-the-data-1",
     "href": "slides/slides-class-1.html#viewing-the-data-1",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Viewing the Data",
     "text": "Viewing the Data\nIn scratchpad script / console\n \nGet columns names\n\ncolnames(data_import)\n## [1] \"species\"           \"island\"            \"bill_length_mm\"   \n## [4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n## [7] \"sex\"               \"year\"\n\n \nSneak peak of data\n\nhead(data_import)\n## # A tibble: 6 × 8\n##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n## 1 Adelie  Torgersen           39.1          18.7               181        3750\n## 2 Adelie  Torgersen           39.5          17.4               186        3800\n## 3 Adelie  Torgersen           40.3          18                 195        3250\n## 4 Adelie  Torgersen           NA            NA                  NA          NA\n## 5 Adelie  Torgersen           36.7          19.3               193        3450\n## 6 Adelie  Torgersen           39.3          20.6               190        3650\n## # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;"
   },
   {
     "objectID": "slides/slides-class-1.html#viewing-the-data-2",
     "href": "slides/slides-class-1.html#viewing-the-data-2",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Viewing the Data",
     "text": "Viewing the Data\nIn scratchpad script / console\n \n\n\nUse $ to refer to a column in a data frame\n\n\nGet unique values in a column\n\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo"
   },
   {
     "objectID": "slides/slides-class-1.html#types-of-values",
     "href": "slides/slides-class-1.html#types-of-values",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Types of Values",
     "text": "Types of Values\n \nClasses are types of values that exist in R. Here are a list of some common value types:\n\n\ncharacter (or non-numeric) \"hello\", \"goodbye\"\ndouble (or numeric) 2, 32.55\ninteger 5, 99\nlogical TRUE, FALSE\nmissing NA NaN"
   },
   {
     "objectID": "slides/slides-class-1.html#types-of-values-1",
     "href": "slides/slides-class-1.html#types-of-values-1",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Types of Values",
     "text": "Types of Values\nIn scratchpad script / console\n \nTo evaluate the type of values in a column you can use typeof()\n\ntypeof(data_import$bill_depth_mm)\n## [1] \"double\"\ntypeof(data_import$flipper_length_mm)\n## [1] \"integer\"\n\n \nTo change the class of values in an object you can use as.character() , as.numeric() , as.double() , as.integer() , as.logical() functions.\n\nas.character(data_import$bill_depth_mm)\n##   [1] \"18.7\" \"17.4\" \"18\"   NA     \"19.3\" \"20.6\" \"17.8\" \"19.6\" \"18.1\" \"20.2\"\n##  [11] \"17.1\" \"17.3\" \"17.6\" \"21.2\" \"21.1\" \"17.8\" \"19\"   \"20.7\" \"18.4\" \"21.5\"\n##  [21] \"18.3\" \"18.7\" \"19.2\" \"18.1\" \"17.2\" \"18.9\" \"18.6\" \"17.9\" \"18.6\" \"18.9\"\n##  [31] \"16.7\" \"18.1\" \"17.8\" \"18.9\" \"17\"   \"21.1\" \"20\"   \"18.5\" \"19.3\" \"19.1\"\n##  [41] \"18\"   \"18.4\" \"18.5\" \"19.7\" \"16.9\" \"18.8\" \"19\"   \"18.9\" \"17.9\" \"21.2\"\n##  [51] \"17.7\" \"18.9\" \"17.9\" \"19.5\" \"18.1\" \"18.6\" \"17.5\" \"18.8\" \"16.6\" \"19.1\"\n##  [61] \"16.9\" \"21.1\" \"17\"   \"18.2\" \"17.1\" \"18\"   \"16.2\" \"19.1\" \"16.6\" \"19.4\"\n##  [71] \"19\"   \"18.4\" \"17.2\" \"18.9\" \"17.5\" \"18.5\" \"16.8\" \"19.4\" \"16.1\" \"19.1\"\n##  [81] \"17.2\" \"17.6\" \"18.8\" \"19.4\" \"17.8\" \"20.3\" \"19.5\" \"18.6\" \"19.2\" \"18.8\"\n##  [91] \"18\"   \"18.1\" \"17.1\" \"18.1\" \"17.3\" \"18.9\" \"18.6\" \"18.5\" \"16.1\" \"18.5\"\n## [101] \"17.9\" \"20\"   \"16\"   \"20\"   \"18.6\" \"18.9\" \"17.2\" \"20\"   \"17\"   \"19\"  \n## [111] \"16.5\" \"20.3\" \"17.7\" \"19.5\" \"20.7\" \"18.3\" \"17\"   \"20.5\" \"17\"   \"18.6\"\n## [121] \"17.2\" \"19.8\" \"17\"   \"18.5\" \"15.9\" \"19\"   \"17.6\" \"18.3\" \"17.1\" \"18\"  \n## [131] \"17.9\" \"19.2\" \"18.5\" \"18.5\" \"17.6\" \"17.5\" \"17.5\" \"20.1\" \"16.5\" \"17.9\"\n## [141] \"17.1\" \"17.2\" \"15.5\" \"17\"   \"16.8\" \"18.7\" \"18.6\" \"18.4\" \"17.8\" \"18.1\"\n## [151] \"17.1\" \"18.5\" \"13.2\" \"16.3\" \"14.1\" \"15.2\" \"14.5\" \"13.5\" \"14.6\" \"15.3\"\n## [161] \"13.4\" \"15.4\" \"13.7\" \"16.1\" \"13.7\" \"14.6\" \"14.6\" \"15.7\" \"13.5\" \"15.2\"\n## [171] \"14.5\" \"15.1\" \"14.3\" \"14.5\" \"14.5\" \"15.8\" \"13.1\" \"15.1\" \"14.3\" \"15\"  \n## [181] \"14.3\" \"15.3\" \"15.3\" \"14.2\" \"14.5\" \"17\"   \"14.8\" \"16.3\" \"13.7\" \"17.3\"\n## [191] \"13.6\" \"15.7\" \"13.7\" \"16\"   \"13.7\" \"15\"   \"15.9\" \"13.9\" \"13.9\" \"15.9\"\n## [201] \"13.3\" \"15.8\" \"14.2\" \"14.1\" \"14.4\" \"15\"   \"14.4\" \"15.4\" \"13.9\" \"15\"  \n## [211] \"14.5\" \"15.3\" \"13.8\" \"14.9\" \"13.9\" \"15.7\" \"14.2\" \"16.8\" \"14.4\" \"16.2\"\n## [221] \"14.2\" \"15\"   \"15\"   \"15.6\" \"15.6\" \"14.8\" \"15\"   \"16\"   \"14.2\" \"16.3\"\n## [231] \"13.8\" \"16.4\" \"14.5\" \"15.6\" \"14.6\" \"15.9\" \"13.8\" \"17.3\" \"14.4\" \"14.2\"\n## [241] \"14\"   \"17\"   \"15\"   \"17.1\" \"14.5\" \"16.1\" \"14.7\" \"15.7\" \"15.8\" \"14.6\"\n## [251] \"14.4\" \"16.5\" \"15\"   \"17\"   \"15.5\" \"15\"   \"13.8\" \"16.1\" \"14.7\" \"15.8\"\n## [261] \"14\"   \"15.1\" \"15.2\" \"15.9\" \"15.2\" \"16.3\" \"14.1\" \"16\"   \"15.7\" \"16.2\"\n## [271] \"13.7\" NA     \"14.3\" \"15.7\" \"14.8\" \"16.1\" \"17.9\" \"19.5\" \"19.2\" \"18.7\"\n## [281] \"19.8\" \"17.8\" \"18.2\" \"18.2\" \"18.9\" \"19.9\" \"17.8\" \"20.3\" \"17.3\" \"18.1\"\n## [291] \"17.1\" \"19.6\" \"20\"   \"17.8\" \"18.6\" \"18.2\" \"17.3\" \"17.5\" \"16.6\" \"19.4\"\n## [301] \"17.9\" \"19\"   \"18.4\" \"19\"   \"17.8\" \"20\"   \"16.6\" \"20.8\" \"16.7\" \"18.8\"\n## [311] \"18.6\" \"16.8\" \"18.3\" \"20.7\" \"16.6\" \"19.9\" \"19.5\" \"17.5\" \"19.1\" \"17\"  \n## [321] \"17.9\" \"18.5\" \"17.9\" \"19.6\" \"18.7\" \"17.3\" \"16.4\" \"19\"   \"17.3\" \"19.7\"\n## [331] \"17.3\" \"18.8\" \"16.6\" \"19.9\" \"18.8\" \"19.4\" \"19.5\" \"16.5\" \"17\"   \"19.8\"\n## [341] \"18.1\" \"18.2\" \"19\"   \"18.7\""
   },
   {
     "objectID": "slides/slides-class-1.html#factors",
     "href": "slides/slides-class-1.html#factors",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Factors",
     "text": "Factors\nIn scratchpad script / console\n \n\ntypeof(data_import$species)\n## [1] \"integer\"\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo\nis.factor(data_import$species)\n## [1] TRUE\n\n \n\n\nFactors are a special type of column that represent levels of a category with an order to those levels.\nThe actual values in Factors can be of type character, double, integer, or logical.\nFactors become especially important in data visualization and statistical analysis."
   },
   {
     "objectID": "slides/slides-class-1.html#creating-factors",
     "href": "slides/slides-class-1.html#creating-factors",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Creating Factors",
     "text": "Creating Factors\nIn scratchpad script / console\n \nYou can set a column of values as a factor by using factor()\n\nfactor(data_import$year, levels = c(2007, 2008, 2009))"
   },
   {
     "objectID": "slides/slides-class-1.html#palmerpenguins",
     "href": "slides/slides-class-1.html#palmerpenguins",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "palmerpenguins",
     "text": "palmerpenguins\n \nLet’s take a look at three variables\n\nspecies\nflipper length\nbody mass"
   },
   {
     "objectID": "slides/slides-class-1.html#data-transformation-1",
     "href": "slides/slides-class-1.html#data-transformation-1",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Data Transformation",
     "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
   },
   {
     "objectID": "slides/slides-class-1.html#data-transformation-2",
     "href": "slides/slides-class-1.html#data-transformation-2",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Data Transformation",
     "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\nThe |&gt; notation says pass data_import into the mutate() function\nThen the result of mutate() is assigned to a new object, data_plot"
   },
   {
     "objectID": "slides/slides-class-1.html#data-transformation-3",
     "href": "slides/slides-class-1.html#data-transformation-3",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Data Transformation",
     "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n\n\nView(data_plot)"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
     "href": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "ggplot2 - data and aesthetics layer",
     "text": "ggplot2 - data and aesthetics layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2---geometries-layer",
     "href": "slides/slides-class-1.html#ggplot2---geometries-layer",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "ggplot2 - geometries layer",
     "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2---theme",
     "href": "slides/slides-class-1.html#ggplot2---theme",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "ggplot2 - theme",
     "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
   },
   {
     "objectID": "slides/slides-class-1.html#ggplot2",
     "href": "slides/slides-class-1.html#ggplot2",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "ggplot2",
     "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
   },
   {
     "objectID": "slides/slides-class-1.html#correlation",
     "href": "slides/slides-class-1.html#correlation",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Correlation",
     "text": "Correlation\n \n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n## \n##  Pearson's product-moment correlation\n## \n## data:  data_import$body_mass_g and data_import$flipper_length_mm\n## t = 32.722, df = 340, p-value &lt; 2.2e-16\n## alternative hypothesis: true correlation is not equal to 0\n## 95 percent confidence interval:\n##  0.843041 0.894599\n## sample estimates:\n##       cor \n## 0.8712018"
   },
   {
     "objectID": "slides/slides-class-1.html#class-1-reproducible-script",
     "href": "slides/slides-class-1.html#class-1-reproducible-script",
-    "title": "An Introduction to Working with Data in R",
+    "title": "Class 1",
     "section": "Class 1: Reproducible Script",
     "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)"
   },
@@ -460,5 +460,266 @@
     "title": "Class 1: An Introduction to Working with Data in R",
     "section": "Class 1: Reproducible Script",
     "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n\n\nIn the rest of the course, we will go into greater depth on transforming data, graphical visualization, and statistical analysis."
+  },
+  {
+    "objectID": "lectures/lectures-class-2.html#importing",
+    "href": "lectures/lectures-class-2.html#importing",
+    "title": "Class 2: Importing, Merging, and Restructuring Data",
+    "section": "Importing",
+    "text": "Importing\nR needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an absolute file path. Absolute file paths start at the root directory of your computer and might look something like:\n\nOn Macs:\nUsers/username/projects/project_name/a_file.csv\nOn Windows:\nC:\\username\\projects\\project_name\\a_file.csv\n\nWhat if you don’t know the full absolute file path to your data?\nI want to point out three approaches to specifying file paths in R:\n\nUsing setwd()\nUsing the RStudio GUI Import Dataset window\nUsing RProjects and here()\n\nNever… ever… ever… use option 1, setwd().\nInstead, you should always use RProjects and here(). But we will not cover this until Class 5. For now, we can just use the RStudio GUI Import Dataset window to find the absolute file path.\n\nRStudio GUI\nWhen you are having difficulty importing a file correctly or unsure of the file format the RStudio Import GUI can be really useful.\nIn the Environment window click on “Import Dataset”. You will see several options available, these options all rely on different packages. For now, select the From Text (readr) option.\nYou will see a data import window open up that looks like this\n\n\n\n\n\n\nSelect Browse on the top right and select the data file you want to import.\nThe Data Preview window will let you see if it is importing it in the right format. You can change the Import Options below.\nYou might want to change the Name but you can always do this later in the R Script.\nClick on the 📋 icon above the Code Preview window to copy the code.\nClick on Cancel to exit out of the Import GUI window\nPaste the code into your Untitled.R script\n\nThe most useful thing here wil be the absolute file path.\n\n\n\n\n\n\n\n\nExploring Your Data\n\n\n\nWhen you want to just explore some data and don’t care about creating a reproducible script it can be perfectly acceptable to not copy and paste the code from Code Preview window and just select the Import button.\n\n\n\n\nCSV Files\ncsv files are by far the easiest files to import into R and most software programs. For this reason, I suggest any time you want to save/output a data file to your computer, do it in csv format.\n\n\n\n\n\n\nNote\n\n\n\nCSV stands for “Comma-Separated Values.” It’s a simple file format used to store data in a table. Each line in the file is a row of the table, and commas are used to separate columns. Think of it like a spreadsheet where each piece of information is lined up in rows and columns, but instead of seeing the grid like in Excel, each row is just a line of text with commas between the values that would go into different columns.\ncsv files are typically saved with .csv file extension (e.g., datafile.csv)\n\n\nTo import a csv file you can use read_csv() from the readr package.\n\nlibrary(readr)\n\nimport &lt;- read_csv(\"filepath/datafile.csv\")\n\nIn the Class_2.R script, import a_file.csv.\nWhen you import a file for the first time it is always a good idea to view it and spend some time getting to know it. Based on what you learned in Class 1, use View(), head(), colnames(), and/or unique() to better understand this data set.\n\n\nTab-Delimited Files\ntab-delimited files are a little more tedious to import just because they require specifying more arguments. Which means you have to memorize more to import tab-delimited files.\n\n\n\n\n\n\nNote\n\n\n\nTab-delimited files use tabs between items in a row to separate columns. In general, the delimiter is the type of value that is used between items in a row to separate columns. There are a lot of different types of delimiters with tab and comma (csv) being the most common.\nTab-delimited files are typically saved with the more standard .txt file extension (e.g., datafile.txt) but a lot of other file formats might also have the .txt extension. This can create some ambiguity as to how the data is stored and formatted for .txt files.\n\n\nTo import a tab-delimited file you can use read_delim() from the readr package.\n\nread_delim(\"filepath/datafile.txt\", delim = \"\\t\", \n           escape_double = FALSE, trim_ws = TRUE)\n\nThere are three additional arguments we have to specify: delim, escape_double, and trim_ws. The notation for tab-delimted files is \"\\t\". I always forget how to specify each of these arguments so I frequently use the RStudio Import Dataset GUI to copy the code needed to import a tab-delimited file."
+  },
+  {
+    "objectID": "classes/class-2.html",
+    "href": "classes/class-2.html",
+    "title": "Class 2",
+    "section": "",
+    "text": "The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html#prepare",
+    "href": "classes/class-2.html#prepare",
+    "title": "Class 2",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n📦 Install readr, dplyr, and tidyr packages\n⬇️ Download sample data files: a_file.csv and another_file.txt",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html#outline",
+    "href": "classes/class-2.html#outline",
+    "title": "Class 2",
+    "section": "Outline",
+    "text": "Outline\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nJoin vs. Bind\njoin_() functions\nbind_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html#class-materials",
+    "href": "classes/class-2.html#class-materials",
+    "title": "Class 2",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 2: Importing, Merging, and Restructuring Data\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "slides/slides-class-2.html#prepare",
+    "href": "slides/slides-class-2.html#prepare",
+    "title": "Class 2",
+    "section": "Prepare",
+    "text": "Prepare\n \nBefore starting this class\n📖 Read the Prerequisites page\n \nOutline\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#script-files",
+    "href": "slides/slides-class-2.html#script-files",
+    "title": "Class 2",
+    "section": "Script Files",
+    "text": "Script Files\n \nTo create a new R script go to\nFile -&gt; New File -&gt; R Script\n \nThis course will refer to two types of R script files:\n\nReproducible script file: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.\n\nThis is the file you actually save to process your data\nIs commented and polished enough to share with others.\n\n\n\n\nScratchpad script file: A script file for testing, debugging, and exploring your data.\n\nOften saved as Untitled.R or not saved at all\nAlternatively, you can just execute code directly in the console"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#sec-running-r-code",
+    "href": "slides/slides-class-2.html#sec-running-r-code",
+    "title": "Class 2",
+    "section": "Running R Code",
+    "text": "Running R Code\nTwo ways of executing R code\n \n\n\nTyping code in an R script file and executing R code line-by-line Ctrl + Enter.\nTyping code directly in the console window\n\n\n\n1 + 2\n3 * 9"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#sec-creating-r-objects",
+    "href": "slides/slides-class-2.html#sec-creating-r-objects",
+    "title": "Class 2",
+    "section": "Creating R Objects",
+    "text": "Creating R Objects\n \n\n\nObjects are created using the assignment operator, &lt;-.\nobject &lt;- functions or values.\n\n\n\nGo ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.\n \n\nmy_first_object &lt;- \"hello\"\nmy_second_object &lt;- c(5,6,7,8)\n\n \n\n\nYou should now see my_first_object and my_second_object in your Environment window\nNote that R is case sensitive"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#sec-using-functions",
+    "href": "slides/slides-class-2.html#sec-using-functions",
+    "title": "Class 2",
+    "section": "Using Functions",
+    "text": "Using Functions\nAnything you do in R is by using functions\n \n\n\nLearning R is learning what functions are available and how to use them.\nExample: there is a function to create a sequence of numbers, seq().\n\n\n\nseq(1, 100, by = 10)\n\n \n\n\n\nFunctions take arguments\nIf you don’t label argument names, then the order of arguments matters!\n\n\n\nseq(from = 1, to = 100, by = 10)\nseq(to = 100, by = 10, from = 1)\nseq(1, 100, 10)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#helper-function",
+    "href": "slides/slides-class-2.html#helper-function",
+    "title": "Class 2",
+    "section": "Helper Function",
+    "text": "Helper Function\n?function_name()\n \n\nYou should make frequent use of the helper function ?\n\ne.g., ?seq()\n\nThe names of arguments\nWhat the arguments do\nArgument default values\n\nYou don’t have to and you almost never will specify all the possible arguments.\nIn some cases it might be important to know what the default value of an argument is."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#r-packages",
+    "href": "slides/slides-class-2.html#r-packages",
+    "title": "Class 2",
+    "section": "R Packages",
+    "text": "R Packages\n \n\nFunctions are organized in R packages\nR comes with a set of R packages and functions\nDevelopers and other researchers have created a lot of R packages specifically for use in psychology research\nMost R packages are hosted on The Comprehensive R Archive Network - CRAN.\n\nOthers may be hosted on GitHub"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#install-and-load-packages",
+    "href": "slides/slides-class-2.html#install-and-load-packages",
+    "title": "Class 2",
+    "section": "Install and Load Packages",
+    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#example-data-set",
+    "href": "slides/slides-class-2.html#example-data-set",
+    "title": "Class 2",
+    "section": "Example Data Set",
+    "text": "Example Data Set\nWe will use a data set from the palmerpenguins package"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#data-frames-1",
+    "href": "slides/slides-class-2.html#data-frames-1",
+    "title": "Class 2",
+    "section": "Data Frames",
+    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#viewing-the-data",
+    "href": "slides/slides-class-2.html#viewing-the-data",
+    "title": "Class 2",
+    "section": "Viewing the Data",
+    "text": "Viewing the Data\nIn scratchpad script / console\n \n\nView(data_import)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#viewing-the-data-1",
+    "href": "slides/slides-class-2.html#viewing-the-data-1",
+    "title": "Class 2",
+    "section": "Viewing the Data",
+    "text": "Viewing the Data\nIn scratchpad script / console\n \nGet columns names\n\ncolnames(data_import)\n## [1] \"species\"           \"island\"            \"bill_length_mm\"   \n## [4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n## [7] \"sex\"               \"year\"\n\n \nSneak peak of data\n\nhead(data_import)\n## # A tibble: 6 × 8\n##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n## 1 Adelie  Torgersen           39.1          18.7               181        3750\n## 2 Adelie  Torgersen           39.5          17.4               186        3800\n## 3 Adelie  Torgersen           40.3          18                 195        3250\n## 4 Adelie  Torgersen           NA            NA                  NA          NA\n## 5 Adelie  Torgersen           36.7          19.3               193        3450\n## 6 Adelie  Torgersen           39.3          20.6               190        3650\n## # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#viewing-the-data-2",
+    "href": "slides/slides-class-2.html#viewing-the-data-2",
+    "title": "Class 2",
+    "section": "Viewing the Data",
+    "text": "Viewing the Data\nIn scratchpad script / console\n \n\n\nUse $ to refer to a column in a data frame\n\n\nGet unique values in a column\n\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#types-of-values",
+    "href": "slides/slides-class-2.html#types-of-values",
+    "title": "Class 2",
+    "section": "Types of Values",
+    "text": "Types of Values\n \nClasses are types of values that exist in R. Here are a list of some common value types:\n\n\ncharacter (or non-numeric) \"hello\", \"goodbye\"\ndouble (or numeric) 2, 32.55\ninteger 5, 99\nlogical TRUE, FALSE\nmissing NA NaN"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#types-of-values-1",
+    "href": "slides/slides-class-2.html#types-of-values-1",
+    "title": "Class 2",
+    "section": "Types of Values",
+    "text": "Types of Values\nIn scratchpad script / console\n \nTo evaluate the type of values in a column you can use typeof()\n\ntypeof(data_import$bill_depth_mm)\n## [1] \"double\"\ntypeof(data_import$flipper_length_mm)\n## [1] \"integer\"\n\n \nTo change the class of values in an object you can use as.character() , as.numeric() , as.double() , as.integer() , as.logical() functions.\n\nas.character(data_import$bill_depth_mm)\n##   [1] \"18.7\" \"17.4\" \"18\"   NA     \"19.3\" \"20.6\" \"17.8\" \"19.6\" \"18.1\" \"20.2\"\n##  [11] \"17.1\" \"17.3\" \"17.6\" \"21.2\" \"21.1\" \"17.8\" \"19\"   \"20.7\" \"18.4\" \"21.5\"\n##  [21] \"18.3\" \"18.7\" \"19.2\" \"18.1\" \"17.2\" \"18.9\" \"18.6\" \"17.9\" \"18.6\" \"18.9\"\n##  [31] \"16.7\" \"18.1\" \"17.8\" \"18.9\" \"17\"   \"21.1\" \"20\"   \"18.5\" \"19.3\" \"19.1\"\n##  [41] \"18\"   \"18.4\" \"18.5\" \"19.7\" \"16.9\" \"18.8\" \"19\"   \"18.9\" \"17.9\" \"21.2\"\n##  [51] \"17.7\" \"18.9\" \"17.9\" \"19.5\" \"18.1\" \"18.6\" \"17.5\" \"18.8\" \"16.6\" \"19.1\"\n##  [61] \"16.9\" \"21.1\" \"17\"   \"18.2\" \"17.1\" \"18\"   \"16.2\" \"19.1\" \"16.6\" \"19.4\"\n##  [71] \"19\"   \"18.4\" \"17.2\" \"18.9\" \"17.5\" \"18.5\" \"16.8\" \"19.4\" \"16.1\" \"19.1\"\n##  [81] \"17.2\" \"17.6\" \"18.8\" \"19.4\" \"17.8\" \"20.3\" \"19.5\" \"18.6\" \"19.2\" \"18.8\"\n##  [91] \"18\"   \"18.1\" \"17.1\" \"18.1\" \"17.3\" \"18.9\" \"18.6\" \"18.5\" \"16.1\" \"18.5\"\n## [101] \"17.9\" \"20\"   \"16\"   \"20\"   \"18.6\" \"18.9\" \"17.2\" \"20\"   \"17\"   \"19\"  \n## [111] \"16.5\" \"20.3\" \"17.7\" \"19.5\" \"20.7\" \"18.3\" \"17\"   \"20.5\" \"17\"   \"18.6\"\n## [121] \"17.2\" \"19.8\" \"17\"   \"18.5\" \"15.9\" \"19\"   \"17.6\" \"18.3\" \"17.1\" \"18\"  \n## [131] \"17.9\" \"19.2\" \"18.5\" \"18.5\" \"17.6\" \"17.5\" \"17.5\" \"20.1\" \"16.5\" \"17.9\"\n## [141] \"17.1\" \"17.2\" \"15.5\" \"17\"   \"16.8\" \"18.7\" \"18.6\" \"18.4\" \"17.8\" \"18.1\"\n## [151] \"17.1\" \"18.5\" \"13.2\" \"16.3\" \"14.1\" \"15.2\" \"14.5\" \"13.5\" \"14.6\" \"15.3\"\n## [161] \"13.4\" \"15.4\" \"13.7\" \"16.1\" \"13.7\" \"14.6\" \"14.6\" \"15.7\" \"13.5\" \"15.2\"\n## [171] \"14.5\" \"15.1\" \"14.3\" \"14.5\" \"14.5\" \"15.8\" \"13.1\" \"15.1\" \"14.3\" \"15\"  \n## [181] \"14.3\" \"15.3\" \"15.3\" \"14.2\" \"14.5\" \"17\"   \"14.8\" \"16.3\" \"13.7\" \"17.3\"\n## [191] \"13.6\" \"15.7\" \"13.7\" \"16\"   \"13.7\" \"15\"   \"15.9\" \"13.9\" \"13.9\" \"15.9\"\n## [201] \"13.3\" \"15.8\" \"14.2\" \"14.1\" \"14.4\" \"15\"   \"14.4\" \"15.4\" \"13.9\" \"15\"  \n## [211] \"14.5\" \"15.3\" \"13.8\" \"14.9\" \"13.9\" \"15.7\" \"14.2\" \"16.8\" \"14.4\" \"16.2\"\n## [221] \"14.2\" \"15\"   \"15\"   \"15.6\" \"15.6\" \"14.8\" \"15\"   \"16\"   \"14.2\" \"16.3\"\n## [231] \"13.8\" \"16.4\" \"14.5\" \"15.6\" \"14.6\" \"15.9\" \"13.8\" \"17.3\" \"14.4\" \"14.2\"\n## [241] \"14\"   \"17\"   \"15\"   \"17.1\" \"14.5\" \"16.1\" \"14.7\" \"15.7\" \"15.8\" \"14.6\"\n## [251] \"14.4\" \"16.5\" \"15\"   \"17\"   \"15.5\" \"15\"   \"13.8\" \"16.1\" \"14.7\" \"15.8\"\n## [261] \"14\"   \"15.1\" \"15.2\" \"15.9\" \"15.2\" \"16.3\" \"14.1\" \"16\"   \"15.7\" \"16.2\"\n## [271] \"13.7\" NA     \"14.3\" \"15.7\" \"14.8\" \"16.1\" \"17.9\" \"19.5\" \"19.2\" \"18.7\"\n## [281] \"19.8\" \"17.8\" \"18.2\" \"18.2\" \"18.9\" \"19.9\" \"17.8\" \"20.3\" \"17.3\" \"18.1\"\n## [291] \"17.1\" \"19.6\" \"20\"   \"17.8\" \"18.6\" \"18.2\" \"17.3\" \"17.5\" \"16.6\" \"19.4\"\n## [301] \"17.9\" \"19\"   \"18.4\" \"19\"   \"17.8\" \"20\"   \"16.6\" \"20.8\" \"16.7\" \"18.8\"\n## [311] \"18.6\" \"16.8\" \"18.3\" \"20.7\" \"16.6\" \"19.9\" \"19.5\" \"17.5\" \"19.1\" \"17\"  \n## [321] \"17.9\" \"18.5\" \"17.9\" \"19.6\" \"18.7\" \"17.3\" \"16.4\" \"19\"   \"17.3\" \"19.7\"\n## [331] \"17.3\" \"18.8\" \"16.6\" \"19.9\" \"18.8\" \"19.4\" \"19.5\" \"16.5\" \"17\"   \"19.8\"\n## [341] \"18.1\" \"18.2\" \"19\"   \"18.7\""
+  },
+  {
+    "objectID": "slides/slides-class-2.html#factors",
+    "href": "slides/slides-class-2.html#factors",
+    "title": "Class 2",
+    "section": "Factors",
+    "text": "Factors\nIn scratchpad script / console\n \n\ntypeof(data_import$species)\n## [1] \"integer\"\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo\nis.factor(data_import$species)\n## [1] TRUE\n\n \n\n\nFactors are a special type of column that represent levels of a category with an order to those levels.\nThe actual values in Factors can be of type character, double, integer, or logical.\nFactors become especially important in data visualization and statistical analysis."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#creating-factors",
+    "href": "slides/slides-class-2.html#creating-factors",
+    "title": "Class 2",
+    "section": "Creating Factors",
+    "text": "Creating Factors\nIn scratchpad script / console\n \nYou can set a column of values as a factor by using factor()\n\nfactor(data_import$year, levels = c(2007, 2008, 2009))"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#palmerpenguins",
+    "href": "slides/slides-class-2.html#palmerpenguins",
+    "title": "Class 2",
+    "section": "palmerpenguins",
+    "text": "palmerpenguins\n \nLet’s take a look at three variables\n\nspecies\nflipper length\nbody mass"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#data-transformation-1",
+    "href": "slides/slides-class-2.html#data-transformation-1",
+    "title": "Class 2",
+    "section": "Data Transformation",
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#data-transformation-2",
+    "href": "slides/slides-class-2.html#data-transformation-2",
+    "title": "Class 2",
+    "section": "Data Transformation",
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\nThe |&gt; notation says pass data_import into the mutate() function\nThen the result of mutate() is assigned to a new object, data_plot"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#data-transformation-3",
+    "href": "slides/slides-class-2.html#data-transformation-3",
+    "title": "Class 2",
+    "section": "Data Transformation",
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n\n\nView(data_plot)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#ggplot2---data-and-aesthetics-layer",
+    "href": "slides/slides-class-2.html#ggplot2---data-and-aesthetics-layer",
+    "title": "Class 2",
+    "section": "ggplot2 - data and aesthetics layer",
+    "text": "ggplot2 - data and aesthetics layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#ggplot2---geometries-layer",
+    "href": "slides/slides-class-2.html#ggplot2---geometries-layer",
+    "title": "Class 2",
+    "section": "ggplot2 - geometries layer",
+    "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#ggplot2---theme",
+    "href": "slides/slides-class-2.html#ggplot2---theme",
+    "title": "Class 2",
+    "section": "ggplot2 - theme",
+    "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#ggplot2",
+    "href": "slides/slides-class-2.html#ggplot2",
+    "title": "Class 2",
+    "section": "ggplot2",
+    "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#correlation",
+    "href": "slides/slides-class-2.html#correlation",
+    "title": "Class 2",
+    "section": "Correlation",
+    "text": "Correlation\n \n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n## \n##  Pearson's product-moment correlation\n## \n## data:  data_import$body_mass_g and data_import$flipper_length_mm\n## t = 32.722, df = 340, p-value &lt; 2.2e-16\n## alternative hypothesis: true correlation is not equal to 0\n## 95 percent confidence interval:\n##  0.843041 0.894599\n## sample estimates:\n##       cor \n## 0.8712018"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#class-1-reproducible-script",
+    "href": "slides/slides-class-2.html#class-1-reproducible-script",
+    "title": "Class 2",
+    "section": "Class 1: Reproducible Script",
+    "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)"
+  },
+  {
+    "objectID": "lectures/lectures-class-2.html#import",
+    "href": "lectures/lectures-class-2.html#import",
+    "title": "Class 2: Importing, Merging, and Restructuring Data",
+    "section": "Import",
+    "text": "Import\nR needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an absolute file path. Absolute file paths start at the root directory of your computer and might look something like:\n\nOn Macs:\nUsers/username/projects/project_name/a_file.csv\nOn Windows:\nC:\\username\\projects\\project_name\\a_file.csv\n\nWhat if you don’t know the full absolute file path to your data?\nI want to point out three approaches to specifying file paths in R:\n\nUsing setwd()\nUsing the RStudio GUI Import Dataset window\nUsing RProjects and here()\n\nNever… ever… ever… use option 1, setwd().\nInstead, you should always use RProjects and here(). But we will not cover this until Class 5. For now, we can just use the RStudio GUI Import Dataset window to find the absolute file path.\n\nRStudio GUI\nWhen you are having difficulty importing a file correctly or unsure of the file format the RStudio Import GUI can be really useful.\nIn the Environment window click on “Import Dataset”. You will see several options available, these options all rely on different packages. For now, select the From Text (readr) option.\nYou will see a data import window open up that looks like this\n\n\n\nRStudio Import Dataset GUI\n\n\n\nSelect Browse on the top right and select the data file you want to import.\nThe Data Preview window will let you see if it is importing it in the right format. You can change the Import Options below.\nYou might want to change the Name but you can always do this later in the R Script.\nClick on the 📋 icon above the Code Preview window to copy the code.\nClick on Cancel to exit out of the Import GUI window\nPaste the code into your Untitled.R script\n\nThe most useful thing here wil be the absolute file path.\n\n\n\n\n\n\n\n\nExploring Your Data\n\n\n\nWhen you want to just explore some data and don’t care about creating a reproducible script it can be perfectly acceptable to not copy and paste the code from Code Preview window and just select the Import button.\n\n\n\n\nCSV Files\ncsv files are by far the easiest files to import into R and most software programs. For this reason, I suggest any time you want to save/output a data file to your computer, do it in csv format.\n\n\n\n\n\n\nNote\n\n\n\nCSV stands for “Comma-Separated Values.” It’s a simple file format used to store data in a table. Each line in the file is a row of the table, and commas are used to separate columns. Think of it like a spreadsheet where each piece of information is lined up in rows and columns, but instead of seeing the grid like in Excel, each row is just a line of text with commas between the values that would go into different columns.\ncsv files are typically saved with .csv file extension (e.g., datafile.csv)\n\n\nTo import a csv file you can use read_csv() from the readr package.\n\nlibrary(readr)\n\ndata_import &lt;- read_csv(\"filepath/datafile.csv\")\n\nIn the Class_2.R script, import a_file.csv.\nWhen you import a file for the first time it is always a good idea to view it and spend some time getting to know it. Based on what you learned in Class 1, use View(), head(), colnames(), and/or unique() to better understand this data set.\n\n\nTab-Delimited Files\ntab-delimited files are a little more tedious to import just because they require specifying more arguments. Which means you have to memorize more to import tab-delimited files.\n\n\n\n\n\n\nNote\n\n\n\nTab-delimited files use tabs between items in a row to separate columns. In general, the delimiter is the type of value that is used between items in a row to separate columns. There are a lot of different types of delimiters with tab and comma (csv) being the most common.\nTab-delimited files are typically saved with the more standard .txt file extension (e.g., datafile.txt) but a lot of other file formats might also have the .txt extension. This can create some ambiguity as to how the data is stored and formatted for .txt files.\n\n\nTo import a tab-delimited file you can use read_delim() from the readr package.\n\ndata_import &lt;- read_delim(\"filepath/datafile.txt\", delim = \"\\t\", \n                     escape_double = FALSE, trim_ws = TRUE)\n\nThere are three additional arguments we have to specify: delim, escape_double, and trim_ws. The notation for tab-delimted files is \"\\t\". I always forget how to specify each of these arguments so I frequently use the RStudio Import Dataset GUI to copy the code needed to import a tab-delimited file."
+  },
+  {
+    "objectID": "lectures/lectures-class-2.html#merge",
+    "href": "lectures/lectures-class-2.html#merge",
+    "title": "Class 2: Importing, Merging, and Restructuring Data",
+    "section": "Merge",
+    "text": "Merge\nYou might find yourself in a situation where you need to import multiple data files and merge them into a single data frame. There are two general classes of merging data\n\nBind\nJoin\n\n\nBind\nIn R, a “bind” is combining data frames together by stacking either the rows or columns.\nA row “bind” takes data frames that have the same columns but different rows and stacks them on top of each other. This will happen if you have separate data files for each subject from the same task. Each subject data file will have their unique rows but all subjects will have the same columns.\n\n\n\nIllustration of a row bind\n\n\nA column “bind” takes data frames that have the same rows but different columns and stacks them side-by-side. This is a much less common situation than a row bind and can usually be accomplished with a join instead.\nRow and column binds can be performed with bind_rows() and bind_cols() from the dplyr package\n\nlibrary(dplyr)\n\ndata_merged &lt;- bind_rows(data_1, data_2)\ndata_merged &lt;- bind_cols(data_1, data_2)\n\n\n\nJoin\nIn R, a “join” is merging data frames together that have at least some rows in common (e.g. Same Subject IDs) and have at least one column that is different. The rows that are common serve as the reference for how to “join” the data frames together.\nThere are lots of different kinds of joins, some of which are:\n\nleft join\nright join\ninner join\nanti join\nfull join\n\nFor a full list and detailed description of the _join() functions see the dplyr documentation\nBut for the most part you can get away with just knowing how to do a full join using full_join() from the dplyr package.\n\ndata_merged &lt;- full_join(data_1, data_2, by = \"Subject\")\n\nWhenever joining, you need to specify what are the key column(s) to join by - columns that are common between the data frames."
+  },
+  {
+    "objectID": "lectures/lectures-class-2.html#restructure",
+    "href": "lectures/lectures-class-2.html#restructure",
+    "title": "Class 2: Importing, Merging, and Restructuring Data",
+    "section": "Restructure",
+    "text": "Restructure\nThe exact same data can be structured in different ways. There are two main formats that any data set can be structured as:\nWide: Variables are spread out across columns, making the data frame wider\n\n\n\n\n\n\n\n\n\nParticipant ID\nStress Level Score\nCreativity Score\nMemory Score\n\n\n\n\n1\n5\n7\n8\n\n\n2\n3\n6\n7\n\n\n3\n4\n8\n6\n\n\n\n \nLong: Variables and values are stacked in rows, making the data frame longer\n\n\n\nParticipant ID\nTest Type\nScore\n\n\n\n\n1\nStress Level\n5\n\n\n1\nCreativity\n7\n\n\n1\nMemory\n8\n\n\n2\nStress Level\n3\n\n\n2\nCreativity\n6\n\n\n2\nMemory\n7\n\n\n3\nStress Level\n4\n\n\n3\nCreativity\n8\n\n\n3\nMemory\n6\n\n\n\n \nAnd actually, you can have a mix of wide and long formatted data in a single data frame.\n\n\n\n\n\n\n\n\n\n\nParticipant ID\nSession\nStress Level\nCreativity\nMemory\n\n\n\n\n1\n1\n5\n7\n8\n\n\n1\n2\n4\n8\n9\n\n\n1\n3\n3\n9\n10\n\n\n2\n1\n6\n6\n7\n\n\n2\n2\n5\n7\n8\n\n\n2\n3\n4\n8\n9\n\n\n3\n1\n4\n8\n6\n\n\n3\n2\n3\n9\n7\n\n\n3\n3\n2\n10\n8\n\n\n\nSession is in long format with values stacked in rows. Stress, creativity, and memory are all in wide format.\nA good rule of thumb for formatting data is to have your variables (IVs and DVs) each have their own column.\n\nNotice that this is not the case in the long formatted data above. Test Type and Score are not variables in this study. Rather Stress, Creativity, and Memory are. Therefore, it makes more sense to have that data in a wide format.\nThis often results in:\n\nBetween-subject variables in wide format\nWithin-subject variables in long format\n\nNotice how Session, a within-subject variable, is in long format because Session is an independent variable in the study, so Session needs it’s own column. Stress, Creativity, and Memory are other variables (probably dependent variables) in this study and so they need their own columns, therefore they are laid out in a wide format.\n\nRestructuring data involves changing the structure from long-to-wide or wide-to-long. The tidyr package provides useful functions to do this:\n\npivot_wider() “widens” data from long-to-wide\npivot_longer() “lengthens” data from wide-to-long\n\n\n\n\n\n\n\nNote\n\n\n\nThe tidyr package, like readr and dplyr, is from the tidyverse set of packages.\n\n\n\nPivot Wider\nUsing the example data sets above, let’s restructure the long data frame to a wide format:\nFirst let’s create the data frame - you can just copy and paste this code\n\ndata_long &lt;- data.frame(\n  ParticipantID = rep(1:3, each = 3),\n  TestType = rep(c(\"Stress Level\", \"Creativity\", \"Memory\"), times = 3),\n  Score = c(5, 7, 8, 3, 6, 7, 4, 8, 6)\n  )\n\nThe two main arguments to specify in pivot_wider() are\n\nnames_from: The column name that contains the variables to create new columns by (e.g. “Test Type”). The values in this column will become Column names in the wider data format.\nvalues_from: The column name that contains the values (e.g. “Score”).\n\nNow we can use pivot_wider() to convert it to a wide format:\n\nlibrary(tidyr)\n\ndata_wide &lt;- data_long |&gt;\n  pivot_wider(names_from = TestType,\n              values_from = Score)\n\n\n\n\n\n\n\nColumn Names\n\n\n\nR does not like column names to have spaces in them, but it does allow it. Notice how in data_wide the column Stress Level contains a space. This is because the value in data_long had a space, which was not a problem then.\nclean_names() from the janitor package provides a convenient way to get rid of spaces and replace them with an _ .\n\nlibrary(janitor)\n\ndata_wide &lt;- clean_names(data_wide, case = \"parse\")\n\n\n\n\n\nPivot Longer\nThe three main arguments to specify in pivot_longer() are:\n\ncols: The column names that will be restructured to a longer format\nnames_to: The new column name that will contain values which correspond to the column names in the wide data\nvalues_to: The new column name that will contain the actual values in the wide data\n\nUsing pivot_longer() we can restructure the data back to long format\n\ndata_long_again &lt;- data_wide |&gt;\n  pivot_longer(cols = any_of(c(\"Stress Level\", \"Creativity\", \"Memory\")),\n               names_to = \"TestType\",\n               values_to = \"Score\")\n\nCheck to make sure data_long and data_long_again are identical.\nOkay, now let’s say we have a wide data set with multiple sessions of Stress , Creativity, and Memory.\n\ndata_sessions_wide &lt;- tibble(\n  ParticipantID = 1:3,\n  StressLevel_S1 = c(5, 6, 4),\n  Creativity_S1 = c(7, 6, 8),\n  Memory_S1 = c(8, 7, 6),\n  StressLevel_S2 = c(4, 5, 3),\n  Creativity_S2 = c(8, 7, 9),\n  Memory_S2 = c(9, 8, 7),\n  StressLevel_S3 = c(3, 4, 2),\n  Creativity_S3 = c(9, 8, 10),\n  Memory_S3 = c(10, 9, 8)\n)\n\nThe data is not very useful in this format, so let’s restructure it to be a mix of long and wide format. Using the rule of thumb above, we want to create 4 columns with Session, Stress Level, Creativity, and Memory. There are two strategies for doing this:\n\nUsing pivot_longer(), separate(), and then pivot_wider()\nUse more complicated syntax in pivot_longer()\n\n\n# 1. Using pivot_longer(), separate(), and then pivot_wider()\ndata_sessions_1 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = \"Session\",\n               values_to = \"Score\") |&gt;\n  separate(Session, into = c(\"Test\", \"Session\")) |&gt;\n  pivot_wider(names_from = Test,\n              values_from = Score)\n\n# 2. Use more complicated syntax in pivot_longer()\ndata_sessions_2 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = c(\".value\", \"Session\"),\n               names_pattern = \"(.*)_(S\\\\d)\")"
   }
 ]
