@@ -218,6 +218,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pivot-wider" id="toc-pivot-wider" class="nav-link" data-scroll-target="#pivot-wider">Pivot Wider</a></li>
   <li><a href="#pivot-longer" id="toc-pivot-longer" class="nav-link" data-scroll-target="#pivot-longer">Pivot Longer</a></li>
   </ul></li>
+  <li><a href="#class-activity" id="toc-class-activity" class="nav-link" data-scroll-target="#class-activity">Class Activity</a>
+  <ul class="collapse">
+  <li><a href="#reproducible-script" id="toc-reproducible-script" class="nav-link" data-scroll-target="#reproducible-script">Reproducible Script</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -244,20 +248,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>We will cover importing data, merging data frames, and restructuring data in this class.</p>
-<p>If you did not do so already… download the sample data files</p>
-<ul>
-<li><p>a_file.csv</p></li>
-<li><p>another_file.txt</p></li>
-</ul>
-<p>Save them wherever. Open up two R scripts and save them wherever</p>
-<ul>
-<li><p>Untitled.R: scratchpad R script</p></li>
-<li><p>Class_2.R: reproducible script file</p></li>
-</ul>
 <section id="import" class="level2">
 <h2 class="anchored" data-anchor-id="import">Import</h2>
 <p>R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an <strong>absolute</strong> file path. Absolute file paths start at the root directory of your computer and might look something like:</p>
-<hr>
 <p>On Macs:</p>
 <p>Users/username/projects/project_name/a_file.csv</p>
 <p>On Windows:</p>
@@ -267,15 +260,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I want to point out three approaches to specifying file paths in R:</p>
 <ol type="1">
 <li>Using <code>setwd()</code></li>
-<li>Using the RStudio GUI Import Dataset window</li>
+<li>Using the RStudio Import Dataset GUI</li>
 <li>Using RProjects and <code>here()</code></li>
 </ol>
 <p>Never… ever… ever… use option 1, <code>setwd()</code>.</p>
-<p>Instead, you should always use RProjects and <code>here()</code>. But we will not cover this until Class 5. For now, we can just use the RStudio GUI Import Dataset window to find the <strong>absolute</strong> file path.</p>
+<p>Instead, you should use RProjects and <code>here()</code>. But we will not cover this until Class 5. For now, we can just use the RStudio Import Dataset GUI to find the <strong>absolute</strong> file path.</p>
 <section id="rstudio-gui" class="level3">
 <h3 class="anchored" data-anchor-id="rstudio-gui">RStudio GUI</h3>
-<p>When you are having difficulty importing a file correctly or unsure of the file format the RStudio Import GUI can be really useful.</p>
-<p>In the <strong>Environment</strong> window click on <strong>“Import Dataset”</strong>. You will see several options available, these options all rely on different packages. For now, select the <strong>From Text (readr)</strong> option.</p>
+<p>When you are having difficulty importing a file correctly or unsure of the file format the RStudio Import Dataset GUI can be really useful.</p>
+<p>In the <strong>Environment</strong> window click on <strong>“Import Dataset”</strong>. You will see several options available, these options all rely on different packages. For now, select the <strong>From Text (readr)…</strong> option.</p>
 <p>You will see a data import window open up that looks like this</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -286,7 +279,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>Select <strong>Browse</strong> on the top right and select the data file you want to import.</p></li>
 <li><p>The <strong>Data Preview</strong> window will let you see if it is importing it in the right format. You can change the <strong>Import Options</strong> below.</p></li>
-<li><p>You might want to change the <strong>Name</strong> but you can always do this later in the R Script.</p></li>
 <li><p>Click on the 📋 icon above the <strong>Code Preview</strong> window to copy the code.</p></li>
 <li><p>Click on <strong>Cancel</strong> to exit out of the Import GUI window</p></li>
 <li><p>Paste the code into your <strong>Untitled.R</strong> script</p>
@@ -331,8 +323,6 @@ Note
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"filepath/datafile.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the <strong>Class_2.R</strong> script, import a_file.csv.</p>
-<p>When you import a file for the first time it is always a good idea to view it and spend some time getting to know it. Based on what you learned in <a href="../lectures/lectures-class-1.html">Class 1</a>, use <code>View()</code>, <code>head()</code>, <code>colnames()</code>, and/or <code>unique()</code> to better understand this data set.</p>
 </section>
 <section id="tab-delimited-files" class="level3">
 <h3 class="anchored" data-anchor-id="tab-delimited-files">Tab-Delimited Files</h3>
@@ -389,19 +379,21 @@ Note
 <h3 class="anchored" data-anchor-id="join">Join</h3>
 <p>In R, a “join” is merging data frames together that have at least some rows in common (e.g.&nbsp;Same Subject IDs) and have at least one column that is different. The rows that are common serve as the reference for how to “join” the data frames together.</p>
 <p>There are lots of different kinds of joins, some of which are:</p>
-<ul>
-<li><p>left join</p></li>
-<li><p>right join</p></li>
-<li><p>inner join</p></li>
-<li><p>anti join</p></li>
-<li><p>full join</p></li>
-</ul>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/dplyr-joins.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="405"></p>
+<figcaption>Types of joins using dplyr</figcaption>
+</figure>
+</div>
 <p>For a full list and detailed description of the <code>_join()</code> functions see the <a href="https://dplyr.tidyverse.org/reference/index.html#data-frames" target="_blank">dplyr documentation</a></p>
 <p>But for the most part you can get away with just knowing how to do a full join using <code>full_join()</code> from the <code>dplyr</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data_merged <span class="ot">&lt;-</span> <span class="fu">full_join</span>(data_1, data_2, <span class="at">by =</span> <span class="st">"Subject"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Whenever joining, you need to specify what are the <strong>key</strong> column(s) to join by - columns that are common between the data frames.</p>
+<p>Whenever joining, you need to specify what are the <strong>key</strong> column(s) to join by - columns that are common between the data frames. Often times there is more than one <strong>key</strong> column that the data frames need to be joined by:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_merged <span class="ot">&lt;-</span> <span class="fu">full_join</span>(data_1, data_2, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Subject"</span>, <span class="st">"Session"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="restructure" class="level2">
@@ -411,9 +403,9 @@ Note
 <table class="table">
 <colgroup>
 <col style="width: 23%">
-<col style="width: 28%">
-<col style="width: 26%">
-<col style="width: 21%">
+<col style="width: 27%">
+<col style="width: 25%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -506,11 +498,11 @@ Note
 <p>And actually, you can have a <strong>mix of wide and long</strong> formatted data in a single data frame.</p>
 <table class="table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 16%">
-<col style="width: 22%">
 <col style="width: 20%">
-<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -621,11 +613,11 @@ Note
 <p>Using the example data sets above, let’s restructure the long data frame to a wide format:</p>
 <p>First let’s create the data frame - you can just copy and paste this code</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ParticipantID =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">3</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">TestType =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Stress Level"</span>, <span class="st">"Creativity"</span>, <span class="st">"Memory"</span>), <span class="at">times =</span> <span class="dv">3</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Score =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">6</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ParticipantID =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">3</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">TestType =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Stress Level"</span>, <span class="st">"Creativity"</span>, <span class="st">"Memory"</span>), <span class="at">times =</span> <span class="dv">3</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Score =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">6</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The two main arguments to specify in <code>pivot_wider()</code> are</p>
 <ul>
@@ -634,11 +626,11 @@ Note
 </ul>
 <p>Now we can use <code>pivot_wider()</code> to convert it to a wide format:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> data_long <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TestType,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> data_long <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TestType,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -653,9 +645,9 @@ Column Names
 <p>R does not like column names to have spaces in them, but it does allow it. Notice how in <code>data_wide</code> the column <code>Stress Level</code> contains a space. This is because the value in <code>data_long</code> had a space, which was not a problem then.</p>
 <p><code>clean_names()</code> from the <code>janitor</code> package provides a convenient way to get rid of spaces and replace them with an <code>_</code> .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> <span class="fu">clean_names</span>(data_wide, <span class="at">case =</span> <span class="st">"parse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> <span class="fu">clean_names</span>(data_wide, <span class="at">case =</span> <span class="st">"parse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -670,26 +662,26 @@ Column Names
 </ul>
 <p>Using <code>pivot_longer()</code> we can restructure the data back to long format</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_long_again <span class="ot">&lt;-</span> data_wide <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">any_of</span>(<span class="fu">c</span>(<span class="st">"Stress Level"</span>, <span class="st">"Creativity"</span>, <span class="st">"Memory"</span>)),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"TestType"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data_long_again <span class="ot">&lt;-</span> data_wide <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">any_of</span>(<span class="fu">c</span>(<span class="st">"Stress Level"</span>, <span class="st">"Creativity"</span>, <span class="st">"Memory"</span>)),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"TestType"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check to make sure <code>data_long</code> and <code>data_long_again</code> are identical.</p>
 <p>Okay, now let’s say we have a wide data set with multiple sessions of <code>Stress</code> , <code>Creativity</code>, and <code>Memory</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data_sessions_wide <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ParticipantID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">StressLevel_S1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">4</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Creativity_S1 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Memory_S1 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">StressLevel_S2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Creativity_S2 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Memory_S2 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">7</span>),</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">StressLevel_S3 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Creativity_S3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Memory_S3 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">8</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_sessions_wide <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ParticipantID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">StressLevel_S1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">4</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Creativity_S1 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Memory_S1 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">StressLevel_S2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Creativity_S2 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Memory_S2 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">7</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">StressLevel_S3 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Creativity_S3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Memory_S3 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">8</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The data is not very useful in this format, so let’s restructure it to be a mix of long and wide format. Using the rule of thumb above, we want to create 4 columns with <code>Session</code>, <code>Stress Level</code>, <code>Creativity</code>, and <code>Memory</code>. There are two strategies for doing this:</p>
 <ol type="1">
@@ -697,20 +689,217 @@ Column Names
 <li>Use more complicated syntax in <code>pivot_longer()</code></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Using pivot_longer(), separate(), and then pivot_wider()</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data_sessions_1 <span class="ot">&lt;-</span> data_sessions_wide <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"_S"</span>),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Session"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Score"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Session, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Test"</span>, <span class="st">"Session"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Test,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Score)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Use more complicated syntax in pivot_longer()</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>data_sessions_2 <span class="ot">&lt;-</span> data_sessions_wide <span class="sc">|&gt;</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"_S"</span>),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"Session"</span>),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.*)_(S</span><span class="sc">\\</span><span class="st">d)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Using pivot_longer(), separate(), and then pivot_wider()</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data_sessions_1 <span class="ot">&lt;-</span> data_sessions_wide <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"_S"</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Session"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Score"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Session, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Test"</span>, <span class="st">"Session"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Test,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Score)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Use more complicated syntax in pivot_longer()</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>data_sessions_2 <span class="ot">&lt;-</span> data_sessions_wide <span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"_S"</span>),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"Session"</span>),</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.*)_(S</span><span class="sc">\\</span><span class="st">d)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="class-activity" class="level2">
+<h2 class="anchored" data-anchor-id="class-activity">Class Activity</h2>
+<p><em>Note that this activity was created with the assistance of ChatGPT 4.</em></p>
+<p>Let’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.</p>
+<p>You’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (<a href="../data/class_2_cog_data.csv"><strong>class_2_cog_data.csv</strong></a>) and another with the mood ratings data (<a href="../data/class_2_mood_data.txt"><strong>class_2_mood_data.txt</strong></a>), but the same participants across each data set.</p>
+<p>Your task will involve importing, restructuring, and merging the data so that we can graphically visualize the results of the experiment.</p>
+<ol type="1">
+<li><p>Create a new R script and save it as <strong>class_2_activity.R</strong></p></li>
+<li><p>Load the following packages at the top of your script</p>
+<ul>
+<li><code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>ggplot2</code></li>
+</ul></li>
+<li><p>Import the data files</p></li>
+<li><p>Get to know the data (use what you learned from <a href="../lectures/lectures-class-1.html">Class 1</a>)</p>
+<ul>
+<li><p>What are the column names?</p></li>
+<li><p>What type of values are in the columns?</p></li>
+<li><p>How many participants are in the study?</p></li>
+<li><p>How many are in each of the intervention conditions?</p></li>
+<li><p>Approximately, what are the range of values on cognitive performance and mood ratings?</p>
+<ul>
+<li>Hint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low</li>
+</ul></li>
+<li><p>Are there are any missing values in the data?</p></li>
+</ul></li>
+<li><p>Restructure each data set to long format with <code>week</code> spread across rows instead of columns and one column for <code>cognitive score</code> or <code>mood rating</code></p>
+<ul>
+<li><p>You will notice that the values in the <code>week</code> column also contain the string: <code>cognitive_week_</code> or <code>mood_week_</code>. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. <strong>This is an optional step.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ul></li>
+<li><p>Merge the two long data frames into one data frame.</p>
+<ul>
+<li>Hint: There is more than one <strong>key</strong> column that the data frames need to be joined by.</li>
+</ul></li>
+<li><p>Plot the cognitive performance data:</p>
+<p>Create a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). Something like this:</p>
+<p><img src="images/class_2_cognitive_plot.png" class="img-fluid" width="413"></p>
+<ol type="1">
+<li><p>First add the data and aesthetic layers - how our data map onto the plot scales and axes</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the following values to fit your data</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data, var_x, var_y, var_color</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> var_x, <span class="at">y =</span> var_y,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> var_color, <span class="at">group =</span> var_color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Now let’s add in the geometries layer - the visual elements used for the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> var_x, <span class="at">y =</span> var_y,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> var_color, <span class="at">group =</span> var_color))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>No need to modify the code here. For now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters. But you can see that we are plotting three <code>geom</code> layers, <strong>errorbar</strong>, <strong>line</strong>, and <strong>point</strong>. We need to use <code>stat_summary()</code> because the data are not aggregated, this function will aggregate the data across participants using <code>fun = mean</code>.</p></li>
+<li><p>Finally, let’s make this plot a little prettier</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the following values based on your preference</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the width, and size values in stat_summary()</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lower limit and upper limit in coord_cartesian()</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the title, x, y, and color in labs()</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># choose a ggplot2 theme</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> var_x, <span class="at">y =</span> var_y,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> var_color, <span class="at">group =</span> var_color)) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Give the plot a title"</span>, </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"change x-axis label"</span>, </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"change y-axis label"</span>, </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"change legend title"</span>) <span class="sc">+</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_</span>() <span class="co"># choose a ggplot2 theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Change the following values based on your preference</p>
+<ul>
+<li><p>the width of the error bars: <code>stat_summary(width = .9)</code></p></li>
+<li><p>the size of the lines: <code>stat_summary(size = .5)</code></p></li>
+<li><p>the size of the data points: <code>stat_summary(size = .1.5)</code></p></li>
+<li><p>the lower and upper limit of the y-axis (zoom in or out): <code>coord_cartesian(ylim = c(lower_limit, upper_limit)</code></p></li>
+<li><p>add a plot title</p></li>
+<li><p>the y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.</p></li>
+<li><p>choose a brewer color palette: <code>scale_color_brewer(palette = "Set1")</code></p>
+<ul>
+<li>See options here: <a href="https://r-graph-gallery.com/38-rcolorbrewers-palettes.html" target="_blank">R Color Brewer’s palettes</a></li>
+</ul></li>
+<li><p>choose a <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" target="_blank">ggplot2 theme</a>:</p>
+<ul>
+<li><p><code>theme_bw()</code></p></li>
+<li><p><code>theme_light()</code></p></li>
+<li><p><code>theme_dark()</code></p></li>
+<li><p><code>theme_minimal()</code></p></li>
+<li><p><code>theme_classic()</code></p></li>
+<li><p><code>theme_void()</code></p></li>
+</ul></li>
+</ul></li>
+</ol></li>
+<li><p>Plot the mood data:</p>
+<p><img src="images/class_2_mood_plot.png" class="img-fluid" width="412"></p>
+<ul>
+<li><p>Copy and paste the code you wrote for plotting the cognitive performance data.</p></li>
+<li><p>Change values as needed</p>
+<ul>
+<li><p>The variable to be plotted on the y-axis <code>aes(y = )</code></p></li>
+<li><p>the lower and upper limits of the y-axis <code>coord_cartesian(ylim = c(lower_limit, upper_limit)</code></p></li>
+<li><p>plot title, y-axis, x-axis, and legend labels</p></li>
+</ul></li>
+</ul></li>
+<li><p>Save the plots as a file on your computer</p>
+<ul>
+<li><p>Place the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">"folder/path/class_2_cognitive_plot.png"</span>), </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ul></li>
+<li><p>Organize and clean up your script</p>
+<ol type="1">
+<li>Load all packages at the top of your script</li>
+<li>Get rid of code that is not a necessary step for creating the plots</li>
+<li>Add comment headers to sections of your code: e.g., <code># load packages</code></li>
+</ol></li>
+</ol>
+<section id="reproducible-script" class="level3">
+<h3 class="anchored" data-anchor-id="reproducible-script">Reproducible Script</h3>
+<p><strong>You should attempt to complete the activity without looking at this code</strong></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>cog_import <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/class_2_cog_data.csv"</span>))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>mood_import <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/class_2_mood_data.txt"</span>), </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># restructure data</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>cog_data <span class="ot">&lt;-</span> cog_import <span class="sc">|&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"cognitive_week"</span>), </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"cognitive_score"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>mood_data <span class="ot">&lt;-</span> mood_import <span class="sc">|&gt;</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"mood_week"</span>), </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"mood_score"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co"># merge data</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">full_join</span>(cog_data, mood_data, </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"participant_id"</span>, <span class="st">"intervention_type"</span>, <span class="st">"week"</span>))</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> cognitive_score, </span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> intervention_type, <span class="at">group =</span> intervention_type)) <span class="sc">+</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">85</span>)) <span class="sc">+</span></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cognitive Scores Across Weeks by Intervention Type"</span>, </span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, </span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cognitive Score"</span>, </span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Intervention Type"</span>) <span class="sc">+</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">"~/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/lectures/images/class_2_cognitive_plot.png"</span>), </span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> mood_score, </span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> intervention_type, <span class="at">group =</span> intervention_type)) <span class="sc">+</span></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mood Across Weeks by Intervention Type"</span>, </span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, </span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mood"</span>, </span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Intervention Type"</span>) <span class="sc">+</span></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">"~/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/lectures/images/class_2_mood_plot.png"</span>), </span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
