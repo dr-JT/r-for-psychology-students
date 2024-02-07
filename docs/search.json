@@ -25,14 +25,301 @@
     "href": "lectures/lectures-class-2.html#restructure",
     "title": "Class 2: Importing, Merging, and Restructuring Data",
     "section": "Restructure",
-    "text": "Restructure\nThe exact same data can be structured in different ways. There are two main formats that any data set can be structured as:\nWide: Variables are spread out across columns, making the data frame wider\n\n\n\n\n\n\n\n\n\nParticipant ID\nStress Level Score\nCreativity Score\nMemory Score\n\n\n\n\n1\n5\n7\n8\n\n\n2\n3\n6\n7\n\n\n3\n4\n8\n6\n\n\n\n \nLong: Variables and values are stacked in rows, making the data frame longer\n\n\n\nParticipant ID\nTest Type\nScore\n\n\n\n\n1\nStress Level\n5\n\n\n1\nCreativity\n7\n\n\n1\nMemory\n8\n\n\n2\nStress Level\n3\n\n\n2\nCreativity\n6\n\n\n2\nMemory\n7\n\n\n3\nStress Level\n4\n\n\n3\nCreativity\n8\n\n\n3\nMemory\n6\n\n\n\n \nAnd actually, you can have a mix of wide and long formatted data in a single data frame.\n\n\n\n\n\n\n\n\n\n\nParticipant ID\nSession\nStress Level\nCreativity\nMemory\n\n\n\n\n1\n1\n5\n7\n8\n\n\n1\n2\n4\n8\n9\n\n\n1\n3\n3\n9\n10\n\n\n2\n1\n6\n6\n7\n\n\n2\n2\n5\n7\n8\n\n\n2\n3\n4\n8\n9\n\n\n3\n1\n4\n8\n6\n\n\n3\n2\n3\n9\n7\n\n\n3\n3\n2\n10\n8\n\n\n\nSession is in long format with values stacked in rows. Stress, creativity, and memory are all in wide format.\nA good rule of thumb for formatting data is to have your variables (IVs and DVs) each have their own column.\n\nNotice that this is not the case in the long formatted data above. Test Type and Score are not variables in this study. Rather Stress, Creativity, and Memory are. Therefore, it makes more sense to have that data in a wide format.\nThis often results in:\n\nBetween-subject variables in wide format\nWithin-subject variables in long format\n\nNotice how Session, a within-subject variable, is in long format because Session is an independent variable in the study, so Session needs it’s own column. Stress, Creativity, and Memory are other variables (probably dependent variables) in this study and so they need their own columns, therefore they are laid out in a wide format.\n\nRestructuring data involves changing the structure from long-to-wide or wide-to-long. The tidyr package provides useful functions to do this:\n\npivot_wider() “widens” data from long-to-wide\npivot_longer() “lengthens” data from wide-to-long\n\n\n\n\n\n\n\nNote\n\n\n\nThe tidyr package, like readr and dplyr, is from the tidyverse set of packages.\n\n\n\nPivot Wider\nUsing the example data sets above, let’s restructure the long data frame to a wide format:\nFirst let’s create the data frame - you can just copy and paste this code\n\ndata_long &lt;- data.frame(\n  ParticipantID = rep(1:3, each = 3),\n  TestType = rep(c(\"Stress Level\", \"Creativity\", \"Memory\"), times = 3),\n  Score = c(5, 7, 8, 3, 6, 7, 4, 8, 6)\n  )\n\nThe two main arguments to specify in pivot_wider() are\n\nnames_from: The column name that contains the variables to create new columns by (e.g. “Test Type”). The values in this column will become Column names in the wider data format.\nvalues_from: The column name that contains the values (e.g. “Score”).\n\nNow we can use pivot_wider() to convert it to a wide format:\n\nlibrary(tidyr)\n\ndata_wide &lt;- data_long |&gt;\n  pivot_wider(names_from = TestType,\n              values_from = Score)\n\n\n\n\n\n\n\nColumn Names\n\n\n\nR does not like column names to have spaces in them, but it does allow it. Notice how in data_wide the column Stress Level contains a space. This is because the value in data_long had a space, which was not a problem then.\nclean_names() from the janitor package provides a convenient way to get rid of spaces and replace them with an _ .\n\nlibrary(janitor)\n\ndata_wide &lt;- clean_names(data_wide, case = \"parse\")\n\n\n\n\n\nPivot Longer\nThe three main arguments to specify in pivot_longer() are:\n\ncols: The column names that will be restructured to a longer format\nnames_to: The new column name that will contain values which correspond to the column names in the wide data\nvalues_to: The new column name that will contain the actual values in the wide data\n\nUsing pivot_longer() we can restructure the data back to long format\n\ndata_long_again &lt;- data_wide |&gt;\n  pivot_longer(cols = any_of(c(\"Stress Level\", \"Creativity\", \"Memory\")),\n               names_to = \"TestType\",\n               values_to = \"Score\")\n\nCheck to make sure data_long and data_long_again are identical.\nOkay, now let’s say we have a wide data set with multiple sessions of Stress , Creativity, and Memory.\n\ndata_sessions_wide &lt;- tibble(\n  ParticipantID = 1:3,\n  StressLevel_S1 = c(5, 6, 4),\n  Creativity_S1 = c(7, 6, 8),\n  Memory_S1 = c(8, 7, 6),\n  StressLevel_S2 = c(4, 5, 3),\n  Creativity_S2 = c(8, 7, 9),\n  Memory_S2 = c(9, 8, 7),\n  StressLevel_S3 = c(3, 4, 2),\n  Creativity_S3 = c(9, 8, 10),\n  Memory_S3 = c(10, 9, 8)\n)\n\nThe data is not very useful in this format, so let’s restructure it to be a mix of long and wide format. Using the rule of thumb above, we want to create 4 columns with Session, Stress Level, Creativity, and Memory. There are two strategies for doing this:\n\nUsing pivot_longer(), separate(), and then pivot_wider()\nUse more complicated syntax in pivot_longer()\n\n\n# 1. Using pivot_longer(), separate(), and then pivot_wider()\ndata_sessions_1 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = \"Session\",\n               values_to = \"Score\") |&gt;\n  separate(Session, into = c(\"Test\", \"Session\")) |&gt;\n  pivot_wider(names_from = Test,\n              values_from = Score)\n\n# 2. Use more complicated syntax in pivot_longer()\ndata_sessions_2 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = c(\".value\", \"Session\"),\n               names_pattern = \"(.*)_(S\\\\d)\")"
+    "text": "Restructure\nThe exact same data can be structured in different ways. There are two main formats that any data set can be structured as:\nWide: Variables are spread out across columns, making the data frame wider\n\n\n\n\n\n\n\n\n\nParticipant ID\nStress Level Score\nCreativity Score\nMemory Score\n\n\n\n\n1\n5\n7\n8\n\n\n2\n3\n6\n7\n\n\n3\n4\n8\n6\n\n\n\n \nLong: Variables and values are spread across rows, making the data frame longer\n\n\n\nParticipant ID\nTest Type\nScore\n\n\n\n\n1\nStress Level\n5\n\n\n1\nCreativity\n7\n\n\n1\nMemory\n8\n\n\n2\nStress Level\n3\n\n\n2\nCreativity\n6\n\n\n2\nMemory\n7\n\n\n3\nStress Level\n4\n\n\n3\nCreativity\n8\n\n\n3\nMemory\n6\n\n\n\n \nAnd actually, you can have a mix of wide and long formatted data in a single data frame.\n\n\n\n\n\n\n\n\n\n\nParticipant ID\nSession\nStress Level\nCreativity\nMemory\n\n\n\n\n1\n1\n5\n7\n8\n\n\n1\n2\n4\n8\n9\n\n\n1\n3\n3\n9\n10\n\n\n2\n1\n6\n6\n7\n\n\n2\n2\n5\n7\n8\n\n\n2\n3\n4\n8\n9\n\n\n3\n1\n4\n8\n6\n\n\n3\n2\n3\n9\n7\n\n\n3\n3\n2\n10\n8\n\n\n\nSession is in long format with values stacked in rows. Stress, creativity, and memory are all in wide format.\nA good rule of thumb for formatting data is to have your variables (IVs and DVs) each have their own column.\n\nNotice that this is not the case in the long formatted data above. Test Type and Score are not variables in this study. Rather Stress, Creativity, and Memory are. Therefore, it makes more sense to have that data in a wide format.\nThis often results in:\n\nBetween-subject variables in wide format\nWithin-subject variables in long format\n\nNotice how Session, a within-subject variable, is in long format because Session is an independent variable in the study, so Session needs it’s own column. Stress, Creativity, and Memory are other variables (probably dependent variables) in this study and so they need their own columns, therefore they are laid out in a wide format.\n\nRestructuring data involves changing the structure from long-to-wide (wider) or wide-to-long (longer). The tidyr package provides useful functions to do this:\n\npivot_wider() “widens” data from long-to-wide\npivot_longer() “lengthens” data from wide-to-long\n\n\n\n\n\n\n\nNote\n\n\n\nThe tidyr package, like readr and dplyr, is from the tidyverse set of packages.\n\n\n\nPivot Wider\nUsing the example data sets above, let’s restructure the long data frame to a wide format:\nFirst let’s create the data frame - you can just copy and paste this code\n\ndata_long &lt;- data.frame(\n  ParticipantID = rep(1:3, each = 3),\n  TestType = rep(c(\"Stress Level\", \"Creativity\", \"Memory\"), times = 3),\n  Score = c(5, 7, 8, 3, 6, 7, 4, 8, 6)\n  )\n\nThe two main arguments to specify in pivot_wider() are\n\nnames_from: The column name that contains the variables to create new columns by (e.g. “Test Type”). The values in this column will become Column names in the wider data format.\nvalues_from: The column name that contains the values (e.g. “Score”).\n\nNow we can use pivot_wider() to convert it to a wide format:\n\nlibrary(tidyr)\n\ndata_wide &lt;- data_long |&gt;\n  pivot_wider(names_from = TestType,\n              values_from = Score)\n\n\n\n\n\n\n\nColumn Names\n\n\n\nR does not like column names to have spaces in them, but it does allow it.\nNotice how in data_wide the column Stress Level contains a space. This is because the value in data_long had a space, which was not a problem then.\nclean_names() from the janitor package provides a convenient way to get rid of spaces and replace them with an _\n\nlibrary(janitor)\n\ndata_wide &lt;- clean_names(data_wide, case = \"parse\")\n\n\n\n\n\nPivot Longer\nThe three main arguments to specify in pivot_longer() are:\n\ncols: The column names that will be restructured to a longer format\nnames_to: The new column name that will contain values which correspond to the column names in the wide data\nvalues_to: The new column name that will contain the actual values in the wide data\n\nUsing pivot_longer() we can restructure the data back to long format\n\ndata_long_again &lt;- data_wide |&gt;\n  pivot_longer(cols = any_of(c(\"Stress Level\", \"Creativity\", \"Memory\")),\n               names_to = \"TestType\",\n               values_to = \"Score\")\n\nCheck to make sure data_long and data_long_again are identical.\nOkay, now let’s say we have a wide data set with multiple sessions of Stress , Creativity, and Memory.\n\ndata_sessions_wide &lt;- tibble(\n  ParticipantID = 1:3,\n  StressLevel_S1 = c(5, 6, 4),\n  Creativity_S1 = c(7, 6, 8),\n  Memory_S1 = c(8, 7, 6),\n  StressLevel_S2 = c(4, 5, 3),\n  Creativity_S2 = c(8, 7, 9),\n  Memory_S2 = c(9, 8, 7),\n  StressLevel_S3 = c(3, 4, 2),\n  Creativity_S3 = c(9, 8, 10),\n  Memory_S3 = c(10, 9, 8)\n)\n\nThe data is not very useful in this format, so let’s restructure it to be a mix of long and wide format. Using the rule of thumb above, we want to create 4 columns with Session, Stress Level, Creativity, and Memory. There are two strategies for doing this:\n\nUsing pivot_longer(), separate(), and then pivot_wider()\nUse more complicated syntax in pivot_longer()\n\n\n# 1. Using pivot_longer(), separate(), and then pivot_wider()\ndata_sessions_1 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = \"Session\",\n               values_to = \"Score\") |&gt;\n  separate(Session, into = c(\"Test\", \"Session\")) |&gt;\n  pivot_wider(names_from = Test,\n              values_from = Score)\n\n# 2. Use more complicated syntax in pivot_longer()\ndata_sessions_2 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = c(\".value\", \"Session\"),\n               names_pattern = \"(.*)_(S\\\\d)\")"
   },
   {
     "objectID": "lectures/lectures-class-2.html#class-activity",
     "href": "lectures/lectures-class-2.html#class-activity",
     "title": "Class 2: Importing, Merging, and Restructuring Data",
     "section": "Class Activity",
-    "text": "Class Activity\nNote that this activity was created with the assistance of ChatGPT 4.\nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (class_2_cog_data.csv) and another with the mood ratings data (class_2_mood_data.txt), but the same participants across each data set.\nYour task will involve importing, restructuring, and merging the data so that we can graphically visualize the results of the experiment.\n\nCreate a new R script and save it as class_2_activity.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, tidyr, ggplot2\n\nImport the data files\nGet to know the data (use what you learned from Class 1)\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\nHow many are in each of the intervention conditions?\nApproximately, what are the range of values on cognitive performance and mood ratings?\n\nHint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low\n\nAre there are any missing values in the data?\n\nRestructure each data set to long format with week spread across rows instead of columns and one column for cognitive score or mood rating\n\nYou will notice that the values in the week column also contain the string: cognitive_week_ or mood_week_. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. This is an optional step.\n\nmutate(week = parse_number(week))\n\n\nMerge the two long data frames into one data frame.\n\nHint: There is more than one key column that the data frames need to be joined by.\n\nPlot the cognitive performance data:\nCreate a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). Something like this:\n\n\nFirst add the data and aesthetic layers - how our data map onto the plot scales and axes\n\n# change the following values to fit your data\n# data, var_x, var_y, var_color\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n\nNow let’s add in the geometries layer - the visual elements used for the data\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5)\n\nNo need to modify the code here. For now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters. But you can see that we are plotting three geom layers, errorbar, line, and point. We need to use stat_summary() because the data are not aggregated, this function will aggregate the data across participants using fun = mean.\nFinally, let’s make this plot a little prettier\n\n# change the following values based on your preference\n# the width, and size values in stat_summary()\n# lower limit and upper limit in coord_cartesian()\n# the title, x, y, and color in labs()\n# choose a ggplot2 theme\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5) +\n  coord_cartesian(ylim = c(72, 80)) +\n  labs(title = \"Give the plot a title\", \n       x = \"change x-axis label\", \n       y = \"change y-axis label\", \n       color = \"change legend title\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_() # choose a ggplot2 theme\n\nChange the following values based on your preference\n\nthe width of the error bars: stat_summary(width = .9)\nthe size of the lines: stat_summary(size = .5)\nthe size of the data points: stat_summary(size = .1.5)\nthe lower and upper limit of the y-axis (zoom in or out): coord_cartesian(ylim = c(lower_limit, upper_limit)\nadd a plot title\nthe y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.\nchoose a brewer color palette: scale_color_brewer(palette = \"Set1\")\n\nSee options here: R Color Brewer’s palettes\n\nchoose a ggplot2 theme:\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\n\n\n\nPlot the mood data:\n\n\nCopy and paste the code you wrote for plotting the cognitive performance data.\nChange values as needed\n\nThe variable to be plotted on the y-axis aes(y = )\nthe lower and upper limits of the y-axis coord_cartesian(ylim = c(lower_limit, upper_limit)\nplot title, y-axis, x-axis, and legend labels\n\n\nSave the plots as a file on your computer\n\nPlace the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.\n\nggsave(here(\"folder/path/class_2_cognitive_plot.png\"), \n       width = 6, height = 4, dpi = 300)\n\n\nOrganize and clean up your script\n\nLoad all packages at the top of your script\nGet rid of code that is not a necessary step for creating the plots\nAdd comment headers to sections of your code: e.g., # load packages\n\n\n\nReproducible Script\nYou should attempt to complete the activity without looking at this code\n\n\nCode\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\n\n# import data\ncog_import &lt;- read_csv(here(\"data/class_2_cog_data.csv\"))\nmood_import &lt;- read_delim(here(\"data/class_2_mood_data.txt\"), \n                          delim = \"\\t\", escape_double = FALSE, trim_ws = TRUE)\n\n# restructure data\ncog_data &lt;- cog_import |&gt;\n  pivot_longer(cols = starts_with(\"cognitive_week\"), \n               names_to = \"week\", \n               values_to = \"cognitive_score\") |&gt;\n  mutate(week = parse_number(week))\n\nmood_data &lt;- mood_import |&gt;\n  pivot_longer(cols = starts_with(\"mood_week\"), \n               names_to = \"week\", \n               values_to = \"mood_score\") |&gt;\n  mutate(week = parse_number(week))\n\n# merge data\ndata &lt;- full_join(cog_data, mood_data, \n                  by = c(\"participant_id\", \"intervention_type\", \"week\"))\n\n# plot data\nggplot(data, aes(x = week, y = cognitive_score, \n                 color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(65, 85)) +\n  labs(title = \"Cognitive Scores Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Cognitive Score\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(here(\"~/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/lectures/images/class_2_cognitive_plot.png\"), \n       width = 6, height = 4, dpi = 300)\n\nggplot(data, aes(x = week, y = mood_score, \n                 color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(60, 80)) +\n  labs(title = \"Mood Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Mood\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(here(\"~/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/lectures/images/class_2_mood_plot.png\"), \n       width = 6, height = 4, dpi = 300)"
+    "text": "Class Activity\nNote that this activity was created with the assistance of ChatGPT 4.\nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (class_2_cog_data.csv) and another with the mood ratings data (class_2_mood_data.txt), but the same participants across each data set.\nYour task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.\n\nCreate a new R script and save it as class_2_activity.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, tidyr, ggplot2\n\nImport the data files\nGet to know the data (use what you learned from Class 1)\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\nHow many are in each of the intervention conditions?\nApproximately, what are the range of values on cognitive performance and mood ratings?\n\nHint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low\n\nAre there are any missing values in the data?\n\nRestructure each data set to long format with week spread across rows instead of columns and one column for cognitive score or mood rating\n\nAfter you have restructured the data frames, you will notice that the values in the week column also contain the string: cognitive_week_ or mood_week_. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. This is an optional step.\n\nmutate(week = parse_number(week))\n\n\nMerge the two long data frames into one data frame.\n\nHint: There is more than one key column that the data frames need to be joined by.\n\nPlot the cognitive performance data:\nCreate a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). Something like this:\n\n\nFirst add the data and aesthetic layers - how the data map onto the plot scales and axes\n\n# change the following values to fit your data\n# data, var_x, var_y, var_color\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n\nNow let’s add in the geometries layer - the visual elements used for the data\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5)\n\nNo need to modify the code here. For now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters. But you can see that we are plotting three geom layers, errorbar, line, and point. We need to use stat_summary() because the data are not aggregated, this function will aggregate the data across participants using fun = mean.\nFinally, let’s make this plot a little prettier\n\n# change the following values based on your preference\n# the width, and size values in stat_summary()\n# lower limit and upper limit in coord_cartesian()\n# the title, x, y, and color in labs()\n# choose a ggplot2 theme\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5) +\n  coord_cartesian(ylim = c(72, 80)) +\n  labs(title = \"Give the plot a title\", \n       x = \"change x-axis label\", \n       y = \"change y-axis label\", \n       color = \"change legend title\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_() # choose a ggplot2 theme\n\nChange the following values based on your preference\n\nthe width of the error bars: stat_summary(width = .9)\nthe size of the lines: stat_summary(size = .5)\nthe size of the data points: stat_summary(size = .1.5)\nthe lower and upper limit of the y-axis (zoom in or out): coord_cartesian(ylim = c(lower_limit, upper_limit)\nadd a plot title\nthe y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.\nchoose a brewer color palette: scale_color_brewer(palette = \"Set1\")\n\nSee options here: R Color Brewer’s palettes\n\nchoose a ggplot2 theme:\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\n\n\n\nPlot the mood data:\n\n\nCopy and paste the code you wrote for plotting the cognitive performance data.\nChange values as needed\n\nThe variable to be plotted on the y-axis aes(y = )\nthe lower and upper limits of the y-axis coord_cartesian(ylim = c(lower_limit, upper_limit)\nplot title, y-axis, x-axis, and legend labels\n\n\nSave the plots as a file on your computer\n\nPlace the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.\n\nggsave(here(\"folder/path/class_2_cognitive_plot.png\"), \n       width = 6, height = 4, dpi = 300)\n\n\nOrganize and clean up your script\n\nLoad all packages at the top of your script\nGet rid of code that is not a necessary step for creating the plots\nAdd comment headers to sections of your code: e.g., # load packages\n\n\n\nReproducible Script\nYou should attempt to complete the activity without looking at this code\n\n\nCode\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\n\n# import data\ncog_import &lt;- read_csv(\"data/class_2_cog_data.csv\")\nmood_import &lt;- read_delim(\"data/class_2_mood_data.txt\", \n                          delim = \"\\t\", escape_double = FALSE, trim_ws = TRUE)\n\n# restructure data\ncog_data &lt;- cog_import |&gt;\n  pivot_longer(cols = starts_with(\"cognitive_week\"), \n               names_to = \"week\", \n               values_to = \"cognitive_score\") |&gt;\n  mutate(week = parse_number(week))\n\nmood_data &lt;- mood_import |&gt;\n  pivot_longer(cols = starts_with(\"mood_week\"), \n               names_to = \"week\", \n               values_to = \"mood_score\") |&gt;\n  mutate(week = parse_number(week))\n\n# merge data\ndata_merged &lt;- full_join(cog_data, mood_data, \n                         by = c(\"participant_id\", \"intervention_type\", \"week\"))\n\n# plot data\nggplot(data_merged, aes(x = week, y = cognitive_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(65, 85)) +\n  labs(title = \"Cognitive Scores Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Cognitive Score\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\nggplot(data_merged, aes(x = week, y = mood_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(60, 80)) +\n  labs(title = \"Mood Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Mood\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_mood_plot.png\", \n       width = 6, height = 4, dpi = 300)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#prepare",
+    "href": "slides/slides-class-2.html#prepare",
+    "title": "Class 2",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n \n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n⬇️ Download sample data files: (right-click to download linked file)\n\n\nclass_2_cog_data.csv\nclass_2_mood_data.csv"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#outline",
+    "href": "slides/slides-class-2.html#outline",
+    "title": "Class 2",
+    "section": "Outline",
+    "text": "Outline\n \n\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nBind vs. Join\nbind_() functions\njoin_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#file-paths",
+    "href": "slides/slides-class-2.html#file-paths",
+    "title": "Class 2",
+    "section": "File Paths",
+    "text": "File Paths\nR needs to know the full file path to the file on your computer in order to import it\n \n\n\nAbsolute file paths\n\n\nOn Macs:\nUsers/username/projects/project_name/a_file.csv\nOn Windows:\nC:\\username\\projects\\project_name\\a_file.csv"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#three-approaches-to-getting-the-right-file-path",
+    "href": "slides/slides-class-2.html#three-approaches-to-getting-the-right-file-path",
+    "title": "Class 2",
+    "section": "Three approaches to getting the right file path",
+    "text": "Three approaches to getting the right file path\n \n\n\nUsing setwd()\nUsing the RStudio Import Dataset GUI\nUsing RProjects and here()\n\n\nNever… ever… ever… use option 1, setwd().\nInstead, you should use RProjects and here(). But we will not cover this until Class 5. For now, we can just use the RStudio Import Dataset GUI to find the absolute file path."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#rstudio-import-dataset-gui",
+    "href": "slides/slides-class-2.html#rstudio-import-dataset-gui",
+    "title": "Class 2",
+    "section": "RStudio Import Dataset GUI",
+    "text": "RStudio Import Dataset GUI"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#rstudio-import-dataset-gui-1",
+    "href": "slides/slides-class-2.html#rstudio-import-dataset-gui-1",
+    "title": "Class 2",
+    "section": "RStudio Import Dataset GUI",
+    "text": "RStudio Import Dataset GUI"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#rstudio-import-dataset-gui-2",
+    "href": "slides/slides-class-2.html#rstudio-import-dataset-gui-2",
+    "title": "Class 2",
+    "section": "RStudio Import Dataset GUI",
+    "text": "RStudio Import Dataset GUI\n \n\n\n\n \n\nSelect Browse on the top right and select the data file you want to import.\nThe Data Preview window will let you see if it is importing it in the right format.\nYou can change the Import Options below.\nClick on the 📋 icon above the Code Preview window to copy the code.\nClick on Cancel to exit out of the Import GUI window\nPaste the code into your Untitled.R script\n\nThe most useful thing here wil be the absolute file path."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#rstudio-import-dataset-gui-3",
+    "href": "slides/slides-class-2.html#rstudio-import-dataset-gui-3",
+    "title": "Class 2",
+    "section": "RStudio Import Dataset GUI",
+    "text": "RStudio Import Dataset GUI\n \n\n\n \n \n \n\n\n\n\n\n\nExploring Your Data\n\n\nWhen you want to just explore some data and don’t care about creating a reproducible script it can be perfectly acceptable to not copy and paste the code from Code Preview window and just select the Import button."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#types-of-data-files",
+    "href": "slides/slides-class-2.html#types-of-data-files",
+    "title": "Class 2",
+    "section": "Types of Data Files",
+    "text": "Types of Data Files\n \n\ncsv\ntab-delimited"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#csv-data-files",
+    "href": "slides/slides-class-2.html#csv-data-files",
+    "title": "Class 2",
+    "section": "csv Data Files",
+    "text": "csv Data Files\n \n\n\nCSV stands for “Comma-Separated Values.”\ncsv files are typically saved with .csv file extension (e.g., datafile.csv)\ncsv files are by far the easiest files to import into R and most software programs.\nI suggest any time you want to save/output a data file to your computer, do it in csv format."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#tab-delimited-data-files",
+    "href": "slides/slides-class-2.html#tab-delimited-data-files",
+    "title": "Class 2",
+    "section": "tab-delimited Data Files",
+    "text": "tab-delimited Data Files\n \n\n\ntab-delimited files are saved with the more standard .txt file extension (e.g., datafile.txt)\nThere are a lot of different types of delimiters\ntab-delimited files are a little more tedious to import\nYou have to memorize more arguments to import tab-delimited files"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#importing-data-files",
+    "href": "slides/slides-class-2.html#importing-data-files",
+    "title": "Class 2",
+    "section": "Importing Data Files",
+    "text": "Importing Data Files\nreadr\n \n\nlibrary(readr)\n\n# csv\ndata_import &lt;- read_csv(\"filepath/datafile.csv\")\n\n# tab-delimited\ndata_import &lt;- read_delim(\"filepath/datafile.txt\", delim = \"\\t\", \n                          escape_double = FALSE, trim_ws = TRUE)\n\n\n\nUse the RStudio Import Dataset GUI to get the filepath that you will need\nIn Class 5 you will learn a better way to specify file paths using RProjects and here::here()"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#merging-data-frames",
+    "href": "slides/slides-class-2.html#merging-data-frames",
+    "title": "Class 2",
+    "section": "Merging Data Frames",
+    "text": "Merging Data Frames\n \nYou might find yourself in a situation where you need to import multiple data files and merge them into a single data frame. There are two general classes of merging data\n \n\n\nBind\nJoin"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#bind",
+    "href": "slides/slides-class-2.html#bind",
+    "title": "Class 2",
+    "section": "Bind",
+    "text": "Bind\nCombining data frames together by stacking either the rows or columns\n \nRow Bind: same columns but different rows and stack them on top of each other"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#bind-1",
+    "href": "slides/slides-class-2.html#bind-1",
+    "title": "Class 2",
+    "section": "Bind",
+    "text": "Bind\nCombining data frames together by stacking either the rows or columns\n \nColumn Bind: same rows but different columns and stacks them side-by-side. This is a much less common situation than a row bind and can usually be accomplished with a join instead"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#bind-2",
+    "href": "slides/slides-class-2.html#bind-2",
+    "title": "Class 2",
+    "section": "Bind",
+    "text": "Bind\ndplyr\n \n\nlibrary(dplyr)\n\n# row bind\ndata_merged &lt;- bind_rows(data_1, data_2)\n\n# column bind\ndata_merged &lt;- bind_cols(data_1, data_2)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#join",
+    "href": "slides/slides-class-2.html#join",
+    "title": "Class 2",
+    "section": "Join",
+    "text": "Join\nMerging data frames together that have at least some rows in common (e.g. Same Subject IDs) and have at least one column that is different\n \n\n\n\n\n\nFor a full list and detailed description of the _join() functions see the dplyr documentation"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#full-join",
+    "href": "slides/slides-class-2.html#full-join",
+    "title": "Class 2",
+    "section": "Full Join",
+    "text": "Full Join\nFor the most part you can get away with just knowing how to do a full join using full_join() from the dplyr package\n \n\ndata_merged &lt;- full_join(data_1, data_2, by = \"Subject\")\n\n\n\n\nYou need to specify what are the key column(s) to join by - columns that are common between the data frames.\nOften times there is more than one key column that the data frames need to be joined by:\n\n\n\ndata_merged &lt;- full_join(data_1, data_2, by = c(\"Subject\", \"Session\"))"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#restructure-1",
+    "href": "slides/slides-class-2.html#restructure-1",
+    "title": "Class 2",
+    "section": "Restructure",
+    "text": "Restructure\n \nThe exact same data can be structured in different ways\nThere are two main formats that any data set can be structured as:\n \n\n\nWide: Variables are spread out across columns, making the data frame wider\n \n\n\n\nID\nStress\nCreativity\nMemory\n\n\n\n\n1\n5\n7\n8\n\n\n2\n3\n6\n7\n\n\n3\n4\n8\n6\n\n\n\n\n\n\nLong: Variables and values are spread across rows, making the data frame longer\n \n\n\n\nID\nTest Type\nScore\n\n\n\n\n1\nStress\n5\n\n\n1\nCreativity\n7\n\n\n1\nMemory\n8\n\n\n2\nStress\n3\n\n\n2\nCreativity\n6\n\n\n2\nMemory\n7\n\n\n3\nStress\n4\n\n\n3\nCreativity\n8\n\n\n3\nMemory\n6"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#restructure-2",
+    "href": "slides/slides-class-2.html#restructure-2",
+    "title": "Class 2",
+    "section": "Restructure",
+    "text": "Restructure\n \nAnd actually, you can have a mix of wide and long formatted data in a single data frame.\n \n\n\n\n\n\n\n\n\n\n\nParticipant ID\nSession\nStress Level\nCreativity\nMemory\n\n\n\n\n1\n1\n5\n7\n8\n\n\n1\n2\n4\n8\n9\n\n\n1\n3\n3\n9\n10\n\n\n2\n1\n6\n6\n7\n\n\n2\n2\n5\n7\n8\n\n\n2\n3\n4\n8\n9\n\n\n3\n1\n4\n8\n6\n\n\n3\n2\n3\n9\n7\n\n\n3\n3\n2\n10\n8"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#restructure-3",
+    "href": "slides/slides-class-2.html#restructure-3",
+    "title": "Class 2",
+    "section": "Restructure",
+    "text": "Restructure\n \n\nA good rule of thumb for formatting data is to have your variables (IVs and DVs) each have their own column.\nThis often results in:\n\nBetween-subject variables in wide format\nWithin-subject variables in long format\n\nRestructuring data involves changing the structure from long-to-wide (wider) or wide-to-long (longer).\nThe tidyr package provides useful functions to do this:\n\npivot_wider() “widens” data from long-to-wide\npivot_longer() “lengthens” data from wide-to-long"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#pivot_wider",
+    "href": "slides/slides-class-2.html#pivot_wider",
+    "title": "Class 2",
+    "section": "pivot_wider()",
+    "text": "pivot_wider()\n \n\n\nUsing the example data sets on previous slides, let’s restructure the long data frame to a wide format\nFirst let’s create the data frame - you can just copy and paste this code in an Untitled.R script:\n\n\n \n\ndata_long &lt;- data.frame(\n  ParticipantID = rep(1:3, each = 3),\n  TestType = rep(c(\"Stress Level\", \"Creativity\", \"Memory\"), times = 3),\n  Score = c(5, 7, 8, 3, 6, 7, 4, 8, 6)\n  )\n\nView(data_long)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#pivot_wider-1",
+    "href": "slides/slides-class-2.html#pivot_wider-1",
+    "title": "Class 2",
+    "section": "pivot_wider()",
+    "text": "pivot_wider()\n \nThe two main arguments to specify in pivot_wider() are\n\n\nnames_from: The column name that contains the variables to create new columns by (e.g. “Test Type”). The values in this column will become column names in the wider data format.\nvalues_from: The column name that contains the values (e.g. “Score”).\n\n\nNow we can use pivot_wider() to convert it to a wide format:\n \n\nlibrary(tidyr)\n\ndata_wide &lt;- data_long |&gt;\n  pivot_wider(names_from = TestType,\n              values_from = Score)\n\nView(data_wide)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#section",
+    "href": "slides/slides-class-2.html#section",
+    "title": "Class 2",
+    "section": "",
+    "text": "Column Names\n\n\nR does not like column names to have spaces in them, but it does allow it.\nNotice how in data_wide the column Stress Level contains a space. This is because the value in data_long had a space, which was not a problem then.\nclean_names() from janitor provides a convenient way to get rid of spaces and replace them with an _\n\nlibrary(janitor)\n\ndata_wide &lt;- clean_names(data_wide, case = \"parse\")"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#pivot_longer",
+    "href": "slides/slides-class-2.html#pivot_longer",
+    "title": "Class 2",
+    "section": "pivot_longer()",
+    "text": "pivot_longer()\n \nThe three main arguments to specify in pivot_longer() are:\n\n\ncols: The column names that will be restructured to a longer format\nnames_to: The new column name that will contain values which correspond to the column names in the wide data\nvalues_to: The new column name that will contain the actual values in the wide data\n\n\nUsing pivot_longer() we can restructure the data back to long format:\n \n\ndata_long_again &lt;- data_wide |&gt;\n  pivot_longer(cols = any_of(c(\"Stress Level\", \"Creativity\", \"Memory\")),\n               names_to = \"TestType\",\n               values_to = \"Score\")\n\nView(data_long_again)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#mixed-wide-and-long",
+    "href": "slides/slides-class-2.html#mixed-wide-and-long",
+    "title": "Class 2",
+    "section": "Mixed Wide and Long",
+    "text": "Mixed Wide and Long\n \nConverting from a wide data format to a mix of wide and long can be more complicated\nLet’s say we have a wide data set with multiple sessions of Stress , Creativity, and Memory.\nCopy and paste this:\n \n\ndata_sessions_wide &lt;- tibble(\n  ParticipantID = 1:3,\n  StressLevel_S1 = c(5, 6, 4),\n  Creativity_S1 = c(7, 6, 8),\n  Memory_S1 = c(8, 7, 6),\n  StressLevel_S2 = c(4, 5, 3),\n  Creativity_S2 = c(8, 7, 9),\n  Memory_S2 = c(9, 8, 7),\n  StressLevel_S3 = c(3, 4, 2),\n  Creativity_S3 = c(9, 8, 10),\n  Memory_S3 = c(10, 9, 8)\n)\n\nView(data_sessions_wide)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#mixed-wide-and-long-1",
+    "href": "slides/slides-class-2.html#mixed-wide-and-long-1",
+    "title": "Class 2",
+    "section": "Mixed Wide and Long",
+    "text": "Mixed Wide and Long\n \nLet’s restructure this to 4 columns: Session, Stress Level, Creativity, and Memory.\nThere are two strategies for doing this:\n\nUsing pivot_longer(), separate(), and then pivot_wider()\nUse more complicated syntax in pivot_longer()\n\n\n# 1. Using pivot_longer(), separate(), and then pivot_wider()\ndata_sessions_1 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = \"Session\",\n               values_to = \"Score\") |&gt;\n  separate(Session, into = c(\"Test\", \"Session\")) |&gt;\n  pivot_wider(names_from = Test,\n              values_from = Score)\n\n# 2. Use more complicated syntax in pivot_longer()\ndata_sessions_2 &lt;- data_sessions_wide |&gt;\n  pivot_longer(cols = contains(\"_S\"),\n               names_to = c(\".value\", \"Session\"),\n               names_pattern = \"(.*)_(S\\\\d)\")"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#class-activity-1",
+    "href": "slides/slides-class-2.html#class-activity-1",
+    "title": "Class 2",
+    "section": "Class Activity",
+    "text": "Class Activity\nNote that this activity was created with the assistance of ChatGPT 4.\n \nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\n \nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (class_2_cog_data.csv) and another with the mood ratings data (class_2_mood_data.txt), but the same participants across each data set.\n \nYour task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#setup",
+    "href": "slides/slides-class-2.html#setup",
+    "title": "Class 2",
+    "section": "Setup",
+    "text": "Setup\n \n\n\nCreate a new R script and save it as class_2_activity.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, tidyr, ggplot2"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#import-1",
+    "href": "slides/slides-class-2.html#import-1",
+    "title": "Class 2",
+    "section": "Import",
+    "text": "Import\n \n\n\nImport the data files\nGet to know the data (use what you learned from Class 1)\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\nHow many are in each of the intervention conditions?\nApproximately, what are the range of values on cognitive performance and mood ratings?\n\nHint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low\n\nAre there are any missing values in the data?"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#restructure-4",
+    "href": "slides/slides-class-2.html#restructure-4",
+    "title": "Class 2",
+    "section": "Restructure",
+    "text": "Restructure\n \n\n\nRestructure each data set to long format with week spread across rows instead of columns and one column for cognitive score or mood rating\n\n\n \nAfter you have restructured the data frames, you will notice that the values in the week column also contain the string: cognitive_week_ or mood_week_.\nThis is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. This is optional.\n \n\nmutate(week = parse_number(week))"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#merge-1",
+    "href": "slides/slides-class-2.html#merge-1",
+    "title": "Class 2",
+    "section": "Merge",
+    "text": "Merge\n \n\n\nMerge the two long data frames into one data frame.\n\nHint: There is more than one key column that the data frames need to be joined by."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot",
+    "href": "slides/slides-class-2.html#plot",
+    "title": "Class 2",
+    "section": "Plot",
+    "text": "Plot\n \nExcellent! You have gotten the data ready to visualize. Graphical visualization is a great way to find patterns in your data. Let’s take a look at the result of this experiment! (note that this data is only simulated).\n \n\nYou are going to create plots that look something like this but I will show you how to further customize the design of the plot"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot-1",
+    "href": "slides/slides-class-2.html#plot-1",
+    "title": "Class 2",
+    "section": "Plot",
+    "text": "Plot\n \n\n\nPlot the cognitive performance data:\nCreate a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). See previous slide\n \n\nFirst add the data and aesthetic layers - how the data map onto the plot scales and axes\n \n\n# change the following values to fit your data\n# data, var_x, var_y, var_color\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot-the-cognitive-performance-data",
+    "href": "slides/slides-class-2.html#plot-the-cognitive-performance-data",
+    "title": "Class 2",
+    "section": "7. Plot the Cognitive Performance Data",
+    "text": "7. Plot the Cognitive Performance Data\n \n\n\nNow let’s add in the geometries layer - the visual elements used for the data\n\n\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5)\n\n\n\n\nNo need to modify the code here.\nFor now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters.\nBut you can see that we are plotting three geom layers, errorbar, line, and point. We need to use stat_summary() because the data are not aggregated, this function will aggregate the data across participants using fun = mean."
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot-the-cognitive-performance-data-1",
+    "href": "slides/slides-class-2.html#plot-the-cognitive-performance-data-1",
+    "title": "Class 2",
+    "section": "7. Plot the Cognitive Performance Data",
+    "text": "7. Plot the Cognitive Performance Data\n \n\n\nFinally, let’s make this plot a little prettier\n\n\n\n# change the following values based on your preference\n# the width, and size values in stat_summary()\n# lower limit and upper limit in coord_cartesian()\n# the title, x, y, and color in labs()\n# choose a ggplot2 theme\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5) +\n  coord_cartesian(ylim = c(72, 80)) +\n  labs(title = \"Give the plot a title\", \n       x = \"change x-axis label\", \n       y = \"change y-axis label\", \n       color = \"change legend title\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_() # choose a ggplot2 theme\n\nSee next slide for more details"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#make-the-plot-look-nicer",
+    "href": "slides/slides-class-2.html#make-the-plot-look-nicer",
+    "title": "Class 2",
+    "section": "Make the plot look nicer",
+    "text": "Make the plot look nicer\n \nChange the following values based on your preference\n\n\nthe width of the error bars: stat_summary(width = .9)\nthe size of the lines: stat_summary(size = .5)\nthe size of the data points: stat_summary(size = .1.5)\nthe lower and upper limit of the y-axis (zoom in or out): coord_cartesian(ylim = c(lower_limit, upper_limit)\nadd a plot title\nthe y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.\nchoose a brewer color palette: scale_color_brewer(palette = \"Set1\")\n\nSee options here: R Color Brewer’s palettes\n\nchoose a ggplot2 theme:\n\ntheme_bw() , theme_light() , theme_dark() , theme_minimal() , theme_classic() , theme_void()"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot-2",
+    "href": "slides/slides-class-2.html#plot-2",
+    "title": "Class 2",
+    "section": "Plot",
+    "text": "Plot\n \n\n\nPlot the mood data:\n\nCopy and paste the code you wrote for plotting the cognitive performance data.\nChange values as needed\n\nThe variable to be plotted on the y-axis aes(y = )\nthe lower and upper limits of the y-axis coord_cartesian(ylim = c(lower_limit, upper_limit)\nplot title, y-axis, x-axis, and legend labels"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot-3",
+    "href": "slides/slides-class-2.html#plot-3",
+    "title": "Class 2",
+    "section": "Plot",
+    "text": "Plot\n \n\n\nSave the plots as a file on your computer\n\nPlace the following code directly below the code for creating each of the plots.\nIt will save the last generated plot to a file.\nChange the file name for each plot.\n\n\n\n\nggsave(here(\"folder/path/class_2_cognitive_plot.png\"), \n       width = 6, height = 4, dpi = 300)"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#plot-4",
+    "href": "slides/slides-class-2.html#plot-4",
+    "title": "Class 2",
+    "section": "Plot",
+    "text": "Plot\n \n\n\nOrganize and clean up your script\n\nLoad all packages at the top of your script\nGet rid of code that is not a necessary step for creating the plots\nAdd comment headers to sections of your code: e.g., # load packages"
+  },
+  {
+    "objectID": "slides/slides-class-2.html#reproducible-script",
+    "href": "slides/slides-class-2.html#reproducible-script",
+    "title": "Class 2",
+    "section": "Reproducible Script",
+    "text": "Reproducible Script\nYou should attempt to complete the activity without looking at this code\n\n\nCode\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\n\n# import data\ncog_import &lt;- read_csv(\"data/class_2_cog_data.csv\")\nmood_import &lt;- read_delim(\"data/class_2_mood_data.txt\", \n                          delim = \"\\t\", escape_double = FALSE, trim_ws = TRUE)\n\n# restructure data\ncog_data &lt;- cog_import |&gt;\n  pivot_longer(cols = starts_with(\"cognitive_week\"), \n               names_to = \"week\", \n               values_to = \"cognitive_score\") |&gt;\n  mutate(week = parse_number(week))\n\nmood_data &lt;- mood_import |&gt;\n  pivot_longer(cols = starts_with(\"mood_week\"), \n               names_to = \"week\", \n               values_to = \"mood_score\") |&gt;\n  mutate(week = parse_number(week))\n\n# merge data\ndata_merged &lt;- full_join(cog_data, mood_data, \n                         by = c(\"participant_id\", \"intervention_type\", \"week\"))\n\n# plot data\nggplot(data_merged, aes(x = week, y = cognitive_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(65, 85)) +\n  labs(title = \"Cognitive Scores Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Cognitive Score\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\nggplot(data_merged, aes(x = week, y = mood_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(60, 80)) +\n  labs(title = \"Mood Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Mood\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_mood_plot.png\", \n       width = 6, height = 4, dpi = 300)"
   },
   {
     "objectID": "index.html",

@@ -161,14 +161,14 @@ The exact same data can be structured in different ways. There are two main form
 **Wide**: Variables are spread out across columns, making the data frame wider
 
 | **Participant ID** | **Stress Level Score** | **Creativity Score** | **Memory Score** |
-|-----------------|--------------------|------------------|-----------------|
+|------------------|-------------------|------------------|------------------|
 | 1                  | 5                      | 7                    | 8                |
 | 2                  | 3                      | 6                    | 7                |
 | 3                  | 4                      | 8                    | 6                |
 
  
 
-**Long**: Variables and values are stacked in rows, making the data frame longer
+**Long**: Variables and values are spread across rows, making the data frame longer
 
 | **Participant ID** | **Test Type** | **Score** |
 |--------------------|---------------|-----------|
@@ -212,7 +212,7 @@ A good rule of thumb for formatting data is to **have your variables (IVs and DV
 
 -   Notice how `Session`, a within-subject variable, is in long format because `Session` is an independent variable in the study, so `Session` needs it's own column. `Stress`, `Creativity`, and `Memory` are other variables (probably dependent variables) in this study and so they need their own columns, therefore they are laid out in a wide format.
 
-Restructuring data involves changing the structure from long-to-wide or wide-to-long. The `tidyr` package provides useful functions to do this:
+Restructuring data involves changing the structure from long-to-wide (wider) or wide-to-long (longer). The `tidyr` package provides useful functions to do this:
 
 -   `pivot_wider()` "widens" data from long-to-wide
 
@@ -255,12 +255,14 @@ data_wide <- data_long |>
               values_from = Score)
 ```
 
-::: callout-warning
+::: callout-tip
 ## Column Names
 
-R does not like column names to have spaces in them, but it does allow it. Notice how in `data_wide` the column `Stress Level` contains a space. This is because the value in `data_long` had a space, which was not a problem then.
+R does not like column names to have spaces in them, but it does allow it.
 
-`clean_names()` from the `janitor` package provides a convenient way to get rid of spaces and replace them with an `_` .
+Notice how in `data_wide` the column `Stress Level` contains a space. This is because the value in `data_long` had a space, which was not a problem then.
+
+`clean_names()` from the `janitor` package provides a convenient way to get rid of spaces and replace them with an `_`
 
 ```{r}
 #| warning: false
@@ -341,7 +343,7 @@ Let's consider a study investigating the impact of sleep quality interventions o
 
 You're analyzing data from a psychology experiment where participants' cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data ([**class_2_cog_data.csv**](/data/class_2_cog_data.csv)) and another with the mood ratings data ([**class_2_mood_data.txt**](/data/class_2_mood_data.txt)), but the same participants across each data set.
 
-Your task will involve importing, restructuring, and merging the data so that we can graphically visualize the results of the experiment.
+Your task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.
 
 1.  Create a new R script and save it as **class_2_activity.R**
 
@@ -369,7 +371,7 @@ Your task will involve importing, restructuring, and merging the data so that we
 
 5.  Restructure each data set to long format with `week` spread across rows instead of columns and one column for `cognitive score` or `mood rating`
 
-    -   You will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. **This is an optional step.**
+    -   After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. **This is an optional step.**
 
         ```{r}
         #| eval: false
@@ -387,7 +389,7 @@ Your task will involve importing, restructuring, and merging the data so that we
 
     ![](images/class_2_cognitive_plot.png){width="413"}
 
-    1.  First add the data and aesthetic layers - how our data map onto the plot scales and axes
+    1.  First add the data and aesthetic layers - how the data map onto the plot scales and axes
 
         ```{r}
         #| eval: false
@@ -498,9 +500,9 @@ Your task will involve importing, restructuring, and merging the data so that we
 
 10. Organize and clean up your script
 
-    1.  Load all packages at the top of your script
-    2.  Get rid of code that is not a necessary step for creating the plots
-    3.  Add comment headers to sections of your code: e.g., `# load packages`
+    -   Load all packages at the top of your script
+    -   Get rid of code that is not a necessary step for creating the plots
+    -   Add comment headers to sections of your code: e.g., `# load packages`
 
 ### Reproducible Script
 
@@ -517,8 +519,8 @@ library(tidyr)
 library(ggplot2)
 
 # import data
-cog_import <- read_csv(here("data/class_2_cog_data.csv"))
-mood_import <- read_delim(here("data/class_2_mood_data.txt"), 
+cog_import <- read_csv("data/class_2_cog_data.csv")
+mood_import <- read_delim("data/class_2_mood_data.txt", 
                           delim = "\t", escape_double = FALSE, trim_ws = TRUE)
 
 # restructure data
@@ -535,12 +537,12 @@ mood_data <- mood_import |>
   mutate(week = parse_number(week))
 
 # merge data
-data <- full_join(cog_data, mood_data, 
-                  by = c("participant_id", "intervention_type", "week"))
+data_merged <- full_join(cog_data, mood_data, 
+                         by = c("participant_id", "intervention_type", "week"))
 
 # plot data
-ggplot(data, aes(x = week, y = cognitive_score, 
-                 color = intervention_type, group = intervention_type)) +
+ggplot(data_merged, aes(x = week, y = cognitive_score, 
+                        color = intervention_type, group = intervention_type)) +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .25) +
   stat_summary(fun = mean, geom = "line", size = 1) +
   stat_summary(fun = mean, geom = "point", size = 2) +
@@ -552,11 +554,11 @@ ggplot(data, aes(x = week, y = cognitive_score,
   scale_color_brewer(palette = "Set1") +
   theme_classic()
 
-ggsave(here("~/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/lectures/images/class_2_cognitive_plot.png"), 
+ggsave("images/class_2_cognitive_plot.png", 
        width = 6, height = 4, dpi = 300)
 
-ggplot(data, aes(x = week, y = mood_score, 
-                 color = intervention_type, group = intervention_type)) +
+ggplot(data_merged, aes(x = week, y = mood_score, 
+                        color = intervention_type, group = intervention_type)) +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .25) +
   stat_summary(fun = mean, geom = "line", size = 1) +
   stat_summary(fun = mean, geom = "point", size = 2) +
@@ -568,7 +570,7 @@ ggplot(data, aes(x = week, y = mood_score,
   scale_color_brewer(palette = "Set1") +
   theme_classic()
 
-ggsave(here("~/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/lectures/images/class_2_mood_plot.png"), 
+ggsave("images/class_2_mood_plot.png", 
        width = 6, height = 4, dpi = 300)
 
 ```

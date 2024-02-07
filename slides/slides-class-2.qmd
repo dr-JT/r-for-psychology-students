@@ -17,3 +17,928 @@ format:
     highlight-style: github
     code-line-numbers: false
 ---
+
+## Prepare
+
+Before starting this class:
+
+ 
+
+📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
+
+⬇️ Download sample data files: (right-click to download linked file)
+
+::: nonincremental
+-   [class_2_cog_data.csv](/data/class_2_cog_data.csv)
+
+-   [class_2_mood_data.csv](/data/class_2_mood_data.txt)
+:::
+
+## Outline
+
+ 
+
+::: nonincremental
+-   Import: `readr`
+
+    -   File paths
+
+    -   `read_csv()` and `read_delim()`
+
+-   Merge: `dplyr`
+
+    -   Bind vs. Join
+
+    -   `bind_()` functions
+
+    -   `join_()` functions
+
+-   Restructure: `tidyr`
+
+    -   `pivot_wider()`
+
+    -   `pivot_longer()`
+:::
+
+# Import
+
+## File Paths
+
+R needs to know the full file path to the file on your computer in order to import it
+
+ 
+
+::: nonincremental
+-   Absolute file paths
+:::
+
+On Macs:
+
+Users/username/projects/project_name/a_file.csv
+
+On Windows:
+
+C:\\username\\projects\\project_name\\a_file.csv
+
+## Three approaches to getting the right file path
+
+ 
+
+::: nonincremental
+1.  Using `setwd()`
+2.  Using the RStudio Import Dataset GUI
+3.  Using RProjects and `here()`
+:::
+
+Never... ever... ever... use option 1, `setwd()`.
+
+Instead, you should use RProjects and `here()`. But we will not cover this until Class 5. For now, we can just use the RStudio Import Dataset GUI to find the **absolute** file path.
+
+## RStudio Import Dataset GUI
+
+ 
+
+![](images/rstudioGUI-location.png){fig-align="center" width="574"}
+
+## RStudio Import Dataset GUI
+
+ 
+
+![](images/rstudioGUI-readr.png){fig-align="center" width="800"}
+
+## RStudio Import Dataset GUI {.smaller}
+
+ 
+
+::: columns
+::: {.column width="50%"}
+::: nonincremental
+ 
+
+-   Select **Browse** on the top right and select the data file you want to import.
+
+-   The **Data Preview** window will let you see if it is importing it in the right format.
+
+-   You can change the **Import Options** below.
+
+-   Click on the 📋 icon above the **Code Preview** window to copy the code.
+
+-   Click on **Cancel** to exit out of the Import GUI window
+
+-   Paste the code into your **Untitled.R** script
+
+    -   The most useful thing here wil be the **absolute** file path.
+:::
+:::
+
+::: {.column width="50%"}
+ 
+
+ 
+
+![](images/rstudioGUI-readr.png){fig-align="right" width="420"}
+:::
+:::
+
+## RStudio Import Dataset GUI {.smaller}
+
+ 
+
+::: columns
+::: {.column width="50%"}
+ 
+
+ 
+
+ 
+
+::: callout-tip
+## Exploring Your Data
+
+When you want to just explore some data and don't care about creating a reproducible script it can be perfectly acceptable to not copy and paste the code from **Code Preview** window and just select the **Import** button.
+:::
+:::
+
+::: {.column width="50%"}
+ 
+
+ 
+
+![](images/rstudioGUI-readr.png){fig-align="right" width="420"}
+:::
+:::
+
+## Types of Data Files
+
+ 
+
+-   `csv`
+
+-   `tab-delimited`
+
+## `csv` Data Files
+
+ 
+
+::: nonincremental
+-   CSV stands for "Comma-Separated Values."
+
+-   `csv` files are typically saved with **.csv** file extension (e.g., datafile.csv)
+
+-   `csv` files are by far the easiest files to import into R and most software programs.
+
+-   I suggest any time you want to save/output a data file to your computer, do it in `csv` format.
+:::
+
+![](images/csv_texteditor.png){fig-align="center"}
+
+## `tab-delimited` Data Files
+
+ 
+
+::: nonincremental
+-   `tab-delimited` files are saved with the more standard .txt file extension (e.g., datafile.txt)
+
+-   There are a lot of different types of delimiters
+
+-   `tab-delimited` files are a little more tedious to import
+
+-   You have to memorize more arguments to import `tab-delimited` files
+:::
+
+![](images/tab_texteditor.png){fig-align="center" width="1930"}
+
+## Importing Data Files
+
+`readr`
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(readr)
+
+# csv
+data_import <- read_csv("filepath/datafile.csv")
+
+# tab-delimited
+data_import <- read_delim("filepath/datafile.txt", delim = "\t", 
+                          escape_double = FALSE, trim_ws = TRUE)
+
+```
+
+<br>
+
+-   Use the RStudio Import Dataset GUI to get the filepath that you will need
+
+-   In Class 5 you will learn a better way to specify file paths using RProjects and `here::here()`
+
+# Merge
+
+## Merging Data Frames
+
+ 
+
+You might find yourself in a situation where you need to import multiple data files and merge them into a single data frame. There are two general classes of merging data
+
+ 
+
+::: nonincremental
+-   Bind
+
+-   Join
+:::
+
+## Bind
+
+Combining data frames together by stacking either the rows or columns
+
+ 
+
+**Row Bind**: same columns but different rows and stack them on top of each other
+
+![](images/row_bind.png){fig-align="center"}
+
+## Bind
+
+Combining data frames together by stacking either the rows or columns
+
+ 
+
+**Column Bind**: same rows but different columns and stacks them side-by-side. This is a much less common situation than a row bind and can usually be accomplished with a **join** instead
+
+## Bind
+
+`dplyr`
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(dplyr)
+
+# row bind
+data_merged <- bind_rows(data_1, data_2)
+
+# column bind
+data_merged <- bind_cols(data_1, data_2)
+
+```
+
+## Join
+
+Merging data frames together that have at least some rows in common (e.g. Same Subject IDs) and have at least one column that is different
+
+ 
+
+![](images/dplyr-joins.png){fig-align="center" width="450"}
+
+[For a full list and detailed description of the `_join()` functions see the [dplyr documentation](https://dplyr.tidyverse.org/reference/index.html#data-frames){target="_blank"}]{style="text-align: center"}
+
+## Full Join
+
+For the most part you can get away with just knowing how to do a full join using `full_join()` from the `dplyr` package
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+data_merged <- full_join(data_1, data_2, by = "Subject")
+
+```
+
+<br>
+
+::: nonincremental
+-   You need to specify what are the **key** column(s) to join by - columns that are common between the data frames.
+
+-   Often times there is more than one **key** column that the data frames need to be joined by:
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+data_merged <- full_join(data_1, data_2, by = c("Subject", "Session"))
+
+```
+
+# Restructure
+
+## Restructure {.smaller}
+
+ 
+
+The exact same data can be structured in different ways
+
+There are two main formats that any data set can be structured as:
+
+ 
+
+::: columns
+::: {.column width="40%"}
+**Wide**: Variables are spread out across columns, making the data frame wider
+
+ 
+
+| **ID** | **Stress** | **Creativity** | **Memory** |
+|--------|------------|----------------|------------|
+| 1      | 5          | 7              | 8          |
+| 2      | 3          | 6              | 7          |
+| 3      | 4          | 8              | 6          |
+:::
+
+::: {.column width="20%"}
+:::
+
+::: {.column width="40%"}
+**Long**: Variables and values are spread across rows, making the data frame longer
+
+ 
+
+| **ID** | **Test Type** | **Score** |
+|--------|---------------|-----------|
+| 1      | Stress        | 5         |
+| 1      | Creativity    | 7         |
+| 1      | Memory        | 8         |
+| 2      | Stress        | 3         |
+| 2      | Creativity    | 6         |
+| 2      | Memory        | 7         |
+| 3      | Stress        | 4         |
+| 3      | Creativity    | 8         |
+| 3      | Memory        | 6         |
+:::
+:::
+
+ 
+
+## Restructure
+
+ 
+
+And actually, you can have a **mix of wide and long** formatted data in a single data frame.
+
+ 
+
+| **Participant ID** | **Session** | **Stress Level** | **Creativity** | **Memory** |
+|---------------|---------------|---------------|---------------|---------------|
+| 1                  | 1           | 5                | 7              | 8          |
+| 1                  | 2           | 4                | 8              | 9          |
+| 1                  | 3           | 3                | 9              | 10         |
+| 2                  | 1           | 6                | 6              | 7          |
+| 2                  | 2           | 5                | 7              | 8          |
+| 2                  | 3           | 4                | 8              | 9          |
+| 3                  | 1           | 4                | 8              | 6          |
+| 3                  | 2           | 3                | 9              | 7          |
+| 3                  | 3           | 2                | 10             | 8          |
+
+## Restructure
+
+ 
+
+-   A good rule of thumb for formatting data is to **have your variables (IVs and DVs) each have their own column**.
+
+-   This often results in:
+
+    -   Between-subject variables in wide format
+
+    -   Within-subject variables in long format
+
+-   Restructuring data involves changing the structure from long-to-wide (wider) or wide-to-long (longer).
+
+-   The `tidyr` package provides useful functions to do this:
+
+    -   `pivot_wider()` "widens" data from long-to-wide
+
+    -   `pivot_longer()` "lengthens" data from wide-to-long
+
+## `pivot_wider()`
+
+ 
+
+::: nonincremental
+-   Using the example data sets on previous slides, let's restructure the long data frame to a wide format
+
+-   First let's create the data frame - you can just copy and paste this code in an **Untitled.R** script:
+:::
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+data_long <- data.frame(
+  ParticipantID = rep(1:3, each = 3),
+  TestType = rep(c("Stress Level", "Creativity", "Memory"), times = 3),
+  Score = c(5, 7, 8, 3, 6, 7, 4, 8, 6)
+  )
+
+View(data_long)
+```
+
+## `pivot_wider()`
+
+ 
+
+The two main arguments to specify in `pivot_wider()` are
+
+::: nonincremental
+-   **names_from**: The column name that contains the variables to create new columns by (e.g. "Test Type"). The values in this column will become column names in the wider data format.
+
+-   **values_from**: The column name that contains the values (e.g. "Score").
+:::
+
+Now we can use `pivot_wider()` to convert it to a wide format:
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(tidyr)
+
+data_wide <- data_long |>
+  pivot_wider(names_from = TestType,
+              values_from = Score)
+
+View(data_wide)
+
+```
+
+## 
+
+ 
+
+ 
+
+ 
+
+::: callout-tip
+## Column Names
+
+R does not like column names to have spaces in them, but it does allow it.
+
+Notice how in `data_wide` the column `Stress Level` contains a space. This is because the value in `data_long` had a space, which was not a problem then.
+
+`clean_names()` from `janitor` provides a convenient way to get rid of spaces and replace them with an `_`
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(janitor)
+
+data_wide <- clean_names(data_wide, case = "parse")
+
+```
+:::
+
+## `pivot_longer()`
+
+ 
+
+The three main arguments to specify in `pivot_longer()` are:
+
+::: nonincremental
+-   **cols**: The column names that will be restructured to a longer format
+
+-   **names_to**: The new column name that will contain values which correspond to the column names in the wide data
+
+-   **values_to**: The new column name that will contain the actual values in the wide data
+:::
+
+Using `pivot_longer()` we can restructure the data back to long format:
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+data_long_again <- data_wide |>
+  pivot_longer(cols = any_of(c("Stress Level", "Creativity", "Memory")),
+               names_to = "TestType",
+               values_to = "Score")
+
+View(data_long_again)
+
+```
+
+## Mixed Wide and Long
+
+ 
+
+Converting from a **wide** data format to a **mix of wide and long** can be more complicated
+
+Let's say we have a wide data set with multiple sessions of `Stress` , `Creativity`, and `Memory`.
+
+Copy and paste this:
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+data_sessions_wide <- tibble(
+  ParticipantID = 1:3,
+  StressLevel_S1 = c(5, 6, 4),
+  Creativity_S1 = c(7, 6, 8),
+  Memory_S1 = c(8, 7, 6),
+  StressLevel_S2 = c(4, 5, 3),
+  Creativity_S2 = c(8, 7, 9),
+  Memory_S2 = c(9, 8, 7),
+  StressLevel_S3 = c(3, 4, 2),
+  Creativity_S3 = c(9, 8, 10),
+  Memory_S3 = c(10, 9, 8)
+)
+
+View(data_sessions_wide)
+
+```
+
+## Mixed Wide and Long
+
+ 
+
+Let's restructure this to 4 columns: `Session`, `Stress Level`, `Creativity`, and `Memory`.
+
+There are two strategies for doing this:
+
+1.  Using `pivot_longer()`, `separate()`, and then `pivot_wider()`
+2.  Use more complicated syntax in `pivot_longer()`
+
+```{r}
+#| echo: true
+#| eval: false
+
+# 1. Using pivot_longer(), separate(), and then pivot_wider()
+data_sessions_1 <- data_sessions_wide |>
+  pivot_longer(cols = contains("_S"),
+               names_to = "Session",
+               values_to = "Score") |>
+  separate(Session, into = c("Test", "Session")) |>
+  pivot_wider(names_from = Test,
+              values_from = Score)
+
+# 2. Use more complicated syntax in pivot_longer()
+data_sessions_2 <- data_sessions_wide |>
+  pivot_longer(cols = contains("_S"),
+               names_to = c(".value", "Session"),
+               names_pattern = "(.*)_(S\\d)")
+
+```
+
+# Class Activity
+
+## Class Activity
+
+*Note that this activity was created with the assistance of ChatGPT 4.*
+
+ 
+
+Let's consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.
+
+ 
+
+You're analyzing data from a psychology experiment where participants' cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data ([**class_2_cog_data.csv**](/data/class_2_cog_data.csv)) and another with the mood ratings data ([**class_2_mood_data.txt**](/data/class_2_mood_data.txt)), but the same participants across each data set.
+
+ 
+
+Your task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.
+
+## Setup
+
+ 
+
+::: nonincremental
+1.  Create a new R script and save it as **class_2_activity.R**
+
+2.  Load the following packages at the top of your script
+
+    -   `readr`, `dplyr`, `tidyr`, `ggplot2`
+:::
+
+## Import
+
+ 
+
+::: nonincremental
+3.  Import the data files
+
+4.  Get to know the data (use what you learned from [Class 1](/lectures/lectures-class-1.html))
+
+    -   What are the column names?
+
+    -   What type of values are in the columns?
+
+    -   How many participants are in the study?
+
+    -   How many are in each of the intervention conditions?
+
+    -   Approximately, what are the range of values on cognitive performance and mood ratings?
+
+        -   Hint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low
+
+    -   Are there are any missing values in the data?
+:::
+
+## Restructure
+
+ 
+
+::: nonincremental
+5.  Restructure each data set to long format with `week` spread across rows instead of columns and one column for `cognitive score` or `mood rating`
+:::
+
+ 
+
+After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`.
+
+This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. **This is optional.**
+
+ 
+
+```{r}
+#| echo: true
+#| eval: false
+
+mutate(week = parse_number(week))
+```
+
+## Merge
+
+ 
+
+::: nonincremental
+6.  Merge the two long data frames into one data frame.
+
+    -   Hint: There is more than one **key** column that the data frames need to be joined by.
+:::
+
+## Plot
+
+ 
+
+Excellent! You have gotten the data ready to visualize. Graphical visualization is a great way to find patterns in your data. Let's take a look at the result of this experiment! (note that this data is only simulated).
+
+ 
+
+. . .
+
+You are going to create plots that look something like this but I will show you how to further customize the design of the plot
+
+::: columns
+::: {.column width="50%"}
+![](images/class_2_cognitive_plot.png){width="726"}
+:::
+
+::: {.column width="50%"}
+![](images/class_2_mood_plot.png){width="726"}
+:::
+:::
+
+## Plot
+
+ 
+
+::: nonincremental
+7.  Plot the cognitive performance data:
+
+    Create a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). See previous slide
+
+     
+
+    1.  First add the data and aesthetic layers - how the data map onto the plot scales and axes
+
+         
+
+        ```{r}
+        #| echo: true
+        #| eval: false
+
+        # change the following values to fit your data
+        # data, var_x, var_y, var_color
+
+        ggplot(data, aes(x = var_x, y = var_y,
+                         color = var_color, group = var_color))
+
+        ```
+:::
+
+## 7. Plot the Cognitive Performance Data
+
+ 
+
+::: nonincremental
+2.  Now let's add in the geometries layer - the visual elements used for the data
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(data, aes(x = var_x, y = var_y,
+                 color = var_color, group = var_color))
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .9) +
+  stat_summary(fun = mean, geom = "line", size = .5) +
+  stat_summary(fun = mean, geom = "point", size = 1.5)
+
+```
+
+<br>
+
+::: nonincremental
+-   No need to modify the code here.
+
+-   For now don't worry about what these are doing, we will cover graphical visualization in more detail in later chapters.
+
+-   But you can see that we are plotting three `geom` layers, **errorbar**, **line**, and **point**. We need to use `stat_summary()` because the data are not aggregated, this function will aggregate the data across participants using `fun = mean`.
+:::
+
+## 7. Plot the Cognitive Performance Data
+
+ 
+
+::: nonincremental
+3.  Finally, let's make this plot a little prettier
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+# change the following values based on your preference
+# the width, and size values in stat_summary()
+# lower limit and upper limit in coord_cartesian()
+# the title, x, y, and color in labs()
+# choose a ggplot2 theme
+
+ggplot(data, aes(x = var_x, y = var_y,
+                 color = var_color, group = var_color)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .9) +
+  stat_summary(fun = mean, geom = "line", size = .5) +
+  stat_summary(fun = mean, geom = "point", size = 1.5) +
+  coord_cartesian(ylim = c(72, 80)) +
+  labs(title = "Give the plot a title", 
+       x = "change x-axis label", 
+       y = "change y-axis label", 
+       color = "change legend title") +
+  scale_color_brewer(palette = "Set1") +
+  theme_() # choose a ggplot2 theme
+
+```
+
+*See next slide for more details*
+
+## Make the plot look nicer {.smaller}
+
+ 
+
+Change the following values based on your preference
+
+::: nonincremental
+-   the width of the error bars: `stat_summary(width = .9)`
+-   the size of the lines: `stat_summary(size = .5)`
+-   the size of the data points: `stat_summary(size = .1.5)`
+-   the lower and upper limit of the y-axis (zoom in or out): `coord_cartesian(ylim = c(lower_limit, upper_limit)`
+-   add a plot title
+-   the y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.
+-   choose a brewer color palette: `scale_color_brewer(palette = "Set1")`
+    -   See options here: [R Color Brewer’s palettes](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html){target="_blank"}
+-   choose a [ggplot2 theme](https://ggplot2.tidyverse.org/reference/ggtheme.html){target="_blank"}:
+    -   `theme_bw()` , `theme_light()` , `theme_dark()` , `theme_minimal()` , `theme_classic()` , `theme_void()`
+:::
+
+## Plot
+
+ 
+
+::: nonincremental
+8.  Plot the mood data:
+
+    -   Copy and paste the code you wrote for plotting the cognitive performance data.
+
+    -   Change values as needed
+
+        -   The variable to be plotted on the y-axis `aes(y = )`
+
+        -   the lower and upper limits of the y-axis `coord_cartesian(ylim = c(lower_limit, upper_limit)`
+
+        -   plot title, y-axis, x-axis, and legend labels
+:::
+
+## Plot
+
+ 
+
+::: nonincremental
+9.  Save the plots as a file on your computer
+
+    -   Place the following code directly below the code for creating each of the plots.
+
+    -   It will save the last generated plot to a file.
+
+    -   Change the file name for each plot.
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+ggsave(here("folder/path/class_2_cognitive_plot.png"), 
+       width = 6, height = 4, dpi = 300)
+
+```
+
+## Plot
+
+ 
+
+::: nonincremental
+10. Organize and clean up your script
+
+    -   Load all packages at the top of your script
+    -   Get rid of code that is not a necessary step for creating the plots
+    -   Add comment headers to sections of your code: e.g., `# load packages`
+:::
+
+## Reproducible Script
+
+You should attempt to complete the activity without looking at this code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-fold: true
+
+# load packages
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# import data
+cog_import <- read_csv("data/class_2_cog_data.csv")
+mood_import <- read_delim("data/class_2_mood_data.txt", 
+                          delim = "\t", escape_double = FALSE, trim_ws = TRUE)
+
+# restructure data
+cog_data <- cog_import |>
+  pivot_longer(cols = starts_with("cognitive_week"), 
+               names_to = "week", 
+               values_to = "cognitive_score") |>
+  mutate(week = parse_number(week))
+
+mood_data <- mood_import |>
+  pivot_longer(cols = starts_with("mood_week"), 
+               names_to = "week", 
+               values_to = "mood_score") |>
+  mutate(week = parse_number(week))
+
+# merge data
+data_merged <- full_join(cog_data, mood_data, 
+                         by = c("participant_id", "intervention_type", "week"))
+
+# plot data
+ggplot(data_merged, aes(x = week, y = cognitive_score, 
+                        color = intervention_type, group = intervention_type)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .25) +
+  stat_summary(fun = mean, geom = "line", size = 1) +
+  stat_summary(fun = mean, geom = "point", size = 2) +
+  coord_cartesian(ylim = c(65, 85)) +
+  labs(title = "Cognitive Scores Across Weeks by Intervention Type", 
+       x = "Week", 
+       y = "Cognitive Score", 
+       color = "Intervention Type") +
+  scale_color_brewer(palette = "Set1") +
+  theme_classic()
+
+ggsave("images/class_2_cognitive_plot.png", 
+       width = 6, height = 4, dpi = 300)
+
+ggplot(data_merged, aes(x = week, y = mood_score, 
+                        color = intervention_type, group = intervention_type)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .25) +
+  stat_summary(fun = mean, geom = "line", size = 1) +
+  stat_summary(fun = mean, geom = "point", size = 2) +
+  coord_cartesian(ylim = c(60, 80)) +
+  labs(title = "Mood Across Weeks by Intervention Type", 
+       x = "Week", 
+       y = "Mood", 
+       color = "Intervention Type") +
+  scale_color_brewer(palette = "Set1") +
+  theme_classic()
+
+ggsave("images/class_2_mood_plot.png", 
+       width = 6, height = 4, dpi = 300)
+
+```
