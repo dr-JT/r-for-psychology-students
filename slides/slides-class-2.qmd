@@ -11,11 +11,14 @@ format:
     slide-number: c
     progress: true
     preview-links: true
-    menu: false
+    menu: true
     auto-stretch: false
     date-format: long
     highlight-style: github
     code-line-numbers: false
+execute:
+  echo: true
+  eval: false
 ---
 
 ## Prepare
@@ -47,8 +50,6 @@ Before starting this class:
 
 -   Merge: `dplyr`
 
-    -   Bind vs. Join
-
     -   `bind_()` functions
 
     -   `join_()` functions
@@ -59,6 +60,78 @@ Before starting this class:
 
     -   `pivot_longer()`
 :::
+
+# Pipe Operator
+
+## Pipe Operator
+
+ 
+
+The pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like:
+
+ 
+
+```{r}
+data |>
+  step1 |>
+  step2 |>
+  step3
+```
+
+<br>
+
+We start with our data. Then we do step1. Then we do step2. Then we do step3. The pipe ties it all together, enabling us to do multiple things to our data, all in one execution of code.
+
+## Pipe Operator
+
+ 
+
+There are different approaches to writing code that performs multiple functions on the same object.
+
+ 
+
+**Here is the standard, non-pipe operator way:**
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- filter(data, y != "c")
+data_new <- mutate(data_new, x_mean = mean(x))
+data_new <- select(data_new, y, x_mean)
+```
+
+<br>
+
+**An alternative is to use the pipe operator** `|>`
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- data |>
+  filter(y != "c") |>
+  mutate(x_mean = mean(x)) |>
+  select(y, x_mean)
+```
+
+## Pipe Operator
+
+ 
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- data |>
+  filter(y != "c") |>
+  mutate(x_mean = mean(x)) |>
+  select(y, x_mean)
+```
+
+<br>
+
+With the pipe operator, the result of the previous line gets passed (or piped) onto the next function.
+
+-   The first line in this example is simply specifying the data frame that is being passed from one line to the next.
+
+-   Notice how I did not have to specify `data` inside the `filter()`, `mutate()`, and `select()`, functions. This makes the code more concise and easier to read.
+
+-   The end result of the last function, then gets assigned to `data_new <-`.
 
 # Import
 
@@ -72,11 +145,13 @@ R needs to know the full file path to the file on your computer in order to impo
 -   Absolute file paths
 :::
 
-On Macs:
+**On Macs**:
 
 Users/username/projects/project_name/a_file.csv
 
-On Windows:
+ 
+
+**On Windows**:
 
 C:\\username\\projects\\project_name\\a_file.csv
 
@@ -85,14 +160,16 @@ C:\\username\\projects\\project_name\\a_file.csv
  
 
 ::: nonincremental
-1.  Using `setwd()`
-2.  Using the RStudio Import Dataset GUI
-3.  Using RProjects and `here()`
+1.  Use `setwd()`
+2.  Use the RStudio Import Dataset GUI
+3.  Use RProjects and `here()`
 :::
 
-Never... ever... ever... use option 1, `setwd()`.
+-   Never... ever... ever... use option 1, `setwd()`.
 
-Instead, you should use RProjects and `here()`. But we will not cover this until Class 5. For now, we can just use the RStudio Import Dataset GUI to find the **absolute** file path.
+-   Instead, you should use RProjects and `here()`. But we will not cover this until Class 5.
+
+-   For now, we can just use the RStudio Import Dataset GUI to find the **absolute** file path.
 
 ## RStudio Import Dataset GUI
 
@@ -127,7 +204,7 @@ Instead, you should use RProjects and `here()`. But we will not cover this until
 
 -   Paste the code into your **Untitled.R** script
 
-    -   The most useful thing here wil be the **absolute** file path.
+    -   The most useful thing here will be the **absolute** file path.
 :::
 :::
 
@@ -215,9 +292,6 @@ When you want to just explore some data and don't care about creating a reproduc
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 library(readr)
 
 # csv
@@ -255,6 +329,8 @@ You might find yourself in a situation where you need to import multiple data fi
 
 Combining data frames together by stacking either the rows or columns
 
+. . .
+
  
 
 **Row Bind**: same columns but different rows and stack them on top of each other
@@ -276,9 +352,6 @@ Combining data frames together by stacking either the rows or columns
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 library(dplyr)
 
 # row bind
@@ -291,7 +364,9 @@ data_merged <- bind_cols(data_1, data_2)
 
 ## Join
 
-Merging data frames together that have at least some rows in common (e.g. Same Subject IDs) and have at least one column that is different
+Merging data frames together that have at least one column in common with a mix of shared and unique entries in that column (e.g. Subject IDs).
+
+. . .
 
  
 
@@ -303,17 +378,18 @@ Merging data frames together that have at least some rows in common (e.g. Same S
 
 For the most part you can get away with just knowing how to do a full join using `full_join()` from the `dplyr` package
 
+. . .
+
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 data_merged <- full_join(data_1, data_2, by = "Subject")
 
 ```
 
 <br>
+
+. . .
 
 ::: nonincremental
 -   You need to specify what are the **key** column(s) to join by - columns that are common between the data frames.
@@ -321,10 +397,9 @@ data_merged <- full_join(data_1, data_2, by = "Subject")
 -   Often times there is more than one **key** column that the data frames need to be joined by:
 :::
 
-```{r}
-#| echo: true
-#| eval: false
+. . .
 
+```{r}
 data_merged <- full_join(data_1, data_2, by = c("Subject", "Session"))
 
 ```
@@ -336,6 +411,8 @@ data_merged <- full_join(data_1, data_2, by = c("Subject", "Session"))
  
 
 The exact same data can be structured in different ways
+
+. . .
 
 There are two main formats that any data set can be structured as:
 
@@ -406,11 +483,11 @@ And actually, you can have a **mix of wide and long** formatted data in a single
 
 -   This often results in:
 
-    -   Between-subject variables in wide format
+    -   Measured variables in wide format
 
-    -   Within-subject variables in long format
+    -   Experimental conditions or repeated-measures in long format
 
--   Restructuring data involves changing the structure from long-to-wide (wider) or wide-to-long (longer).
+-   Restructuring data involves changing the structure from long-to-wide (wider) or wide-to-long (longer)
 
 -   The `tidyr` package provides useful functions to do this:
 
@@ -431,9 +508,6 @@ And actually, you can have a **mix of wide and long** formatted data in a single
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 data_long <- data.frame(
   ParticipantID = rep(1:3, each = 3),
   TestType = rep(c("Stress Level", "Creativity", "Memory"), times = 3),
@@ -455,14 +529,13 @@ The two main arguments to specify in `pivot_wider()` are
 -   **values_from**: The column name that contains the values (e.g. "Score").
 :::
 
+. . .
+
 Now we can use `pivot_wider()` to convert it to a wide format:
 
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 library(tidyr)
 
 data_wide <- data_long |>
@@ -491,12 +564,9 @@ Notice how in `data_wide` the column `Stress Level` contains a space. This is be
 `clean_names()` from `janitor` provides a convenient way to get rid of spaces and replace them with an `_`
 
 ```{r}
-#| echo: true
-#| eval: false
-
 library(janitor)
 
-data_wide <- clean_names(data_wide, case = "parse")
+data_wide_clean <- clean_names(data_wide, case = "parse")
 
 ```
 :::
@@ -515,14 +585,13 @@ The three main arguments to specify in `pivot_longer()` are:
 -   **values_to**: The new column name that will contain the actual values in the wide data
 :::
 
+. . .
+
 Using `pivot_longer()` we can restructure the data back to long format:
 
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 data_long_again <- data_wide |>
   pivot_longer(cols = any_of(c("Stress Level", "Creativity", "Memory")),
                names_to = "TestType",
@@ -538,16 +607,15 @@ View(data_long_again)
 
 Converting from a **wide** data format to a **mix of wide and long** can be more complicated
 
-Let's say we have a wide data set with multiple sessions of `Stress` , `Creativity`, and `Memory`.
+. . .
 
-Copy and paste this:
+Let's say we have a wide data set with multiple sessions of `Stress` , `Creativity`, and `Memory`.
 
  
 
-```{r}
-#| echo: true
-#| eval: false
+Copy and paste this:
 
+```{r}
 data_sessions_wide <- tibble(
   ParticipantID = 1:3,
   StressLevel_S1 = c(5, 6, 4),
@@ -576,10 +644,9 @@ There are two strategies for doing this:
 1.  Using `pivot_longer()`, `separate()`, and then `pivot_wider()`
 2.  Use more complicated syntax in `pivot_longer()`
 
-```{r}
-#| echo: true
-#| eval: false
+. . .
 
+```{r}
 # 1. Using pivot_longer(), separate(), and then pivot_wider()
 data_sessions_1 <- data_sessions_wide |>
   pivot_longer(cols = contains("_S"),
@@ -596,6 +663,20 @@ data_sessions_2 <- data_sessions_wide |>
                names_pattern = "(.*)_(S\\d)")
 
 ```
+
+## Tidy Select Functions
+
+ 
+
+::: callout-note
+You may find yourself in a situation where you need to select multiple columns in a argument but it can be tedious to type each every column, especially if the number of columns is larger.
+
+There are what is known as tidy select functions to easily select column names, particularly if there is a consistent pattern to those column names.
+
+This can be very useful in functions like `pivot_longer()`. In the examples provided on previous slides, we used some tidy select functions: `any_of()` and `contains()`.
+
+To learn more about what tidy select functions are available and what they do read the [tidy select documentation](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html){target="_blank"}.
+:::
 
 # Class Activity
 
@@ -614,6 +695,12 @@ You're analyzing data from a psychology experiment where participants' cognitive
  
 
 Your task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.
+
+ 
+
+::: {style="text-align: center"}
+Reference these slides and/or the [class lecture materials](/lectures/lectures-class-2.html){target="_blank"} to complete the activity.
+:::
 
 ## Setup
 
@@ -668,9 +755,6 @@ This is redundant information with the column names and can be removed to clean 
  
 
 ```{r}
-#| echo: true
-#| eval: false
-
 mutate(week = parse_number(week))
 ```
 
@@ -722,9 +806,6 @@ You are going to create plots that look something like this but I will show you 
          
 
         ```{r}
-        #| echo: true
-        #| eval: false
-
         # change the following values to fit your data
         # data, var_x, var_y, var_color
 
@@ -743,9 +824,6 @@ You are going to create plots that look something like this but I will show you 
 :::
 
 ```{r}
-#| echo: true
-#| eval: false
-
 ggplot(data, aes(x = var_x, y = var_y,
                  color = var_color, group = var_color))
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .9) +
@@ -773,9 +851,6 @@ ggplot(data, aes(x = var_x, y = var_y,
 :::
 
 ```{r}
-#| echo: true
-#| eval: false
-
 # change the following values based on your preference
 # the width, and size values in stat_summary()
 # lower limit and upper limit in coord_cartesian()
@@ -851,9 +926,6 @@ Change the following values based on your preference
 :::
 
 ```{r}
-#| echo: true
-#| eval: false
-
 ggsave(here("folder/path/class_2_cognitive_plot.png"), 
        width = 6, height = 4, dpi = 300)
 
@@ -876,8 +948,6 @@ ggsave(here("folder/path/class_2_cognitive_plot.png"),
 You should attempt to complete the activity without looking at this code
 
 ```{r}
-#| echo: true
-#| eval: false
 #| code-fold: true
 
 # load packages

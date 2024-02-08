@@ -29,8 +29,6 @@ Before starting this class:
 
 -   Merge: `dplyr`
 
-    -   Bind vs. Join
-
     -   `bind_()` functions
 
     -   `join_()` functions
