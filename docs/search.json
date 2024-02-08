@@ -749,5 +749,54 @@
     "title": "Class 1: An Introduction to Working with Data in R",
     "section": "Class 1: Reproducible Script",
     "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n\n\nIn the rest of the course, we will go into greater depth on transforming data, graphical visualization, and statistical analysis."
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html",
+    "href": "lectures/lectures-class-3.html",
+    "title": "Class 3: Data Transformation",
+    "section": "",
+    "text": "We will cover the basics of data transformation in this class."
+  },
+  {
+    "objectID": "classes/class-3.html",
+    "href": "classes/class-3.html",
+    "title": "Class 3",
+    "section": "",
+    "text": "The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats."
+  },
+  {
+    "objectID": "classes/class-3.html#prepare",
+    "href": "classes/class-3.html#prepare",
+    "title": "Class 3",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n⬇️ Download sample data files: (right-click to download linked file)\n\nclass_2_cog_data.csv\nclass_2_mood_data.csv"
+  },
+  {
+    "objectID": "classes/class-3.html#outline",
+    "href": "classes/class-3.html#outline",
+    "title": "Class 3",
+    "section": "Outline",
+    "text": "Outline\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nBind vs. Join\nbind_() functions\njoin_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()"
+  },
+  {
+    "objectID": "classes/class-3.html#class-materials",
+    "href": "classes/class-3.html#class-materials",
+    "title": "Class 3",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 2: Importing, Merging, and Restructuring Data\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections"
+  },
+  {
+    "objectID": "lectures/lectures-class-2.html#pipe-operator",
+    "href": "lectures/lectures-class-2.html#pipe-operator",
+    "title": "Class 2: Importing, Merging, and Restructuring Data",
+    "section": "Pipe Operator",
+    "text": "Pipe Operator\nFirst, however, we need to talk about the pipe operator |&gt; .\n\n\n\n\n\n\nNote\n\n\n\nThere are actually two pipe operators now. The original dplyr pipe operator, %&gt;% , and the newer base R pipe operator, |&gt; . You can use either one.\n\n\nThe pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like\n\ndata |&gt;\n  step1 |&gt;\n  step2 |&gt;\n  step3\n\nWe start with our data. Then we do step1. Then we do step2. Then we do step3. The pipe ties it all together, enabling us to do multiple things to our data, all in one execution of code.\nThere are different approaches to writing code that performs multiple functions on the same object. Here is the standard, non-pipe operator way:\n\n# three steps: filter, calculate a mean, then select only some columns to keep\ndata_new &lt;- filter(data, y != \"c\")\ndata_new &lt;- mutate(data_new, x_mean = mean(x))\ndata_new &lt;- select(data_new, y, x_mean)\n\nAn alternative is to use the pipe operator |&gt;\n\n# three steps: filter, calculate a mean, then select only some columns to keep\ndata_new &lt;- data |&gt;\n  filter(y != \"c\") |&gt;\n  mutate(x_mean = mean(x)) |&gt;\n  select(y, x_mean)\n\nWith the pipe operator, the result of the previous line gets passed (or piped) onto the next function. The first line in this example is simply specifying the data frame that is being passed from one line to the next. Notice how I did not have to specify data inside the filter(), mutate(), and select(), functions. This makes the code more concise and easier to read. The end result of the last function, then gets assigned to data_new &lt;-."
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#this-is-the-way",
+    "href": "lectures/lectures-class-3.html#this-is-the-way",
+    "title": "Class 3: Data Transformation",
+    "section": "This is The Way",
+    "text": "This is The Way\nAlthough you will be learning R in this class, it might be more appropriate to say that you are learning the tidyverse.\n\nThe tidyverse is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with readr), to restructuring and transforming data (with tidyr and dplyr), and to graphically visualizing data (with ggplot2).\n\n\n\n\n\n\nTip\n\n\n\nsearvh"
   }
 ]

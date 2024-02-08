@@ -1,0 +1,58 @@
+---
+title: "Class 3"
+subtitle: "Data Transformation"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.
+
+## Prepare
+
+Before starting this class:
+
+📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
+
+⬇️ Download sample data files: (right-click to download linked file)
+
+-   [class_2_cog_data.csv](/data/class_2_cog_data.csv)
+
+-   [class_2_mood_data.csv](/data/class_2_mood_data.txt)
+
+## Outline
+
+-   Import: `readr`
+
+    -   File paths
+
+    -   `read_csv()` and `read_delim()`
+
+-   Merge: `dplyr`
+
+    -   Bind vs. Join
+
+    -   `bind_()` functions
+
+    -   `join_()` functions
+
+-   Restructure: `tidyr`
+
+    -   `pivot_wider()`
+
+    -   `pivot_longer()`
+
+## Class Materials
+
+📘 [Class 2: Importing, Merging, and Restructuring Data](/lectures/lectures-class-2.html)
+
+🖥️ [Slides - Full Screen](/slides/slides-class-2.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-2.html"></iframe>
+```
+
+</div>

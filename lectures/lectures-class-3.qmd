@@ -1,0 +1,20 @@
+---
+title: "Class 3: Data Transformation"
+execute:
+  echo: true
+  eval: false
+---
+
+We will cover the basics of data transformation in this class.
+
+## This is The Way
+
+Although you will be learning R in this class, it might be more appropriate to say that you are learning the tidyverse.
+
+![](images/tidyverse.png){width="476"}
+
+The [tidyverse](#0){target="_blank"} is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with `readr`), to restructuring and transforming data (with `tidyr` and `dplyr`), and to graphically visualizing data (with `ggplot2`).
+
+::: callout-tip
+searvh
+:::

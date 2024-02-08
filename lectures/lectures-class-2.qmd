@@ -1,8 +1,51 @@
 ---
 title: "Class 2: Importing, Merging, and Restructuring Data"
+execute:
+  echo: true
+  eval: false
 ---
 
 We will cover importing data, merging data frames, and restructuring data in this class.
+
+## Pipe Operator
+
+First, however, we need to talk about the pipe operator `|>` .
+
+::: callout-note
+There are actually two pipe operators now. The original `dplyr` pipe operator, `%>%` , and the newer base R pipe operator, `|>` . You can use either one.
+:::
+
+The pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like
+
+```{r}
+data |>
+  step1 |>
+  step2 |>
+  step3
+```
+
+We start with our data. Then we do step1. Then we do step2. Then we do step3. The pipe ties it all together, enabling us to do multiple things to our data, all in one execution of code.
+
+There are different approaches to writing code that performs multiple functions on the same object. Here is the standard, non-pipe operator way:
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- filter(data, y != "c")
+data_new <- mutate(data_new, x_mean = mean(x))
+data_new <- select(data_new, y, x_mean)
+```
+
+An alternative is to use the pipe operator `|>`
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- data |>
+  filter(y != "c") |>
+  mutate(x_mean = mean(x)) |>
+  select(y, x_mean)
+```
+
+With the pipe operator, the result of the previous line gets passed (or piped) onto the next function. The first line in this example is simply specifying the data frame that is being passed from one line to the next. Notice how I did not have to specify `data` inside the `filter()`, `mutate()`, and `select()`, functions. This makes the code more concise and easier to read. The end result of the last function, then gets assigned to `data_new <-`.
 
 ## Import
 
@@ -71,7 +114,6 @@ CSV stands for "Comma-Separated Values." It's a simple file format used to store
 To import a `csv` file you can use `read_csv()` from the `readr` package.
 
 ```{r}
-#| eval: false
 
 library(readr)
 
@@ -91,7 +133,6 @@ Tab-delimited files are typically saved with the more standard **.txt** file ext
 To import a `tab-delimited` file you can use `read_delim()` from the `readr` package.
 
 ```{r}
-#| eval: false
 
 data_import <- read_delim("filepath/datafile.txt", delim = "\t", 
                      escape_double = FALSE, trim_ws = TRUE)
@@ -120,7 +161,6 @@ A column "bind" takes data frames that have the same rows but different columns 
 Row and column binds can be performed with `bind_rows()` and `bind_cols()` from the `dplyr` package
 
 ```{r}
-#| eval: false
 
 library(dplyr)
 
@@ -141,7 +181,6 @@ For a full list and detailed description of the `_join()` functions see the [dpl
 But for the most part you can get away with just knowing how to do a full join using `full_join()` from the `dplyr` package.
 
 ```{r}
-#| eval: false
 
 data_merged <- full_join(data_1, data_2, by = "Subject")
 ```
@@ -149,7 +188,6 @@ data_merged <- full_join(data_1, data_2, by = "Subject")
 Whenever joining, you need to specify what are the **key** column(s) to join by - columns that are common between the data frames. Often times there is more than one **key** column that the data frames need to be joined by:
 
 ```{r}
-#| eval: false
 
 data_merged <- full_join(data_1, data_2, by = c("Subject", "Session"))
 ```
@@ -161,7 +199,7 @@ The exact same data can be structured in different ways. There are two main form
 **Wide**: Variables are spread out across columns, making the data frame wider
 
 | **Participant ID** | **Stress Level Score** | **Creativity Score** | **Memory Score** |
-|------------------|-------------------|------------------|------------------|
+|-----------------|--------------------|------------------|-----------------|
 | 1                  | 5                      | 7                    | 8                |
 | 2                  | 3                      | 6                    | 7                |
 | 3                  | 4                      | 8                    | 6                |
@@ -229,6 +267,8 @@ Using the example data sets above, let's restructure the long data frame to a wi
 First let's create the data frame - you can just copy and paste this code
 
 ```{r}
+#| eval: true
+
 data_long <- data.frame(
   ParticipantID = rep(1:3, each = 3),
   TestType = rep(c("Stress Level", "Creativity", "Memory"), times = 3),
@@ -247,6 +287,7 @@ Now we can use `pivot_wider()` to convert it to a wide format:
 ```{r}
 #| warning: false
 #| message: false
+#| eval: true
 
 library(tidyr)
 
@@ -267,7 +308,6 @@ Notice how in `data_wide` the column `Stress Level` contains a space. This is be
 ```{r}
 #| warning: false
 #| message: false
-#| eval: false
 
 library(janitor)
 
@@ -288,6 +328,8 @@ The three main arguments to specify in `pivot_longer()` are:
 Using `pivot_longer()` we can restructure the data back to long format
 
 ```{r}
+#| eval: true
+
 data_long_again <- data_wide |>
   pivot_longer(cols = any_of(c("Stress Level", "Creativity", "Memory")),
                names_to = "TestType",
@@ -299,6 +341,8 @@ Check to make sure `data_long` and `data_long_again` are identical.
 Okay, now let's say we have a wide data set with multiple sessions of `Stress` , `Creativity`, and `Memory`.
 
 ```{r}
+#| eval: true
+
 data_sessions_wide <- tibble(
   ParticipantID = 1:3,
   StressLevel_S1 = c(5, 6, 4),
@@ -319,6 +363,8 @@ The data is not very useful in this format, so let's restructure it to be a mix 
 2.  Use more complicated syntax in `pivot_longer()`
 
 ```{r}
+#| eval: true
+
 # 1. Using pivot_longer(), separate(), and then pivot_wider()
 data_sessions_1 <- data_sessions_wide |>
   pivot_longer(cols = contains("_S"),
@@ -374,7 +420,6 @@ Your task will be to import, restructure, and merge the data so that we can grap
     -   After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. **This is an optional step.**
 
         ```{r}
-        #| eval: false
 
         mutate(week = parse_number(week))
         ```
@@ -392,7 +437,6 @@ Your task will be to import, restructure, and merge the data so that we can grap
     1.  First add the data and aesthetic layers - how the data map onto the plot scales and axes
 
         ```{r}
-        #| eval: false
 
         # change the following values to fit your data
         # data, var_x, var_y, var_color
@@ -404,7 +448,6 @@ Your task will be to import, restructure, and merge the data so that we can grap
     2.  Now let's add in the geometries layer - the visual elements used for the data
 
         ```{r}
-        #| eval: false
 
         ggplot(data, aes(x = var_x, y = var_y,
                          color = var_color, group = var_color))
@@ -418,7 +461,6 @@ Your task will be to import, restructure, and merge the data so that we can grap
     3.  Finally, let's make this plot a little prettier
 
         ```{r}
-        #| eval: false
 
         # change the following values based on your preference
         # the width, and size values in stat_summary()
@@ -491,7 +533,6 @@ Your task will be to import, restructure, and merge the data so that we can grap
     -   Place the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.
 
         ```{r}
-        #| eval: false
 
         ggsave(here("folder/path/class_2_cognitive_plot.png"), 
                width = 6, height = 4, dpi = 300)
@@ -510,7 +551,6 @@ Your task will be to import, restructure, and merge the data so that we can grap
 
 ```{r}
 #| code-fold: true
-#| eval: false
 
 # load packages
 library(readr)
