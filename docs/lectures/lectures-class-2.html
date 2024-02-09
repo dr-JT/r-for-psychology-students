@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -252,19 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pipe-operator" class="level2">
 <h2 class="anchored" data-anchor-id="pipe-operator">Pipe Operator</h2>
 <p>First, however, we need to talk about the pipe operator <code>|&gt;</code> .</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>There are actually two pipe operators now. The original <code>dplyr</code> pipe operator, <code>%&gt;%</code> , and the newer base R pipe operator, <code>|&gt;</code> . You can use either one.</p>
-</div>
-</div>
 <p>The pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
@@ -345,20 +333,8 @@ Exploring Your Data
 <section id="csv-files" class="level3">
 <h3 class="anchored" data-anchor-id="csv-files">CSV Files</h3>
 <p><code>csv</code> files are by far the easiest files to import into R and most software programs. For this reason, I suggest any time you want to save/output a data file to your computer, do it in <code>csv</code> format.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>CSV stands for “Comma-Separated Values.” It’s a simple file format used to store data in a table. Each line in the file is a row of the table, and commas are used to separate columns. Think of it like a spreadsheet where each piece of information is lined up in rows and columns, but instead of seeing the grid like in Excel, each row is just a line of text with commas between the values that would go into different columns.</p>
 <p><code>csv</code> files are typically saved with <strong>.csv</strong> file extension (e.g., data file.csv)</p>
-</div>
-</div>
 <p>To import a <code>csv</code> file you can use <code>read_csv()</code> from the <code>readr</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
@@ -369,20 +345,8 @@ Note
 <section id="tab-delimited-files" class="level3">
 <h3 class="anchored" data-anchor-id="tab-delimited-files">Tab-Delimited Files</h3>
 <p><code>tab-delimited</code> files are a little more tedious to import just because they require specifying more arguments. Which means you have to memorize more to import <code>tab-delimited</code> files.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>Tab-delimited files use <strong>tabs</strong> between items in a row to separate columns. In general, the delimiter is the type of value that is used between items in a row to separate columns. There are a lot of different types of delimiters with tab and comma (csv) being the most common.</p>
 <p>Tab-delimited files are typically saved with the more standard <strong>.txt</strong> file extension (e.g., data file.txt) but a lot of other file formats might also have the <strong>.txt</strong> extension. This can create some ambiguity as to how the data is stored and formatted for .txt files.</p>
-</div>
-</div>
 <p>To import a <code>tab-delimited</code> file you can use <code>read_delim()</code> from the <code>readr</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"filepath/datafile.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, </span>
@@ -444,10 +408,10 @@ Note
 <p><strong>Wide</strong>: Variables are spread out across columns, making the data frame wider</p>
 <table class="table">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 27%">
-<col style="width: 24%">
-<col style="width: 24%">
+<col style="width: 23%">
+<col style="width: 28%">
+<col style="width: 26%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -540,11 +504,11 @@ Note
 <p>And actually, you can have a <strong>mix of wide and long</strong> formatted data in a single data frame.</p>
 <table class="table">
 <colgroup>
+<col style="width: 25%">
+<col style="width: 16%">
+<col style="width: 22%">
 <col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -637,19 +601,7 @@ Note
 <li><p><code>pivot_wider()</code> “widens” data from long-to-wide</p></li>
 <li><p><code>pivot_longer()</code> “lengthens” data from wide-to-long</p></li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>The <code>tidyr</code> package, like <code>readr</code> and <code>dplyr</code>, is from the <strong>tidyverse</strong> set of packages.</p>
-</div>
-</div>
 <section id="pivot-wider" class="level3">
 <h3 class="anchored" data-anchor-id="pivot-wider">Pivot Wider</h3>
 <p>Using the example data sets above, let’s restructure the long data frame to a wide format:</p>
@@ -747,22 +699,10 @@ Column Names
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"Session"</span>),</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.*)_(S</span><span class="sc">\\</span><span class="st">d)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>You may find yourself in a situation where you need to select multiple columns in a argument but it can be tedious to type each every column, especially if the number of columns is larger.</p>
 <p>There are what is known as tidy select functions to easily select column names, particularly if there is a consistent pattern to those column names.</p>
 <p>This can be very useful in functions like <code>pivot_longer()</code>. In the examples provided on above, we used some tidy select functions: <code>any_of()</code> and <code>contains()</code>.</p>
 <p>To learn more about what tidy select functions are available and what they do read the <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" target="_blank">tidy select documentation</a>.</p>
-</div>
-</div>
 </section>
 </section>
 <section id="class-activity" class="level2">
@@ -791,10 +731,113 @@ Note
 <li><p>Are there are any missing values in the data?</p></li>
 </ul></li>
 <li><p>Restructure each data set to long format with <code>week</code> spread across rows instead of columns and one column for <code>cognitive score</code> or <code>mood rating</code></p>
+<p>The data frames should look something like</p>
+<table class="table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 31%">
+<col style="width: 13%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>participant_id</strong></th>
+<th><strong>intervention_type</strong></th>
+<th><strong>week</strong></th>
+<th><strong>cognitive_score</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>1</td>
+<td>76.09</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>2</td>
+<td>75.34</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>3</td>
+<td>75.09</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>4</td>
+<td>78.85</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Sleep Hygiene</td>
+<td>1</td>
+<td>72.30</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 33%">
+<col style="width: 14%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>participant_id</strong></th>
+<th><strong>intervention_type</strong></th>
+<th><strong>week</strong></th>
+<th><strong>mood_score</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>1</td>
+<td>66.32</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>2</td>
+<td>83.44</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>3</td>
+<td>76.29</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Sleep Hygiene</td>
+<td>4</td>
+<td>79.14</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Sleep Hygiene</td>
+<td>1</td>
+<td>60.17</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><p>After you have restructured the data frames, you will notice that the values in the <code>week</code> column also contain the string: <code>cognitive_week_</code> or <code>mood_week_</code>. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. <strong>This is an optional step.</strong></p>
+<li><p>After you have restructured the data frames, you will notice that the values in the <code>week</code> column also contain the string: <code>cognitive_week_</code> or <code>mood_week_</code>. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g., you can pipe the result of pivot_longer() to this mutate() code</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
 </ul></li>
 <li><p>Merge the two long data frames into one data frame.</p>
@@ -806,6 +849,24 @@ Note
 <p><img src="images/class_2_cognitive_plot.png" class="img-fluid" width="413"></p>
 <ol type="1">
 <li><p>First add the data and aesthetic layers - how the data map onto the plot scales and axes</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>data should be changed to the name of your data frame containing the cognitive data</p></li>
+<li><p>var_x should be changed to the name of the column that should be plotted on the x-axis</p></li>
+<li><p>var_y should be changed to the name of the column that should be plotted on the y-axis</p></li>
+<li><p>var_color should be change to the name of the column containing the intervention type</p></li>
+</ul>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the following values to fit your data</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data, var_x, var_y, var_color</span></span>
@@ -1127,7 +1188,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

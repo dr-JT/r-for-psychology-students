@@ -746,16 +746,36 @@ Reference these slides and/or the [class lecture materials](/lectures/lectures-c
 5.  Restructure each data set to long format with `week` spread across rows instead of columns and one column for `cognitive score` or `mood rating`
 :::
 
+The data frames should look something like
+
  
 
-After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`.
+| **participant_id** | **intervention_type** | **week** | **cognitive_score** |
+|--------------------|-----------------------|----------|---------------------|
+| 1                  | Sleep Hygiene         | 1        | 76.09               |
+| 1                  | Sleep Hygiene         | 2        | 75.34               |
+| 1                  | Sleep Hygiene         | 3        | 75.09               |
+| 1                  | Sleep Hygiene         | 4        | 78.85               |
+| 2                  | Sleep Hygiene         | 1        | 72.30               |
 
-This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. **This is optional.**
+## Restructure
+
+ 
+
+After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`
+
+This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so.
 
  
 
 ```{r}
 mutate(week = parse_number(week))
+
+# e.g., you can pipe the result of pivot_longer() to this mutate() code
+
+data_long <- data |>
+  pivot_longer() |>
+  mutate(week = parse_number(week))
 ```
 
 ## Merge
@@ -813,6 +833,10 @@ You are going to create plots that look something like this but I will show you 
                          color = var_color, group = var_color))
 
         ```
+:::
+
+::: {style="text-align: center"}
+*This will not plot the data yet, just setup the y and x-axis of the plot. Move on to the next slide to add the actual data.*
 :::
 
 ## 7. Plot the Cognitive Performance Data

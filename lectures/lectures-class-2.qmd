@@ -11,9 +11,7 @@ We will cover importing data, merging data frames, and restructuring data in thi
 
 First, however, we need to talk about the pipe operator `|>` .
 
-::: callout-note
 There are actually two pipe operators now. The original `dplyr` pipe operator, `%>%` , and the newer base R pipe operator, `|>` . You can use either one.
-:::
 
 The pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like
 
@@ -105,11 +103,9 @@ When you want to just explore some data and don't care about creating a reproduc
 
 `csv` files are by far the easiest files to import into R and most software programs. For this reason, I suggest any time you want to save/output a data file to your computer, do it in `csv` format.
 
-::: callout-note
 CSV stands for "Comma-Separated Values." It's a simple file format used to store data in a table. Each line in the file is a row of the table, and commas are used to separate columns. Think of it like a spreadsheet where each piece of information is lined up in rows and columns, but instead of seeing the grid like in Excel, each row is just a line of text with commas between the values that would go into different columns.
 
 `csv` files are typically saved with **.csv** file extension (e.g., data file.csv)
-:::
 
 To import a `csv` file you can use `read_csv()` from the `readr` package.
 
@@ -124,11 +120,9 @@ data_import <- read_csv("filepath/datafile.csv")
 
 `tab-delimited` files are a little more tedious to import just because they require specifying more arguments. Which means you have to memorize more to import `tab-delimited` files.
 
-::: callout-note
 Tab-delimited files use **tabs** between items in a row to separate columns. In general, the delimiter is the type of value that is used between items in a row to separate columns. There are a lot of different types of delimiters with tab and comma (csv) being the most common.
 
 Tab-delimited files are typically saved with the more standard **.txt** file extension (e.g., data file.txt) but a lot of other file formats might also have the **.txt** extension. This can create some ambiguity as to how the data is stored and formatted for .txt files.
-:::
 
 To import a `tab-delimited` file you can use `read_delim()` from the `readr` package.
 
@@ -199,7 +193,7 @@ The exact same data can be structured in different ways. There are two main form
 **Wide**: Variables are spread out across columns, making the data frame wider
 
 | **Participant ID** | **Stress Level Score** | **Creativity Score** | **Memory Score** |
-|------------------|--------------------|------------------|------------------|
+|--------------------|------------------------|----------------------|------------------|
 | 1                  | 5                      | 7                    | 8                |
 | 2                  | 3                      | 6                    | 7                |
 | 3                  | 4                      | 8                    | 6                |
@@ -225,7 +219,7 @@ The exact same data can be structured in different ways. There are two main form
 And actually, you can have a **mix of wide and long** formatted data in a single data frame.
 
 | **Participant ID** | **Session** | **Stress Level** | **Creativity** | **Memory** |
-|---------------|---------------|---------------|---------------|---------------|
+|--------------------|-------------|------------------|----------------|------------|
 | 1                  | 1           | 5                | 7              | 8          |
 | 1                  | 2           | 4                | 8              | 9          |
 | 1                  | 3           | 3                | 9              | 10         |
@@ -256,9 +250,7 @@ Restructuring data involves changing the structure from long-to-wide (wider) or 
 
 -   `pivot_longer()` "lengthens" data from wide-to-long
 
-::: callout-note
 The `tidyr` package, like `readr` and `dplyr`, is from the **tidyverse** set of packages.
-:::
 
 ### Pivot Wider
 
@@ -381,7 +373,6 @@ data_sessions_2 <- data_sessions_wide |>
                names_pattern = "(.*)_(S\\d)")
 ```
 
-::: callout-note
 You may find yourself in a situation where you need to select multiple columns in a argument but it can be tedious to type each every column, especially if the number of columns is larger.
 
 There are what is known as tidy select functions to easily select column names, particularly if there is a consistent pattern to those column names.
@@ -389,7 +380,6 @@ There are what is known as tidy select functions to easily select column names, 
 This can be very useful in functions like `pivot_longer()`. In the examples provided on above, we used some tidy select functions: `any_of()` and `contains()`.
 
 To learn more about what tidy select functions are available and what they do read the [tidy select documentation](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html){target="_blank"}.
-:::
 
 ## Class Activity
 
@@ -427,11 +417,35 @@ Your task will be to import, restructure, and merge the data so that we can grap
 
 5.  Restructure each data set to long format with `week` spread across rows instead of columns and one column for `cognitive score` or `mood rating`
 
-    -   After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so. **This is an optional step.**
+    The data frames should look something like
+
+    | **participant_id** | **intervention_type** | **week** | **cognitive_score** |
+    |--------------------|-----------------------|----------|---------------------|
+    | 1                  | Sleep Hygiene         | 1        | 76.09               |
+    | 1                  | Sleep Hygiene         | 2        | 75.34               |
+    | 1                  | Sleep Hygiene         | 3        | 75.09               |
+    | 1                  | Sleep Hygiene         | 4        | 78.85               |
+    | 2                  | Sleep Hygiene         | 1        | 72.30               |
+
+    | **participant_id** | **intervention_type** | **week** | **mood_score** |
+    |--------------------|-----------------------|----------|----------------|
+    | 1                  | Sleep Hygiene         | 1        | 66.32          |
+    | 1                  | Sleep Hygiene         | 2        | 83.44          |
+    | 1                  | Sleep Hygiene         | 3        | 76.29          |
+    | 1                  | Sleep Hygiene         | 4        | 79.14          |
+    | 2                  | Sleep Hygiene         | 1        | 60.17          |
+
+    -   After you have restructured the data frames, you will notice that the values in the `week` column also contain the string: `cognitive_week_` or `mood_week_`. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so.
 
         ```{r}
 
         mutate(week = parse_number(week))
+
+        # e.g., you can pipe the result of pivot_longer() to this mutate() code
+
+        data_long <- data |>
+          pivot_longer() |>
+          mutate(week = parse_number(week))
         ```
 
 6.  Merge the two long data frames into one data frame.
@@ -445,6 +459,16 @@ Your task will be to import, restructure, and merge the data so that we can grap
     ![](images/class_2_cognitive_plot.png){width="413"}
 
     1.  First add the data and aesthetic layers - how the data map onto the plot scales and axes
+
+        ::: callout-tip
+        -   data should be changed to the name of your data frame containing the cognitive data
+
+        -   var_x should be changed to the name of the column that should be plotted on the x-axis
+
+        -   var_y should be changed to the name of the column that should be plotted on the y-axis
+
+        -   var_color should be change to the name of the column containing the intervention type
+        :::
 
         ```{r}
 
