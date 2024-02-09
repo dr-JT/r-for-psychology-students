@@ -193,7 +193,7 @@ The exact same data can be structured in different ways. There are two main form
 **Wide**: Variables are spread out across columns, making the data frame wider
 
 | **Participant ID** | **Stress Level Score** | **Creativity Score** | **Memory Score** |
-|--------------------|------------------------|----------------------|------------------|
+|------------------|-------------------|------------------|------------------|
 | 1                  | 5                      | 7                    | 8                |
 | 2                  | 3                      | 6                    | 7                |
 | 3                  | 4                      | 8                    | 6                |
@@ -219,7 +219,7 @@ The exact same data can be structured in different ways. There are two main form
 And actually, you can have a **mix of wide and long** formatted data in a single data frame.
 
 | **Participant ID** | **Session** | **Stress Level** | **Creativity** | **Memory** |
-|--------------------|-------------|------------------|----------------|------------|
+|---------------|---------------|---------------|---------------|---------------|
 | 1                  | 1           | 5                | 7              | 8          |
 | 1                  | 2           | 4                | 8              | 9          |
 | 1                  | 3           | 3                | 9              | 10         |
@@ -568,7 +568,7 @@ Your task will be to import, restructure, and merge the data so that we can grap
 
         ```{r}
 
-        ggsave(here("folder/path/class_2_cognitive_plot.png"), 
+        ggsave("folder/path/class_2_cognitive_plot.png", 
                width = 6, height = 4, dpi = 300)
 
         ```

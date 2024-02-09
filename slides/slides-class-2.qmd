@@ -950,7 +950,7 @@ Change the following values based on your preference
 :::
 
 ```{r}
-ggsave(here("folder/path/class_2_cognitive_plot.png"), 
+ggsave("folder/path/class_2_cognitive_plot.png", 
        width = 6, height = 4, dpi = 300)
 
 ```
