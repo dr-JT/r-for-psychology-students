@@ -3,18 +3,93 @@ title: "Class 3: Data Transformation"
 execute:
   echo: true
   eval: false
+  message: false
+  warning: false
 ---
 
 We will cover the basics of data transformation in this class.
 
 ## This is The Way
 
-Although you will be learning R in this class, it might be more appropriate to say that you are learning the tidyverse.
+Although you will be learning R in this class, it might be more appropriate to say that you are learning the **tidyverse**.
 
 ![](images/tidyverse.png){width="476"}
 
-The [tidyverse](#0){target="_blank"} is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with `readr`), to restructuring and transforming data (with `tidyr` and `dplyr`), and to graphically visualizing data (with `ggplot2`).
+The [tidyverse](#0){target="_blank"} is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with `readr`), restructuring and transforming data (with `tidyr` and `dplyr`), and to graphically visualizing data (with `ggplot2`).
 
-::: callout-tip
-searvh
-:::
+## `dplyr()`
+
+The language of `dplyr` will be the underlying framework for how you will think about manipulating and transforming data in R.
+
+![](images/dplyr_logo.png){width="104"}
+
+`dplyr` uses intuitive language that you are already familiar with. As with any R function, you can think of functions in the dplyr package as verbs that refer to performing a particular action on a data frame.
+
+-   `rename()` renames columns
+
+-   `filter()` filters rows based on their values in specified columns
+
+-   `select()` selects (or removes) columns
+
+-   `mutate()` creates new columns based on transformation from other columns, or edits values within existing columns
+
+-   `group_by()` splits data frame into separate groups based on specified columns
+
+-   `summarise()` aggregates across rows to create a summary statistic (means, standard deviations, etc.)
+
+For more information on these functions [Visit the dplyr webpage](https://dplyr.tidyverse.org){target="_blank"}
+
+For more detailed instructions on how to use the `dplyr` functions see the [Data Transformation](https://r4ds.had.co.nz/transform.html){target="_blank"} chapter in the popular [R for Data Science](https://r4ds.had.co.nz/index.html){target="_blank"} book.
+
+## Stay within the Data Frame
+
+Not only is the language of `dplyr` intuitive but it allows you to perform data manipulations all within the `data frame` itself, without having to create external variables, lists, for loops, etc.
+
+It can be tempting to hold information outside of a data frame but in general I suggest avoiding this strategy. Instead, hold the information in a new column within the `data frame` itself.
+
+**For example**: A common strategy I see any many R scripts is to hold the mean or count of a column of values outside the `data frame` and in a new variable in the Environment.
+
+```{r}
+#| eval: true
+
+data <- data.frame(x = c(1,6,4,3,7,5,8,4), 
+                   y = c(2,3,2,1,4,6,4,3))
+
+y_mean <- mean(data$y)
+```
+
+This variable is then used to subtract out the mean from the values in column `y`
+
+```{r}
+#| eval: true
+
+library(dplyr)
+
+data <- mutate(data, 
+               y_new = y - y_mean)
+
+head(data)
+```
+
+Although there is nothing wrong with this approach, in general, I would advise against this strategy.
+
+A better strategy is to do all this without leaving the data frame `data`.
+
+```{r}
+#| eval: true
+
+library(dplyr)
+
+data <- data.frame(x = c(1,6,4,3,7,5,8,4), 
+                   y = c(2,3,2,1,4,6,4,3))
+
+data <- mutate(data,
+               y_mean = mean(y),
+               y_new = y - y_mean)
+
+head(data)
+```
+
+Additionally, thanks to `mutate(.by = )` and `group_by()` you can, for the most part, avoid using for loops completely.
+
+## `rename()`

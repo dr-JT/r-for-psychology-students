@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -94,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -169,6 +203,9 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#this-is-the-way" id="toc-this-is-the-way" class="nav-link active" data-scroll-target="#this-is-the-way">This is The Way</a></li>
+  <li><a href="#dplyr" id="toc-dplyr" class="nav-link" data-scroll-target="#dplyr"><code>dplyr()</code></a></li>
+  <li><a href="#stay-within-the-data-frame" id="toc-stay-within-the-data-frame" class="nav-link" data-scroll-target="#stay-within-the-data-frame">Stay within the Data Frame</a></li>
+  <li><a href="#rename" id="toc-rename" class="nav-link" data-scroll-target="#rename"><code>rename()</code></a></li>
   </ul>
 </nav>
     </div>
@@ -197,22 +234,82 @@ ul.task-list li input[type="checkbox"] {
 <p>We will cover the basics of data transformation in this class.</p>
 <section id="this-is-the-way" class="level2">
 <h2 class="anchored" data-anchor-id="this-is-the-way">This is The Way</h2>
-<p>Although you will be learning R in this class, it might be more appropriate to say that you are learning the tidyverse.</p>
+<p>Although you will be learning R in this class, it might be more appropriate to say that you are learning the <strong>tidyverse</strong>.</p>
 <p><img src="images/tidyverse.png" class="img-fluid" width="476"></p>
-<p>The <a href="#0" target="_blank">tidyverse</a> is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with <code>readr</code>), to restructuring and transforming data (with <code>tidyr</code> and <code>dplyr</code>), and to graphically visualizing data (with <code>ggplot2</code>).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>The <a href="#0" target="_blank">tidyverse</a> is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with <code>readr</code>), restructuring and transforming data (with <code>tidyr</code> and <code>dplyr</code>), and to graphically visualizing data (with <code>ggplot2</code>).</p>
+</section>
+<section id="dplyr" class="level2">
+<h2 class="anchored" data-anchor-id="dplyr"><code>dplyr()</code></h2>
+<p>The language of <code>dplyr</code> will be the underlying framework for how you will think about manipulating and transforming data in R.</p>
+<p><img src="images/dplyr_logo.png" class="img-fluid" width="104"></p>
+<p><code>dplyr</code> uses intuitive language that you are already familiar with. As with any R function, you can think of functions in the dplyr package as verbs that refer to performing a particular action on a data frame.</p>
+<ul>
+<li><p><code>rename()</code> renames columns</p></li>
+<li><p><code>filter()</code> filters rows based on their values in specified columns</p></li>
+<li><p><code>select()</code> selects (or removes) columns</p></li>
+<li><p><code>mutate()</code> creates new columns based on transformation from other columns, or edits values within existing columns</p></li>
+<li><p><code>group_by()</code> splits data frame into separate groups based on specified columns</p></li>
+<li><p><code>summarise()</code> aggregates across rows to create a summary statistic (means, standard deviations, etc.)</p></li>
+</ul>
+<p>For more information on these functions <a href="https://dplyr.tidyverse.org" target="_blank">Visit the dplyr webpage</a></p>
+<p>For more detailed instructions on how to use the <code>dplyr</code> functions see the <a href="https://r4ds.had.co.nz/transform.html" target="_blank">Data Transformation</a> chapter in the popular <a href="https://r4ds.had.co.nz/index.html" target="_blank">R for Data Science</a> book.</p>
+</section>
+<section id="stay-within-the-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="stay-within-the-data-frame">Stay within the Data Frame</h2>
+<p>Not only is the language of <code>dplyr</code> intuitive but it allows you to perform data manipulations all within the <code>data frame</code> itself, without having to create external variables, lists, for loops, etc.</p>
+<p>It can be tempting to hold information outside of a data frame but in general I suggest avoiding this strategy. Instead, hold the information in a new column within the <code>data frame</code> itself.</p>
+<p><strong>For example</strong>: A common strategy I see any many R scripts is to hold the mean or count of a column of values outside the <code>data frame</code> and in a new variable in the Environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">4</span>), </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-title-container flex-fill">
-Tip
+<p>This variable is then used to subtract out the mean from the values in column <code>y</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(data, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">y_new =</span> y <span class="sc">-</span> y_mean)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x y  y_new
+1 1 2 -1.125
+2 6 3 -0.125
+3 4 2 -1.125
+4 3 1 -2.125
+5 7 4  0.875
+6 5 6  2.875</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>searvh</p>
+<p>Although there is nothing wrong with this approach, in general, I would advise against this strategy.</p>
+<p>A better strategy is to do all this without leaving the data frame <code>data</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">4</span>), </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(data,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">y_mean =</span> <span class="fu">mean</span>(y),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">y_new =</span> y <span class="sc">-</span> y_mean)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x y y_mean  y_new
+1 1 2  3.125 -1.125
+2 6 3  3.125 -0.125
+3 4 2  3.125 -1.125
+4 3 1  3.125 -2.125
+5 7 4  3.125  0.875
+6 5 6  3.125  2.875</code></pre>
 </div>
 </div>
+<p>Additionally, thanks to <code>mutate(.by = )</code> and <code>group_by()</code> you can, for the most part, avoid using for loops completely.</p>
+</section>
+<section id="rename" class="level2">
+<h2 class="anchored" data-anchor-id="rename"><code>rename()</code></h2>
 
 
 </section>
@@ -379,12 +476,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
