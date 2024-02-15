@@ -13,7 +13,7 @@ Before starting this class:
 
 📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
 
-Download sample data files: (right-click to download linked file)
+Download sample data files:
 
 ⬇️ <a href="/data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>
 

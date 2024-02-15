@@ -13,7 +13,7 @@ Before starting this class:
 
 📦 Install the `gt` package
 
-Download sample data files: (right-click to download linked file)
+Download sample data files:
 
 ⬇️ <a href="/data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a>
 
