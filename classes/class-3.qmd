@@ -43,16 +43,16 @@ Before starting this class:
 
 ## Class Materials
 
-📘 [Class 2: Importing, Merging, and Restructuring Data](/lectures/lectures-class-2.html)
+📘 [Class 3: Data Transformation](/lectures/lectures-class-3.html)
 
-🖥️ [Slides - Full Screen](/slides/slides-class-2.html){target="_blank"}
+🖥️ [Slides - Full Screen](/slides/slides-class-3.html){target="_blank"}
 
 Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="/slides/slides-class-2.html"></iframe>
+<iframe class="slide-deck" src="/slides/slides-class-3.html"></iframe>
 ```
 
 </div>

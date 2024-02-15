@@ -1,0 +1,62 @@
+---
+title: "Class 3"
+subtitle: "Data Transformation"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    controls: true
+    embed-resources: true
+    incremental: true
+    smaller: false
+    slide-number: c
+    progress: true
+    preview-links: true
+    menu: true
+    auto-stretch: false
+    date-format: long
+    highlight-style: github
+    code-line-numbers: false
+execute:
+  echo: true
+  eval: false
+---
+
+## Prepare
+
+Before starting this class:
+
+ 
+
+📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
+
+⬇️ Download sample data files: (right-click to download linked file)
+
+::: nonincremental
+-   [class_2_cog_data.csv](/data/class_2_cog_data.csv)
+
+-   [class_2_mood_data.csv](/data/class_2_mood_data.txt)
+:::
+
+## Outline
+
+ 
+
+::: nonincremental
+-   Import: `readr`
+
+    -   File paths
+
+    -   `read_csv()` and `read_delim()`
+
+-   Merge: `dplyr`
+
+    -   `bind_()` functions
+
+    -   `join_()` functions
+
+-   Restructure: `tidyr`
+
+    -   `pivot_wider()`
+
+    -   `pivot_longer()`
+:::

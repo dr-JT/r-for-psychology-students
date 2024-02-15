@@ -32,6 +32,8 @@ website:
             text: "Class 1"
           - href: classes/class-2.qmd
             text: "Class 2"
+          - href: classes/class-3.qmd
+            text: "Class 3"
     
 format:
   html:
