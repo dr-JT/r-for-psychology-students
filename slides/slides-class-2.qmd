@@ -29,13 +29,13 @@ Before starting this class:
 
 📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
 
-⬇️ Download sample data files: (right-click to download linked file)
+ 
 
-::: nonincremental
--   [class_2_cog_data.csv](/data/class_2_cog_data.csv)
+Download sample data files: (right-click to download linked file)
 
--   [class_2_mood_data.csv](/data/class_2_mood_data.txt)
-:::
+⬇️ <a href="/data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>
+
+⬇️ <a href="/data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a>
 
 ## Outline
 
@@ -682,15 +682,13 @@ To learn more about what tidy select functions are available and what they do re
 
 ## Class Activity
 
-*Note that this activity was created with the assistance of ChatGPT 4.*
-
  
 
 Let's consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.
 
  
 
-You're analyzing data from a psychology experiment where participants' cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data ([**class_2_cog_data.csv**](/data/class_2_cog_data.csv)) and another with the mood ratings data ([**class_2_mood_data.txt**](/data/class_2_mood_data.txt)), but the same participants across each data set.
+You're analyzing data from a psychology experiment where participants' cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (⬇️ <a href="/data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>) and another with the mood ratings data (⬇️ <a href="/data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a>), but the same participants across each data set.
 
  
 

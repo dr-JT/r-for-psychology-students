@@ -21,42 +21,1005 @@ execute:
   eval: false
 ---
 
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+library(gt)
+library(dplyr)
+
+```
+
 ## Prepare
 
 Before starting this class:
 
  
 
-📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
+Before starting this class:
 
-⬇️ Download sample data files: (right-click to download linked file)
+📦 Install the `gt` package
 
-::: nonincremental
--   [class_2_cog_data.csv](/data/class_2_cog_data.csv)
+ 
 
--   [class_2_mood_data.csv](/data/class_2_mood_data.txt)
-:::
+Download sample data files: (right-click to download linked file)
+
+⬇️ <a href="/data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a>
+
+⬇️ <a href="/data/class_3_mnemonic_rawdata.csv" download="class_3_mnemonic_rawdata.csv">class_3_mnemonic_rawdata.csv</a>
 
 ## Outline
 
  
 
 ::: nonincremental
--   Import: `readr`
+-   The `tidyverse` and `dplyr`
 
-    -   File paths
+-   Rename columns: `rename()`
 
-    -   `read_csv()` and `read_delim()`
+-   Filter rows: `filter()`
 
--   Merge: `dplyr`
+-   Select columns: `select()`
 
-    -   `bind_()` functions
+-   Compute and transform values: `mutate()`
 
-    -   `join_()` functions
-
--   Restructure: `tidyr`
-
-    -   `pivot_wider()`
-
-    -   `pivot_longer()`
+-   Aggregate data: `summarise()`
 :::
+
+# tidyverse and dplyr
+
+## This is The Way
+
+ 
+
+Although you will be learning R in this class, it might be more appropriate to say that you are learning the **tidyverse**.
+
+ 
+
+. . .
+
+The [tidyverse](#0){target="_blank"} is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with `readr`), restructuring and transforming data (with `tidyr` and `dplyr`), and to graphically visualizing data (with `ggplot2`).
+
+![](images/tidyverse.png){width="323"}
+
+## 
+
+![](images/dplyr_logo.png){width="108"}
+
+The language of the `dplyr` package will be the underlying framework for how you will think about manipulating and transforming data in R.
+
+## 
+
+![](images/dplyr_logo.png){width="108"}
+
+`dplyr` uses intuitive language that you are already familiar with.
+
+-   `rename()` renames columns
+
+-   `filter()` filters rows based on their values in specified columns
+
+-   `select()` selects (or removes) columns
+
+-   `mutate()` creates new columns based on transformation from other columns, or edits values within existing columns
+
+-   `summarise()` aggregates across rows to create a summary statistic (means, standard deviations, etc.)
+
+. . .
+
+For more information on these functions [Visit the dplyr webpage](https://dplyr.tidyverse.org){target="_blank"}
+
+# Example Data Set
+
+## Example Data Set
+
+ 
+
+Use what you learned in [Class 2](/lectures/lectures-class-2.html){target="_blank"} and import the two data files:
+
+⬇️ <a href="/data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a>
+
+⬇️ <a href="/data/class_3_mnemonic_rawdata.csv" download="class_3_mnemonic_rawdata.csv">class_3_mnemonic_rawdata.csv</a>
+
+ 
+
+Try to figure out how to import the data yourself (hint: use the Import Datatset GUI to help identify the correct file path and import parameters)
+
+ 
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the Code"
+
+library(readr)
+
+repetition_import <- read_delim("data/class_3_repetition_rawdata.txt", 
+                                delim = "\t", escape_double = FALSE, 
+                                trim_ws = TRUE)
+
+mnemonic_import <- read_csv("data/class_3_mnemonic_rawdata.csv")
+```
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(readr)
+library(here)
+
+repetition_import <- read_delim(here("data/class_3_repetition_rawdata.txt"), 
+                                delim = "\t", escape_double = FALSE, 
+                                trim_ws = TRUE)
+
+mnemonic_import <- read_csv(here("data/class_3_mnemonic_rawdata.csv"))
+```
+
+## Example Data Set
+
+ 
+
+These data come from a hypothetical (I made it up) research study to compare the effectiveness of two memory techniques, a mnemonic technique and a spaced repetition technique, for improving memory retention. Participants were randomly assigned to one of the two memory techniques and completed 3 memory tests (A, B, and C). The number of correctly recalled words for each memory test was recorded in the two data files by research assistants.
+
+## Example Data Set
+
+ 
+
+Use what you learned from Class 1 to explore the data
+
+::: nonincremental
+-   what are the column names?
+
+-   what type of values are in each column?
+:::
+
+. . .
+
+It turns out that the research assistant who ran participants in the **spaced repetition** condition did not follow the lab's protocol for recording data 🤦‍♀️
+
+They:
+
+-   used wrong column names,
+-   recorded the memory tests as X, Y, and Z (A, B, and C, respectively),
+-   left out what condition these data were from
+-   gave some particpants less than 3 memory tests! 🤬
+
+# Rename columns: `readr()`
+
+## rename()
+
+ 
+
+First, let's fix the RA's mistake by renaming the columns in the **spaced repetition** data as they are named in the **mnemonic** data. We can do so using the `rename()` function. The format for this function looks something like:
+
+ 
+
+```{r}
+rename(new_name = old_name)
+```
+
+<br>
+
+. . .
+
+Here is how we would rename the columns in the **spaced repetition** data we imported.
+
+ 
+
+```{r}
+library(dplyr)
+
+repetition_data <- repetition_import |>
+  rename(participant_id = `subject number`,
+         word_list = List,
+         recall_correct = recallCorrect)
+```
+
+<br>
+
+. . .
+
+For more options on how to use `rename()` see the [documentation here](https://dplyr.tidyverse.org/reference/rename.html){target="_blank"}
+
+# Filter rows: `filter()`
+
+## filter()
+
+ 
+
+`filter()` is an inclusive filter and requires the use of *logical* statements.
+
+::: columns
+::: {.column .fragment width="50%"}
+Here are a list of some commone logical operators in R:
+
+![](images/logical-operations.png){width="268"}
+:::
+
+::: {.column .fragment width="50%"}
+In addition to the logical operators, other functions can be used in `filter()`, such as:
+
+-   `is.na()` - include if missing
+
+-   `!is.na()` - include if not missing
+
+-   `between()` - values that are between a certain range of numbers
+
+-   `near()` - values that are near a certain value
+:::
+:::
+
+. . .
+
+For more options on how to use `filter()` see the [documentation here](https://dplyr.tidyverse.org/reference/filter.html){target="_blank"}.
+
+## filter()
+
+ 
+
+Let's remove rows that correspond to those participants that did not complete 3 memory tests. It turns out that those participants were always ran on Thursday or Friday, must have been a bad day for the research assistant 😢.
+
+ 
+
+We can use `filter()` to remove rows that have `Thursday` or `Friday` in the `day` column.
+
+ 
+
+```{r}
+repetition_data <- repetition_data |>
+  filter(day != "Thursday", day != "Friday")
+```
+
+# Select columns: `select()`
+
+## select()
+
+ 
+
+`select()` allows you to select which columns to keep and/or remove.
+
+ 
+
+```{r}
+select(columns, to, keep)
+```
+
+<br>
+
+. . .
+
+```{r}
+select(-columns, -to, -remove)
+```
+
+. . .
+
+ 
+
+`select()` can be used with more complex operators and tidyselect functions, see the [documentation here](https://dplyr.tidyverse.org/reference/select.html){target="_blank"}.
+
+## select()
+
+ 
+
+For the repetition data, let's only keep the following columns
+
+::: nonincremental
+-   participant_id
+
+-   word_list
+
+-   recall_correct
+:::
+
+```{r}
+repetition_data <- repetition_data |>
+  select(participant_id, word_list, recall_correct)
+
+```
+
+<br>
+
+Another way to do this would be:
+
+```{r}
+repetition_data <- repetition_data |>
+  select(-day, -time, -computer_station)
+```
+
+# Compute and transform values: `mutate()`
+
+## mutate()
+
+ 
+
+`mutate()` is a very powerful function. It basically allows you to do any computation or transformation on the values in the data frame. See the full [documentation here](https://dplyr.tidyverse.org/reference/mutate.html){target="_blank"}.
+
+ 
+
+. . .
+
+The basic format for mutate goes something like:
+
+```{r}
+mutate(column_name = value,
+       another_col = a_function(),
+       last_col = col1 + col2)
+```
+
+<br>
+
+. . .
+
+Within `mutate()` the `=` sign functions similarly to the assignment operator `<-`, where the result of whatever is on the right-hand side of `=` gets assigned to the column that is specified on the left-hand side (an existing column or a new one you are creating).
+
+## mutate()
+
+Add a new column
+
+ 
+
+We need to create a column specifying what condition the **spaced repetition** data came from, dang RA!
+
+. . .
+
+ 
+
+```{r}
+repetition_data <- repetition_data |>
+  mutate(condition = "spaced repetition")
+```
+
+<br>
+
+. . .
+
+Easy!
+
+Now let's do something a little more complicated.
+
+## case_when()
+
+ 
+
+`case_when()` is basically a sequence of `if else` type of statements where each statement is evaluated, if it is true then it is given a certain value, else the next statement is evaluated, and so on.
+
+. . .
+
+ 
+
+The basic format of `case_when()` looks like:
+
+```{r}
+mutate(a_column = case_when(a logical statement ~ a value,
+                            another statement ~ another value,
+                            .default = and another value))
+```
+
+## case_when()
+
+ 
+
+Let's see an example of this with the **spaced repetition** data. We need to change the values in the `word_list` column so that X is A, Y is B, and Z is C.
+
+ 
+
+. . .
+
+```{r}
+repetition_data <- repetition_data |>
+  mutate(word_list = case_when(word_list == "X" ~ "A",
+                               word_list == "Y" ~ "B",
+                               word_list == "Z" ~ "C"))
+```
+
+<br>
+
+. . .
+
+Just to be clear, you can create an entirely new column this way
+
+```{r}
+repetition_data <- repetition_data |>
+  mutate(new_word_list = case_when(word_list == "X" ~ "A",
+                                   word_list == "Y" ~ "B",
+                                   word_list == "Z" ~ "C"))
+```
+
+## .by = 
+
+ 
+
+This next computation is not necessary for our example data set but I want to demonstrate the use of `mutate(.by = )`.
+
+ 
+
+This option is very handy if you want to perform functions separately on different groups or splits of the data frame.
+
+## .by = 
+
+ 
+
+For example, let's calculate the mean for each word list separately.
+
+```{r}
+repetition_data <- repetition_data |>
+  mutate(.by = word_list, 
+         word_list_mean = mean(recall_correct))
+```
+
+<br>
+
+. . .
+
+Compare this with
+
+```{r}
+repetition_data <- repetition_data |>
+  mutate(word_list_mean = mean(recall_correct))
+```
+
+<br>
+
+. . .
+
+You can use multiple columns in `.by =`
+
+```{r}
+repetition_data <- repetition_data |>
+  mutate(.by = c(participant_id, word_list), 
+         word_list_mean = mean(recall_correct))
+```
+
+*It doesn't make much sense in this case*
+
+## rowwise()
+
+ 
+
+`rowwise()` is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., `mean()`) across multiple columns.
+
+ 
+
+. . .
+
+The data set we are working with does not provide a good demonstration of this so let's create a different set of data to look at how to use `rowwise()`
+
+```{r}
+#| eval: true
+
+data_sample <- data.frame(ID = 1:5,
+                          Q1 = sample(1:50, 5),
+                          Q2 = sample(1:50, 5),
+                          Q3 = sample(1:50, 5))
+
+```
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(gt)
+gt(data_sample) |>
+  table_theme(table_align = "center")
+
+```
+
+## rowwise()
+
+ 
+
+Let's say we want to calculate each participant's mean response across these three columns.
+
+ 
+
+. . .
+
+```{r}
+#| eval: true
+
+data_sample <- data_sample |>
+  rowwise() |>
+  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |>
+  ungroup()
+```
+
+```{r}
+#| echo: false
+#| eval: true
+
+gt(data_sample) |>
+  table_theme(table_align = "center")
+
+```
+
+. . .
+
+::: callout-important
+You NEED to `ungroup()` the data frame whenever you are done with `rowwise()`
+:::
+
+## rowwise()
+
+ 
+
+Note the difference when you don't use `rowwise()`, it calculates the mean across all rows in the data
+
+ 
+
+```{r}
+#| eval: true
+data_sample <- data_sample |>
+  mutate(Q_mean = mean(c(Q1, Q2, Q3)))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+
+gt(data_sample) |>
+  table_theme(table_align = "center")
+
+```
+
+## Putting it all together
+
+ 
+
+```{r}
+#| eval: true
+
+repetition_data <- repetition_import |>
+  rename(participant_id = `subject number`,
+         word_list = List,
+         recall_correct = recallCorrect) |>
+  filter(day != "Thursday", day != "Friday") |>
+  select(participant_id, word_list, recall_correct) |>
+  mutate(condition = "spaced repetition",
+         word_list = case_when(word_list == "X" ~ "A",
+                               word_list == "Y" ~ "B",
+                               word_list == "Z" ~ "C")) |>
+  mutate(.by = word_list, 
+         word_list_mean = mean(recall_correct))
+```
+
+<br>
+
+```{r}
+#| eval: true
+
+mnemonic_data <- mnemonic_import |>
+  select(participant_id, condition, word_list, recall_correct)
+```
+
+<br>
+
+```{r}
+#| eval: true
+
+data_merged <- bind_rows(mnemonic_data, repetition_data) |>
+  select(-word_list_mean) |>
+  arrange(participant_id)
+```
+
+# Aggregate data: `summarise()`
+
+## summarise()
+
+ 
+
+The thing is, we don't really care about performance on each individual `word_list` (A, B, and C). We care about the participant's overall performance, **aggregated** across all three word lists. To aggregrate data using `dplyr` we can use `summarise()`.
+
+ 
+
+-   The result of `summarise()` is a reduced data frame with fewer rows.
+
+-   The code inside of `summarise()` looks a lot like the code we could put in `mutate()`.
+
+-   The difference is that `mutate()` does not collapse the data frame but `summarise()` does.
+
+## summarise()
+
+ 
+
+Let's calculate the mean recall performance by condition and participant. This will result in one row per participant (because it is a between-subject design).
+
+. . .
+
+ 
+
+```{r}
+#| eval: true
+
+data_scores <- data_merged |>
+  summarise(.by = c(participant_id, condition),
+            recall_correct_mean = mean(recall_correct))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+
+gt(data_scores) |>
+  table_theme(table_align = "center")
+```
+
+## summarise()
+
+ 
+
+Notice the difference when you don't use `.by =`
+
+```{r}
+data_scores <- data_merged |>
+  summarise(recall_correct_mean = mean(recall_correct))
+```
+
+<br>
+
+```{r}
+#| echo: false
+#| eval: true
+
+data_demo <- data_merged |>
+  summarise(recall_correct_mean = mean(recall_correct))
+
+gt(data_demo) |>
+  table_theme(table_align = "center")
+```
+
+## summarise()
+
+ 
+
+You can calculate other summary statistics such as:
+
+```{r}
+data_scores <- data_merged |>
+  summarise(.by = c(particpant_id, condition),
+            recall_correct_mean = mean(recall_correct),
+            recall_correct_sd = sd(recall_correct),
+            recall_correct_sum = sum(recall_correct),
+            recall_correct_min = min(recall_correct),
+            recall_correct_max = max(recall_correct))
+```
+
+## ggplot2
+
+ 
+
+Let's plot the data to see what the difference in memory recall is for the two types of strategy:
+
+```{r}
+#| eval: true
+#| code-fold: true
+#| code-summary: "Show Code"
+
+library(ggplot2)
+
+ggplot(data_scores, aes(condition, recall_correct_mean)) +
+  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +
+  stat_summary(fun = mean, geom = "point", 
+               color = "firebrick", size = 3) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", 
+               color = "firebrick", width = .2) +
+  coord_cartesian(ylim = c(0, 10)) +
+  scale_x_discrete(labels = c("Mnemonic", "Spaced Recognition")) +
+  labs(title = "Recal Performance for Mnemonic and Spaced Recognition",
+       y = "Recall Performance",
+       x = "") +
+  theme_classic() +
+  theme(axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 12))
+```
+
+## Reproducible Script
+
+```{r}
+# load packages
+library(readr)
+library(dplyr)
+library(gt)
+library(ggplot2)
+
+# import data
+repetition_import <- read_delim("data/class_3_repetition_rawdata.txt", 
+                                delim = "\t", escape_double = FALSE, 
+                                trim_ws = TRUE)
+
+mnemonic_import <- read_csv("data/class_3_mnemonic_rawdata.csv")
+
+# trasnform data
+repetition_data <- repetition_import |>
+  rename(participant_id = `subject number`,
+         word_list = List,
+         recall_correct = recallCorrect) |>
+  filter(day != "Thursday", day != "Friday") |>
+  select(participant_id, word_list, recall_correct) |>
+  mutate(condition = "spaced repetition",
+         word_list = case_when(word_list == "X" ~ "A",
+                               word_list == "Y" ~ "B",
+                               word_list == "Z" ~ "C")) |>
+  mutate(.by = word_list, 
+         word_list_mean = mean(recall_correct))
+
+mnemonic_data <- mnemonic_import |>
+  select(participant_id, condition, word_list, recall_correct)
+
+# merge data
+data_merged <- bind_rows(mnemonic_data, repetition_data) |>
+  select(-word_list_mean) |>
+  arrange(participant_id)
+
+# aggregate data
+data_scores <- data_merged |>
+  summarise(.by = c(participant_id, condition),
+            recall_correct_mean = mean(recall_correct))
+
+# plot aggregate data
+ggplot(data_scores, aes(condition, recall_correct_mean)) +
+  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +
+  stat_summary(fun = mean, geom = "point", 
+               color = "firebrick", size = 3) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", 
+               color = "firebrick", width = .2) +
+  coord_cartesian(ylim = c(0, 10)) +
+  scale_x_discrete(labels = c("Mnemonic", "Spaced Recognition")) +
+  labs(title = "Recal Performance for Mnemonic and Spaced Recognition",
+       y = "Recall Performance",
+       x = "") +
+  theme_classic() +
+  theme(axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 12))
+```
+
+# Class Activity
+
+## Class 3 Activity
+
+ 
+
+For this activity we will work with a real data set from a paper published in Psychological Science (one of the leading journals in psychology).
+
+> Dawtry, R. J., Sutton, R. M., & Sibley, C. G. (2015). Why Wealthier People Think People Are Wealthier, and Why It Matters: From Social Sampling to Attitudes to Redistribution. Psychological Science, 26(9), 1389–1400. <https://doi.org/10.1177/0956797615586560>
+
+ 
+
+📄 [Download the paper](/data/dawtry-et-al-2015.pdf){target="_blank"} (optional)
+
+⬇️ <a href="/data/Dawtry Sutton and Sibley 2015 Study 1a.csv" download="Dawtry Sutton and Sibley 2015 Study 1a.csv">Download the data</a>
+
+## Class 3 Activity
+
+ 
+
+In this research, Dawtry, Sutton, and Sibley (2015) wanted to examine why people differ in their assessments of the increasing wealth inequality within developed nations. Previous research reveals that most people desire a society in which the overall level of wealth is high and that wealth is spread somewhat equally across society. However, support for this approach to income distribution changes across the social strata. In particular, wealthy people tend to view society as already wealthy and thus are satisfied with the status quo, and less likely to support redistribution. In their paper Dawtry et al., (2015) sought to examine why this is the case. The authors propose that one reason wealthy people tend to view the current system is fair is because their social-circle is comprised of other wealthy people, which biases their perceptions of wealth, which leads them to overestimate the mean level of wealth across society.
+
+## Class 3 Activity {.smaller}
+
+ 
+
+To test this hypothesis, the authors conducted a study with 305 participants, recruited from an online participant pool. Participants reported their own annual household income, the income level of those within their own social circle, and the income for the entire population. Participants also rated their **perception** of the level of equality/inequality across their social circle and across society, their **level of satisfaction** with and **perceived fairness** of the current system, their attitudes toward redistribution of wealth (measured using a four-item scale), and their political preference.
+
+. . .
+
+ 
+
+Key variables we will look at:
+
+-   **Level of satisfactioin** with current system (1 = extremely satisfied, 9 = extremely dissatisfied)
+
+-   **Perceived fairness** of current system (1 = extremely fair, 9 = extremely unfair)
+
+-   **Attitude on redistribution** of wealth (1 = strongly disagree, 6 = strongly agree)
+
+    -   contained in four columms: `redist1` through `redist4`
+
+-   **Political preference** (1 = very liberal/very left-wing/strong Democrat, 9 = very conservative/very right-wing/strong Republican): `Political_Preference`
+
+## Setup
+
+ 
+
+1.  Create a new R script and save it as **class_3_activity_firstlastname.R**
+
+2.  **Load** the following packages at the top of your script
+
+    -   `readr`, `dplyr`, `gt`, `ggplot2`
+
+3.  **Import** the data file
+
+4.  Take some time to **explore the data**.
+
+    -   What are the column names?
+    -   What type of values are in the columns?
+    -   How many participants are in the study?
+        -   hint: use a combination of `length()` and `unique()`
+
+            ```{r}
+            length(unique(data$columnname))
+            ```
+
+## Rename and Filter
+
+ 
+
+5.  **Rename** the level of satisfaction and perceived fairness columns
+
+    In the previous step, you should have noticed how these column names are not ideal. They contain spaces and even a special character `?` . You will need to use the special quotation mark `` ` ` ``to reference these column names in `rename()` , e.g., `` `column name with spaces` `` You can find these special quotation marks to the left of the **1** key and above the **tab** key.
+
+6.  **Filter** by only keeping rows in which `Political_Preference` is not missing `NA` . Note how many fewer rows there are in the data after filtering.
+
+    hint: use `filter(!is.na())` to evaluate whether values in `Political_Preference` are NOT `!` missing `is.na()`
+
+    ```{r}
+    #| code-fold: true
+    #| code-summary: "Show cheat code"
+
+    filter(!is.na(Political_Preference))
+
+    ```
+
+## Select and Transform
+
+ 
+
+7.  **Select** only the columns that contain the key variables we are interested in.
+
+8.  **Reverse score** redist2 and redist4, so that 6=1, 5=2, 4=3, 3=4, 2=5, 1=6.
+
+    Use `mutate()` and `case_when()`
+
+9.  **Aggregate** values [across rows]{.underline}
+
+    ::: nonincremental
+    -   **Calculate** a [single variable]{.underline} representing participant's *mean* attitude on redistrubtion of wealth
+    -   **Calculate** a [single variable]{.underline} representing participant's *mean* perception that the current systen is satisfactory and fair.
+    :::
+
+    Use a combination of `rowwise()` and `mutate()`
+
+## Summarize
+
+ 
+
+10. Create a new data frame **summarizing** the values for attitude on redistribution and the combined satisfactory and fairness variable for each level of political preference. (calculate the mean when summarizing)
+
+    Use `summarise(.by = )`
+
+11. Create a **table** of this summarized data frame
+
+    Use `gt()` from the `gt` package, e.g.,
+
+    ```{r}
+    gt(new_data)
+    ```
+
+## Plot
+
+ 
+
+12. Create a **line plot** of this summarized data frame
+
+    Copy and paste code on next slide
+
+## Plot
+
+You will need to change the name of variables to match how you created them.
+
+`data_summary`, `redist_mean`, and `fairnesss_satisfactory_mean`
+
+```{r}
+ggplot(data_summary, aes(Political_Preference)) +
+  geom_line(aes(y = redist_mean, color = "redist")) +
+  geom_line(aes(y = fairness_satisfactory_mean, color = "fair/satis")) +
+  coord_cartesian(xlim = c(1, 9.1), ylim = c(1, 9)) +
+  scale_x_continuous(breaks = 1:9, 
+                     labels = 
+                       c("1\nLiberal", "2", "3", "4", 
+                         "5", "6", "7", "8", "9\nConservative")) +
+  scale_y_continuous(breaks = 1:9,
+                     labels = c("Strongly\nDisagree", "2", "3", "4", 
+                                "5", "6", "7", "8", "Strongly\nAgree")) +
+  scale_color_manual(values = c("redist" = "steelblue",
+                                "fair/satis" = "firebrick"),
+                     name = "",
+                     labels = c("Fairness/Satisfactory of Current System",
+                                "Redistribution Preference")) +
+  theme_light() +
+  theme(legend.position = "top") +
+  labs(title = "Economic Attitdues by Political Preference",
+       x = "Political Preference",
+       y = "Attitude")
+```
+
+## Plot
+
+ 
+
+::: nonincremental
+13. Save your plot to a file
+:::
+
+```{r}
+ggsave("images/economic_attitudes_by_political_preference.png",
+       width = 6, height = 4, dpi = 300)
+```
+
+## Check Your Work
+
+ 
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+# load packages
+library(readr)
+library(dplyr)
+library(gt)
+library(ggplot2)
+
+# import data
+data_import <- read_csv("data/Dawtry Sutton and Sibley 2015 Study 1a.csv")
+
+# data transformation
+data <- data_import |>
+  rename(fairness = `current system is fair?`,
+         satisfactory = `current system is satisfactory?`) |>
+  filter(!is.na(Political_Preference)) |>
+  select(fairness, satisfactory, redist1, redist2, redist3, redist4,
+         Social_Circle_Mean_Income, Political_Preference) |>
+  mutate(redist2_recode = case_when(redist2 == 6 ~ 1,
+                                    redist2 == 5 ~ 2,
+                                    redist2 == 4 ~ 3,
+                                    redist2 == 3 ~ 4,
+                                    redist2 == 2 ~ 5,
+                                    redist2 == 1 ~ 6),
+         redist4_recode = case_when(redist4 == 6 ~ 1,
+                                    redist4 == 5 ~ 2,
+                                    redist4 == 4 ~ 3,
+                                    redist4 == 3 ~ 4,
+                                    redist4 == 2 ~ 5,
+                                    redist4 == 1 ~ 6)) |>
+  rowwise() |>
+  mutate(redist = mean(c(redist1, redist2, redist3, redist4)),
+         fairness_satisfactory = mean(c(fairness, satisfactory))) |>
+  ungroup()
+
+# aggregate data
+data_summary <- data |>
+  summarise(.by = Political_Preference,
+            redist_mean = mean(redist),
+            fairness_satisfactory_mean = mean(fairness_satisfactory)) |>
+  arrange(Political_Preference)
+
+gt(data_summary)
+
+# line plot of summary data
+ggplot(data_summary, aes(Political_Preference)) +
+  geom_line(aes(y = redist_mean, color = "redist")) +
+  geom_line(aes(y = fairness_satisfactory_mean, color = "fair/satis")) +
+  coord_cartesian(xlim = c(1, 9), ylim = c(1, 9)) +
+  scale_x_continuous(breaks = 1:9, 
+                     labels = 
+                       c("1\nLiberal", "2", "3", "4", 
+                         "5", "6", "7", "8", "9\nConservative")) +
+  scale_y_continuous(breaks = 1:9,
+                     labels = c("Strongly\nDisagree", "2", "3", "4", 
+                                "5", "6", "7", "8", "Strongly\nAgree")) +
+  scale_color_manual(values = c("redist" = "steelblue",
+                                "fair/satis" = "firebrick"),
+                     name = "",
+                     labels = c("Fairness/Satisfactory of Current System",
+                                "Redistribution Preference")) +
+  theme_light() +
+  theme(legend.position = "top") +
+  labs(title = "Economic Attitdues by Political Preference",
+       x = "Political Preference",
+       y = "Attitude")
+
+ggsave("images/economic_attitudes_by_political_preference.png",
+       width = 6, height = 4, dpi = 300)
+```

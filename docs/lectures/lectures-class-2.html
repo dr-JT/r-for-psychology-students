@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -714,7 +714,7 @@ Column Names
 <section id="class-activity" class="level2">
 <h2 class="anchored" data-anchor-id="class-activity">Class Activity</h2>
 <p>Let’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.</p>
-<p>You’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (<a href="../data/class_2_cog_data.csv"><strong>class_2_cog_data.csv</strong></a>) and another with the mood ratings data (<a href="../data/class_2_mood_data.txt"><strong>class_2_mood_data.txt</strong></a>), but the same participants across each data set.</p>
+<p>You’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (⬇️ <a href="../data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>) and another with the mood ratings data (⬇️ <a href="../data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a>), but the same participants across each data set.</p>
 <p>Your task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.</p>
 <ol type="1">
 <li><p>Create a new R script and save it as <strong>class_2_activity.R</strong></p></li>
@@ -1193,12 +1193,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

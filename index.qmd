@@ -32,7 +32,7 @@ and more
 
 [Class 2](/classes/class-2.html) - Importing, Merging, and Restructuring Data
 
-Class 3 - Data Transformation
+[Class 3](/classes/class-3.html) - Data Transformation
 
 Class 4 - Data Visualization
 

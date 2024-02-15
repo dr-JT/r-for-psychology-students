@@ -3,6 +3,8 @@ title: "Class 1: An Introduction to Working with Data in R"
 execute:
   echo: true
   eval: false
+  message: false
+  warning: false
 ---
 
 This course does not require that you already have experience with R, but it would greatly benefit you to have at least a basic understanding of how R works. In this first class we will only cover the bare bones that will be needed to get you started. For a more complete intro to the basics of R see the page on R Basics.

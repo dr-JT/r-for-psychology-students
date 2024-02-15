@@ -14,6 +14,83 @@
     "text": "This is The Way\nAlthough you will be learning R in this class, it might be more appropriate to say that you are learning the tidyverse.\n\nThe tidyverse is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with readr), restructuring and transforming data (with tidyr and dplyr), and to graphically visualizing data (with ggplot2)."
   },
   {
+    "objectID": "lectures/lectures-class-3.html#dplyr",
+    "href": "lectures/lectures-class-3.html#dplyr",
+    "title": "Class 3: Data Transformation",
+    "section": "dplyr",
+    "text": "dplyr\nThe language of dplyr will be the underlying framework for how you will think about manipulating and transforming data in R.\n\ndplyr uses intuitive language that you are already familiar with. As with any R function, you can think of functions in the dplyr package as verbs that refer to performing a particular action on a data frame.\n\nrename() renames columns\nfilter() filters rows based on their values in specified columns\nselect() selects (or removes) columns\nmutate() creates new columns based on transformation from other columns, or edits values within existing columns\nsummarise() aggregates across rows to create a summary statistic (means, standard deviations, etc.)\n\nFor more information on these functions Visit the dplyr webpage\nFor more detailed instructions on how to use the dplyr functions see the Data Transformation chapter in the popular R for Data Science book."
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#stay-within-the-data-frame",
+    "href": "lectures/lectures-class-3.html#stay-within-the-data-frame",
+    "title": "Class 3: Data Transformation",
+    "section": "Stay within the Data Frame",
+    "text": "Stay within the Data Frame\nNot only is the language of dplyr intuitive but it allows you to perform data manipulations all within the data frame itself, without having to create external variables, lists, for loops, etc.\nIt can be tempting to hold information outside of a data frame but in general I suggest avoiding this strategy. Instead, hold the information in a new column within the data frame itself.\nFor example: A common strategy I see in many R scripts is to hold the mean or count of a column of values outside the data frame and in a new variable in the Environment.\n\ndata &lt;- data.frame(x = c(1,6,4,3,7,5,8,4), \n                   y = c(2,3,2,1,4,6,4,3))\n\ny_mean &lt;- mean(data$y)\n\nThis variable is then used to subtract out the mean from the values in column y\n\nlibrary(dplyr)\n\ndata &lt;- mutate(data, \n               y_new = y - y_mean)\n\n\n\n\n\n\n  \n    \n    \n      x\n      y\n      y_new\n    \n  \n  \n    1.000\n2.000\n−1.125\n    6.000\n3.000\n−0.125\n    4.000\n2.000\n−1.125\n    3.000\n1.000\n−2.125\n    7.000\n4.000\n0.875\n    5.000\n6.000\n2.875\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nAlthough there is nothing wrong with this approach, in general, I would advise against this strategy.\nA better strategy is to do all this without leaving the data frame data.\n\nlibrary(dplyr)\n\ndata &lt;- data.frame(x = c(1,6,4,3,7,5,8,4), \n                   y = c(2,3,2,1,4,6,4,3))\n\ndata &lt;- mutate(data,\n               y_mean = mean(y),\n               y_new = y - y_mean)\n\n\n\n\n\n\n  \n    \n    \n      x\n      y\n      y_mean\n      y_new\n    \n  \n  \n    1.000\n2.000\n3.125\n−1.125\n    6.000\n3.000\n3.125\n−0.125\n    4.000\n2.000\n3.125\n−1.125\n    3.000\n1.000\n3.125\n−2.125\n    7.000\n4.000\n3.125\n0.875\n    5.000\n6.000\n3.125\n2.875"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#example-data-set",
+    "href": "lectures/lectures-class-3.html#example-data-set",
+    "title": "Class 3: Data Transformation",
+    "section": "Example Data Set",
+    "text": "Example Data Set\nLet’s use what we learned in Class 2 and import two data files.\n⬇️ class_3_repetition_rawdata.txt\n⬇️ class_3_mnemonic_rawdata.csv\nTry to figure out how to import the data yourself (hint: use the Import Datatset GUI to help identify the correct file path and import parameters)\n\n\nShow the Code\nlibrary(readr)\n\nrepetition_import &lt;- read_delim(\"data/class_3_repetition_rawdata.txt\", \n                                delim = \"\\t\", escape_double = FALSE, \n                                trim_ws = TRUE)\n\nmnemonic_import &lt;- read_csv(\"data/class_3_mnemonic_rawdata.csv\")\n\n\nThese data come from a hypothetical (I made it up) research study to compare the effectiveness of two memory techniques, a mnemonic technique and a spaced repetition technique, for improving memory retention. Participants were randomly assigned to one of the two memory techniques and completed 3 memory tests (A, B, and C). The number of correctly recalled words for each memory test was recorded in the two data files by research assistants.\nUse what you learned from Class 1 to explore the data\n\nwhat are the column names?\nwhat type of values are in each column?\n\nYou will recognize there are some differences between these two data sets even though they both contain memory recall performance on 3 memory tests (A, B, and C). It turns out that the research assistant who ran participants in the spaced repetition condition did not follow the lab’s protocol for recording data 🤦‍♀️\nThey used wrong column names, recorded the memory tests as X, Y, and Z (A, B, and C, respectively), they left out what condition these data were from, and they gave some particpants less than 3 memory tests! 🤬"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#rename",
+    "href": "lectures/lectures-class-3.html#rename",
+    "title": "Class 3: Data Transformation",
+    "section": "rename()",
+    "text": "rename()\nFirst, let’s fix the RA’s mistake by renaming the columns in the spaced repetition data as they are named in the mnemonic data. We can do so using the rename() function. The format for this function looks something like:\n\nrename(new_name = old_name)\n\nHere is how we would rename the columns in the spaced repetition data we imported.\n\nlibrary(dplyr)\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect)\n\nFor more options on how to use rename() see the documentation here"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#filter",
+    "href": "lectures/lectures-class-3.html#filter",
+    "title": "Class 3: Data Transformation",
+    "section": "filter()",
+    "text": "filter()\nfilter() is an inclusive filter and requires the use of logical statements. Here are a list of some commone logical operators in R:\n\nIn addition to the logical operators, other functions can be used in filter(), such as:\n\nis.na() - include if missing\n!is.na() - include if not missing\nbetween() - values that are between a certain range of numbers\nnear() - values that are near a certain value\n\nFor more options on how to use filter() see the documentation here.\nLet’s remove rows that correspond to those participants that did not complete 3 memory tests. It turns out that those participants were always ran on Thursday or Friday, must have been a bad day for the research assistant 😢. We can use filter() to remove rows that have Thursday or Friday in the day column.\n\nrepetition_data &lt;- repetition_data |&gt;\n  filter(day != \"Thursday\", day != \"Friday\")"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#select",
+    "href": "lectures/lectures-class-3.html#select",
+    "title": "Class 3: Data Transformation",
+    "section": "select()",
+    "text": "select()\nselect() allows you to select which columns to keep and/or remove.\n\nselect(columns, to, keep)\n\n\nselect(-columns, -to, -remove)\n\nselect() can be used with more complex operators and tidyselect functions, see the documentation here.\nFor the repetition data, let’s only keep the following columns\n\nparticipant_id\nword_list\nrecall_correct\n\n\nrepetition_data &lt;- repetition_data |&gt;\n  select(participant_id, word_list, recall_correct)\n\nAnother way to do this would be:\n\nrepetition_data &lt;- repetition_data |&gt;\n  select(-day, -time, -computer_station)"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#mutate",
+    "href": "lectures/lectures-class-3.html#mutate",
+    "title": "Class 3: Data Transformation",
+    "section": "mutate()",
+    "text": "mutate()\nmutate() is a very powerful function. It basically allows you to do any computation or transformation on the values in the data frame. See the full documentation here.\nThe basic format for mutate goes something like:\n\nmutate(column_name = value,\n       another_col = a_function(),\n       last_col = col1 + col2)\n\nWithin mutate() the = sign functions similarly to the assignment operator &lt;-, where the result of whatever is on the right-hand side of = gets assigned to the column that is specified on the left-hand side (an existing column or a new one you are creating).\nI want to demonstrate basic but common examples of using mutate()\nWe need to create a column specifying what condition the spaced repetition data came from, dang RA!\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(condition = \"spaced repetition\")\n\nEasy!\nNow let’s do something a little more complicated.\n\ncase_when()\ncase_when() is basically a sequence of if else type of statements where each statement is evaluated, if it is true then it is given a certain value, else the next statement is evaluated, and so on. The basic format of case_when() looks like:\n\nmutate(a_column = case_when(a logical statement ~ a value,\n                            another statement ~ another value,\n                            .default = and another value))\n\nLet’s see an example of this with the spaced repetition data. We need to change the values in the word_list column so that X is A, Y is B, and Z is C.\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\"))\n\nJust to be clear, you can create an entirely new column this way\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(new_word_list = case_when(word_list == \"X\" ~ \"A\",\n                                   word_list == \"Y\" ~ \"B\",\n                                   word_list == \"Z\" ~ \"C\"))\n\n\n\n.by =\nThis next computation is not necessary for our example data set but I want to demonstrate the use of mutate(.by = ). This option is very handy if you want to perform functions separately on different groups or splits of the data frame.\nFor example, let’s calculate the mean for each word list separately.\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nCompare this with\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(word_list_mean = mean(recall_correct))\n\nYou can use multiple columns in .by =\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(.by = c(participant_id, word_list), \n         word_list_mean = mean(recall_correct))\n\nIt doesn’t make much sense in this case\nThe .by = option becomes extremely useful when used in summarise() which we will get to in a bit.\n\n\nrowwise()\nWhile .by = is used when performing functions on groups of rows, rowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n50.000\n22.000\n21.000\n    2.000\n26.000\n5.000\n22.000\n    3.000\n23.000\n4.000\n9.000\n    4.000\n39.000\n18.000\n30.000\n    5.000\n13.000\n16.000\n39.000\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nHere is an example where we have a single row per participant with columns representing their responses to three different questions. Let’s say we want to calculate their mean response across these three columns.\n\n\n\n\n\n\nImportant\n\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()\n\n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n50.000\n22.000\n21.000\n31.000\n    2.000\n26.000\n5.000\n22.000\n17.667\n    3.000\n23.000\n4.000\n9.000\n12.000\n    4.000\n39.000\n18.000\n30.000\n29.000\n    5.000\n13.000\n16.000\n39.000\n22.667\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n50.000\n22.000\n21.000\n22.467\n    2.000\n26.000\n5.000\n22.000\n22.467\n    3.000\n23.000\n4.000\n9.000\n22.467\n    4.000\n39.000\n18.000\n30.000\n22.467\n    5.000\n13.000\n16.000\n39.000\n22.467\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\nWe can put all the dplyr functions together through a series of pipes:\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nLet’s also do one thing to the mnemonic data set and then row bind these two data sets into one data frame.\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#summarise",
+    "href": "lectures/lectures-class-3.html#summarise",
+    "title": "Class 3: Data Transformation",
+    "section": "summarise()",
+    "text": "summarise()\nThe thing is, we don’t really care about performance on each individual word_list (A, B, and C). We care about the participant’s overall performance, aggregated across all three word lists. To aggregrate data using dplyr we can use summarise(). The result of summarise() is a reduced data frame with fewer rows. In this example, we will essentially collapse the three rows corresponding to each word list into a single row containing an aggregated summary statistic (such as a sum or mean value).\nIn a lot of ways, the code inside of summarise() looks a lot like the code we could put in mutate(). The difference is that mutate() does not collapse the data frame but summarise() does.\nTo figure out what to specify in .by = you should think of the data frame that you want to end up with (which columns you want to keep). Ultimately, we will want a data set with participant_id, condition, and mean recall performance - this last one we will create inside of summarise().\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(participant_id, condition),\n            recall_correct_mean = mean(recall_correct))\n\n\n\n\n\n\n  \n    \n    \n      participant_id\n      condition\n      recall_correct_mean\n    \n  \n  \n    1.000\nspaced repetition\n3.000\n    2.000\nmnemonic\n7.333\n    4.000\nmnemonic\n5.000\n    5.000\nspaced repetition\n5.000\n    6.000\nmnemonic\n6.667\n    8.000\nmnemonic\n5.333\n    9.000\nspaced repetition\n3.333\n    10.000\nmnemonic\n4.000\n    12.000\nmnemonic\n8.667\n    13.000\nspaced repetition\n5.000\n    14.000\nmnemonic\n7.000\n    16.000\nmnemonic\n7.333\n    17.000\nspaced repetition\n5.333\n    19.000\nspaced repetition\n6.667\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nYou can calculate other summary statistics such as:\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(particpant_id, condition),\n            recall_correct_mean = mean(recall_correct),\n            recall_correct_sd = sd(recall_correct),\n            recall_correct_sum = sum(recall_correct),\n            recall_correct_min = min(recall_correct),\n            recall_correct_max = max(recall_correct))\n\nNotice the difference when you don’t use .by =:\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(recall_correct_mean = mean(recall_correct),\n            recall_correct_sd = sd(recall_correct),\n            recall_correct_sum = sum(recall_correct),\n            recall_correct_min = min(recall_correct),\n            recall_correct_max = max(recall_correct))\n\n\n\n\n\n\n  \n    \n    \n      recall_correct_mean\n      recall_correct_sd\n      recall_correct_sum\n      recall_correct_min\n      recall_correct_max\n    \n  \n  \n    5.690\n2.006\n239.000\n2.000\n9.000"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#ggplot2",
+    "href": "lectures/lectures-class-3.html#ggplot2",
+    "title": "Class 3: Data Transformation",
+    "section": "ggplot2",
+    "text": "ggplot2\nLet’s plot the data to see what the difference in memory recall is for the two types of strategy:\n\nlibrary(ggplot2)\n\nggplot(data_scores, aes(condition, recall_correct_mean)) +\n  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +\n  stat_summary(fun = mean, geom = \"point\", \n               color = \"firebrick\", size = 3) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", \n               color = \"firebrick\", width = .2) +\n  coord_cartesian(ylim = c(0, 10)) +\n  scale_x_discrete(labels = c(\"Mnemonic\", \"Spaced Recognition\")) +\n  labs(title = \"Recal Performance for Mnemonic and Spaced Recognition\",\n       y = \"Recall Performance\",\n       x = \"\") +\n  theme_classic() +\n  theme(axis.text.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.y = element_text(size = 12))"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#reproducible-script",
+    "href": "lectures/lectures-class-3.html#reproducible-script",
+    "title": "Class 3: Data Transformation",
+    "section": "Reproducible Script",
+    "text": "Reproducible Script\n\n\nShow Code\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gt)\nlibrary(ggplot2)\n\n# import data\nrepetition_import &lt;- read_delim(\"data/class_3_repetition_rawdata.txt\", \n                                delim = \"\\t\", escape_double = FALSE, \n                                trim_ws = TRUE)\n\nmnemonic_import &lt;- read_csv(\"data/class_3_mnemonic_rawdata.csv\")\n\n# trasnform data\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n# merge data\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)\n\n# aggregate data\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(participant_id, condition),\n            recall_correct_mean = mean(recall_correct))\n\n# plot aggregate data\nggplot(data_scores, aes(condition, recall_correct_mean)) +\n  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +\n  stat_summary(fun = mean, geom = \"point\", \n               color = \"firebrick\", size = 3) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", \n               color = \"firebrick\", width = .2) +\n  coord_cartesian(ylim = c(0, 10)) +\n  scale_x_discrete(labels = c(\"Mnemonic\", \"Spaced Recognition\")) +\n  labs(title = \"Recal Performance for Mnemonic and Spaced Recognition\",\n       y = \"Recall Performance\",\n       x = \"\") +\n  theme_classic() +\n  theme(axis.text.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.y = element_text(size = 12))"
+  },
+  {
+    "objectID": "lectures/lectures-class-3.html#class-activity",
+    "href": "lectures/lectures-class-3.html#class-activity",
+    "title": "Class 3: Data Transformation",
+    "section": "Class Activity",
+    "text": "Class Activity\nFor this activity we will work with a real data set from a paper published in Psychological Science (one of the leading journals in psychology).\n\nDawtry, R. J., Sutton, R. M., & Sibley, C. G. (2015). Why Wealthier People Think People Are Wealthier, and Why It Matters: From Social Sampling to Attitudes to Redistribution. Psychological Science, 26(9), 1389–1400. https://doi.org/10.1177/0956797615586560\n\n📄 Download the paper (optional)\n⬇️ Download the data\nIn this research, Dawtry, Sutton, and Sibley (2015) wanted to examine why people differ in their assessments of the increasing wealth inequality within developed nations. Previous research reveals that most people desire a society in which the overall level of wealth is high and that wealth is spread somewhat equally across society. However, support for this approach to income distribution changes across the social strata. In particular, wealthy people tend to view society as already wealthy and thus are satisfied with the status quo, and less likely to support redistribution. In their paper Dawtry et al., (2015) sought to examine why this is the case. The authors propose that one reason wealthy people tend to view the current system is fair is because their social-circle is comprised of other wealthy people, which biases their perceptions of wealth, which leads them to overestimate the mean level of wealth across society.\nTo test this hypothesis, the authors conducted a study with 305 participants, recruited from an online participant pool. Participants reported their own annual household income, the income level of those within their own social circle, and the income for the entire population. Participants also rated their perception of the level of equality/inequality across their social circle and across society, their level of satisfaction with and perceived fairness of the current system, their attitudes toward redistribution of wealth (measured using a four-item scale), and their political preference.\nKey variables we will look at:\n\nLevel of satisfactioin with current system (1 = extremely satisfied, 9 = extremely dissatisfied)\nPerceived fairness of current system (1 = extremely fair, 9 = extremely unfair)\nAttitude on redistribution of wealth (1 = strongly disagree, 6 = strongly agree)\n\ncontained in four columms: redist1 through redist4\n\nPolitical preference (1 = very liberal/very left-wing/strong Democrat, 9 = very conservative/very right-wing/strong Republican): Political_Preference\n\n\nCreate a new R script and save it as class_3_activity_firstlastname.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, gt, ggplot2\n\nImport the data file\nTake some time to explore the data.\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\n\nhint: use a combination of length() and unique()\n\n\nRename the level of satisfaction and perceived fairness columns\nIn the previous step, you should have noticed how these column names are not ideal. They contain spaces and even a special character ? . You will need to use the special quotation mark ` `to reference these column names in rename() , e.g., `column name with spaces` You can find these special quotation marks to the left of the 1 key and above the tab key.\nFilter by only keeping rows in which Political_Preference is not missing NA . Note how many fewer rows there are in the data after filtering.\nhint: use filter(!is.na()) to evaluate whether values in Political_Preference are NOT ! missing is.na()\n\n\nShow cheat code\nfilter(!is.na(Political_Preference))\n\n\nSelect only the columns that contain the key variables we are interested in.\nReverse score redist2 and redist4, so that 6=1, 5=2, 4=3, 3=4, 2=5, 1=6.\nUse mutate() and case_when()\nAggregate values across rows\n\nCalculate a single variable representing participant’s mean attitude on redistrubtion of wealth\nCalculate a single variable representing participant’s mean perception that the current systen is satisfactory and fair.\n\nUse a combination of rowwise() and mutate()\nCreate a new data frame summarizing the values for attitude on redistribution and the combined satisfactory and fairness variable for each level of political preference. (calculate the mean when summarizing)\nUse summarise(.by = )\nCreate a table of this summarized data frame\nUse gt() from the gt package, e.g.,\n\ngt(new_data)\n\nCreate a line plot of this summarized data frame\nYou can copy and paste this, but you might need to change the name of variables to match how you labeled them.\ndata_summary, redist_mean, and fairnesss_satisfactory_mean\n\nggplot(data_summary, aes(Political_Preference)) +\n  geom_line(aes(y = redist_mean, color = \"redist\")) +\n  geom_line(aes(y = fairness_satisfactory_mean, color = \"fair/satis\")) +\n  coord_cartesian(xlim = c(1, 9.1), ylim = c(1, 9)) +\n  scale_x_continuous(breaks = 1:9, \n                     labels = \n                       c(\"1\\nLiberal\", \"2\", \"3\", \"4\", \n                         \"5\", \"6\", \"7\", \"8\", \"9\\nConservative\")) +\n  scale_y_continuous(breaks = 1:9,\n                     labels = c(\"Strongly\\nDisagree\", \"2\", \"3\", \"4\", \n                                \"5\", \"6\", \"7\", \"8\", \"Strongly\\nAgree\")) +\n  scale_color_manual(values = c(\"redist\" = \"steelblue\",\n                                \"fair/satis\" = \"firebrick\"),\n                     name = \"\",\n                     labels = c(\"Fairness/Satisfactory of Current System\",\n                                \"Redistribution Preference\")) +\n  theme_light() +\n  theme(legend.position = \"top\") +\n  labs(title = \"Economic Attitdues by Political Preference\",\n       x = \"Political Preference\",\n       y = \"Attitude\")\n\n\n\nCheck Your Work\n\n\nShow Code\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gt)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- read_csv(\"data/Dawtry Sutton and Sibley 2015 Study 1a.csv\")\n\n# data transformation\ndata &lt;- data_import |&gt;\n  rename(fairness = `current system is fair?`,\n         satisfactory = `current system is satisfactory?`) |&gt;\n  filter(!is.na(Political_Preference)) |&gt;\n  select(fairness, satisfactory, redist1, redist2, redist3, redist4,\n         Social_Circle_Mean_Income, Political_Preference) |&gt;\n  mutate(redist2_recode = case_when(redist2 == 6 ~ 1,\n                                    redist2 == 5 ~ 2,\n                                    redist2 == 4 ~ 3,\n                                    redist2 == 3 ~ 4,\n                                    redist2 == 2 ~ 5,\n                                    redist2 == 1 ~ 6),\n         redist4_recode = case_when(redist4 == 6 ~ 1,\n                                    redist4 == 5 ~ 2,\n                                    redist4 == 4 ~ 3,\n                                    redist4 == 3 ~ 4,\n                                    redist4 == 2 ~ 5,\n                                    redist4 == 1 ~ 6)) |&gt;\n  rowwise() |&gt;\n  mutate(redist = mean(c(redist1, redist2, redist3, redist4)),\n         fairness_satisfactory = mean(c(fairness, satisfactory))) |&gt;\n  ungroup()\n\n# aggregate data\ndata_summary &lt;- data |&gt;\n  summarise(.by = Political_Preference,\n            redist_mean = mean(redist),\n            fairness_satisfactory_mean = mean(fairness_satisfactory)) |&gt;\n  arrange(Political_Preference)\n\ngt(data_summary)\n\n# line plot of summary data\nggplot(data_summary, aes(Political_Preference)) +\n  geom_line(aes(y = redist_mean, color = \"redist\")) +\n  geom_line(aes(y = fairness_satisfactory_mean, color = \"fair/satis\")) +\n  coord_cartesian(xlim = c(1, 9), ylim = c(1, 9)) +\n  scale_x_continuous(breaks = 1:9, \n                     labels = \n                       c(\"1\\nLiberal\", \"2\", \"3\", \"4\", \n                         \"5\", \"6\", \"7\", \"8\", \"9\\nConservative\")) +\n  scale_y_continuous(breaks = 1:9,\n                     labels = c(\"Strongly\\nDisagree\", \"2\", \"3\", \"4\", \n                                \"5\", \"6\", \"7\", \"8\", \"Strongly\\nAgree\")) +\n  scale_color_manual(values = c(\"redist\" = \"steelblue\",\n                                \"fair/satis\" = \"firebrick\"),\n                     name = \"\",\n                     labels = c(\"Fairness/Satisfactory of Current System\",\n                                \"Redistribution Preference\")) +\n  theme_light() +\n  theme(legend.position = \"top\") +\n  labs(title = \"Economic Attitdues by Political Preference\",\n       x = \"Political Preference\",\n       y = \"Attitude\")\n\nggsave(\"images/economic_attitudes_by_political_preference.png\",\n       width = 6, height = 4, dpi = 300)"
+  },
+  {
     "objectID": "lectures/lectures-class-1.html",
     "href": "lectures/lectures-class-1.html",
     "title": "Class 1: An Introduction to Working with Data in R",
@@ -74,7 +151,7 @@
     "href": "lectures/lectures-class-1.html#visualizing-data",
     "title": "Class 1: An Introduction to Working with Data in R",
     "section": "Visualizing Data",
-    "text": "Visualizing Data\nWe will use the ggplot2 package to visualize the relationship between species, flipper_length_mm , and body_mass_g. Let’s do this step-by-step. First let’s build the data and aesthetic layers. These layers tell ggplot() what data to plot and how we map them onto the scales (e.g., x-axis and y-axis) of the graphic.\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))\n\n\n\n\n\n\n\n\nNote that this only creates the overall structure of the graphic, no data is plotted yet. That is because there are a lot of different ways to visualize the data and we need to specify these visual elements in the geometries or geom layer.\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()\n\nWarning: Removed 2 rows containing missing values (`geom_point()`).\n\n\n\n\n\n\n\n\n\nNote how it mapped species onto the color and shape of the data points.\nLet’s make the plot a littler prettier by using a customized theme, theme_classic()\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()\n\nWarning: Removed 2 rows containing missing values (`geom_point()`).\n\n\n\n\n\n\n\n\n\nOptional: We can also add horizontal and vertical lines corresponding to the mean for each species that we calculated earlier.\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\nWarning: Removed 2 rows containing missing values (`geom_point()`)."
+    "text": "Visualizing Data\nWe will use the ggplot2 package to visualize the relationship between species, flipper_length_mm , and body_mass_g. Let’s do this step-by-step. First let’s build the data and aesthetic layers. These layers tell ggplot() what data to plot and how we map them onto the scales (e.g., x-axis and y-axis) of the graphic.\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))\n\n\n\n\n\n\n\n\nNote that this only creates the overall structure of the graphic, no data is plotted yet. That is because there are a lot of different ways to visualize the data and we need to specify these visual elements in the geometries or geom layer.\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()\n\n\n\n\n\n\n\n\nNote how it mapped species onto the color and shape of the data points.\nLet’s make the plot a littler prettier by using a customized theme, theme_classic()\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()\n\n\n\n\n\n\n\n\nOptional: We can also add horizontal and vertical lines corresponding to the mean for each species that we calculated earlier.\n\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
   },
   {
     "objectID": "lectures/lectures-class-1.html#statistical-analysis",
@@ -91,407 +168,11 @@
     "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n\n\nIn the rest of the course, we will go into greater depth on transforming data, graphical visualization, and statistical analysis."
   },
   {
-    "objectID": "slides/slides-class-1.html#prepare",
-    "href": "slides/slides-class-1.html#prepare",
-    "title": "Class 1",
-    "section": "Prepare",
-    "text": "Prepare\n \nBefore starting this class:\n📖 Read the Prerequisites page\n \nOutline\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#script-files",
-    "href": "slides/slides-class-1.html#script-files",
-    "title": "Class 1",
-    "section": "Script Files",
-    "text": "Script Files\n \nTo create a new R script go to\nFile -&gt; New File -&gt; R Script\n \nThis course will refer to two types of R script files:\n\nReproducible script file: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.\n\nThis is the file you actually save to process your data\nIs commented and polished enough to share with others.\n\n\n\n\nScratchpad script file: A script file for testing, debugging, and exploring your data.\n\nOften saved as Untitled.R or not saved at all\nAlternatively, you can just execute code directly in the console"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#sec-running-r-code",
-    "href": "slides/slides-class-1.html#sec-running-r-code",
-    "title": "Class 1",
-    "section": "Running R Code",
-    "text": "Running R Code\nTwo ways of executing R code\n \n\n\nTyping code in an R script file and executing R code line-by-line Ctrl + Enter.\nTyping code directly in the console window\n\n\n\n1 + 2\n3 * 9"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#sec-creating-r-objects",
-    "href": "slides/slides-class-1.html#sec-creating-r-objects",
-    "title": "Class 1",
-    "section": "Creating R Objects",
-    "text": "Creating R Objects\n \n\n\nObjects are created using the assignment operator, &lt;-.\nobject &lt;- functions or values.\n\n\n\nGo ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.\n \n\nmy_first_object &lt;- \"hello\"\nmy_second_object &lt;- c(5,6,7,8)\n\n \n\n\nYou should now see my_first_object and my_second_object in your Environment window\nNote that R is case sensitive"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#sec-using-functions",
-    "href": "slides/slides-class-1.html#sec-using-functions",
-    "title": "Class 1",
-    "section": "Using Functions",
-    "text": "Using Functions\nAnything you do in R is by using functions\n \n\n\nLearning R is learning what functions are available and how to use them.\nExample: there is a function to create a sequence of numbers, seq().\n\n\n\nseq(1, 100, by = 10)\n\n \n\n\n\nFunctions take arguments\nIf you don’t label argument names, then the order of arguments matters!\n\n\n\nseq(from = 1, to = 100, by = 10)\nseq(to = 100, by = 10, from = 1)\nseq(1, 100, 10)"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#helper-function",
-    "href": "slides/slides-class-1.html#helper-function",
-    "title": "Class 1",
-    "section": "Helper Function",
-    "text": "Helper Function\n?function_name()\n \n\nYou should make frequent use of the helper function ?\n\ne.g., ?seq()\n\nThe names of arguments\nWhat the arguments do\nArgument default values\n\nYou don’t have to and you almost never will specify all the possible arguments.\nIn some cases it might be important to know what the default value of an argument is."
-  },
-  {
-    "objectID": "slides/slides-class-1.html#r-packages",
-    "href": "slides/slides-class-1.html#r-packages",
-    "title": "Class 1",
-    "section": "R Packages",
-    "text": "R Packages\n \n\nFunctions are organized in R packages\nR comes with a set of R packages and functions\nDevelopers and other researchers have created a lot of R packages specifically for use in psychology research\nMost R packages are hosted on The Comprehensive R Archive Network - CRAN.\n\nOthers may be hosted on GitHub"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#install-and-load-packages",
-    "href": "slides/slides-class-1.html#install-and-load-packages",
-    "title": "Class 1",
-    "section": "Install and Load Packages",
-    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#example-data-set",
-    "href": "slides/slides-class-1.html#example-data-set",
-    "title": "Class 1",
-    "section": "Example Data Set",
-    "text": "Example Data Set\nWe will use a data set from the palmerpenguins package"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#data-frames-1",
-    "href": "slides/slides-class-1.html#data-frames-1",
-    "title": "Class 1",
-    "section": "Data Frames",
-    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#viewing-the-data",
-    "href": "slides/slides-class-1.html#viewing-the-data",
-    "title": "Class 1",
-    "section": "Viewing the Data",
-    "text": "Viewing the Data\nIn scratchpad script / console\n \n\nView(data_import)"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#viewing-the-data-1",
-    "href": "slides/slides-class-1.html#viewing-the-data-1",
-    "title": "Class 1",
-    "section": "Viewing the Data",
-    "text": "Viewing the Data\nIn scratchpad script / console\n \nGet columns names\n\ncolnames(data_import)\n## [1] \"species\"           \"island\"            \"bill_length_mm\"   \n## [4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n## [7] \"sex\"               \"year\"\n\n \nSneak peak of data\n\nhead(data_import)\n## # A tibble: 6 × 8\n##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n## 1 Adelie  Torgersen           39.1          18.7               181        3750\n## 2 Adelie  Torgersen           39.5          17.4               186        3800\n## 3 Adelie  Torgersen           40.3          18                 195        3250\n## 4 Adelie  Torgersen           NA            NA                  NA          NA\n## 5 Adelie  Torgersen           36.7          19.3               193        3450\n## 6 Adelie  Torgersen           39.3          20.6               190        3650\n## # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#viewing-the-data-2",
-    "href": "slides/slides-class-1.html#viewing-the-data-2",
-    "title": "Class 1",
-    "section": "Viewing the Data",
-    "text": "Viewing the Data\nIn scratchpad script / console\n \n\n\nUse $ to refer to a column in a data frame\n\n\nGet unique values in a column\n\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#types-of-values",
-    "href": "slides/slides-class-1.html#types-of-values",
-    "title": "Class 1",
-    "section": "Types of Values",
-    "text": "Types of Values\n \nClasses are types of values that exist in R. Here are a list of some common value types:\n\n\ncharacter (or non-numeric) \"hello\", \"goodbye\"\ndouble (or numeric) 2, 32.55\ninteger 5, 99\nlogical TRUE, FALSE\nmissing NA NaN"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#types-of-values-1",
-    "href": "slides/slides-class-1.html#types-of-values-1",
-    "title": "Class 1",
-    "section": "Types of Values",
-    "text": "Types of Values\nIn scratchpad script / console\n \nTo evaluate the type of values in a column you can use typeof()\n\ntypeof(data_import$bill_depth_mm)\n## [1] \"double\"\ntypeof(data_import$flipper_length_mm)\n## [1] \"integer\"\n\n \nTo change the class of values in an object you can use as.character() , as.numeric() , as.double() , as.integer() , as.logical() functions.\n\nas.character(data_import$bill_depth_mm)\n##   [1] \"18.7\" \"17.4\" \"18\"   NA     \"19.3\" \"20.6\" \"17.8\" \"19.6\" \"18.1\" \"20.2\"\n##  [11] \"17.1\" \"17.3\" \"17.6\" \"21.2\" \"21.1\" \"17.8\" \"19\"   \"20.7\" \"18.4\" \"21.5\"\n##  [21] \"18.3\" \"18.7\" \"19.2\" \"18.1\" \"17.2\" \"18.9\" \"18.6\" \"17.9\" \"18.6\" \"18.9\"\n##  [31] \"16.7\" \"18.1\" \"17.8\" \"18.9\" \"17\"   \"21.1\" \"20\"   \"18.5\" \"19.3\" \"19.1\"\n##  [41] \"18\"   \"18.4\" \"18.5\" \"19.7\" \"16.9\" \"18.8\" \"19\"   \"18.9\" \"17.9\" \"21.2\"\n##  [51] \"17.7\" \"18.9\" \"17.9\" \"19.5\" \"18.1\" \"18.6\" \"17.5\" \"18.8\" \"16.6\" \"19.1\"\n##  [61] \"16.9\" \"21.1\" \"17\"   \"18.2\" \"17.1\" \"18\"   \"16.2\" \"19.1\" \"16.6\" \"19.4\"\n##  [71] \"19\"   \"18.4\" \"17.2\" \"18.9\" \"17.5\" \"18.5\" \"16.8\" \"19.4\" \"16.1\" \"19.1\"\n##  [81] \"17.2\" \"17.6\" \"18.8\" \"19.4\" \"17.8\" \"20.3\" \"19.5\" \"18.6\" \"19.2\" \"18.8\"\n##  [91] \"18\"   \"18.1\" \"17.1\" \"18.1\" \"17.3\" \"18.9\" \"18.6\" \"18.5\" \"16.1\" \"18.5\"\n## [101] \"17.9\" \"20\"   \"16\"   \"20\"   \"18.6\" \"18.9\" \"17.2\" \"20\"   \"17\"   \"19\"  \n## [111] \"16.5\" \"20.3\" \"17.7\" \"19.5\" \"20.7\" \"18.3\" \"17\"   \"20.5\" \"17\"   \"18.6\"\n## [121] \"17.2\" \"19.8\" \"17\"   \"18.5\" \"15.9\" \"19\"   \"17.6\" \"18.3\" \"17.1\" \"18\"  \n## [131] \"17.9\" \"19.2\" \"18.5\" \"18.5\" \"17.6\" \"17.5\" \"17.5\" \"20.1\" \"16.5\" \"17.9\"\n## [141] \"17.1\" \"17.2\" \"15.5\" \"17\"   \"16.8\" \"18.7\" \"18.6\" \"18.4\" \"17.8\" \"18.1\"\n## [151] \"17.1\" \"18.5\" \"13.2\" \"16.3\" \"14.1\" \"15.2\" \"14.5\" \"13.5\" \"14.6\" \"15.3\"\n## [161] \"13.4\" \"15.4\" \"13.7\" \"16.1\" \"13.7\" \"14.6\" \"14.6\" \"15.7\" \"13.5\" \"15.2\"\n## [171] \"14.5\" \"15.1\" \"14.3\" \"14.5\" \"14.5\" \"15.8\" \"13.1\" \"15.1\" \"14.3\" \"15\"  \n## [181] \"14.3\" \"15.3\" \"15.3\" \"14.2\" \"14.5\" \"17\"   \"14.8\" \"16.3\" \"13.7\" \"17.3\"\n## [191] \"13.6\" \"15.7\" \"13.7\" \"16\"   \"13.7\" \"15\"   \"15.9\" \"13.9\" \"13.9\" \"15.9\"\n## [201] \"13.3\" \"15.8\" \"14.2\" \"14.1\" \"14.4\" \"15\"   \"14.4\" \"15.4\" \"13.9\" \"15\"  \n## [211] \"14.5\" \"15.3\" \"13.8\" \"14.9\" \"13.9\" \"15.7\" \"14.2\" \"16.8\" \"14.4\" \"16.2\"\n## [221] \"14.2\" \"15\"   \"15\"   \"15.6\" \"15.6\" \"14.8\" \"15\"   \"16\"   \"14.2\" \"16.3\"\n## [231] \"13.8\" \"16.4\" \"14.5\" \"15.6\" \"14.6\" \"15.9\" \"13.8\" \"17.3\" \"14.4\" \"14.2\"\n## [241] \"14\"   \"17\"   \"15\"   \"17.1\" \"14.5\" \"16.1\" \"14.7\" \"15.7\" \"15.8\" \"14.6\"\n## [251] \"14.4\" \"16.5\" \"15\"   \"17\"   \"15.5\" \"15\"   \"13.8\" \"16.1\" \"14.7\" \"15.8\"\n## [261] \"14\"   \"15.1\" \"15.2\" \"15.9\" \"15.2\" \"16.3\" \"14.1\" \"16\"   \"15.7\" \"16.2\"\n## [271] \"13.7\" NA     \"14.3\" \"15.7\" \"14.8\" \"16.1\" \"17.9\" \"19.5\" \"19.2\" \"18.7\"\n## [281] \"19.8\" \"17.8\" \"18.2\" \"18.2\" \"18.9\" \"19.9\" \"17.8\" \"20.3\" \"17.3\" \"18.1\"\n## [291] \"17.1\" \"19.6\" \"20\"   \"17.8\" \"18.6\" \"18.2\" \"17.3\" \"17.5\" \"16.6\" \"19.4\"\n## [301] \"17.9\" \"19\"   \"18.4\" \"19\"   \"17.8\" \"20\"   \"16.6\" \"20.8\" \"16.7\" \"18.8\"\n## [311] \"18.6\" \"16.8\" \"18.3\" \"20.7\" \"16.6\" \"19.9\" \"19.5\" \"17.5\" \"19.1\" \"17\"  \n## [321] \"17.9\" \"18.5\" \"17.9\" \"19.6\" \"18.7\" \"17.3\" \"16.4\" \"19\"   \"17.3\" \"19.7\"\n## [331] \"17.3\" \"18.8\" \"16.6\" \"19.9\" \"18.8\" \"19.4\" \"19.5\" \"16.5\" \"17\"   \"19.8\"\n## [341] \"18.1\" \"18.2\" \"19\"   \"18.7\""
-  },
-  {
-    "objectID": "slides/slides-class-1.html#factors",
-    "href": "slides/slides-class-1.html#factors",
-    "title": "Class 1",
-    "section": "Factors",
-    "text": "Factors\nIn scratchpad script / console\n \n\ntypeof(data_import$species)\n## [1] \"integer\"\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo\nis.factor(data_import$species)\n## [1] TRUE\n\n \n\n\nFactors are a special type of column that represent levels of a category with an order to those levels.\nThe actual values in Factors can be of type character, double, integer, or logical.\nFactors become especially important in data visualization and statistical analysis."
-  },
-  {
-    "objectID": "slides/slides-class-1.html#creating-factors",
-    "href": "slides/slides-class-1.html#creating-factors",
-    "title": "Class 1",
-    "section": "Creating Factors",
-    "text": "Creating Factors\nIn scratchpad script / console\n \nYou can set a column of values as a factor by using factor()\n\nfactor(data_import$year, levels = c(2007, 2008, 2009))"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#palmerpenguins",
-    "href": "slides/slides-class-1.html#palmerpenguins",
-    "title": "Class 1",
-    "section": "palmerpenguins",
-    "text": "palmerpenguins\n \nLet’s take a look at three variables\n\nspecies\nflipper length\nbody mass"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#data-transformation-1",
-    "href": "slides/slides-class-1.html#data-transformation-1",
-    "title": "Class 1",
-    "section": "Data Transformation",
-    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#data-transformation-2",
-    "href": "slides/slides-class-1.html#data-transformation-2",
-    "title": "Class 1",
-    "section": "Data Transformation",
-    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\nThe |&gt; notation says pass data_import into the mutate() function\nThen the result of mutate() is assigned to a new object, data_plot"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#data-transformation-3",
-    "href": "slides/slides-class-1.html#data-transformation-3",
-    "title": "Class 1",
-    "section": "Data Transformation",
-    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n\n\nView(data_plot)"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
-    "href": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
-    "title": "Class 1",
-    "section": "ggplot2 - data and aesthetics layer",
-    "text": "ggplot2 - data and aesthetics layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#ggplot2---geometries-layer",
-    "href": "slides/slides-class-1.html#ggplot2---geometries-layer",
-    "title": "Class 1",
-    "section": "ggplot2 - geometries layer",
-    "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#ggplot2---theme",
-    "href": "slides/slides-class-1.html#ggplot2---theme",
-    "title": "Class 1",
-    "section": "ggplot2 - theme",
-    "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#ggplot2",
-    "href": "slides/slides-class-1.html#ggplot2",
-    "title": "Class 1",
-    "section": "ggplot2",
-    "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#correlation",
-    "href": "slides/slides-class-1.html#correlation",
-    "title": "Class 1",
-    "section": "Correlation",
-    "text": "Correlation\n \n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n## \n##  Pearson's product-moment correlation\n## \n## data:  data_import$body_mass_g and data_import$flipper_length_mm\n## t = 32.722, df = 340, p-value &lt; 2.2e-16\n## alternative hypothesis: true correlation is not equal to 0\n## 95 percent confidence interval:\n##  0.843041 0.894599\n## sample estimates:\n##       cor \n## 0.8712018"
-  },
-  {
-    "objectID": "slides/slides-class-1.html#class-1-reproducible-script",
-    "href": "slides/slides-class-1.html#class-1-reproducible-script",
-    "title": "Class 1",
-    "section": "Class 1: Reproducible Script",
-    "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)"
-  },
-  {
-    "objectID": "prerequisites.html",
-    "href": "prerequisites.html",
-    "title": "Prerequisites",
-    "section": "",
-    "text": "If you do not have R or RStudio installed on your computer, then follow the install instructions below.\nIf you already have R or RStudio installed on your computer, then is it recommended to Update Software for this course.",
-    "crumbs": [
-      "Course Information",
-      "Prerequisites"
-    ]
-  },
-  {
-    "objectID": "prerequisites.html#sec-install-software",
-    "href": "prerequisites.html#sec-install-software",
-    "title": "Prerequisites",
-    "section": "Install Software",
-    "text": "Install Software\n\nInstall R\nFirst you need to download the latest version of R from their website https://www.r-project.org\n\nSelect CRAN on the left, just under Download\nSelect the first option under 0-Cloud\nSelect the download option depending on your computer\nSelect the base installation (for Windows) or the Latest Release (for Mac)\nOpen and Run the installation file\n\n\n\nInstall RStudio\nThe easiest way to interact with R is through the RStudio environment. To do this you need to download RStudio\n\nSelect the Free version of RStudio Desktop\nSelect the download option depending on your computer",
-    "crumbs": [
-      "Course Information",
-      "Prerequisites"
-    ]
-  },
-  {
-    "objectID": "prerequisites.html#sec-update-software",
-    "href": "prerequisites.html#sec-update-software",
-    "title": "Prerequisites",
-    "section": "Update Software",
-    "text": "Update Software\n\nUpdate R\nIf you already have R installed, but want to update it to the most current version follow these steps.\nWarning: When updating R (not RStudio), it may remove all packages you have installed\nFirst check what version of R you have installed.\n\nOpen RStudio\nIn the console window you will see the R version you are running (e.g., R version 4.1.0)\nIf you have an R version older than 4.0.0 than you need to update R.\nRun the following lines of code in your console window. This is an easy way to re-install all your currently installed packages. This step will save a list of packages to re-install later.\n\n\n# Save current packages and their versions to object called ip\n\nip &lt;- installed.packages()\nip\n\n# Save the object as an .rds file\n\nsaveRDS(ip, \"CurrentPackages.rds\")\n\n\nExit out of all R or RStudio windows\nDownload and install the latest version of R (see the section on installing R above)\nOpen RStudio\nCheck if your previously installed packages are installed using the Packages tab in the bottom right window\nIf you need to re-install your previous packages, then run the following lines of code\n\n\n# After updating R, load the file and reinstall packages\n\nip &lt;- readRDS(\"CurrentPackages.rds\")\n\ninstall.packages(ip[,1])\n\n\n\nUpdate RStudio\nGo to Help -&gt; Check for Updates",
-    "crumbs": [
-      "Course Information",
-      "Prerequisites"
-    ]
-  },
-  {
-    "objectID": "prerequisites.html#getting-to-know-rstudio",
-    "href": "prerequisites.html#getting-to-know-rstudio",
-    "title": "Prerequisites",
-    "section": "Getting to Know RStudio",
-    "text": "Getting to Know RStudio\nWhile R is the actual programming software that executes the code, RStudio is an environment for interacting with R, writing R scripts, managing and organizing projects, and much more. When you open RStudio, it will open a window to the R console within the RStudio environment.\nGo ahead an open the RStudio application on your computer.\nWhen you open a fresh session of RStudio there are 3 window panes open. The Console window, the Environment window, and the Files window. Go ahead and navigate to File -&gt; New File -&gt; R Script. You should now see something similar to the image below\n\n\n\n\n\nFigure 1: RStudio window panes\n\n\n\n\n\n\n\n\nThere are 4 window panes and each one has it’s own set of tabs associated with it:\n\nThe Console window (the bottom left window pane) is where code is executed and output is displayed.\nThe Source window (the top left window pane) is where you will write your code to create a script file. When you open a new script file you will see a blank sheet where you can start writing the script. When you execute lines of code from here you will see it being executed in the Console window.\nThe Source window is also where you can view data frames you have just imported or created. In the image above, notice the different tabs in the Source window. There are two “Untitled” script files open and one data frame called ‘data’.\nThe Environment window (top right window pane) is where you can see any data frames, variables, or functions you have created. Go ahead and type the following in your Console window and hit enter.\n\n\nwelcome_message &lt;- \"hello\"\n\nYou should now see the variable welcome_message in the Environment window pane\n\nThe Files window (the bottom right window pane) is where you can see your computer’s directories, plots you create, manage packages, and see help documentation.\n\nYou can also Customize RStudio settings and appearances.\n\nCustomizing RStudio\nComing soon…",
-    "crumbs": [
-      "Course Information",
-      "Prerequisites"
-    ]
-  },
-  {
-    "objectID": "classes/class-3.html",
-    "href": "classes/class-3.html",
-    "title": "Class 3",
-    "section": "",
-    "text": "The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.",
-    "crumbs": [
-      "Classes",
-      "Class 3"
-    ]
-  },
-  {
-    "objectID": "classes/class-3.html#prepare",
-    "href": "classes/class-3.html#prepare",
-    "title": "Class 3",
-    "section": "Prepare",
-    "text": "Prepare\nBefore starting this class:\n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n⬇️ Download sample data files: (right-click to download linked file)\n\nclass_2_cog_data.csv\nclass_2_mood_data.csv",
-    "crumbs": [
-      "Classes",
-      "Class 3"
-    ]
-  },
-  {
-    "objectID": "classes/class-3.html#outline",
-    "href": "classes/class-3.html#outline",
-    "title": "Class 3",
-    "section": "Outline",
-    "text": "Outline\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nBind vs. Join\nbind_() functions\njoin_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()",
-    "crumbs": [
-      "Classes",
-      "Class 3"
-    ]
-  },
-  {
-    "objectID": "classes/class-3.html#class-materials",
-    "href": "classes/class-3.html#class-materials",
-    "title": "Class 3",
-    "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 3: Data Transformation\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
-    "crumbs": [
-      "Classes",
-      "Class 3"
-    ]
-  },
-  {
-    "objectID": "what-is-R.html",
-    "href": "what-is-R.html",
-    "title": "What is R?",
-    "section": "",
-    "text": "According to the R website\n\nR is a free software environment for statistical computing and graphics.\n\nLet’s unpack this a bit.\n\nFree is nice!\nStatistical computing is a general term referring to a large class of techniques that involves statistics, machine learning, and more.\nGraphics refers to creating visualizations of data and output from statistical computing.\n\nIt’s really all about data! We live in a data rich world. Our personal lives, the media, and the workplace are inundated with data. But data is often times obscure and not intuitive compared to how we interact with real-world objects. It is hidden behind numbers stored in columns, rows, and complex databases. There are also more units of data that we can realistically process and understand. As a result, data can easily be misleading and at worse be used to intentionally deceive and lie (see How to Lie with Statistics).\nA fundamental skill for the modern person, therefore, is to have some level of competency with working with and understanding data. Where it comes from, how it can be transformed, basic concepts about statistics and probability, and the graphical visualization of data.\nSo where does R come in?\nR is only one of many tools that are available to learn about data, process it, understand it with statistics, and visualize it for the purpose of communication and understanding.\nR is a coding language. There are pros and cons to this. Any coding language requires a steep learning curve but the underlying logic of most coding languages is the same, and therefore; it can introduce you to a world coding that allows a powerful level of control and customization that goes beyond what we can achieve through the more clunky interface of real-world objects and graphical user interfaces (GUI) on our monitors.\nDebates on which programming language you should learn and use are rampant on the internet and social media. For the basic undergraduate psychology student, R has a lot of advantages. Beyond that one may want to learn Python, Julia, or Matlab.\nRegardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of data. You will gain an appreciation for the level of mundanity and complexity that is involved in processing the vast amounts of data in this world. Through working with data yourself, you will also become a better consumer of data and information that you see in your own work, the news, and social media.\nIt all starts with gaining a basic level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation. This course will cover the basics in each of these areas using R and from there you should be equipped to continue learning more on your own and from other courses.",
-    "crumbs": [
-      "Course Information",
-      "What is R?"
-    ]
-  },
-  {
-    "objectID": "classes/class-1.html",
-    "href": "classes/class-1.html",
-    "title": "Class 1",
-    "section": "",
-    "text": "The main objective of this class is to get you a basic level of understanding of how to work with data in R.",
-    "crumbs": [
-      "Classes",
-      "Class 1"
-    ]
-  },
-  {
-    "objectID": "classes/class-1.html#prepare",
-    "href": "classes/class-1.html#prepare",
-    "title": "Class 1",
-    "section": "Prepare",
-    "text": "Prepare\nBefore starting this class:\n📖 Read the Prerequisites page",
-    "crumbs": [
-      "Classes",
-      "Class 1"
-    ]
-  },
-  {
-    "objectID": "classes/class-1.html#outline",
-    "href": "classes/class-1.html#outline",
-    "title": "Class 1",
-    "section": "Outline",
-    "text": "Outline\n\nBasics of using R\nData Frames\nBrief intro to data transformation, graphical visualization, and staistical computation",
-    "crumbs": [
-      "Classes",
-      "Class 1"
-    ]
-  },
-  {
-    "objectID": "classes/class-1.html#class-materials",
-    "href": "classes/class-1.html#class-materials",
-    "title": "Class 1",
-    "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 1: An Introduction to Working with Data in R\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
-    "crumbs": [
-      "Classes",
-      "Class 1"
-    ]
-  },
-  {
-    "objectID": "classes/class-2.html",
-    "href": "classes/class-2.html",
-    "title": "Class 2",
-    "section": "",
-    "text": "The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.",
-    "crumbs": [
-      "Classes",
-      "Class 2"
-    ]
-  },
-  {
-    "objectID": "classes/class-2.html#prepare",
-    "href": "classes/class-2.html#prepare",
-    "title": "Class 2",
-    "section": "Prepare",
-    "text": "Prepare\nBefore starting this class:\n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n⬇️ Download sample data files: (right-click to download linked file)\n\nclass_2_cog_data.csv\nclass_2_mood_data.csv",
-    "crumbs": [
-      "Classes",
-      "Class 2"
-    ]
-  },
-  {
-    "objectID": "classes/class-2.html#outline",
-    "href": "classes/class-2.html#outline",
-    "title": "Class 2",
-    "section": "Outline",
-    "text": "Outline\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nbind_() functions\njoin_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()",
-    "crumbs": [
-      "Classes",
-      "Class 2"
-    ]
-  },
-  {
-    "objectID": "classes/class-2.html#class-materials",
-    "href": "classes/class-2.html#class-materials",
-    "title": "Class 2",
-    "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 2: Importing, Merging, and Restructuring Data\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
-    "crumbs": [
-      "Classes",
-      "Class 2"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome!",
-    "section": "",
-    "text": "The purpose of this course is for you to gain a basic level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.\nAlthough it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#course-format",
-    "href": "index.html#course-format",
-    "title": "Welcome!",
-    "section": "Course Format",
-    "text": "Course Format\nBefore starting the course you should read the following sections\n📖 What is R?\n📖 Prerequisites\nYou can navigate to different sections of the course on the left sidebar.\nMost pages will also have a page navigation on the right sidebar where you can navigate to different sections of the page you are currently on.\n\nClasses\nThe landing page for each class contains the class materials:\n📘 the actual content of the class\n🖥️ slides\nand more\nClass 1 - An Introduction to Working with Data in R\nClass 2 - Importing, Merging, and Restructuring Data\nClass 3 - Data Transformation\nClass 4 - Data Visualization\nClass 5 - Projects and Reproducible Workflows\nClass 6 - Quarto Documents\nClass 7 - Statistical Analysis: Regression\nClass 8 - Statistical Analysis: ANOVA",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
     "objectID": "slides/slides-class-2.html#prepare",
     "href": "slides/slides-class-2.html#prepare",
     "title": "Class 2",
     "section": "Prepare",
-    "text": "Prepare\nBefore starting this class:\n \n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n⬇️ Download sample data files: (right-click to download linked file)\n\n\nclass_2_cog_data.csv\nclass_2_mood_data.csv"
+    "text": "Prepare\nBefore starting this class:\n \n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n \nDownload sample data files: (right-click to download linked file)\n⬇️ class_2_cog_data.csv\n⬇️ class_2_mood_data.txt"
   },
   {
     "objectID": "slides/slides-class-2.html#outline",
@@ -708,7 +389,7 @@
     "href": "slides/slides-class-2.html#class-activity-1",
     "title": "Class 2",
     "section": "Class Activity",
-    "text": "Class Activity\nNote that this activity was created with the assistance of ChatGPT 4.\n \nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\n \nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (class_2_cog_data.csv) and another with the mood ratings data (class_2_mood_data.txt), but the same participants across each data set.\n \nYour task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.\n \n\nReference these slides and/or the class lecture materials to complete the activity."
+    "text": "Class Activity\n \nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\n \nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (⬇️ class_2_cog_data.csv) and another with the mood ratings data (⬇️ class_2_mood_data.txt), but the same participants across each data set.\n \nYour task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.\n \n\nReference these slides and/or the class lecture materials to complete the activity."
   },
   {
     "objectID": "slides/slides-class-2.html#setup",
@@ -809,6 +490,682 @@
     "text": "Reproducible Script\nYou should attempt to complete the activity without looking at this code\n\n\nCode\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\n\n# import data\ncog_import &lt;- read_csv(\"data/class_2_cog_data.csv\")\nmood_import &lt;- read_delim(\"data/class_2_mood_data.txt\", \n                          delim = \"\\t\", escape_double = FALSE, trim_ws = TRUE)\n\n# restructure data\ncog_data &lt;- cog_import |&gt;\n  pivot_longer(cols = starts_with(\"cognitive_week\"), \n               names_to = \"week\", \n               values_to = \"cognitive_score\") |&gt;\n  mutate(week = parse_number(week))\n\nmood_data &lt;- mood_import |&gt;\n  pivot_longer(cols = starts_with(\"mood_week\"), \n               names_to = \"week\", \n               values_to = \"mood_score\") |&gt;\n  mutate(week = parse_number(week))\n\n# merge data\ndata_merged &lt;- full_join(cog_data, mood_data, \n                         by = c(\"participant_id\", \"intervention_type\", \"week\"))\n\n# plot data\nggplot(data_merged, aes(x = week, y = cognitive_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(65, 85)) +\n  labs(title = \"Cognitive Scores Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Cognitive Score\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\nggplot(data_merged, aes(x = week, y = mood_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(60, 80)) +\n  labs(title = \"Mood Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Mood\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_mood_plot.png\", \n       width = 6, height = 4, dpi = 300)"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome!",
+    "section": "",
+    "text": "The purpose of this course is for you to gain a basic level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.\nAlthough it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#course-format",
+    "href": "index.html#course-format",
+    "title": "Welcome!",
+    "section": "Course Format",
+    "text": "Course Format\nBefore starting the course you should read the following sections\n📖 What is R?\n📖 Prerequisites\nYou can navigate to different sections of the course on the left sidebar.\nMost pages will also have a page navigation on the right sidebar where you can navigate to different sections of the page you are currently on.\n\nClasses\nThe landing page for each class contains the class materials:\n📘 the actual content of the class\n🖥️ slides\nand more\nClass 1 - An Introduction to Working with Data in R\nClass 2 - Importing, Merging, and Restructuring Data\nClass 3 - Data Transformation\nClass 4 - Data Visualization\nClass 5 - Projects and Reproducible Workflows\nClass 6 - Quarto Documents\nClass 7 - Statistical Analysis: Regression\nClass 8 - Statistical Analysis: ANOVA",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html",
+    "href": "classes/class-2.html",
+    "title": "Class 2",
+    "section": "",
+    "text": "The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html#prepare",
+    "href": "classes/class-2.html#prepare",
+    "title": "Class 2",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n📦 Install readr, dplyr, tidyr, and ggplot2 packages\nDownload sample data files: (right-click to download linked file)\n⬇️ class_2_cog_data.csv\n⬇️ class_2_mood_data.txt",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html#outline",
+    "href": "classes/class-2.html#outline",
+    "title": "Class 2",
+    "section": "Outline",
+    "text": "Outline\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nbind_() functions\njoin_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-2.html#class-materials",
+    "href": "classes/class-2.html#class-materials",
+    "title": "Class 2",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 2: Importing, Merging, and Restructuring Data\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "crumbs": [
+      "Classes",
+      "Class 2"
+    ]
+  },
+  {
+    "objectID": "classes/class-1.html",
+    "href": "classes/class-1.html",
+    "title": "Class 1",
+    "section": "",
+    "text": "The main objective of this class is to get you a basic level of understanding of how to work with data in R.",
+    "crumbs": [
+      "Classes",
+      "Class 1"
+    ]
+  },
+  {
+    "objectID": "classes/class-1.html#prepare",
+    "href": "classes/class-1.html#prepare",
+    "title": "Class 1",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n📖 Read the Prerequisites page",
+    "crumbs": [
+      "Classes",
+      "Class 1"
+    ]
+  },
+  {
+    "objectID": "classes/class-1.html#outline",
+    "href": "classes/class-1.html#outline",
+    "title": "Class 1",
+    "section": "Outline",
+    "text": "Outline\n\nBasics of using R\nData Frames\nBrief intro to data transformation, graphical visualization, and staistical computation",
+    "crumbs": [
+      "Classes",
+      "Class 1"
+    ]
+  },
+  {
+    "objectID": "classes/class-1.html#class-materials",
+    "href": "classes/class-1.html#class-materials",
+    "title": "Class 1",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 1: An Introduction to Working with Data in R\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "crumbs": [
+      "Classes",
+      "Class 1"
+    ]
+  },
+  {
+    "objectID": "what-is-R.html",
+    "href": "what-is-R.html",
+    "title": "What is R?",
+    "section": "",
+    "text": "According to the R website\n\nR is a free software environment for statistical computing and graphics.\n\nLet’s unpack this a bit.\n\nFree is nice!\nStatistical computing is a general term referring to a large class of techniques that involves statistics, machine learning, and more.\nGraphics refers to creating visualizations of data and output from statistical computing.\n\nIt’s really all about data! We live in a data rich world. Our personal lives, the media, and the workplace are inundated with data. But data is often times obscure and not intuitive compared to how we interact with real-world objects. It is hidden behind numbers stored in columns, rows, and complex databases. There are also more units of data that we can realistically process and understand. As a result, data can easily be misleading and at worse be used to intentionally deceive and lie (see How to Lie with Statistics).\nA fundamental skill for the modern person, therefore, is to have some level of competency with working with and understanding data. Where it comes from, how it can be transformed, basic concepts about statistics and probability, and the graphical visualization of data.\nSo where does R come in?\nR is only one of many tools that are available to learn about data, process it, understand it with statistics, and visualize it for the purpose of communication and understanding.\nR is a coding language. There are pros and cons to this. Any coding language requires a steep learning curve but the underlying logic of most coding languages is the same, and therefore; it can introduce you to a world coding that allows a powerful level of control and customization that goes beyond what we can achieve through the more clunky interface of real-world objects and graphical user interfaces (GUI) on our monitors.\nDebates on which programming language you should learn and use are rampant on the internet and social media. For the basic undergraduate psychology student, R has a lot of advantages. Beyond that one may want to learn Python, Julia, or Matlab.\nRegardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of data. You will gain an appreciation for the level of mundanity and complexity that is involved in processing the vast amounts of data in this world. Through working with data yourself, you will also become a better consumer of data and information that you see in your own work, the news, and social media.\nIt all starts with gaining a basic level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation. This course will cover the basics in each of these areas using R and from there you should be equipped to continue learning more on your own and from other courses.",
+    "crumbs": [
+      "Course Information",
+      "What is R?"
+    ]
+  },
+  {
+    "objectID": "classes/class-3.html",
+    "href": "classes/class-3.html",
+    "title": "Class 3",
+    "section": "",
+    "text": "The main objective of this class is to get familiar with the basic functions in dplyr for performing basic data transformations.",
+    "crumbs": [
+      "Classes",
+      "Class 3"
+    ]
+  },
+  {
+    "objectID": "classes/class-3.html#prepare",
+    "href": "classes/class-3.html#prepare",
+    "title": "Class 3",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n📦 Install the gt package\nDownload sample data files: (right-click to download linked file)\n⬇️ class_3_repetition_rawdata.txt\n⬇️ class_3_mnemonic_rawdata.csv",
+    "crumbs": [
+      "Classes",
+      "Class 3"
+    ]
+  },
+  {
+    "objectID": "classes/class-3.html#outline",
+    "href": "classes/class-3.html#outline",
+    "title": "Class 3",
+    "section": "Outline",
+    "text": "Outline\n\nThe tidyverse and dplyr\nRename columns: rename()\nFilter rows: filter()\nSelect columns: select()\nCompute and transform values: mutate()\nAggregate data: summarise()",
+    "crumbs": [
+      "Classes",
+      "Class 3"
+    ]
+  },
+  {
+    "objectID": "classes/class-3.html#class-materials",
+    "href": "classes/class-3.html#class-materials",
+    "title": "Class 3",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 3: Data Transformation\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "crumbs": [
+      "Classes",
+      "Class 3"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html",
+    "href": "prerequisites.html",
+    "title": "Prerequisites",
+    "section": "",
+    "text": "If you do not have R or RStudio installed on your computer, then follow the install instructions below.\nIf you already have R or RStudio installed on your computer, then is it recommended to Update Software for this course.",
+    "crumbs": [
+      "Course Information",
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#sec-install-software",
+    "href": "prerequisites.html#sec-install-software",
+    "title": "Prerequisites",
+    "section": "Install Software",
+    "text": "Install Software\n\nInstall R\nFirst you need to download the latest version of R from their website https://www.r-project.org\n\nSelect CRAN on the left, just under Download\nSelect the first option under 0-Cloud\nSelect the download option depending on your computer\nSelect the base installation (for Windows) or the Latest Release (for Mac)\nOpen and Run the installation file\n\n\n\nInstall RStudio\nThe easiest way to interact with R is through the RStudio environment. To do this you need to download RStudio\n\nSelect the Free version of RStudio Desktop\nSelect the download option depending on your computer",
+    "crumbs": [
+      "Course Information",
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#sec-update-software",
+    "href": "prerequisites.html#sec-update-software",
+    "title": "Prerequisites",
+    "section": "Update Software",
+    "text": "Update Software\n\nUpdate R\nIf you already have R installed, but want to update it to the most current version follow these steps.\nWarning: When updating R (not RStudio), it may remove all packages you have installed\nFirst check what version of R you have installed.\n\nOpen RStudio\nIn the console window you will see the R version you are running (e.g., R version 4.1.0)\nIf you have an R version older than 4.0.0 than you need to update R.\nRun the following lines of code in your console window. This is an easy way to re-install all your currently installed packages. This step will save a list of packages to re-install later.\n\n\n# Save current packages and their versions to object called ip\n\nip &lt;- installed.packages()\nip\n\n# Save the object as an .rds file\n\nsaveRDS(ip, \"CurrentPackages.rds\")\n\n\nExit out of all R or RStudio windows\nDownload and install the latest version of R (see the section on installing R above)\nOpen RStudio\nCheck if your previously installed packages are installed using the Packages tab in the bottom right window\nIf you need to re-install your previous packages, then run the following lines of code\n\n\n# After updating R, load the file and reinstall packages\n\nip &lt;- readRDS(\"CurrentPackages.rds\")\n\ninstall.packages(ip[,1])\n\n\n\nUpdate RStudio\nGo to Help -&gt; Check for Updates",
+    "crumbs": [
+      "Course Information",
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#getting-to-know-rstudio",
+    "href": "prerequisites.html#getting-to-know-rstudio",
+    "title": "Prerequisites",
+    "section": "Getting to Know RStudio",
+    "text": "Getting to Know RStudio\nWhile R is the actual programming software that executes the code, RStudio is an environment for interacting with R, writing R scripts, managing and organizing projects, and much more. When you open RStudio, it will open a window to the R console within the RStudio environment.\nGo ahead an open the RStudio application on your computer.\nWhen you open a fresh session of RStudio there are 3 window panes open. The Console window, the Environment window, and the Files window. Go ahead and navigate to File -&gt; New File -&gt; R Script. You should now see something similar to the image below\n\n\n\n\n\nFigure 1: RStudio window panes\n\n\n\n\n\n\n\n\nThere are 4 window panes and each one has it’s own set of tabs associated with it:\n\nThe Console window (the bottom left window pane) is where code is executed and output is displayed.\nThe Source window (the top left window pane) is where you will write your code to create a script file. When you open a new script file you will see a blank sheet where you can start writing the script. When you execute lines of code from here you will see it being executed in the Console window.\nThe Source window is also where you can view data frames you have just imported or created. In the image above, notice the different tabs in the Source window. There are two “Untitled” script files open and one data frame called ‘data’.\nThe Environment window (top right window pane) is where you can see any data frames, variables, or functions you have created. Go ahead and type the following in your Console window and hit enter.\n\n\nwelcome_message &lt;- \"hello\"\n\nYou should now see the variable welcome_message in the Environment window pane\n\nThe Files window (the bottom right window pane) is where you can see your computer’s directories, plots you create, manage packages, and see help documentation.\n\nYou can also Customize RStudio settings and appearances.\n\nCustomizing RStudio\nComing soon…",
+    "crumbs": [
+      "Course Information",
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "slides/slides-class-1.html#prepare",
+    "href": "slides/slides-class-1.html#prepare",
+    "title": "Class 1",
+    "section": "Prepare",
+    "text": "Prepare\n \nBefore starting this class:\n📖 Read the Prerequisites page\n \nOutline\n\n\nR Basics\nData Frames\nBrief intro to\n\nData transformation\nGraphical visualization\nStatistical analysis"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#script-files",
+    "href": "slides/slides-class-1.html#script-files",
+    "title": "Class 1",
+    "section": "Script Files",
+    "text": "Script Files\n \nTo create a new R script go to\nFile -&gt; New File -&gt; R Script\n \nThis course will refer to two types of R script files:\n\nReproducible script file: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.\n\nThis is the file you actually save to process your data\nIs commented and polished enough to share with others.\n\n\n\n\nScratchpad script file: A script file for testing, debugging, and exploring your data.\n\nOften saved as Untitled.R or not saved at all\nAlternatively, you can just execute code directly in the console"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#sec-running-r-code",
+    "href": "slides/slides-class-1.html#sec-running-r-code",
+    "title": "Class 1",
+    "section": "Running R Code",
+    "text": "Running R Code\nTwo ways of executing R code\n \n\n\nTyping code in an R script file and executing R code line-by-line Ctrl + Enter.\nTyping code directly in the console window\n\n\n\n1 + 2\n3 * 9"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#sec-creating-r-objects",
+    "href": "slides/slides-class-1.html#sec-creating-r-objects",
+    "title": "Class 1",
+    "section": "Creating R Objects",
+    "text": "Creating R Objects\n \n\n\nObjects are created using the assignment operator, &lt;-.\nobject &lt;- functions or values.\n\n\n\nGo ahead and type the following two lines of code in your scratchpad script file/console and execute the lines of code.\n \n\nmy_first_object &lt;- \"hello\"\nmy_second_object &lt;- c(5,6,7,8)\n\n \n\n\nYou should now see my_first_object and my_second_object in your Environment window\nNote that R is case sensitive"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#sec-using-functions",
+    "href": "slides/slides-class-1.html#sec-using-functions",
+    "title": "Class 1",
+    "section": "Using Functions",
+    "text": "Using Functions\nAnything you do in R is by using functions\n \n\n\nLearning R is learning what functions are available and how to use them.\nExample: there is a function to create a sequence of numbers, seq().\n\n\n\nseq(1, 100, by = 10)\n\n \n\n\n\nFunctions take arguments\nIf you don’t label argument names, then the order of arguments matters!\n\n\n\nseq(from = 1, to = 100, by = 10)\nseq(to = 100, by = 10, from = 1)\nseq(1, 100, 10)"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#helper-function",
+    "href": "slides/slides-class-1.html#helper-function",
+    "title": "Class 1",
+    "section": "Helper Function",
+    "text": "Helper Function\n?function_name()\n \n\nYou should make frequent use of the helper function ?\n\ne.g., ?seq()\n\nThe names of arguments\nWhat the arguments do\nArgument default values\n\nYou don’t have to and you almost never will specify all the possible arguments.\nIn some cases it might be important to know what the default value of an argument is."
+  },
+  {
+    "objectID": "slides/slides-class-1.html#r-packages",
+    "href": "slides/slides-class-1.html#r-packages",
+    "title": "Class 1",
+    "section": "R Packages",
+    "text": "R Packages\n \n\nFunctions are organized in R packages\nR comes with a set of R packages and functions\nDevelopers and other researchers have created a lot of R packages specifically for use in psychology research\nMost R packages are hosted on The Comprehensive R Archive Network - CRAN.\n\nOthers may be hosted on GitHub"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#install-and-load-packages",
+    "href": "slides/slides-class-1.html#install-and-load-packages",
+    "title": "Class 1",
+    "section": "Install and Load Packages",
+    "text": "Install and Load Packages\n \nTo install packages from CRAN is easy\n\ninstall.packages(\"dplyr\")\n\n \n\nInstalling the package installs it on your computer\nWhen you want to use the functions in the package you need to load the package into your current environment\n\n\n\nlibrary(dplyr)"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#example-data-set",
+    "href": "slides/slides-class-1.html#example-data-set",
+    "title": "Class 1",
+    "section": "Example Data Set",
+    "text": "Example Data Set\nWe will use a data set from the palmerpenguins package"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#data-frames-1",
+    "href": "slides/slides-class-1.html#data-frames-1",
+    "title": "Class 1",
+    "section": "Data Frames",
+    "text": "Data Frames\n \n\n\nLet’s create a new script - a reproducible script to use for this class\nYou should always load packages at the top of the script\n\n\n\n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n \n\n\n\n\n\n\n\n\nNote\n\n\nCommenting\nIt is a good idea to comment your code to provide organization and clarity as to what the code is doing"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#viewing-the-data",
+    "href": "slides/slides-class-1.html#viewing-the-data",
+    "title": "Class 1",
+    "section": "Viewing the Data",
+    "text": "Viewing the Data\nIn scratchpad script / console\n \n\nView(data_import)"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#viewing-the-data-1",
+    "href": "slides/slides-class-1.html#viewing-the-data-1",
+    "title": "Class 1",
+    "section": "Viewing the Data",
+    "text": "Viewing the Data\nIn scratchpad script / console\n \nGet columns names\n\ncolnames(data_import)\n## [1] \"species\"           \"island\"            \"bill_length_mm\"   \n## [4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n## [7] \"sex\"               \"year\"\n\n \nSneak peak of data\n\nhead(data_import)\n## # A tibble: 6 × 8\n##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n## 1 Adelie  Torgersen           39.1          18.7               181        3750\n## 2 Adelie  Torgersen           39.5          17.4               186        3800\n## 3 Adelie  Torgersen           40.3          18                 195        3250\n## 4 Adelie  Torgersen           NA            NA                  NA          NA\n## 5 Adelie  Torgersen           36.7          19.3               193        3450\n## 6 Adelie  Torgersen           39.3          20.6               190        3650\n## # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#viewing-the-data-2",
+    "href": "slides/slides-class-1.html#viewing-the-data-2",
+    "title": "Class 1",
+    "section": "Viewing the Data",
+    "text": "Viewing the Data\nIn scratchpad script / console\n \n\n\nUse $ to refer to a column in a data frame\n\n\nGet unique values in a column\n\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#types-of-values",
+    "href": "slides/slides-class-1.html#types-of-values",
+    "title": "Class 1",
+    "section": "Types of Values",
+    "text": "Types of Values\n \nClasses are types of values that exist in R. Here are a list of some common value types:\n\n\ncharacter (or non-numeric) \"hello\", \"goodbye\"\ndouble (or numeric) 2, 32.55\ninteger 5, 99\nlogical TRUE, FALSE\nmissing NA NaN"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#types-of-values-1",
+    "href": "slides/slides-class-1.html#types-of-values-1",
+    "title": "Class 1",
+    "section": "Types of Values",
+    "text": "Types of Values\nIn scratchpad script / console\n \nTo evaluate the type of values in a column you can use typeof()\n\ntypeof(data_import$bill_depth_mm)\n## [1] \"double\"\ntypeof(data_import$flipper_length_mm)\n## [1] \"integer\"\n\n \nTo change the class of values in an object you can use as.character() , as.numeric() , as.double() , as.integer() , as.logical() functions.\n\nas.character(data_import$bill_depth_mm)\n##   [1] \"18.7\" \"17.4\" \"18\"   NA     \"19.3\" \"20.6\" \"17.8\" \"19.6\" \"18.1\" \"20.2\"\n##  [11] \"17.1\" \"17.3\" \"17.6\" \"21.2\" \"21.1\" \"17.8\" \"19\"   \"20.7\" \"18.4\" \"21.5\"\n##  [21] \"18.3\" \"18.7\" \"19.2\" \"18.1\" \"17.2\" \"18.9\" \"18.6\" \"17.9\" \"18.6\" \"18.9\"\n##  [31] \"16.7\" \"18.1\" \"17.8\" \"18.9\" \"17\"   \"21.1\" \"20\"   \"18.5\" \"19.3\" \"19.1\"\n##  [41] \"18\"   \"18.4\" \"18.5\" \"19.7\" \"16.9\" \"18.8\" \"19\"   \"18.9\" \"17.9\" \"21.2\"\n##  [51] \"17.7\" \"18.9\" \"17.9\" \"19.5\" \"18.1\" \"18.6\" \"17.5\" \"18.8\" \"16.6\" \"19.1\"\n##  [61] \"16.9\" \"21.1\" \"17\"   \"18.2\" \"17.1\" \"18\"   \"16.2\" \"19.1\" \"16.6\" \"19.4\"\n##  [71] \"19\"   \"18.4\" \"17.2\" \"18.9\" \"17.5\" \"18.5\" \"16.8\" \"19.4\" \"16.1\" \"19.1\"\n##  [81] \"17.2\" \"17.6\" \"18.8\" \"19.4\" \"17.8\" \"20.3\" \"19.5\" \"18.6\" \"19.2\" \"18.8\"\n##  [91] \"18\"   \"18.1\" \"17.1\" \"18.1\" \"17.3\" \"18.9\" \"18.6\" \"18.5\" \"16.1\" \"18.5\"\n## [101] \"17.9\" \"20\"   \"16\"   \"20\"   \"18.6\" \"18.9\" \"17.2\" \"20\"   \"17\"   \"19\"  \n## [111] \"16.5\" \"20.3\" \"17.7\" \"19.5\" \"20.7\" \"18.3\" \"17\"   \"20.5\" \"17\"   \"18.6\"\n## [121] \"17.2\" \"19.8\" \"17\"   \"18.5\" \"15.9\" \"19\"   \"17.6\" \"18.3\" \"17.1\" \"18\"  \n## [131] \"17.9\" \"19.2\" \"18.5\" \"18.5\" \"17.6\" \"17.5\" \"17.5\" \"20.1\" \"16.5\" \"17.9\"\n## [141] \"17.1\" \"17.2\" \"15.5\" \"17\"   \"16.8\" \"18.7\" \"18.6\" \"18.4\" \"17.8\" \"18.1\"\n## [151] \"17.1\" \"18.5\" \"13.2\" \"16.3\" \"14.1\" \"15.2\" \"14.5\" \"13.5\" \"14.6\" \"15.3\"\n## [161] \"13.4\" \"15.4\" \"13.7\" \"16.1\" \"13.7\" \"14.6\" \"14.6\" \"15.7\" \"13.5\" \"15.2\"\n## [171] \"14.5\" \"15.1\" \"14.3\" \"14.5\" \"14.5\" \"15.8\" \"13.1\" \"15.1\" \"14.3\" \"15\"  \n## [181] \"14.3\" \"15.3\" \"15.3\" \"14.2\" \"14.5\" \"17\"   \"14.8\" \"16.3\" \"13.7\" \"17.3\"\n## [191] \"13.6\" \"15.7\" \"13.7\" \"16\"   \"13.7\" \"15\"   \"15.9\" \"13.9\" \"13.9\" \"15.9\"\n## [201] \"13.3\" \"15.8\" \"14.2\" \"14.1\" \"14.4\" \"15\"   \"14.4\" \"15.4\" \"13.9\" \"15\"  \n## [211] \"14.5\" \"15.3\" \"13.8\" \"14.9\" \"13.9\" \"15.7\" \"14.2\" \"16.8\" \"14.4\" \"16.2\"\n## [221] \"14.2\" \"15\"   \"15\"   \"15.6\" \"15.6\" \"14.8\" \"15\"   \"16\"   \"14.2\" \"16.3\"\n## [231] \"13.8\" \"16.4\" \"14.5\" \"15.6\" \"14.6\" \"15.9\" \"13.8\" \"17.3\" \"14.4\" \"14.2\"\n## [241] \"14\"   \"17\"   \"15\"   \"17.1\" \"14.5\" \"16.1\" \"14.7\" \"15.7\" \"15.8\" \"14.6\"\n## [251] \"14.4\" \"16.5\" \"15\"   \"17\"   \"15.5\" \"15\"   \"13.8\" \"16.1\" \"14.7\" \"15.8\"\n## [261] \"14\"   \"15.1\" \"15.2\" \"15.9\" \"15.2\" \"16.3\" \"14.1\" \"16\"   \"15.7\" \"16.2\"\n## [271] \"13.7\" NA     \"14.3\" \"15.7\" \"14.8\" \"16.1\" \"17.9\" \"19.5\" \"19.2\" \"18.7\"\n## [281] \"19.8\" \"17.8\" \"18.2\" \"18.2\" \"18.9\" \"19.9\" \"17.8\" \"20.3\" \"17.3\" \"18.1\"\n## [291] \"17.1\" \"19.6\" \"20\"   \"17.8\" \"18.6\" \"18.2\" \"17.3\" \"17.5\" \"16.6\" \"19.4\"\n## [301] \"17.9\" \"19\"   \"18.4\" \"19\"   \"17.8\" \"20\"   \"16.6\" \"20.8\" \"16.7\" \"18.8\"\n## [311] \"18.6\" \"16.8\" \"18.3\" \"20.7\" \"16.6\" \"19.9\" \"19.5\" \"17.5\" \"19.1\" \"17\"  \n## [321] \"17.9\" \"18.5\" \"17.9\" \"19.6\" \"18.7\" \"17.3\" \"16.4\" \"19\"   \"17.3\" \"19.7\"\n## [331] \"17.3\" \"18.8\" \"16.6\" \"19.9\" \"18.8\" \"19.4\" \"19.5\" \"16.5\" \"17\"   \"19.8\"\n## [341] \"18.1\" \"18.2\" \"19\"   \"18.7\""
+  },
+  {
+    "objectID": "slides/slides-class-1.html#factors",
+    "href": "slides/slides-class-1.html#factors",
+    "title": "Class 1",
+    "section": "Factors",
+    "text": "Factors\nIn scratchpad script / console\n \n\ntypeof(data_import$species)\n## [1] \"integer\"\nunique(data_import$species)\n## [1] Adelie    Gentoo    Chinstrap\n## Levels: Adelie Chinstrap Gentoo\nis.factor(data_import$species)\n## [1] TRUE\n\n \n\n\nFactors are a special type of column that represent levels of a category with an order to those levels.\nThe actual values in Factors can be of type character, double, integer, or logical.\nFactors become especially important in data visualization and statistical analysis."
+  },
+  {
+    "objectID": "slides/slides-class-1.html#creating-factors",
+    "href": "slides/slides-class-1.html#creating-factors",
+    "title": "Class 1",
+    "section": "Creating Factors",
+    "text": "Creating Factors\nIn scratchpad script / console\n \nYou can set a column of values as a factor by using factor()\n\nfactor(data_import$year, levels = c(2007, 2008, 2009))"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#palmerpenguins",
+    "href": "slides/slides-class-1.html#palmerpenguins",
+    "title": "Class 1",
+    "section": "palmerpenguins",
+    "text": "palmerpenguins\n \nLet’s take a look at three variables\n\nspecies\nflipper length\nbody mass"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#data-transformation-1",
+    "href": "slides/slides-class-1.html#data-transformation-1",
+    "title": "Class 1",
+    "section": "Data Transformation",
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\n\n\nStrategy: Stay in the data frame!\n\nStore variables and computations in columns in the data frame\n\n\n\n\n\nNot advised\n\nflipper_length_mm.mean &lt;- mean(data_import$flipper_length_mm, na.rm = TRUE)\nbody_mass_g.mean &lt;- mean(data_import$body_mass_g, na.rm = TRUE)"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#data-transformation-2",
+    "href": "slides/slides-class-1.html#data-transformation-2",
+    "title": "Class 1",
+    "section": "Data Transformation",
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n \n\nThe |&gt; notation says pass data_import into the mutate() function\nThen the result of mutate() is assigned to a new object, data_plot"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#data-transformation-3",
+    "href": "slides/slides-class-1.html#data-transformation-3",
+    "title": "Class 1",
+    "section": "Data Transformation",
+    "text": "Data Transformation\n \n\n\nCompute the mean flipper length and body mass for each species of penguin\n\n\n\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n\n\nView(data_plot)"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
+    "href": "slides/slides-class-1.html#ggplot2---data-and-aesthetics-layer",
+    "title": "Class 1",
+    "section": "ggplot2 - data and aesthetics layer",
+    "text": "ggplot2 - data and aesthetics layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species))"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#ggplot2---geometries-layer",
+    "href": "slides/slides-class-1.html#ggplot2---geometries-layer",
+    "title": "Class 1",
+    "section": "ggplot2 - geometries layer",
+    "text": "ggplot2 - geometries layer\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#ggplot2---theme",
+    "href": "slides/slides-class-1.html#ggplot2---theme",
+    "title": "Class 1",
+    "section": "ggplot2 - theme",
+    "text": "ggplot2 - theme\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  theme_classic()"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#ggplot2",
+    "href": "slides/slides-class-1.html#ggplot2",
+    "title": "Class 1",
+    "section": "ggplot2",
+    "text": "ggplot2\n \n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#correlation",
+    "href": "slides/slides-class-1.html#correlation",
+    "title": "Class 1",
+    "section": "Correlation",
+    "text": "Correlation\n \n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)\n## \n##  Pearson's product-moment correlation\n## \n## data:  data_import$body_mass_g and data_import$flipper_length_mm\n## t = 32.722, df = 340, p-value &lt; 2.2e-16\n## alternative hypothesis: true correlation is not equal to 0\n## 95 percent confidence interval:\n##  0.843041 0.894599\n## sample estimates:\n##       cor \n## 0.8712018"
+  },
+  {
+    "objectID": "slides/slides-class-1.html#class-1-reproducible-script",
+    "href": "slides/slides-class-1.html#class-1-reproducible-script",
+    "title": "Class 1",
+    "section": "Class 1: Reproducible Script",
+    "text": "Class 1: Reproducible Script\n \n\n# load packages\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- penguins\n\n# transform data\ndata_plot &lt;- data_import |&gt;\n  mutate(.by = species,\n         flipper_length_mm.mean = mean(flipper_length_mm, na.rm = TRUE),\n         body_mass_g.mean = mean(body_mass_g, na.rm = TRUE))\n\n# visualize data\nggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,\n                      color = species, shape = species)) +\n  geom_point() +\n  geom_hline(aes(yintercept = body_mass_g.mean, color = species)) +\n  geom_vline(aes(xintercept = flipper_length_mm.mean, color = species)) +\n  theme_classic()\n\n# statistical analysis\ncor.test(data_import$body_mass_g, data_import$flipper_length_mm)"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#prepare",
+    "href": "slides/slides-class-3.html#prepare",
+    "title": "Class 3",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n \nBefore starting this class:\n📦 Install the gt package\n \nDownload sample data files: (right-click to download linked file)\n⬇️ class_3_repetition_rawdata.txt\n⬇️ class_3_mnemonic_rawdata.csv"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#outline",
+    "href": "slides/slides-class-3.html#outline",
+    "title": "Class 3",
+    "section": "Outline",
+    "text": "Outline\n \n\n\nThe tidyverse and dplyr\nRename columns: rename()\nFilter rows: filter()\nSelect columns: select()\nCompute and transform values: mutate()\nAggregate data: summarise()"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#this-is-the-way",
+    "href": "slides/slides-class-3.html#this-is-the-way",
+    "title": "Class 3",
+    "section": "This is The Way",
+    "text": "This is The Way\n \nAlthough you will be learning R in this class, it might be more appropriate to say that you are learning the tidyverse.\n \n\nThe tidyverse is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with readr), restructuring and transforming data (with tidyr and dplyr), and to graphically visualizing data (with ggplot2)."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#section",
+    "href": "slides/slides-class-3.html#section",
+    "title": "Class 3",
+    "section": "",
+    "text": "The language of the dplyr package will be the underlying framework for how you will think about manipulating and transforming data in R."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#section-1",
+    "href": "slides/slides-class-3.html#section-1",
+    "title": "Class 3",
+    "section": "",
+    "text": "dplyr uses intuitive language that you are already familiar with.\n\nrename() renames columns\nfilter() filters rows based on their values in specified columns\nselect() selects (or removes) columns\nmutate() creates new columns based on transformation from other columns, or edits values within existing columns\nsummarise() aggregates across rows to create a summary statistic (means, standard deviations, etc.)\n\n\nFor more information on these functions Visit the dplyr webpage"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#example-data-set-1",
+    "href": "slides/slides-class-3.html#example-data-set-1",
+    "title": "Class 3",
+    "section": "Example Data Set",
+    "text": "Example Data Set\n \nUse what you learned in Class 2 and import the two data files:\n⬇️ class_3_repetition_rawdata.txt\n⬇️ class_3_mnemonic_rawdata.csv\n \nTry to figure out how to import the data yourself (hint: use the Import Datatset GUI to help identify the correct file path and import parameters)\n \n\n\nShow the Code\nlibrary(readr)\n\nrepetition_import &lt;- read_delim(\"data/class_3_repetition_rawdata.txt\", \n                                delim = \"\\t\", escape_double = FALSE, \n                                trim_ws = TRUE)\n\nmnemonic_import &lt;- read_csv(\"data/class_3_mnemonic_rawdata.csv\")"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#example-data-set-2",
+    "href": "slides/slides-class-3.html#example-data-set-2",
+    "title": "Class 3",
+    "section": "Example Data Set",
+    "text": "Example Data Set\n \nThese data come from a hypothetical (I made it up) research study to compare the effectiveness of two memory techniques, a mnemonic technique and a spaced repetition technique, for improving memory retention. Participants were randomly assigned to one of the two memory techniques and completed 3 memory tests (A, B, and C). The number of correctly recalled words for each memory test was recorded in the two data files by research assistants."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#example-data-set-3",
+    "href": "slides/slides-class-3.html#example-data-set-3",
+    "title": "Class 3",
+    "section": "Example Data Set",
+    "text": "Example Data Set\n \nUse what you learned from Class 1 to explore the data\n\n\nwhat are the column names?\nwhat type of values are in each column?\n\n\n\nIt turns out that the research assistant who ran participants in the spaced repetition condition did not follow the lab’s protocol for recording data 🤦‍♀️\nThey:\n\nused wrong column names,\nrecorded the memory tests as X, Y, and Z (A, B, and C, respectively),\nleft out what condition these data were from\ngave some particpants less than 3 memory tests! 🤬"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#rename",
+    "href": "slides/slides-class-3.html#rename",
+    "title": "Class 3",
+    "section": "rename()",
+    "text": "rename()\n \nFirst, let’s fix the RA’s mistake by renaming the columns in the spaced repetition data as they are named in the mnemonic data. We can do so using the rename() function. The format for this function looks something like:\n \n\nrename(new_name = old_name)\n\n\n\nHere is how we would rename the columns in the spaced repetition data we imported.\n \n\nlibrary(dplyr)\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect)\n\n\n\n\nFor more options on how to use rename() see the documentation here"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#filter",
+    "href": "slides/slides-class-3.html#filter",
+    "title": "Class 3",
+    "section": "filter()",
+    "text": "filter()\n \nfilter() is an inclusive filter and requires the use of logical statements.\n\n\nHere are a list of some commone logical operators in R:\n\n\nIn addition to the logical operators, other functions can be used in filter(), such as:\n\nis.na() - include if missing\n!is.na() - include if not missing\nbetween() - values that are between a certain range of numbers\nnear() - values that are near a certain value\n\n\n\n\nFor more options on how to use filter() see the documentation here."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#filter-1",
+    "href": "slides/slides-class-3.html#filter-1",
+    "title": "Class 3",
+    "section": "filter()",
+    "text": "filter()\n \nLet’s remove rows that correspond to those participants that did not complete 3 memory tests. It turns out that those participants were always ran on Thursday or Friday, must have been a bad day for the research assistant 😢.\n \nWe can use filter() to remove rows that have Thursday or Friday in the day column.\n \n\nrepetition_data &lt;- repetition_data |&gt;\n  filter(day != \"Thursday\", day != \"Friday\")"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#select",
+    "href": "slides/slides-class-3.html#select",
+    "title": "Class 3",
+    "section": "select()",
+    "text": "select()\n \nselect() allows you to select which columns to keep and/or remove.\n \n\nselect(columns, to, keep)\n\n\n\n\nselect(-columns, -to, -remove)\n\n\n\n \nselect() can be used with more complex operators and tidyselect functions, see the documentation here."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#select-1",
+    "href": "slides/slides-class-3.html#select-1",
+    "title": "Class 3",
+    "section": "select()",
+    "text": "select()\n \nFor the repetition data, let’s only keep the following columns\n\n\nparticipant_id\nword_list\nrecall_correct\n\n\n\nrepetition_data &lt;- repetition_data |&gt;\n  select(participant_id, word_list, recall_correct)\n\n\nAnother way to do this would be:\n\nrepetition_data &lt;- repetition_data |&gt;\n  select(-day, -time, -computer_station)"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#mutate",
+    "href": "slides/slides-class-3.html#mutate",
+    "title": "Class 3",
+    "section": "mutate()",
+    "text": "mutate()\n \nmutate() is a very powerful function. It basically allows you to do any computation or transformation on the values in the data frame. See the full documentation here.\n \n\nThe basic format for mutate goes something like:\n\nmutate(column_name = value,\n       another_col = a_function(),\n       last_col = col1 + col2)\n\n\n\n\nWithin mutate() the = sign functions similarly to the assignment operator &lt;-, where the result of whatever is on the right-hand side of = gets assigned to the column that is specified on the left-hand side (an existing column or a new one you are creating)."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#mutate-1",
+    "href": "slides/slides-class-3.html#mutate-1",
+    "title": "Class 3",
+    "section": "mutate()",
+    "text": "mutate()\nAdd a new column\n \nWe need to create a column specifying what condition the spaced repetition data came from, dang RA!\n\n \n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(condition = \"spaced repetition\")\n\n\n\n\nEasy!\nNow let’s do something a little more complicated."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#case_when",
+    "href": "slides/slides-class-3.html#case_when",
+    "title": "Class 3",
+    "section": "case_when()",
+    "text": "case_when()\n \ncase_when() is basically a sequence of if else type of statements where each statement is evaluated, if it is true then it is given a certain value, else the next statement is evaluated, and so on.\n\n \nThe basic format of case_when() looks like:\n\nmutate(a_column = case_when(a logical statement ~ a value,\n                            another statement ~ another value,\n                            .default = and another value))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#case_when-1",
+    "href": "slides/slides-class-3.html#case_when-1",
+    "title": "Class 3",
+    "section": "case_when()",
+    "text": "case_when()\n \nLet’s see an example of this with the spaced repetition data. We need to change the values in the word_list column so that X is A, Y is B, and Z is C.\n \n\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\"))\n\n\n\n\nJust to be clear, you can create an entirely new column this way\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(new_word_list = case_when(word_list == \"X\" ~ \"A\",\n                                   word_list == \"Y\" ~ \"B\",\n                                   word_list == \"Z\" ~ \"C\"))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#by",
+    "href": "slides/slides-class-3.html#by",
+    "title": "Class 3",
+    "section": ".by =",
+    "text": ".by =\n \nThis next computation is not necessary for our example data set but I want to demonstrate the use of mutate(.by = ).\n \nThis option is very handy if you want to perform functions separately on different groups or splits of the data frame."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#by-1",
+    "href": "slides/slides-class-3.html#by-1",
+    "title": "Class 3",
+    "section": ".by =",
+    "text": ".by =\n \nFor example, let’s calculate the mean for each word list separately.\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\n\n\nCompare this with\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(word_list_mean = mean(recall_correct))\n\n\n\n\nYou can use multiple columns in .by =\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(.by = c(participant_id, word_list), \n         word_list_mean = mean(recall_correct))\n\nIt doesn’t make much sense in this case"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#rowwise",
+    "href": "slides/slides-class-3.html#rowwise",
+    "title": "Class 3",
+    "section": "rowwise()",
+    "text": "rowwise()\n \nrowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\n \n\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n48.000\n25.000\n48.000\n    2.000\n26.000\n21.000\n29.000\n    3.000\n35.000\n14.000\n31.000\n    4.000\n45.000\n40.000\n3.000\n    5.000\n46.000\n5.000\n14.000"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#rowwise-1",
+    "href": "slides/slides-class-3.html#rowwise-1",
+    "title": "Class 3",
+    "section": "rowwise()",
+    "text": "rowwise()\n \nLet’s say we want to calculate each participant’s mean response across these three columns.\n \n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n48.000\n25.000\n48.000\n40.333\n    2.000\n26.000\n21.000\n29.000\n25.333\n    3.000\n35.000\n14.000\n31.000\n26.667\n    4.000\n45.000\n40.000\n3.000\n29.333\n    5.000\n46.000\n5.000\n14.000\n21.667\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#rowwise-2",
+    "href": "slides/slides-class-3.html#rowwise-2",
+    "title": "Class 3",
+    "section": "rowwise()",
+    "text": "rowwise()\n \nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n \n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n48.000\n25.000\n48.000\n28.667\n    2.000\n26.000\n21.000\n29.000\n28.667\n    3.000\n35.000\n14.000\n31.000\n28.667\n    4.000\n45.000\n40.000\n3.000\n28.667\n    5.000\n46.000\n5.000\n14.000\n28.667"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#putting-it-all-together",
+    "href": "slides/slides-class-3.html#putting-it-all-together",
+    "title": "Class 3",
+    "section": "Putting it all together",
+    "text": "Putting it all together\n \n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\n\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n\n\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#summarise",
+    "href": "slides/slides-class-3.html#summarise",
+    "title": "Class 3",
+    "section": "summarise()",
+    "text": "summarise()\n \nThe thing is, we don’t really care about performance on each individual word_list (A, B, and C). We care about the participant’s overall performance, aggregated across all three word lists. To aggregrate data using dplyr we can use summarise().\n \n\nThe result of summarise() is a reduced data frame with fewer rows.\nThe code inside of summarise() looks a lot like the code we could put in mutate().\nThe difference is that mutate() does not collapse the data frame but summarise() does."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#summarise-1",
+    "href": "slides/slides-class-3.html#summarise-1",
+    "title": "Class 3",
+    "section": "summarise()",
+    "text": "summarise()\n \nLet’s calculate the mean recall performance by condition and participant. This will result in one row per participant (because it is a between-subject design).\n\n \n\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(participant_id, condition),\n            recall_correct_mean = mean(recall_correct))\n\n\n\n\n\n\n  \n    \n    \n      participant_id\n      condition\n      recall_correct_mean\n    \n  \n  \n    1.000\nspaced repetition\n3.000\n    2.000\nmnemonic\n7.333\n    4.000\nmnemonic\n5.000\n    5.000\nspaced repetition\n5.000\n    6.000\nmnemonic\n6.667\n    8.000\nmnemonic\n5.333\n    9.000\nspaced repetition\n3.333\n    10.000\nmnemonic\n4.000\n    12.000\nmnemonic\n8.667\n    13.000\nspaced repetition\n5.000\n    14.000\nmnemonic\n7.000\n    16.000\nmnemonic\n7.333\n    17.000\nspaced repetition\n5.333\n    19.000\nspaced repetition\n6.667"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#summarise-2",
+    "href": "slides/slides-class-3.html#summarise-2",
+    "title": "Class 3",
+    "section": "summarise()",
+    "text": "summarise()\n \nNotice the difference when you don’t use .by =\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(recall_correct_mean = mean(recall_correct))\n\n\n\n\n\n\n\n  \n    \n    \n      recall_correct_mean\n    \n  \n  \n    5.690"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#summarise-3",
+    "href": "slides/slides-class-3.html#summarise-3",
+    "title": "Class 3",
+    "section": "summarise()",
+    "text": "summarise()\n \nYou can calculate other summary statistics such as:\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(particpant_id, condition),\n            recall_correct_mean = mean(recall_correct),\n            recall_correct_sd = sd(recall_correct),\n            recall_correct_sum = sum(recall_correct),\n            recall_correct_min = min(recall_correct),\n            recall_correct_max = max(recall_correct))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#ggplot2",
+    "href": "slides/slides-class-3.html#ggplot2",
+    "title": "Class 3",
+    "section": "ggplot2",
+    "text": "ggplot2\n \nLet’s plot the data to see what the difference in memory recall is for the two types of strategy:\n\n\nShow Code\nlibrary(ggplot2)\n\nggplot(data_scores, aes(condition, recall_correct_mean)) +\n  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +\n  stat_summary(fun = mean, geom = \"point\", \n               color = \"firebrick\", size = 3) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", \n               color = \"firebrick\", width = .2) +\n  coord_cartesian(ylim = c(0, 10)) +\n  scale_x_discrete(labels = c(\"Mnemonic\", \"Spaced Recognition\")) +\n  labs(title = \"Recal Performance for Mnemonic and Spaced Recognition\",\n       y = \"Recall Performance\",\n       x = \"\") +\n  theme_classic() +\n  theme(axis.text.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.y = element_text(size = 12))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#reproducible-script",
+    "href": "slides/slides-class-3.html#reproducible-script",
+    "title": "Class 3",
+    "section": "Reproducible Script",
+    "text": "Reproducible Script\n\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gt)\nlibrary(ggplot2)\n\n# import data\nrepetition_import &lt;- read_delim(\"data/class_3_repetition_rawdata.txt\", \n                                delim = \"\\t\", escape_double = FALSE, \n                                trim_ws = TRUE)\n\nmnemonic_import &lt;- read_csv(\"data/class_3_mnemonic_rawdata.csv\")\n\n# trasnform data\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n# merge data\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)\n\n# aggregate data\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(participant_id, condition),\n            recall_correct_mean = mean(recall_correct))\n\n# plot aggregate data\nggplot(data_scores, aes(condition, recall_correct_mean)) +\n  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +\n  stat_summary(fun = mean, geom = \"point\", \n               color = \"firebrick\", size = 3) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", \n               color = \"firebrick\", width = .2) +\n  coord_cartesian(ylim = c(0, 10)) +\n  scale_x_discrete(labels = c(\"Mnemonic\", \"Spaced Recognition\")) +\n  labs(title = \"Recal Performance for Mnemonic and Spaced Recognition\",\n       y = \"Recall Performance\",\n       x = \"\") +\n  theme_classic() +\n  theme(axis.text.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.y = element_text(size = 12))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#class-3-activity",
+    "href": "slides/slides-class-3.html#class-3-activity",
+    "title": "Class 3",
+    "section": "Class 3 Activity",
+    "text": "Class 3 Activity\n \nFor this activity we will work with a real data set from a paper published in Psychological Science (one of the leading journals in psychology).\n\nDawtry, R. J., Sutton, R. M., & Sibley, C. G. (2015). Why Wealthier People Think People Are Wealthier, and Why It Matters: From Social Sampling to Attitudes to Redistribution. Psychological Science, 26(9), 1389–1400. https://doi.org/10.1177/0956797615586560\n\n \n📄 Download the paper (optional)\n⬇️ Download the data"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#class-3-activity-1",
+    "href": "slides/slides-class-3.html#class-3-activity-1",
+    "title": "Class 3",
+    "section": "Class 3 Activity",
+    "text": "Class 3 Activity\n \nIn this research, Dawtry, Sutton, and Sibley (2015) wanted to examine why people differ in their assessments of the increasing wealth inequality within developed nations. Previous research reveals that most people desire a society in which the overall level of wealth is high and that wealth is spread somewhat equally across society. However, support for this approach to income distribution changes across the social strata. In particular, wealthy people tend to view society as already wealthy and thus are satisfied with the status quo, and less likely to support redistribution. In their paper Dawtry et al., (2015) sought to examine why this is the case. The authors propose that one reason wealthy people tend to view the current system is fair is because their social-circle is comprised of other wealthy people, which biases their perceptions of wealth, which leads them to overestimate the mean level of wealth across society."
+  },
+  {
+    "objectID": "slides/slides-class-3.html#class-3-activity-2",
+    "href": "slides/slides-class-3.html#class-3-activity-2",
+    "title": "Class 3",
+    "section": "Class 3 Activity",
+    "text": "Class 3 Activity\n \nTo test this hypothesis, the authors conducted a study with 305 participants, recruited from an online participant pool. Participants reported their own annual household income, the income level of those within their own social circle, and the income for the entire population. Participants also rated their perception of the level of equality/inequality across their social circle and across society, their level of satisfaction with and perceived fairness of the current system, their attitudes toward redistribution of wealth (measured using a four-item scale), and their political preference.\n\n \nKey variables we will look at:\n\nLevel of satisfactioin with current system (1 = extremely satisfied, 9 = extremely dissatisfied)\nPerceived fairness of current system (1 = extremely fair, 9 = extremely unfair)\nAttitude on redistribution of wealth (1 = strongly disagree, 6 = strongly agree)\n\ncontained in four columms: redist1 through redist4\n\nPolitical preference (1 = very liberal/very left-wing/strong Democrat, 9 = very conservative/very right-wing/strong Republican): Political_Preference"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#setup",
+    "href": "slides/slides-class-3.html#setup",
+    "title": "Class 3",
+    "section": "Setup",
+    "text": "Setup\n \n\nCreate a new R script and save it as class_3_activity_firstlastname.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, gt, ggplot2\n\nImport the data file\nTake some time to explore the data.\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\n\nhint: use a combination of length() and unique()\n\nlength(unique(data$columnname))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#rename-and-filter",
+    "href": "slides/slides-class-3.html#rename-and-filter",
+    "title": "Class 3",
+    "section": "Rename and Filter",
+    "text": "Rename and Filter\n \n\nRename the level of satisfaction and perceived fairness columns\nIn the previous step, you should have noticed how these column names are not ideal. They contain spaces and even a special character ? . You will need to use the special quotation mark ` `to reference these column names in rename() , e.g., `column name with spaces` You can find these special quotation marks to the left of the 1 key and above the tab key.\nFilter by only keeping rows in which Political_Preference is not missing NA . Note how many fewer rows there are in the data after filtering.\nhint: use filter(!is.na()) to evaluate whether values in Political_Preference are NOT ! missing is.na()\n\n\nShow cheat code\nfilter(!is.na(Political_Preference))"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#select-and-transform",
+    "href": "slides/slides-class-3.html#select-and-transform",
+    "title": "Class 3",
+    "section": "Select and Transform",
+    "text": "Select and Transform\n \n\nSelect only the columns that contain the key variables we are interested in.\nReverse score redist2 and redist4, so that 6=1, 5=2, 4=3, 3=4, 2=5, 1=6.\nUse mutate() and case_when()\nAggregate values across rows\n\n\nCalculate a single variable representing participant’s mean attitude on redistrubtion of wealth\nCalculate a single variable representing participant’s mean perception that the current systen is satisfactory and fair.\n\n\nUse a combination of rowwise() and mutate()"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#summarize",
+    "href": "slides/slides-class-3.html#summarize",
+    "title": "Class 3",
+    "section": "Summarize",
+    "text": "Summarize\n \n\nCreate a new data frame summarizing the values for attitude on redistribution and the combined satisfactory and fairness variable for each level of political preference. (calculate the mean when summarizing)\nUse summarise(.by = )\nCreate a table of this summarized data frame\nUse gt() from the gt package, e.g.,\n\ngt(new_data)"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#plot",
+    "href": "slides/slides-class-3.html#plot",
+    "title": "Class 3",
+    "section": "Plot",
+    "text": "Plot\n \n\nCreate a line plot of this summarized data frame\nCopy and paste code on next slide"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#plot-1",
+    "href": "slides/slides-class-3.html#plot-1",
+    "title": "Class 3",
+    "section": "Plot",
+    "text": "Plot\nYou will need to change the name of variables to match how you created them.\ndata_summary, redist_mean, and fairnesss_satisfactory_mean\n\nggplot(data_summary, aes(Political_Preference)) +\n  geom_line(aes(y = redist_mean, color = \"redist\")) +\n  geom_line(aes(y = fairness_satisfactory_mean, color = \"fair/satis\")) +\n  coord_cartesian(xlim = c(1, 9.1), ylim = c(1, 9)) +\n  scale_x_continuous(breaks = 1:9, \n                     labels = \n                       c(\"1\\nLiberal\", \"2\", \"3\", \"4\", \n                         \"5\", \"6\", \"7\", \"8\", \"9\\nConservative\")) +\n  scale_y_continuous(breaks = 1:9,\n                     labels = c(\"Strongly\\nDisagree\", \"2\", \"3\", \"4\", \n                                \"5\", \"6\", \"7\", \"8\", \"Strongly\\nAgree\")) +\n  scale_color_manual(values = c(\"redist\" = \"steelblue\",\n                                \"fair/satis\" = \"firebrick\"),\n                     name = \"\",\n                     labels = c(\"Fairness/Satisfactory of Current System\",\n                                \"Redistribution Preference\")) +\n  theme_light() +\n  theme(legend.position = \"top\") +\n  labs(title = \"Economic Attitdues by Political Preference\",\n       x = \"Political Preference\",\n       y = \"Attitude\")"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#plot-2",
+    "href": "slides/slides-class-3.html#plot-2",
+    "title": "Class 3",
+    "section": "Plot",
+    "text": "Plot\n \n\n\nSave your plot to a file\n\n\n\nggsave(\"images/economic_attitudes_by_political_preference.png\",\n       width = 6, height = 4, dpi = 300)"
+  },
+  {
+    "objectID": "slides/slides-class-3.html#check-your-work",
+    "href": "slides/slides-class-3.html#check-your-work",
+    "title": "Class 3",
+    "section": "Check Your Work",
+    "text": "Check Your Work\n \n\n\nShow Code\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gt)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- read_csv(\"data/Dawtry Sutton and Sibley 2015 Study 1a.csv\")\n\n# data transformation\ndata &lt;- data_import |&gt;\n  rename(fairness = `current system is fair?`,\n         satisfactory = `current system is satisfactory?`) |&gt;\n  filter(!is.na(Political_Preference)) |&gt;\n  select(fairness, satisfactory, redist1, redist2, redist3, redist4,\n         Social_Circle_Mean_Income, Political_Preference) |&gt;\n  mutate(redist2_recode = case_when(redist2 == 6 ~ 1,\n                                    redist2 == 5 ~ 2,\n                                    redist2 == 4 ~ 3,\n                                    redist2 == 3 ~ 4,\n                                    redist2 == 2 ~ 5,\n                                    redist2 == 1 ~ 6),\n         redist4_recode = case_when(redist4 == 6 ~ 1,\n                                    redist4 == 5 ~ 2,\n                                    redist4 == 4 ~ 3,\n                                    redist4 == 3 ~ 4,\n                                    redist4 == 2 ~ 5,\n                                    redist4 == 1 ~ 6)) |&gt;\n  rowwise() |&gt;\n  mutate(redist = mean(c(redist1, redist2, redist3, redist4)),\n         fairness_satisfactory = mean(c(fairness, satisfactory))) |&gt;\n  ungroup()\n\n# aggregate data\ndata_summary &lt;- data |&gt;\n  summarise(.by = Political_Preference,\n            redist_mean = mean(redist),\n            fairness_satisfactory_mean = mean(fairness_satisfactory)) |&gt;\n  arrange(Political_Preference)\n\ngt(data_summary)\n\n# line plot of summary data\nggplot(data_summary, aes(Political_Preference)) +\n  geom_line(aes(y = redist_mean, color = \"redist\")) +\n  geom_line(aes(y = fairness_satisfactory_mean, color = \"fair/satis\")) +\n  coord_cartesian(xlim = c(1, 9), ylim = c(1, 9)) +\n  scale_x_continuous(breaks = 1:9, \n                     labels = \n                       c(\"1\\nLiberal\", \"2\", \"3\", \"4\", \n                         \"5\", \"6\", \"7\", \"8\", \"9\\nConservative\")) +\n  scale_y_continuous(breaks = 1:9,\n                     labels = c(\"Strongly\\nDisagree\", \"2\", \"3\", \"4\", \n                                \"5\", \"6\", \"7\", \"8\", \"Strongly\\nAgree\")) +\n  scale_color_manual(values = c(\"redist\" = \"steelblue\",\n                                \"fair/satis\" = \"firebrick\"),\n                     name = \"\",\n                     labels = c(\"Fairness/Satisfactory of Current System\",\n                                \"Redistribution Preference\")) +\n  theme_light() +\n  theme(legend.position = \"top\") +\n  labs(title = \"Economic Attitdues by Political Preference\",\n       x = \"Political Preference\",\n       y = \"Attitude\")\n\nggsave(\"images/economic_attitudes_by_political_preference.png\",\n       width = 6, height = 4, dpi = 300)"
+  },
+  {
     "objectID": "lectures/lectures-class-2.html",
     "href": "lectures/lectures-class-2.html",
     "title": "Class 2: Importing, Merging, and Restructuring Data",
@@ -848,90 +1205,6 @@
     "href": "lectures/lectures-class-2.html#class-activity",
     "title": "Class 2: Importing, Merging, and Restructuring Data",
     "section": "Class Activity",
-    "text": "Class Activity\nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (class_2_cog_data.csv) and another with the mood ratings data (class_2_mood_data.txt), but the same participants across each data set.\nYour task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.\n\nCreate a new R script and save it as class_2_activity.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, tidyr, ggplot2\n\nImport the data files\nGet to know the data (use what you learned from Class 1)\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\nHow many are in each of the intervention conditions?\nApproximately, what are the range of values on cognitive performance and mood ratings?\n\nHint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low\n\nAre there are any missing values in the data?\n\nRestructure each data set to long format with week spread across rows instead of columns and one column for cognitive score or mood rating\nThe data frames should look something like\n\n\n\n\n\n\n\n\n\nparticipant_id\nintervention_type\nweek\ncognitive_score\n\n\n\n\n1\nSleep Hygiene\n1\n76.09\n\n\n1\nSleep Hygiene\n2\n75.34\n\n\n1\nSleep Hygiene\n3\n75.09\n\n\n1\nSleep Hygiene\n4\n78.85\n\n\n2\nSleep Hygiene\n1\n72.30\n\n\n\n\n\n\n\n\n\n\n\n\nparticipant_id\nintervention_type\nweek\nmood_score\n\n\n\n\n1\nSleep Hygiene\n1\n66.32\n\n\n1\nSleep Hygiene\n2\n83.44\n\n\n1\nSleep Hygiene\n3\n76.29\n\n\n1\nSleep Hygiene\n4\n79.14\n\n\n2\nSleep Hygiene\n1\n60.17\n\n\n\n\nAfter you have restructured the data frames, you will notice that the values in the week column also contain the string: cognitive_week_ or mood_week_. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so.\n\nmutate(week = parse_number(week))\n\n# e.g., you can pipe the result of pivot_longer() to this mutate() code\n\ndata_long &lt;- data |&gt;\n  pivot_longer() |&gt;\n  mutate(week = parse_number(week))\n\n\nMerge the two long data frames into one data frame.\n\nHint: There is more than one key column that the data frames need to be joined by.\n\nPlot the cognitive performance data:\nCreate a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). Something like this:\n\n\nFirst add the data and aesthetic layers - how the data map onto the plot scales and axes\n\n\n\n\n\n\nTip\n\n\n\n\ndata should be changed to the name of your data frame containing the cognitive data\nvar_x should be changed to the name of the column that should be plotted on the x-axis\nvar_y should be changed to the name of the column that should be plotted on the y-axis\nvar_color should be change to the name of the column containing the intervention type\n\n\n\n\n# change the following values to fit your data\n# data, var_x, var_y, var_color\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n\nNow let’s add in the geometries layer - the visual elements used for the data\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5)\n\nNo need to modify the code here. For now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters. But you can see that we are plotting three geom layers, errorbar, line, and point. We need to use stat_summary() because the data are not aggregated, this function will aggregate the data across participants using fun = mean.\nFinally, let’s make this plot a little prettier\n\n# change the following values based on your preference\n# the width, and size values in stat_summary()\n# lower limit and upper limit in coord_cartesian()\n# the title, x, y, and color in labs()\n# choose a ggplot2 theme\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5) +\n  coord_cartesian(ylim = c(72, 80)) +\n  labs(title = \"Give the plot a title\", \n       x = \"change x-axis label\", \n       y = \"change y-axis label\", \n       color = \"change legend title\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_() # choose a ggplot2 theme\n\nChange the following values based on your preference\n\nthe width of the error bars: stat_summary(width = .9)\nthe size of the lines: stat_summary(size = .5)\nthe size of the data points: stat_summary(size = .1.5)\nthe lower and upper limit of the y-axis (zoom in or out): coord_cartesian(ylim = c(lower_limit, upper_limit)\nadd a plot title\nthe y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.\nchoose a brewer color palette: scale_color_brewer(palette = \"Set1\")\n\nSee options here: R Color Brewer’s palettes\n\nchoose a ggplot2 theme:\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\n\n\n\nPlot the mood data:\n\n\nCopy and paste the code you wrote for plotting the cognitive performance data.\nChange values as needed\n\nThe variable to be plotted on the y-axis aes(y = )\nthe lower and upper limits of the y-axis coord_cartesian(ylim = c(lower_limit, upper_limit)\nplot title, y-axis, x-axis, and legend labels\n\n\nSave the plots as a file on your computer\n\nPlace the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.\n\nggsave(\"folder/path/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\n\nOrganize and clean up your script\n\nLoad all packages at the top of your script\nGet rid of code that is not a necessary step for creating the plots\nAdd comment headers to sections of your code: e.g., # load packages\n\n\n\nReproducible Script\nYou should attempt to complete the activity without looking at this code\n\n\nCode\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\n\n# import data\ncog_import &lt;- read_csv(\"data/class_2_cog_data.csv\")\nmood_import &lt;- read_delim(\"data/class_2_mood_data.txt\", \n                          delim = \"\\t\", escape_double = FALSE, trim_ws = TRUE)\n\n# restructure data\ncog_data &lt;- cog_import |&gt;\n  pivot_longer(cols = starts_with(\"cognitive_week\"), \n               names_to = \"week\", \n               values_to = \"cognitive_score\") |&gt;\n  mutate(week = parse_number(week))\n\nmood_data &lt;- mood_import |&gt;\n  pivot_longer(cols = starts_with(\"mood_week\"), \n               names_to = \"week\", \n               values_to = \"mood_score\") |&gt;\n  mutate(week = parse_number(week))\n\n# merge data\ndata_merged &lt;- full_join(cog_data, mood_data, \n                         by = c(\"participant_id\", \"intervention_type\", \"week\"))\n\n# plot data\nggplot(data_merged, aes(x = week, y = cognitive_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(65, 85)) +\n  labs(title = \"Cognitive Scores Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Cognitive Score\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\nggplot(data_merged, aes(x = week, y = mood_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(60, 80)) +\n  labs(title = \"Mood Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Mood\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_mood_plot.png\", \n       width = 6, height = 4, dpi = 300)"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#dplyr",
-    "href": "lectures/lectures-class-3.html#dplyr",
-    "title": "Class 3: Data Transformation",
-    "section": "dplyr",
-    "text": "dplyr\nThe language of dplyr will be the underlying framework for how you will think about manipulating and transforming data in R.\n\ndplyr uses intuitive language that you are already familiar with. As with any R function, you can think of functions in the dplyr package as verbs that refer to performing a particular action on a data frame.\n\nrename() renames columns\nfilter() filters rows based on their values in specified columns\nselect() selects (or removes) columns\nmutate() creates new columns based on transformation from other columns, or edits values within existing columns\nsummarise() aggregates across rows to create a summary statistic (means, standard deviations, etc.)\n\nFor more information on these functions Visit the dplyr webpage\nFor more detailed instructions on how to use the dplyr functions see the Data Transformation chapter in the popular R for Data Science book."
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#stay-within-the-data-frame",
-    "href": "lectures/lectures-class-3.html#stay-within-the-data-frame",
-    "title": "Class 3: Data Transformation",
-    "section": "Stay within the Data Frame",
-    "text": "Stay within the Data Frame\nNot only is the language of dplyr intuitive but it allows you to perform data manipulations all within the data frame itself, without having to create external variables, lists, for loops, etc.\nIt can be tempting to hold information outside of a data frame but in general I suggest avoiding this strategy. Instead, hold the information in a new column within the data frame itself.\nFor example: A common strategy I see in many R scripts is to hold the mean or count of a column of values outside the data frame and in a new variable in the Environment.\n\ndata &lt;- data.frame(x = c(1,6,4,3,7,5,8,4), \n                   y = c(2,3,2,1,4,6,4,3))\n\ny_mean &lt;- mean(data$y)\n\nThis variable is then used to subtract out the mean from the values in column y\n\nlibrary(dplyr)\n\ndata &lt;- mutate(data, \n               y_new = y - y_mean)\n\n\n\n\n\n\n  \n    \n    \n      x\n      y\n      y_new\n    \n  \n  \n    1.000\n2.000\n−1.125\n    6.000\n3.000\n−0.125\n    4.000\n2.000\n−1.125\n    3.000\n1.000\n−2.125\n    7.000\n4.000\n0.875\n    5.000\n6.000\n2.875\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nAlthough there is nothing wrong with this approach, in general, I would advise against this strategy.\nA better strategy is to do all this without leaving the data frame data.\n\nlibrary(dplyr)\n\ndata &lt;- data.frame(x = c(1,6,4,3,7,5,8,4), \n                   y = c(2,3,2,1,4,6,4,3))\n\ndata &lt;- mutate(data,\n               y_mean = mean(y),\n               y_new = y - y_mean)\n\n\n\n\n\n\n  \n    \n    \n      x\n      y\n      y_mean\n      y_new\n    \n  \n  \n    1.000\n2.000\n3.125\n−1.125\n    6.000\n3.000\n3.125\n−0.125\n    4.000\n2.000\n3.125\n−1.125\n    3.000\n1.000\n3.125\n−2.125\n    7.000\n4.000\n3.125\n0.875\n    5.000\n6.000\n3.125\n2.875"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#rename",
-    "href": "lectures/lectures-class-3.html#rename",
-    "title": "Class 3: Data Transformation",
-    "section": "rename()",
-    "text": "rename()\nFirst, let’s fix the RA’s mistake by renaming the columns in the spaced repetition data as they are named in the mnemonic data. We can do so using the rename() function. The format for this function looks something like:\n\nrename(new_name = old_name)\n\nHere is how we would rename the columns in the spaced repetition data we imported.\n\nlibrary(dplyr)\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect)\n\nFor more options on how to use rename() see the documentation here"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#example-data-set",
-    "href": "lectures/lectures-class-3.html#example-data-set",
-    "title": "Class 3: Data Transformation",
-    "section": "Example Data Set",
-    "text": "Example Data Set\nLet’s use what we learned in Class 2 and import two data files.\n⬇️ class_3_repetition_rawdata.txt\n⬇️ class_3_mnemonic_rawdata.csv\nTry to figure out how to import the data yourself (hint: use the Import Datatset GUI to help identify the correct file path and import parameters)\n\n\nShow the Code\nlibrary(readr)\n\nrepetition_import &lt;- read_delim(\"data/class_3_repetition_rawdata.txt\", \n                                delim = \"\\t\", escape_double = FALSE, \n                                trim_ws = TRUE)\n\nmnemonic_import &lt;- read_csv(\"data/class_3_mnemonic_rawdata.csv\")\n\n\nThese data come from a hypothetical (I made it up) research study to compare the effectiveness of two memory techniques, a mnemonic technique and a spaced repetition technique, for improving memory retention. Participants were randomly assigned to one of the two memory techniques and completed 3 memory tests (A, B, and C). The number of correctly recalled words for each memory test was recorded in the two data files by research assistants.\nUse what you learned from Class 1 to explore the data\n\nwhat are the column names?\nwhat type of values are in each column?\n\nYou will recognize there are some differences between these two data sets even though they both contain memory recall performance on 3 memory tests (A, B, and C). It turns out that the research assistant who ran participants in the spaced repetition condition did not follow the lab’s protocol for recording data 🤦‍♀️\nThey used wrong column names, recorded the memory tests as X, Y, and Z (A, B, and C, respectively), they left out what condition these data were from, and they gave some particpants less than 3 memory tests! 🤬"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#filter",
-    "href": "lectures/lectures-class-3.html#filter",
-    "title": "Class 3: Data Transformation",
-    "section": "filter()",
-    "text": "filter()\nfilter() is an inclusive filter and requires the use of logical statements. Here are a list of some commone logical operators in R:\n\nIn addition to the logical operators, other functions can be used in filter(), such as:\n\nis.na() - include if missing\n!is.na() - include if not missing\nbetween() - values that are between a certain range of numbers\nnear() - values that are near a certain value\n\nFor more options on how to use filter() see the documentation here.\nLet’s remove rows that correspond to those participants that did not complete 3 memory tests. It turns out that those participants were always ran on Thursday or Friday, must have been a bad day for the research assistant 😢. We can use filter() to remove rows that have Thursday or Friday in the day column.\n\nrepetition_data &lt;- repetition_data |&gt;\n  filter(day != \"Thursday\", day != \"Friday\")"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#select",
-    "href": "lectures/lectures-class-3.html#select",
-    "title": "Class 3: Data Transformation",
-    "section": "select()",
-    "text": "select()\nselect() allows you to select which columns to keep and/or remove.\n\nselect(columns, to, keep)\n\n\nselect(-columns, -to, -remove)\n\nselect() can be used with more complex operators and tidyselect functions, see the documentation here.\nFor the repetition data, let’s only keep the following columns\n\nparticipant_id\nword_list\nrecall_correct\n\n\nrepetition_data &lt;- repetition_data |&gt;\n  select(participant_id, word_list, recall_correct)\n\nAnother way to do this would be:\n\nrepetition_data &lt;- repetition_data |&gt;\n  select(-day, -time, -computer_station)"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#mutate",
-    "href": "lectures/lectures-class-3.html#mutate",
-    "title": "Class 3: Data Transformation",
-    "section": "mutate()",
-    "text": "mutate()\nmutate() is a very powerful function. It basically allows you to do any computation or transformation on the values in the data frame. See the full documentation here.\nThe basic format for mutate goes something like:\n\nmutate(column_name = value,\n       another_col = a_function(),\n       last_col = col1 + col2)\n\nWithin mutate() the = sign functions similarly to the assignment operator &lt;-, where the result of whatever is on the right-hand side of = gets assigned to the column that is specified on the left-hand side (an existing column or a new one you are creating).\nI want to demonstrate basic but common examples of using mutate()\nWe need to create a column specifying what condition the spaced repetition data came from, dang RA!\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(condition = \"spaced repetition\")\n\nEasy!\nNow let’s do something a little more complicated.\n\ncase_when()\ncase_when() is basically a sequence of if else type of statements where each statement is evaluated, if it is true then it is given a certain value, else the next statement is evaluated, and so on. The basic format of case_when() looks like:\n\nmutate(a_column = case_when(a logical statement ~ a value,\n                            another statement ~ another value,\n                            .default = and another value))\n\nLet’s see an example of this with the spaced repetition data. We need to change the values in the word_list column so that X is A, Y is B, and Z is C.\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\"))\n\nJust to be clear, you can create an entirely new column this way\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(new_word_list = case_when(word_list == \"X\" ~ \"A\",\n                                   word_list == \"Y\" ~ \"B\",\n                                   word_list == \"Z\" ~ \"C\"))\n\n\n\n.by =\nThis next computation is not necessary for our example data set but I want to demonstrate the use of mutate(.by = ). This option is very handy if you want to perform functions separately on different groups or splits of the data frame.\nFor example, let’s calculate the mean for each word list separately.\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nCompare this with\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(word_list_mean = mean(recall_correct))\n\nYou can use multiple columns in .by =\n\nrepetition_data &lt;- repetition_data |&gt;\n  mutate(.by = c(participant_id, word_list), \n         word_list_mean = mean(recall_correct))\n\nIt doesn’t make much sense in this case\nThe .by = option becomes extremely useful when used in summarise() which we will get to in a bit.\n\n\nrowwise()\nWhile .by = is used when performing functions on groups of rows, rowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n8.000\n6.000\n16.000\n    2.000\n22.000\n45.000\n3.000\n    3.000\n40.000\n7.000\n49.000\n    4.000\n9.000\n47.000\n47.000\n    5.000\n35.000\n50.000\n9.000\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nHere is an example where we have a single row per participant with columns representing their responses to three different questions. Let’s say we want to calculate their mean response across these three columns.\n\n\n\n\n\n\nImportant\n\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()\n\n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n8.000\n6.000\n16.000\n10.000\n    2.000\n22.000\n45.000\n3.000\n23.333\n    3.000\n40.000\n7.000\n49.000\n32.000\n    4.000\n9.000\n47.000\n47.000\n34.333\n    5.000\n35.000\n50.000\n9.000\n31.333\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n8.000\n6.000\n16.000\n26.200\n    2.000\n22.000\n45.000\n3.000\n26.200\n    3.000\n40.000\n7.000\n49.000\n26.200\n    4.000\n9.000\n47.000\n47.000\n26.200\n    5.000\n35.000\n50.000\n9.000\n26.200\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\nWe can put all the dplyr functions together through a series of pipes:\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nLet’s also do one thing to the mnemonic data set and then row bind these two data sets into one data frame.\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#summarise",
-    "href": "lectures/lectures-class-3.html#summarise",
-    "title": "Class 3: Data Transformation",
-    "section": "summarise()",
-    "text": "summarise()\nThe thing is, we don’t really care about performance on each individual word_list (A, B, and C). We care about the participant’s overall performance, aggregated across all three word lists. To aggregrate data using dplyr we can use summarise(). The result of summarise() is a reduced data frame with fewer rows. In this example, we will essentially collapse the three rows corresponding to each word list into a single row containing an aggregated summary statistic (such as a sum or mean value).\nIn a lot of ways, the code inside of summarise() looks a lot like the code we could put in mutate(). The difference is that mutate() does not collapse the data frame but summarise() does.\nTo figure out what to specify in .by = you should think of the data frame that you want to end up with (which columns you want to keep). Ultimately, we will want a data set with participant_id, condition, and mean recall performance - this last one we will create inside of summarise().\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(participant_id, condition),\n            recall_correct_mean = mean(recall_correct))\n\n\n\n\n\n\n  \n    \n    \n      participant_id\n      condition\n      recall_correct_mean\n    \n  \n  \n    1.000\nspaced repetition\n3.000\n    2.000\nmnemonic\n7.333\n    4.000\nmnemonic\n5.000\n    5.000\nspaced repetition\n5.000\n    6.000\nmnemonic\n6.667\n    8.000\nmnemonic\n5.333\n    9.000\nspaced repetition\n3.333\n    10.000\nmnemonic\n4.000\n    12.000\nmnemonic\n8.667\n    13.000\nspaced repetition\n5.000\n    14.000\nmnemonic\n7.000\n    16.000\nmnemonic\n7.333\n    17.000\nspaced repetition\n5.333\n    19.000\nspaced repetition\n6.667\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nYou can calculate other summary statistics such as:\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(particpant_id, condition),\n            recall_correct_mean = mean(recall_correct),\n            recall_correct_sd = sd(recall_correct),\n            recall_correct_sum = sum(recall_correct),\n            recall_correct_min = min(recall_correct),\n            recall_correct_max = max(recall_correct))\n\nNotice the difference when you don’t use .by =:\n\ndata_scores &lt;- data_merged |&gt;\n  summarise(recall_correct_mean = mean(recall_correct),\n            recall_correct_sd = sd(recall_correct),\n            recall_correct_sum = sum(recall_correct),\n            recall_correct_min = min(recall_correct),\n            recall_correct_max = max(recall_correct))\n\n\n\n\n\n\n  \n    \n    \n      recall_correct_mean\n      recall_correct_sd\n      recall_correct_sum\n      recall_correct_min\n      recall_correct_max\n    \n  \n  \n    5.690\n2.006\n239.000\n2.000\n9.000"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#ggplot2",
-    "href": "lectures/lectures-class-3.html#ggplot2",
-    "title": "Class 3: Data Transformation",
-    "section": "ggplot2",
-    "text": "ggplot2\nLet’s plot the data to see what the difference in memory recall is for the two types of strategy:\n\nlibrary(ggplot2)\n\nggplot(data_scores, aes(condition, recall_correct_mean)) +\n  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +\n  stat_summary(fun = mean, geom = \"point\", \n               color = \"firebrick\", size = 3) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", \n               color = \"firebrick\", width = .2) +\n  coord_cartesian(ylim = c(0, 10)) +\n  scale_x_discrete(labels = c(\"Mnemonic\", \"Spaced Recognition\")) +\n  labs(title = \"Recal Performance for Mnemonic and Spaced Recognition\",\n       y = \"Recall Performance\",\n       x = \"\") +\n  theme_classic() +\n  theme(axis.text.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.y = element_text(size = 12))"
-  },
-  {
-    "objectID": "lectures/lectures-class-3.html#class-activity",
-    "href": "lectures/lectures-class-3.html#class-activity",
-    "title": "Class 3: Data Transformation",
-    "section": "Class Activity",
-    "text": "Class Activity\nFor this activity we will work with a real data set from a paper published in Psychological Science (one of the leading journals in psychology).\n\nDawtry, R. J., Sutton, R. M., & Sibley, C. G. (2015). Why Wealthier People Think People Are Wealthier, and Why It Matters: From Social Sampling to Attitudes to Redistribution. Psychological Science, 26(9), 1389–1400. https://doi.org/10.1177/0956797615586560\n\n📄 Download the paper (optional)\n⬇️ Download the data\nIn this research, Dawtry, Sutton, and Sibley (2015) wanted to examine why people differ in their assessments of the increasing wealth inequality within developed nations. Previous research reveals that most people desire a society in which the overall level of wealth is high and that wealth is spread somewhat equally across society. However, support for this approach to income distribution changes across the social strata. In particular, wealthy people tend to view society as already wealthy and thus are satisfied with the status quo, and less likely to support redistribution. In their paper Dawtry et al., (2015) sought to examine why this is the case. The authors propose that one reason wealthy people tend to view the current system is fair is because their social-circle is comprised of other wealthy people, which biases their perceptions of wealth, which leads them to overestimate the mean level of wealth across society.\nTo test this hypothesis, the authors conducted a study with 305 participants, recruited from an online participant pool. Participants reported their own annual household income, the income level of those within their own social circle, and the income for the entire population. Participants also rated their perception of the level of equality/inequality across their social circle and across society, their level of satisfaction with and perceived fairness of the current system, their attitudes toward redistribution of wealth (measured using a four-item scale), and their political preference.\nKey variables we will look at:\n\nLevel of satisfactioin with current system (1 = extremely satisfied, 9 = extremely dissatisfied)\nPerceived fairness of current system (1 = extremely fair, 9 = extremely unfair)\nAttitude on redistribution of wealth (1 = strongly disagree, 6 = strongly agree)\n\ncontained in four columms: redist1 through redist4\n\nPolitical preference (1 = very liberal/very left-wing/strong Democrat, 9 = very conservative/very right-wing/strong Republican): Political_Preference\n\n\nCreate a new R script and save it as class_3_activity_firstlastname.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, gt, ggplot2\n\nImport the data file\nTake some time to explore the data.\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\n\nhint: use a combination of length() and unique()\n\n\nRename the level of satisfaction and perceived fairness columns\nIn the previous step, you should have noticed how these column names are not ideal. They contain spaces and even a special character ? . You will need to use the special quotation mark ` `to reference these column names in rename() , e.g., `column name with spaces` You can find these special quotation marks to the left of the 1 key and above the tab key.\nFilter by only keeping rows in which Political_Preference is not missing NA . Note how many fewer rows there are in the data after filtering.\nhint: use filter(!is.na()) to evaluate whether values in Political_Preference are NOT ! missing is.na()\n\n\nShow cheat code\nfilter(!is.na(Political_Preference))\n\n\nSelect only the columns that contain the key variables we are interested in.\nReverse score redist2 and redist4, so that 6=1, 5=2, 4=3, 3=4, 2=5, 1=6.\nUse mutate() and case_when()\nAggregate values across rows\n\nCalculate a single variable representing participant’s mean attitude on redistrubtion of wealth\nCalculate a single variable representing participant’s mean perception that the current systen is satisfactory and fair.\n\nUse a combination of rowwise() and mutate()\nCreate a new data frame summarizing the values for attitude on redistribution and the combined satisfactory and fairness variable for each level of political preference. (calculate the mean when summarizing)\nUse summarise(.by = )\nCreate a table of this summarized data frame\nUse gt() from the gt package, e.g.,\n\ngt(new_data)\n\nCreate a line plot of this summarized data frame\nYou can copy and paste this, but you might need to change the name of variables to match how you labeled them.\ndata_summary, redist_mean, and fairnesss_satisfactory_mean\n\nggplot(data_summary, aes(Political_Preference)) +\n  geom_line(aes(y = redist_mean, color = \"redist\")) +\n  geom_line(aes(y = fairness_satisfactory_mean, color = \"fair/satis\")) +\n  coord_cartesian(xlim = c(1, 9.1), ylim = c(1, 9)) +\n  scale_x_continuous(breaks = 1:9, \n                     labels = \n                       c(\"1\\nLiberal\", \"2\", \"3\", \"4\", \n                         \"5\", \"6\", \"7\", \"8\", \"9\\nConservative\")) +\n  scale_y_continuous(breaks = 1:9,\n                     labels = c(\"Strongly\\nDisagree\", \"2\", \"3\", \"4\", \n                                \"5\", \"6\", \"7\", \"8\", \"Strongly\\nAgree\")) +\n  scale_color_manual(values = c(\"redist\" = \"steelblue\",\n                                \"fair/satis\" = \"firebrick\"),\n                     name = \"\",\n                     labels = c(\"Fairness/Satisfactory of Current System\",\n                                \"Redistribution Preference\")) +\n  theme_light() +\n  theme(legend.position = \"top\") +\n  labs(title = \"Economic Attitdues by Political Preference\",\n       x = \"Political Preference\",\n       y = \"Attitude\")\n\n\n\nReproducible Script\n\n\nShow Cheat Code\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gt)\nlibrary(ggplot2)\n\n# import data\ndata_import &lt;- read_csv(\"data/Dawtry Sutton and Sibley 2015 Study 1a.csv\")\n\n# data transformation\ndata &lt;- data_import |&gt;\n  rename(fairness = `current system is fair?`,\n         satisfactory = `current system is satisfactory?`) |&gt;\n  filter(!is.na(Political_Preference)) |&gt;\n  select(fairness, satisfactory, redist1, redist2, redist3, redist4,\n         Social_Circle_Mean_Income, Political_Preference) |&gt;\n  mutate(redist2_recode = case_when(redist2 == 6 ~ 1,\n                                    redist2 == 5 ~ 2,\n                                    redist2 == 4 ~ 3,\n                                    redist2 == 3 ~ 4,\n                                    redist2 == 2 ~ 5,\n                                    redist2 == 1 ~ 6),\n         redist4_recode = case_when(redist4 == 6 ~ 1,\n                                    redist4 == 5 ~ 2,\n                                    redist4 == 4 ~ 3,\n                                    redist4 == 3 ~ 4,\n                                    redist4 == 2 ~ 5,\n                                    redist4 == 1 ~ 6)) |&gt;\n  rowwise() |&gt;\n  mutate(redist = mean(c(redist1, redist2, redist3, redist4)),\n         fairness_satisfactory = mean(c(fairness, satisfactory))) |&gt;\n  ungroup()\n\n# aggregate data\ndata_summary &lt;- data |&gt;\n  summarise(.by = Political_Preference,\n            redist_mean = mean(redist),\n            fairness_satisfactory_mean = mean(fairness_satisfactory)) |&gt;\n  arrange(Political_Preference)\n\ngt(data_summary)\n\n# line plot of summary data\nggplot(data_summary, aes(Political_Preference)) +\n  geom_line(aes(y = redist_mean, color = \"redist\")) +\n  geom_line(aes(y = fairness_satisfactory_mean, color = \"fair/satis\")) +\n  coord_cartesian(xlim = c(1, 9), ylim = c(1, 9)) +\n  scale_x_continuous(breaks = 1:9, \n                     labels = \n                       c(\"1\\nLiberal\", \"2\", \"3\", \"4\", \n                         \"5\", \"6\", \"7\", \"8\", \"9\\nConservative\")) +\n  scale_y_continuous(breaks = 1:9,\n                     labels = c(\"Strongly\\nDisagree\", \"2\", \"3\", \"4\", \n                                \"5\", \"6\", \"7\", \"8\", \"Strongly\\nAgree\")) +\n  scale_color_manual(values = c(\"redist\" = \"steelblue\",\n                                \"fair/satis\" = \"firebrick\"),\n                     name = \"\",\n                     labels = c(\"Fairness/Satisfactory of Current System\",\n                                \"Redistribution Preference\")) +\n  theme_light() +\n  theme(legend.position = \"top\") +\n  labs(title = \"Economic Attitdues by Political Preference\",\n       x = \"Political Preference\",\n       y = \"Attitude\")\n\nggsave(\"images/economic_attitudes_by_political_preference.png\",\n       width = 6, height = 4, dpi = 300)"
-  },
-  {
-    "objectID": "slides/slides-class-3.html#prepare",
-    "href": "slides/slides-class-3.html#prepare",
-    "title": "Class 3",
-    "section": "Prepare",
-    "text": "Prepare\nBefore starting this class:\n \n📦 Install readr, dplyr, tidyr, and ggplot2 packages\n⬇️ Download sample data files: (right-click to download linked file)\n\n\nclass_2_cog_data.csv\nclass_2_mood_data.csv"
-  },
-  {
-    "objectID": "slides/slides-class-3.html#outline",
-    "href": "slides/slides-class-3.html#outline",
-    "title": "Class 3",
-    "section": "Outline",
-    "text": "Outline\n \n\n\nImport: readr\n\nFile paths\nread_csv() and read_delim()\n\nMerge: dplyr\n\nbind_() functions\njoin_() functions\n\nRestructure: tidyr\n\npivot_wider()\npivot_longer()"
+    "text": "Class Activity\nLet’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.\nYou’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (⬇️ class_2_cog_data.csv) and another with the mood ratings data (⬇️ class_2_mood_data.txt), but the same participants across each data set.\nYour task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.\n\nCreate a new R script and save it as class_2_activity.R\nLoad the following packages at the top of your script\n\nreadr, dplyr, tidyr, ggplot2\n\nImport the data files\nGet to know the data (use what you learned from Class 1)\n\nWhat are the column names?\nWhat type of values are in the columns?\nHow many participants are in the study?\nHow many are in each of the intervention conditions?\nApproximately, what are the range of values on cognitive performance and mood ratings?\n\nHint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low\n\nAre there are any missing values in the data?\n\nRestructure each data set to long format with week spread across rows instead of columns and one column for cognitive score or mood rating\nThe data frames should look something like\n\n\n\n\n\n\n\n\n\nparticipant_id\nintervention_type\nweek\ncognitive_score\n\n\n\n\n1\nSleep Hygiene\n1\n76.09\n\n\n1\nSleep Hygiene\n2\n75.34\n\n\n1\nSleep Hygiene\n3\n75.09\n\n\n1\nSleep Hygiene\n4\n78.85\n\n\n2\nSleep Hygiene\n1\n72.30\n\n\n\n\n\n\n\n\n\n\n\n\nparticipant_id\nintervention_type\nweek\nmood_score\n\n\n\n\n1\nSleep Hygiene\n1\n66.32\n\n\n1\nSleep Hygiene\n2\n83.44\n\n\n1\nSleep Hygiene\n3\n76.29\n\n\n1\nSleep Hygiene\n4\n79.14\n\n\n2\nSleep Hygiene\n1\n60.17\n\n\n\n\nAfter you have restructured the data frames, you will notice that the values in the week column also contain the string: cognitive_week_ or mood_week_. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so.\n\nmutate(week = parse_number(week))\n\n# e.g., you can pipe the result of pivot_longer() to this mutate() code\n\ndata_long &lt;- data |&gt;\n  pivot_longer() |&gt;\n  mutate(week = parse_number(week))\n\n\nMerge the two long data frames into one data frame.\n\nHint: There is more than one key column that the data frames need to be joined by.\n\nPlot the cognitive performance data:\nCreate a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). Something like this:\n\n\nFirst add the data and aesthetic layers - how the data map onto the plot scales and axes\n\n\n\n\n\n\nTip\n\n\n\n\ndata should be changed to the name of your data frame containing the cognitive data\nvar_x should be changed to the name of the column that should be plotted on the x-axis\nvar_y should be changed to the name of the column that should be plotted on the y-axis\nvar_color should be change to the name of the column containing the intervention type\n\n\n\n\n# change the following values to fit your data\n# data, var_x, var_y, var_color\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n\nNow let’s add in the geometries layer - the visual elements used for the data\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color))\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5)\n\nNo need to modify the code here. For now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters. But you can see that we are plotting three geom layers, errorbar, line, and point. We need to use stat_summary() because the data are not aggregated, this function will aggregate the data across participants using fun = mean.\nFinally, let’s make this plot a little prettier\n\n# change the following values based on your preference\n# the width, and size values in stat_summary()\n# lower limit and upper limit in coord_cartesian()\n# the title, x, y, and color in labs()\n# choose a ggplot2 theme\n\nggplot(data, aes(x = var_x, y = var_y,\n                 color = var_color, group = var_color)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .9) +\n  stat_summary(fun = mean, geom = \"line\", size = .5) +\n  stat_summary(fun = mean, geom = \"point\", size = 1.5) +\n  coord_cartesian(ylim = c(72, 80)) +\n  labs(title = \"Give the plot a title\", \n       x = \"change x-axis label\", \n       y = \"change y-axis label\", \n       color = \"change legend title\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_() # choose a ggplot2 theme\n\nChange the following values based on your preference\n\nthe width of the error bars: stat_summary(width = .9)\nthe size of the lines: stat_summary(size = .5)\nthe size of the data points: stat_summary(size = .1.5)\nthe lower and upper limit of the y-axis (zoom in or out): coord_cartesian(ylim = c(lower_limit, upper_limit)\nadd a plot title\nthe y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.\nchoose a brewer color palette: scale_color_brewer(palette = \"Set1\")\n\nSee options here: R Color Brewer’s palettes\n\nchoose a ggplot2 theme:\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\n\n\n\nPlot the mood data:\n\n\nCopy and paste the code you wrote for plotting the cognitive performance data.\nChange values as needed\n\nThe variable to be plotted on the y-axis aes(y = )\nthe lower and upper limits of the y-axis coord_cartesian(ylim = c(lower_limit, upper_limit)\nplot title, y-axis, x-axis, and legend labels\n\n\nSave the plots as a file on your computer\n\nPlace the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.\n\nggsave(\"folder/path/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\n\nOrganize and clean up your script\n\nLoad all packages at the top of your script\nGet rid of code that is not a necessary step for creating the plots\nAdd comment headers to sections of your code: e.g., # load packages\n\n\n\nReproducible Script\nYou should attempt to complete the activity without looking at this code\n\n\nCode\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\n\n# import data\ncog_import &lt;- read_csv(\"data/class_2_cog_data.csv\")\nmood_import &lt;- read_delim(\"data/class_2_mood_data.txt\", \n                          delim = \"\\t\", escape_double = FALSE, trim_ws = TRUE)\n\n# restructure data\ncog_data &lt;- cog_import |&gt;\n  pivot_longer(cols = starts_with(\"cognitive_week\"), \n               names_to = \"week\", \n               values_to = \"cognitive_score\") |&gt;\n  mutate(week = parse_number(week))\n\nmood_data &lt;- mood_import |&gt;\n  pivot_longer(cols = starts_with(\"mood_week\"), \n               names_to = \"week\", \n               values_to = \"mood_score\") |&gt;\n  mutate(week = parse_number(week))\n\n# merge data\ndata_merged &lt;- full_join(cog_data, mood_data, \n                         by = c(\"participant_id\", \"intervention_type\", \"week\"))\n\n# plot data\nggplot(data_merged, aes(x = week, y = cognitive_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(65, 85)) +\n  labs(title = \"Cognitive Scores Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Cognitive Score\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_cognitive_plot.png\", \n       width = 6, height = 4, dpi = 300)\n\nggplot(data_merged, aes(x = week, y = mood_score, \n                        color = intervention_type, group = intervention_type)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .25) +\n  stat_summary(fun = mean, geom = \"line\", size = 1) +\n  stat_summary(fun = mean, geom = \"point\", size = 2) +\n  coord_cartesian(ylim = c(60, 80)) +\n  labs(title = \"Mood Across Weeks by Intervention Type\", \n       x = \"Week\", \n       y = \"Mood\", \n       color = \"Intervention Type\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\nggsave(\"images/class_2_mood_plot.png\", \n       width = 6, height = 4, dpi = 300)"
   }
 ]

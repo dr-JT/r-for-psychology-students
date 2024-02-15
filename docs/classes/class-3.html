@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -202,36 +202,24 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.</p>
+<p>The main objective of this class is to get familiar with the basic functions in <code>dplyr</code> for performing basic data transformations.</p>
 <section id="prepare" class="level2">
 <h2 class="anchored" data-anchor-id="prepare">Prepare</h2>
 <p>Before starting this class:</p>
-<p>📦 Install <code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, and <code>ggplot2</code> packages</p>
-<p>⬇️ Download sample data files: (right-click to download linked file)</p>
-<ul>
-<li><p><a href="../data/class_2_cog_data.csv">class_2_cog_data.csv</a></p></li>
-<li><p><a href="../data/class_2_mood_data.txt">class_2_mood_data.csv</a></p></li>
-</ul>
+<p>📦 Install the <code>gt</code> package</p>
+<p>Download sample data files: (right-click to download linked file)</p>
+<p>⬇️ <a href="../data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a></p>
+<p>⬇️ <a href="../data/class_3_mnemonic_rawdata.csv" download="class_3_mnemonic_rawdata.csv">class_3_mnemonic_rawdata.csv</a></p>
 </section>
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
 <ul>
-<li><p>Import: <code>readr</code></p>
-<ul>
-<li><p>File paths</p></li>
-<li><p><code>read_csv()</code> and <code>read_delim()</code></p></li>
-</ul></li>
-<li><p>Merge: <code>dplyr</code></p>
-<ul>
-<li><p>Bind vs.&nbsp;Join</p></li>
-<li><p><code>bind_()</code> functions</p></li>
-<li><p><code>join_()</code> functions</p></li>
-</ul></li>
-<li><p>Restructure: <code>tidyr</code></p>
-<ul>
-<li><p><code>pivot_wider()</code></p></li>
-<li><p><code>pivot_longer()</code></p></li>
-</ul></li>
+<li><p>The <code>tidyverse</code> and <code>dplyr</code></p></li>
+<li><p>Rename columns: <code>rename()</code></p></li>
+<li><p>Filter rows: <code>filter()</code></p></li>
+<li><p>Select columns: <code>select()</code></p></li>
+<li><p>Compute and transform values: <code>mutate()</code></p></li>
+<li><p>Aggregate data: <code>summarise()</code></p></li>
 </ul>
 </section>
 <section id="class-materials" class="level2">
@@ -408,12 +396,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

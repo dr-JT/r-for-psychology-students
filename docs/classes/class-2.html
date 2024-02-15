@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -94,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -208,11 +208,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="prepare">Prepare</h2>
 <p>Before starting this class:</p>
 <p>📦 Install <code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, and <code>ggplot2</code> packages</p>
-<p>⬇️ Download sample data files: (right-click to download linked file)</p>
-<ul>
-<li><p><a href="../data/class_2_cog_data.csv">class_2_cog_data.csv</a></p></li>
-<li><p><a href="../data/class_2_mood_data.txt">class_2_mood_data.csv</a></p></li>
-</ul>
+<p>Download sample data files: (right-click to download linked file)</p>
+<p>⬇️ <a href="../data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a></p>
+<p>⬇️ <a href="../data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a></p>
 </section>
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
@@ -408,12 +406,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

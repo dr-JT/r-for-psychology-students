@@ -3,6 +3,8 @@ title: "Class 2: Importing, Merging, and Restructuring Data"
 execute:
   echo: true
   eval: false
+  message: false
+  warning: false
 ---
 
 We will cover importing data, merging data frames, and restructuring data in this class.
@@ -385,7 +387,7 @@ To learn more about what tidy select functions are available and what they do re
 
 Let's consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.
 
-You're analyzing data from a psychology experiment where participants' cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data ([**class_2_cog_data.csv**](/data/class_2_cog_data.csv)) and another with the mood ratings data ([**class_2_mood_data.txt**](/data/class_2_mood_data.txt)), but the same participants across each data set.
+You're analyzing data from a psychology experiment where participants' cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (⬇️ <a href="/data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>) and another with the mood ratings data (⬇️ <a href="/data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a>), but the same participants across each data set.
 
 Your task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.
 

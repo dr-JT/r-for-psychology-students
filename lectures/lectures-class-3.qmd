@@ -11,29 +11,7 @@ execute:
 #| echo: false
 #| eval: true
 
-library(gt)
-
-table_theme <- function(x, digits = 3, title = NULL, note = NULL) {
-  x |>
-    tab_options(table.align = "left",
-                table.border.top.width = 0,
-                table.border.bottom.width = 0,
-                table_body.border.bottom.color = "black",
-                heading.align = "center",
-                heading.padding = 8,
-                heading.border.bottom.color = "black",
-                heading.title.font.size = 14,
-                heading.title.font.weight = "bolder",
-                column_labels.border.top.width = 0,
-                column_labels.border.bottom.color = "black",
-                column_labels.padding = 6,
-                footnotes.font.size = 13,
-                quarto.disable_processing = TRUE) |>
-    opt_row_striping(row_striping = FALSE) |>
-    tab_header(title = title) |>
-    tab_footnote(note) |>
-    fmt_number(use_seps = FALSE, decimals = digits)
-}
+source(here::here("prerender.R"))
 
 ```
 
@@ -100,6 +78,8 @@ data <- mutate(data,
 ```{r}
 #| echo: false
 #| eval: true
+
+library(gt)
 
 head(data) |>
   gt() |>
@@ -320,7 +300,7 @@ repetition_data <- repetition_data |>
                                    word_list == "Z" ~ "C"))
 ```
 
-### .by = 
+### .by =
 
 This next computation is not necessary for our example data set but I want to demonstrate the use of `mutate(.by = )`. This option is very handy if you want to perform functions separately on different groups or splits of the data frame.
 
@@ -542,6 +522,69 @@ ggplot(data_scores, aes(condition, recall_correct_mean)) +
         axis.text.y = element_text(size = 12))
 ```
 
+## Reproducible Script
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+# load packages
+library(readr)
+library(dplyr)
+library(gt)
+library(ggplot2)
+
+# import data
+repetition_import <- read_delim("data/class_3_repetition_rawdata.txt", 
+                                delim = "\t", escape_double = FALSE, 
+                                trim_ws = TRUE)
+
+mnemonic_import <- read_csv("data/class_3_mnemonic_rawdata.csv")
+
+# trasnform data
+repetition_data <- repetition_import |>
+  rename(participant_id = `subject number`,
+         word_list = List,
+         recall_correct = recallCorrect) |>
+  filter(day != "Thursday", day != "Friday") |>
+  select(participant_id, word_list, recall_correct) |>
+  mutate(condition = "spaced repetition",
+         word_list = case_when(word_list == "X" ~ "A",
+                               word_list == "Y" ~ "B",
+                               word_list == "Z" ~ "C")) |>
+  mutate(.by = word_list, 
+         word_list_mean = mean(recall_correct))
+
+mnemonic_data <- mnemonic_import |>
+  select(participant_id, condition, word_list, recall_correct)
+
+# merge data
+data_merged <- bind_rows(mnemonic_data, repetition_data) |>
+  select(-word_list_mean) |>
+  arrange(participant_id)
+
+# aggregate data
+data_scores <- data_merged |>
+  summarise(.by = c(participant_id, condition),
+            recall_correct_mean = mean(recall_correct))
+
+# plot aggregate data
+ggplot(data_scores, aes(condition, recall_correct_mean)) +
+  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +
+  stat_summary(fun = mean, geom = "point", 
+               color = "firebrick", size = 3) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", 
+               color = "firebrick", width = .2) +
+  coord_cartesian(ylim = c(0, 10)) +
+  scale_x_discrete(labels = c("Mnemonic", "Spaced Recognition")) +
+  labs(title = "Recal Performance for Mnemonic and Spaced Recognition",
+       y = "Recall Performance",
+       x = "") +
+  theme_classic() +
+  theme(axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 12))
+```
+
 ## Class Activity
 
 For this activity we will work with a real data set from a paper published in Psychological Science (one of the leading journals in psychology).
@@ -654,11 +697,11 @@ Key variables we will look at:
            y = "Attitude")
     ```
 
-### Reproducible Script
+### Check Your Work
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show Cheat Code"
+#| code-summary: "Show Code"
 
 # load packages
 library(readr)
