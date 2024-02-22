@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -94,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -207,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="prepare" class="level2">
 <h2 class="anchored" data-anchor-id="prepare">Prepare</h2>
 <p>Before starting this class:</p>
-<p>📦 Install <code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, and <code>ggplot2</code> packages</p>
+<p>📦 Install <code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>ggplot2</code> , <code>Hmisc</code> , <code>RColorBrewer</code></p>
 <p>Download sample data files:</p>
 <p>⬇️ <a href="../data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a></p>
 <p>⬇️ <a href="../data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a></p>
@@ -235,6 +235,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="class-materials" class="level2">
 <h2 class="anchored" data-anchor-id="class-materials">Class Materials</h2>
 <p>📘 <a href="../lectures/lectures-class-2.html">Class 2: Importing, Merging, and Restructuring Data</a></p>
+<p>✏️ <a href="../activities/activities-class-2.html">Learning Activity</a></p>
 <p>🖥️ <a href="../slides/slides-class-2.html" target="_blank">Slides - Full Screen</a></p>
 <p>Press <strong>M</strong> on the slides to bring up the menu to access options such as navigating to different sections</p>
 <div>
@@ -406,7 +407,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

@@ -33,8 +33,6 @@ library(dplyr)
 
 ## Prepare
 
-Before starting this class:
-
  
 
 Before starting this class:
@@ -164,7 +162,7 @@ These data come from a hypothetical (I made it up) research study to compare the
 
  
 
-Use what you learned from Class 1 to explore the data
+Use what you learned from [Class 1](/lectures/lectures-class-1.html){target="_blank"} to explore the data
 
 ::: nonincremental
 -   what are the column names?
@@ -183,7 +181,7 @@ They:
 -   left out what condition these data were from
 -   gave some particpants less than 3 memory tests! 🤬
 
-# Rename columns: `readr()`
+# Rename columns: `rename()`
 
 ## rename()
 
@@ -425,7 +423,7 @@ repetition_data <- repetition_data |>
                                    word_list == "Z" ~ "C"))
 ```
 
-## .by = 
+## .by =
 
  
 
@@ -435,7 +433,7 @@ This next computation is not necessary for our example data set but I want to de
 
 This option is very handy if you want to perform functions separately on different groups or splits of the data frame.
 
-## .by = 
+## .by =
 
  
 
@@ -774,252 +772,4 @@ ggplot(data_scores, aes(condition, recall_correct_mean)) +
         axis.text.y = element_text(size = 12))
 ```
 
-# Class Activity
-
-## Class 3 Activity
-
- 
-
-For this activity we will work with a real data set from a paper published in Psychological Science (one of the leading journals in psychology).
-
-> Dawtry, R. J., Sutton, R. M., & Sibley, C. G. (2015). Why Wealthier People Think People Are Wealthier, and Why It Matters: From Social Sampling to Attitudes to Redistribution. Psychological Science, 26(9), 1389–1400. <https://doi.org/10.1177/0956797615586560>
-
- 
-
-📄 [Download the paper](/data/dawtry-et-al-2015.pdf){target="_blank"} (optional)
-
-⬇️ <a href="/data/Dawtry Sutton and Sibley 2015 Study 1a.csv" download="Dawtry Sutton and Sibley 2015 Study 1a.csv">Download the data</a>
-
-## Class 3 Activity
-
- 
-
-In this research, Dawtry, Sutton, and Sibley (2015) wanted to examine why people differ in their assessments of the increasing wealth inequality within developed nations. Previous research reveals that most people desire a society in which the overall level of wealth is high and that wealth is spread somewhat equally across society. However, support for this approach to income distribution changes across the social strata. In particular, wealthy people tend to view society as already wealthy and thus are satisfied with the status quo, and less likely to support redistribution. In their paper Dawtry et al., (2015) sought to examine why this is the case. The authors propose that one reason wealthy people tend to view the current system is fair is because their social-circle is comprised of other wealthy people, which biases their perceptions of wealth, which leads them to overestimate the mean level of wealth across society.
-
-## Class 3 Activity {.smaller}
-
- 
-
-To test this hypothesis, the authors conducted a study with 305 participants, recruited from an online participant pool. Participants reported their own annual household income, the income level of those within their own social circle, and the income for the entire population. Participants also rated their **perception** of the level of equality/inequality across their social circle and across society, their **level of satisfaction** with and **perceived fairness** of the current system, their attitudes toward redistribution of wealth (measured using a four-item scale), and their political preference.
-
-. . .
-
- 
-
-Key variables we will look at:
-
--   **Level of satisfactioin** with current system (1 = extremely satisfied, 9 = extremely dissatisfied)
-
--   **Perceived fairness** of current system (1 = extremely fair, 9 = extremely unfair)
-
--   **Attitude on redistribution** of wealth (1 = strongly disagree, 6 = strongly agree)
-
-    -   contained in four columms: `redist1` through `redist4`
-
--   **Political preference** (1 = very liberal/very left-wing/strong Democrat, 9 = very conservative/very right-wing/strong Republican): `Political_Preference`
-
-## Setup
-
- 
-
-1.  Create a new R script and save it as **class_3_activity_firstlastname.R**
-
-2.  **Load** the following packages at the top of your script
-
-    -   `readr`, `dplyr`, `gt`, `ggplot2`
-
-3.  **Import** the data file
-
-4.  Take some time to **explore the data**.
-
-    -   What are the column names?
-    -   What type of values are in the columns?
-    -   How many participants are in the study?
-        -   hint: use a combination of `length()` and `unique()`
-
-            ```{r}
-            length(unique(data$columnname))
-            ```
-
-## Rename and Filter
-
- 
-
-5.  **Rename** the level of satisfaction and perceived fairness columns
-
-    In the previous step, you should have noticed how these column names are not ideal. They contain spaces and even a special character `?` . You will need to use the special quotation mark `` ` ` ``to reference these column names in `rename()` , e.g., `` `column name with spaces` `` You can find these special quotation marks to the left of the **1** key and above the **tab** key.
-
-6.  **Filter** by only keeping rows in which `Political_Preference` is not missing `NA` . Note how many fewer rows there are in the data after filtering.
-
-    hint: use `filter(!is.na())` to evaluate whether values in `Political_Preference` are NOT `!` missing `is.na()`
-
-    ```{r}
-    #| code-fold: true
-    #| code-summary: "Show cheat code"
-
-    filter(!is.na(Political_Preference))
-
-    ```
-
-## Select and Transform
-
- 
-
-7.  **Select** only the columns that contain the key variables we are interested in.
-
-8.  **Reverse score** redist2 and redist4, so that 6=1, 5=2, 4=3, 3=4, 2=5, 1=6.
-
-    Use `mutate()` and `case_when()`
-
-9.  **Aggregate** values [across rows]{.underline}
-
-    ::: nonincremental
-    -   **Calculate** a [single variable]{.underline} representing participant's *mean* attitude on redistrubtion of wealth
-    -   **Calculate** a [single variable]{.underline} representing participant's *mean* perception that the current systen is satisfactory and fair.
-    :::
-
-    Use a combination of `rowwise()` and `mutate()`
-
-## Summarize
-
- 
-
-10. Create a new data frame **summarizing** the values for attitude on redistribution and the combined satisfactory and fairness variable for each level of political preference. (calculate the mean when summarizing)
-
-    Use `summarise(.by = )`
-
-11. Create a **table** of this summarized data frame
-
-    Use `gt()` from the `gt` package, e.g.,
-
-    ```{r}
-    gt(new_data)
-    ```
-
-## Plot
-
- 
-
-12. Create a **line plot** of this summarized data frame
-
-    Copy and paste code on next slide
-
-## Plot
-
-You will need to change the name of variables to match how you created them.
-
-`data_summary`, `redist_mean`, and `fairnesss_satisfactory_mean`
-
-```{r}
-ggplot(data_summary, aes(Political_Preference)) +
-  geom_line(aes(y = redist_mean, color = "redist")) +
-  geom_line(aes(y = fairness_satisfactory_mean, color = "fair/satis")) +
-  coord_cartesian(xlim = c(1, 9.1), ylim = c(1, 9)) +
-  scale_x_continuous(breaks = 1:9, 
-                     labels = 
-                       c("1\nLiberal", "2", "3", "4", 
-                         "5", "6", "7", "8", "9\nConservative")) +
-  scale_y_continuous(breaks = 1:9,
-                     labels = c("Strongly\nDisagree", "2", "3", "4", 
-                                "5", "6", "7", "8", "Strongly\nAgree")) +
-  scale_color_manual(values = c("redist" = "steelblue",
-                                "fair/satis" = "firebrick"),
-                     name = "",
-                     labels = c("Fairness/Satisfactory of Current System",
-                                "Redistribution Preference")) +
-  theme_light() +
-  theme(legend.position = "top") +
-  labs(title = "Economic Attitdues by Political Preference",
-       x = "Political Preference",
-       y = "Attitude")
-```
-
-## Plot
-
- 
-
-::: nonincremental
-13. Save your plot to a file
-:::
-
-```{r}
-ggsave("images/economic_attitudes_by_political_preference.png",
-       width = 6, height = 4, dpi = 300)
-```
-
-## Check Your Work
-
- 
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# load packages
-library(readr)
-library(dplyr)
-library(gt)
-library(ggplot2)
-
-# import data
-data_import <- read_csv("data/Dawtry Sutton and Sibley 2015 Study 1a.csv")
-
-# data transformation
-data <- data_import |>
-  rename(fairness = `current system is fair?`,
-         satisfactory = `current system is satisfactory?`) |>
-  filter(!is.na(Political_Preference)) |>
-  select(fairness, satisfactory, redist1, redist2, redist3, redist4,
-         Social_Circle_Mean_Income, Political_Preference) |>
-  mutate(redist2_recode = case_when(redist2 == 6 ~ 1,
-                                    redist2 == 5 ~ 2,
-                                    redist2 == 4 ~ 3,
-                                    redist2 == 3 ~ 4,
-                                    redist2 == 2 ~ 5,
-                                    redist2 == 1 ~ 6),
-         redist4_recode = case_when(redist4 == 6 ~ 1,
-                                    redist4 == 5 ~ 2,
-                                    redist4 == 4 ~ 3,
-                                    redist4 == 3 ~ 4,
-                                    redist4 == 2 ~ 5,
-                                    redist4 == 1 ~ 6)) |>
-  rowwise() |>
-  mutate(redist = mean(c(redist1, redist2, redist3, redist4)),
-         fairness_satisfactory = mean(c(fairness, satisfactory))) |>
-  ungroup()
-
-# aggregate data
-data_summary <- data |>
-  summarise(.by = Political_Preference,
-            redist_mean = mean(redist),
-            fairness_satisfactory_mean = mean(fairness_satisfactory)) |>
-  arrange(Political_Preference)
-
-gt(data_summary)
-
-# line plot of summary data
-ggplot(data_summary, aes(Political_Preference)) +
-  geom_line(aes(y = redist_mean, color = "redist")) +
-  geom_line(aes(y = fairness_satisfactory_mean, color = "fair/satis")) +
-  coord_cartesian(xlim = c(1, 9), ylim = c(1, 9)) +
-  scale_x_continuous(breaks = 1:9, 
-                     labels = 
-                       c("1\nLiberal", "2", "3", "4", 
-                         "5", "6", "7", "8", "9\nConservative")) +
-  scale_y_continuous(breaks = 1:9,
-                     labels = c("Strongly\nDisagree", "2", "3", "4", 
-                                "5", "6", "7", "8", "Strongly\nAgree")) +
-  scale_color_manual(values = c("redist" = "steelblue",
-                                "fair/satis" = "firebrick"),
-                     name = "",
-                     labels = c("Fairness/Satisfactory of Current System",
-                                "Redistribution Preference")) +
-  theme_light() +
-  theme(legend.position = "top") +
-  labs(title = "Economic Attitdues by Political Preference",
-       x = "Political Preference",
-       y = "Attitude")
-
-ggsave("images/economic_attitudes_by_political_preference.png",
-       width = 6, height = 4, dpi = 300)
-```
+# ✏️ [Start Learning Activity -\>](/activities/activities-class-3.html){target="_blank"}

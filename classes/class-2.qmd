@@ -11,7 +11,7 @@ The main objective of this class is to get a basic handling on importing data, m
 
 Before starting this class:
 
-📦 Install `readr`, `dplyr`, `tidyr`, and `ggplot2` packages
+📦 Install `readr`, `dplyr`, `tidyr`, `ggplot2` , `Hmisc` , `RColorBrewer`
 
 Download sample data files:
 
@@ -42,6 +42,8 @@ Download sample data files:
 ## Class Materials
 
 📘 [Class 2: Importing, Merging, and Restructuring Data](/lectures/lectures-class-2.html)
+
+✏️ [Learning Activity](/activities/activities-class-2.html)
 
 🖥️ [Slides - Full Screen](/slides/slides-class-2.html){target="_blank"}
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -224,10 +224,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#pivot-wider" id="toc-pivot-wider" class="nav-link" data-scroll-target="#pivot-wider">Pivot Wider</a></li>
   <li><a href="#pivot-longer" id="toc-pivot-longer" class="nav-link" data-scroll-target="#pivot-longer">Pivot Longer</a></li>
-  </ul></li>
-  <li><a href="#class-activity" id="toc-class-activity" class="nav-link" data-scroll-target="#class-activity">Class Activity</a>
-  <ul class="collapse">
-  <li><a href="#reproducible-script" id="toc-reproducible-script" class="nav-link" data-scroll-target="#reproducible-script">Reproducible Script</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -415,9 +411,9 @@ Exploring Your Data
 <table class="table">
 <colgroup>
 <col style="width: 23%">
-<col style="width: 28%">
-<col style="width: 26%">
-<col style="width: 21%">
+<col style="width: 27%">
+<col style="width: 25%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -510,11 +506,11 @@ Exploring Your Data
 <p>And actually, you can have a <strong>mix of wide and long</strong> formatted data in a single data frame.</p>
 <table class="table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 16%">
-<col style="width: 22%">
 <col style="width: 20%">
-<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -709,323 +705,8 @@ Column Names
 <p>There are what is known as tidy select functions to easily select column names, particularly if there is a consistent pattern to those column names.</p>
 <p>This can be very useful in functions like <code>pivot_longer()</code>. In the examples provided on above, we used some tidy select functions: <code>any_of()</code> and <code>contains()</code>.</p>
 <p>To learn more about what tidy select functions are available and what they do read the <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" target="_blank">tidy select documentation</a>.</p>
-</section>
-</section>
-<section id="class-activity" class="level2">
-<h2 class="anchored" data-anchor-id="class-activity">Class Activity</h2>
-<p>Let’s consider a study investigating the impact of sleep quality interventions on cognitive performance and mood across several weeks. In this scenario, participants are exposed to two interventions (Sleep Hygiene Education and Relaxation Techniques) and their cognitive performance scores and mood ratings are recorded weekly.</p>
-<p>You’re analyzing data from a psychology experiment where participants’ cognitive performance scores and mood ratings are recorded across four weeks for two interventions. The data is split into two files, one with the cognitive performance data (⬇️ <a href="../data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>) and another with the mood ratings data (⬇️ <a href="../data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a>), but the same participants across each data set.</p>
-<p>Your task will be to import, restructure, and merge the data so that we can graphically visualize the results of the experiment.</p>
-<ol type="1">
-<li><p>Create a new R script and save it as <strong>class_2_activity.R</strong></p></li>
-<li><p>Load the following packages at the top of your script</p>
-<ul>
-<li><code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>ggplot2</code></li>
-</ul></li>
-<li><p>Import the data files</p></li>
-<li><p>Get to know the data (use what you learned from <a href="../lectures/lectures-class-1.html">Class 1</a>)</p>
-<ul>
-<li><p>What are the column names?</p></li>
-<li><p>What type of values are in the columns?</p></li>
-<li><p>How many participants are in the study?</p></li>
-<li><p>How many are in each of the intervention conditions?</p></li>
-<li><p>Approximately, what are the range of values on cognitive performance and mood ratings?</p>
-<ul>
-<li>Hint: You can click on the columns names when viewing the data frame to toggle between sorting from low-to-high and high-to-low</li>
-</ul></li>
-<li><p>Are there are any missing values in the data?</p></li>
-</ul></li>
-<li><p>Restructure each data set to long format with <code>week</code> spread across rows instead of columns and one column for <code>cognitive score</code> or <code>mood rating</code></p>
-<p>The data frames should look something like</p>
-<table class="table">
-<colgroup>
-<col style="width: 27%">
-<col style="width: 31%">
-<col style="width: 13%">
-<col style="width: 28%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>participant_id</strong></th>
-<th><strong>intervention_type</strong></th>
-<th><strong>week</strong></th>
-<th><strong>cognitive_score</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>1</td>
-<td>76.09</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>2</td>
-<td>75.34</td>
-</tr>
-<tr class="odd">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>3</td>
-<td>75.09</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>4</td>
-<td>78.85</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>Sleep Hygiene</td>
-<td>1</td>
-<td>72.30</td>
-</tr>
-</tbody>
-</table>
-<table class="table">
-<colgroup>
-<col style="width: 28%">
-<col style="width: 33%">
-<col style="width: 14%">
-<col style="width: 23%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>participant_id</strong></th>
-<th><strong>intervention_type</strong></th>
-<th><strong>week</strong></th>
-<th><strong>mood_score</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>1</td>
-<td>66.32</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>2</td>
-<td>83.44</td>
-</tr>
-<tr class="odd">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>3</td>
-<td>76.29</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Sleep Hygiene</td>
-<td>4</td>
-<td>79.14</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>Sleep Hygiene</td>
-<td>1</td>
-<td>60.17</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>After you have restructured the data frames, you will notice that the values in the <code>week</code> column also contain the string: <code>cognitive_week_</code> or <code>mood_week_</code>. This is redundant information with the column names and can be removed to clean up the format of the data. The following line of code can be used to to do so.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g., you can pipe the result of pivot_longer() to this mutate() code</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>() <span class="sc">|&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-</ul></li>
-<li><p>Merge the two long data frames into one data frame.</p>
-<ul>
-<li>Hint: There is more than one <strong>key</strong> column that the data frames need to be joined by.</li>
-</ul></li>
-<li><p>Plot the cognitive performance data:</p>
-<p>Create a plot showing the cognitive scores (y-axis) across weeks (x-axis) by intervention type (color). Something like this:</p>
-<p><img src="images/class_2_cognitive_plot.png" class="img-fluid" width="413"></p>
-<ol type="1">
-<li><p>First add the data and aesthetic layers - how the data map onto the plot scales and axes</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>data should be changed to the name of your data frame containing the cognitive data</p></li>
-<li><p>var_x should be changed to the name of the column that should be plotted on the x-axis</p></li>
-<li><p>var_y should be changed to the name of the column that should be plotted on the y-axis</p></li>
-<li><p>var_color should be change to the name of the column containing the intervention type</p></li>
-</ul>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the following values to fit your data</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data, var_x, var_y, var_color</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> var_x, <span class="at">y =</span> var_y,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> var_color, <span class="at">group =</span> var_color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-<li><p>Now let’s add in the geometries layer - the visual elements used for the data</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> var_x, <span class="at">y =</span> var_y,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> var_color, <span class="at">group =</span> var_color))</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">9</span>) <span class="sc">+</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>No need to modify the code here. For now don’t worry about what these are doing, we will cover graphical visualization in more detail in later chapters. But you can see that we are plotting three <code>geom</code> layers, <strong>errorbar</strong>, <strong>line</strong>, and <strong>point</strong>. We need to use <code>stat_summary()</code> because the data are not aggregated, this function will aggregate the data across participants using <code>fun = mean</code>.</p></li>
-<li><p>Finally, let’s make this plot a little prettier</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the following values based on your preference</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the width, and size values in stat_summary()</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lower limit and upper limit in coord_cartesian()</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the title, x, y, and color in labs()</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># choose a ggplot2 theme</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> var_x, <span class="at">y =</span> var_y,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> var_color, <span class="at">group =</span> var_color)) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">9</span>) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Give the plot a title"</span>, </span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"change x-axis label"</span>, </span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"change y-axis label"</span>, </span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"change legend title"</span>) <span class="sc">+</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_</span>() <span class="co"># choose a ggplot2 theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Change the following values based on your preference</p>
-<ul>
-<li><p>the width of the error bars: <code>stat_summary(width = .9)</code></p></li>
-<li><p>the size of the lines: <code>stat_summary(size = .5)</code></p></li>
-<li><p>the size of the data points: <code>stat_summary(size = .1.5)</code></p></li>
-<li><p>the lower and upper limit of the y-axis (zoom in or out): <code>coord_cartesian(ylim = c(lower_limit, upper_limit)</code></p></li>
-<li><p>add a plot title</p></li>
-<li><p>the y-axis, x-axis, and legend labels. e.g., no underscores, capitalize words, etc.</p></li>
-<li><p>choose a brewer color palette: <code>scale_color_brewer(palette = "Set1")</code></p>
-<ul>
-<li>See options here: <a href="https://r-graph-gallery.com/38-rcolorbrewers-palettes.html" target="_blank">R Color Brewer’s palettes</a></li>
-</ul></li>
-<li><p>choose a <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" target="_blank">ggplot2 theme</a>:</p>
-<ul>
-<li><p><code>theme_bw()</code></p></li>
-<li><p><code>theme_light()</code></p></li>
-<li><p><code>theme_dark()</code></p></li>
-<li><p><code>theme_minimal()</code></p></li>
-<li><p><code>theme_classic()</code></p></li>
-<li><p><code>theme_void()</code></p></li>
-</ul></li>
-</ul></li>
-</ol></li>
-<li><p>Plot the mood data:</p>
-<p><img src="images/class_2_mood_plot.png" class="img-fluid" width="412"></p>
-<ul>
-<li><p>Copy and paste the code you wrote for plotting the cognitive performance data.</p></li>
-<li><p>Change values as needed</p>
-<ul>
-<li><p>The variable to be plotted on the y-axis <code>aes(y = )</code></p></li>
-<li><p>the lower and upper limits of the y-axis <code>coord_cartesian(ylim = c(lower_limit, upper_limit)</code></p></li>
-<li><p>plot title, y-axis, x-axis, and legend labels</p></li>
-</ul></li>
-</ul></li>
-<li><p>Save the plots as a file on your computer</p>
-<ul>
-<li><p>Place the following code directly below the code for creating each of the plots. It will save the last generated plot to a file. Change the file name for each plot.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"folder/path/class_2_cognitive_plot.png"</span>, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-</ul></li>
-<li><p>Organize and clean up your script</p>
-<ul>
-<li>Load all packages at the top of your script</li>
-<li>Get rid of code that is not a necessary step for creating the plots</li>
-<li>Add comment headers to sections of your code: e.g., <code># load packages</code></li>
-</ul></li>
-</ol>
-<section id="reproducible-script" class="level3">
-<h3 class="anchored" data-anchor-id="reproducible-script">Reproducible Script</h3>
-<p><strong>You should attempt to complete the activity without looking at this code</strong></p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cog_import <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/class_2_cog_data.csv"</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>mood_import <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/class_2_mood_data.txt"</span>, </span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># restructure data</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>cog_data <span class="ot">&lt;-</span> cog_import <span class="sc">|&gt;</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"cognitive_week"</span>), </span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"cognitive_score"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>mood_data <span class="ot">&lt;-</span> mood_import <span class="sc">|&gt;</span></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"mood_week"</span>), </span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"mood_score"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="co"># merge data</span></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>data_merged <span class="ot">&lt;-</span> <span class="fu">full_join</span>(cog_data, mood_data, </span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>                         <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"participant_id"</span>, <span class="st">"intervention_type"</span>, <span class="st">"week"</span>))</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data</span></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_merged, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> cognitive_score, </span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> intervention_type, <span class="at">group =</span> intervention_type)) <span class="sc">+</span></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">85</span>)) <span class="sc">+</span></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cognitive Scores Across Weeks by Intervention Type"</span>, </span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, </span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cognitive Score"</span>, </span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Intervention Type"</span>) <span class="sc">+</span></span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"images/class_2_cognitive_plot.png"</span>, </span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_merged, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> mood_score, </span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> intervention_type, <span class="at">group =</span> intervention_type)) <span class="sc">+</span></span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mood Across Weeks by Intervention Type"</span>, </span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, </span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mood"</span>, </span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Intervention Type"</span>) <span class="sc">+</span></span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"images/class_2_mood_plot.png"</span>, </span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<hr>
+<p>✏️ <a href="../activities/activities-class-2.html" target="_blank">Start Learning Activity -&gt;</a></p>
 
 
 </section>
@@ -1193,7 +874,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

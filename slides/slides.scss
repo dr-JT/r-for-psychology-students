@@ -25,7 +25,8 @@ $presentation-h3-font-size: 1em !default;
 
 /*-- scss:rules --*/
 
-// footer and progress bar
+
+/*-- // footer and progress bar
 .reveal .footer {
   display: block !important;
   bottom: 0px !important;
@@ -43,13 +44,14 @@ $presentation-h3-font-size: 1em !default;
   font-weight: 300 !important;
   font-style: $font-family-sans-serif;
   color: #FFFFFF !important;
-}
+} 
+--*/
 
 .reveal .progress {
   background-color: transparent;
-	color: #6e9fcc;
+	color: $color-primary;
 	height: 6px;
-	padding-bottom: 40px;
+	/*-- padding-bottom: 40px; --*/
 }
 
 // Slide numbers to the bottom-left
@@ -59,10 +61,10 @@ $presentation-h3-font-size: 1em !default;
   width: 30px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
-  color: #FFFFFF !important;
+  background-color: #FFFFFF !important;
   text-align: center !important;
   vertical-align: center !important;
-  background-color: $color-primary !important;
+  color: $color-primary !important;
   font-size: 1em;
   font-weight: 600;
   height: 35px;
