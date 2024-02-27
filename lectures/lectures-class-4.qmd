@@ -528,4 +528,108 @@ Obviously, there are a lot of different theme elements you can tweak and it is h
 
 ### Create your own theme template
 
-Often times you may want to apply the same customized theme elements to multiple plots, or use your own theme settings across multiple projects.
+Often times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.
+
+One convenient way of doing so is to use `theme_set()`
+
+`theme_set()` will automatically apply the same theme settings across all ggplots created in a document.
+
+For instance, if you want to make sure all your ggplots have a **bolded** legend title and use `theme_classic()` you can create a theme to do that:
+
+```{r}
+#| eval: true
+
+bold_legend <- theme(legend.title = element_text(face = "bold"))
+
+plot_theme <- theme_classic() + bold_legend
+
+```
+
+Then you need to specify the theme object, `plot_theme`, in `theme_set()`
+
+```{r}
+#| eval: true
+
+theme_set(plot_theme)
+
+```
+
+Now any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.
+
+```{r}
+#| eval: true
+
+ggplot(adelie, aes(species, body_mass_g, 
+                     color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1")
+
+```
+
+You can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use "bold" fonts for titles or not, etc.).
+
+Coming up with your own custom theme (or using someone else's) along with `theme_set()` is a great way to create consistency in the design across your plots without having to copy and paste the theme settings for every single ggplot you make. You can just do it once at the top of the document with `theme_set()`.
+
+Here is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).
+
+```{r}
+#| eval: true
+
+theme_spacious <- function(font_size = 14, bold = TRUE) {
+  key_size <- trunc(font_size * .8)
+  if (bold == TRUE) {
+    face.type <- "bold"
+  } else {
+    face.type <- "plain"
+  }
+
+  theme(text = element_text(size = font_size),
+        axis.title.x = element_text(margin = margin(t = 15, r = 0,
+                                                    b = 0, l = 0),
+                                    face = face.type),
+        axis.title.y = element_text(margin = margin(t = 0, r = 15,
+                                                    b = 0, l = 0),
+                                    face = face.type),
+        legend.title = element_text(face = face.type),
+        legend.spacing = unit(20, "pt"),
+        legend.text = element_text(size = key_size),
+        plot.title = element_text(face = face.type, hjust = .5,
+                                  margin = margin(b = 10)),
+        plot.subtitle = element_text(hjust = .5),
+        plot.caption = element_text(hjust = 0, size = key_size,
+                                    margin = margin(t = 20)),
+        strip.background = element_rect(fill = "white", color = "white"),
+        strip.text = element_text(color = "black",
+                                  face = face.type))
+}
+
+output_theme <- theme_linedraw() + 
+  theme_spacious(font_size = 12) +
+  theme(panel.border = element_rect(color = "gray"),
+        axis.line.x = element_line(color = "gray"),
+        axis.line.y = element_line(color = "gray"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+theme_set(output_theme)
+```
+
+```{r}
+#| eval: true
+
+ggplot(adelie, aes(species, body_mass_g, 
+                     color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1")
+
+```
