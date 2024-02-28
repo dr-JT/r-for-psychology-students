@@ -146,15 +146,44 @@ ggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +
   geom_point(mapping = aes(color = species))
 ```
 
-So you can see that the three essential grammatical elements for any graphical visualization are:
+Besides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:
 
--   Data
+#### Color related aesthetics
 
--   Aesthetics
+[See mode details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"}
 
--   Geometries
+-   **Color**: applies to most geoms `geom_(color = )`
 
-However, there are often other types of elements you may want to include.
+-   **Fill**: applies to most geoms `geom_(fill = )`
+
+-   **Transparency**: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; `geom_(alpha = )`
+
+[See a full list of R colors here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf){target="_blank"}
+
+#### Shape related aesthetics
+
+[See more details here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html){target="_blank"}
+
+-   **Shape**: `geom_point(shape = )`, `geom_jitter(shape = )`
+
+-   **Size**: `geom_point(size = )`, `geom_jitter(size = )`
+
+-   **Line Type**: `geom_line(linetype = )`
+
+-   **Line Width**: `geom_line(linewidth = )`
+
+-   **Width**: `geom_errobar(width = )`, `geom_jitter(width = )`
+
+```{r}
+#| eval: true
+#| source-line-numbers: "3"
+
+ggplot(penguins, 
+       aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point(shape = "diamond filled", size = 3, fill = "white")
+```
+
+Besides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include.
 
 ![](images/ge_all.png){width="550"}
 
@@ -192,9 +221,59 @@ The statistics layer allows you plot aggregated statistical values calculated fr
 
 The statistics layer is used in combination with a **geom** to plot values that are a function (e.g., mean) of the values in your data. The two main **stat** functions are:
 
+-   `geom_(stat = "summary")`
+
 -   `stat_smooth()`
 
--   `stat_summary()`
+### geom\_(stat = "summary")
+
+In the previous plots, we plotted the raw values for each individual penguin. However, statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the **geom** functions using `stat = "summary"`. There are two main arguments you need to specify:
+
+-   **stat**: set this to "summary" to calculate a summary statistic
+
+-   **fun**: The function used to calculate an aggregated summary statistic. Functions like **mean**, **sum**, **min**, **max**, **sd** can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in `geom_()`
+
+In the `penguins` data set, we have the raw values of `body_mass_g` for each individual penguin but perhaps we are just interested in the average (mean) values for each `species`. This can be done easily using `geom_point(stat = "summary", fun = mean)`
+
+```{r}
+#| eval: true
+#| source-line-numbers: "2"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick")
+```
+
+Using multiple **geoms** you can plot both the raw values for each individual penguin and the summary statistic
+
+```{r}
+#| eval: true
+#| source-line-numbers: "2-3"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick")
+
+```
+
+The `fun =` argument returns only a single summary statistic value (e.g., a mean). However, some **geoms** actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the **fun.data** argument instead:
+
+`mean_cl_normal` is a function to calculate 95% confidence limits from your data.
+
+```{r}
+#| eval: true
+#| source-line-numbers: "5"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick") +
+  geom_errorbar(stat = "summary", fun.data = mean_cl_normal, width = .1)
+
+```
+
+### stat_smooth(method = "lm")
 
 `stat_smooth(method = "lm")` is used in scatterplots to plot the regression line on your data.
 
@@ -216,44 +295,6 @@ ggplot(penguins,
   geom_point() +
   facet_wrap(vars(sex)) +
   stat_smooth(method = "lm")
-```
-
-`stat_summary()` can be used to plot things like the **mean** values in your data. There are two main arguments you need to specify in `stat_summary()`:
-
--   **fun**: The function used to calculate an aggregated summary statistic. Functions like **mean**, **sum**, **min**, **max**, **sd** can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in `stat_summary()`. E.g., `stat_summary(fun = mean, na.rm = TRUE)`
-
--   **geom**: The geometical element, `geom_()` , you want to use as the visual element for the summary statistic.
-
-In the `penguins` data set, we have the raw values for each individual penguin but perhaps we are just interested in the average (mean) values for each `species`. This can be done easily using `stat_sumary()`
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(species, flipper_length_mm)) +
-  stat_summary(fun = mean, geom = "point")
-```
-
-Using a combination of `geom_jitter()` and `stat_summary()` you can plot both the raw values for each individual penguin and the mean values for each species:
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(species, flipper_length_mm)) +
-  geom_jitter(width = .1, size = .75, alpha = .2) +
-  stat_summary(fun = mean, geom = "point", 
-               size = 4, color = "steelblue")
-```
-
-The `stat_summary(fun = )` argument returns only a single summary statistic value (e.g., a mean). However, there are cases when you will want to return more than one value, for instance when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the **fun.data** argument instead:
-
-`mean_cl_normal` is a function to calculate 95% confidence limits from your data.
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(species, flipper_length_mm)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1)
 ```
 
 ## Coordinates Layer
@@ -356,7 +397,7 @@ You can adjust the scale (major and minor ticks) of the x and y axes using the `
 
 -   continuous: `scale_x_continuous(breaks = seq())` and `scale_y_continuous(breaks = seq())`
 
--   discrete: `scale_x_discrete(breaks = c())` and `scale_y_continuous(breaks = c())`
+-   discrete: `scale_x_discrete(breaks = seq())` and `scale_y_continuous(breaks = seq())`
 
 For example:
 
@@ -400,13 +441,6 @@ There are three main set of functions that we can use to control the theme layer
 -   **Labels**: `labs()` is a convenient function for labeling the title, subtitle, axes, and legend
 
 -   **Theme templates**: There are predefined theme templates that come with `ggplot2`
-
-    -   `theme_bw()`
-    -   `theme_light()`
-    -   `theme_dark()`
-    -   `theme_minimal()`
-    -   `theme_classic()`
-    -   `theme_void()`
 
 -   **Other theme elements**: `theme()` can be used to further customize the look of your plot
 
@@ -476,6 +510,15 @@ ggplot(adelie, aes(species, body_mass_g,
 ```
 
 ### Theme templates
+
+Here are some themes that come loaded with `ggplot2`
+
+-   `theme_bw()`
+-   `theme_light()`
+-   `theme_dark()`
+-   `theme_minimal()`
+-   `theme_classic()`
+-   `theme_void()`
 
 Using a theme template is straightforward
 
@@ -585,6 +628,8 @@ Here is a custom theme I made. One of the things it does is increases the amount
 
 ```{r}
 #| eval: true
+#| code-fold: true
+#| code-summary: "Show theme_spacious()"
 
 theme_spacious <- function(font_size = 14, bold = TRUE) {
   key_size <- trunc(font_size * .8)
@@ -613,9 +658,13 @@ theme_spacious <- function(font_size = 14, bold = TRUE) {
         strip.text = element_text(color = "black",
                                   face = face.type))
 }
+```
+
+```{r}
+#| eval: true
 
 output_theme <- theme_linedraw() + 
-  theme_spacious(font_size = 12) +
+  theme_spacious(font_size = 12, bold = TRUE) +
   theme(panel.border = element_rect(color = "gray"),
         axis.line.x = element_line(color = "gray"),
         axis.line.y = element_line(color = "gray"),
@@ -637,5 +686,85 @@ ggplot(adelie, aes(species, body_mass_g,
   labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
        x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
   scale_color_brewer(palette = "Set1")
+
+```
+
+## Common Types of Plots
+
+### Histogram
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(body_mass_g)) +
+  geom_histogram(bins = 20, fill = "white", color = "black")
+```
+
+### Bar, point, and line
+
+When you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.
+
+#### Bar plot
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_bar(stat = "summary", fun = mean)
+```
+
+#### Point plot
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_point(stat = "summary", fun = mean)
+
+```
+
+#### Point plot - with raw values
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, 
+             size = 4, color = "steelblue")
+```
+
+#### Line plot
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_line(stat = "summary", fun = mean, group = 1)
+
+```
+
+#### Line plot - with raw values
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_line(stat = "summary", fun = mean, group = 1) +
+  geom_point(stat = "summary", fun = mean, 
+             size = 4, color = "steelblue")
+```
+
+### Scatterplot
+
+When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a **scatterplot**.
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(bill_length_mm, body_mass_g)) +
+  geom_point() +
+  stat_smooth(method = "lm", color = "forestgreen")
 
 ```
