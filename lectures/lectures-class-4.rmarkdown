@@ -15,6 +15,7 @@ source(here::here("prerender.R"))
 
 ```
 
+
 Graphical visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
 
 1)  **Data exploration**: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.
@@ -41,6 +42,7 @@ Let's take a look at how these elements work to create a simple visualization of
 
 Go ahead and load the `palmerpenguins` and `ggplot2` packages using `library()` . Additionally, let's make the `penguins` data set that is loaded with `palmerpenguins` visible in the environment by explicitly assigning it to an object.
 
+
 ```{r}
 #| echo: false
 #| eval: true
@@ -54,6 +56,7 @@ library(ggplot2)
 penguins <- penguins
 ```
 
+
 ## Data layer
 
 The Data Layer specifies the data object that is being plotted.
@@ -62,11 +65,13 @@ The Data Layer specifies the data object that is being plotted.
 
 It is the first grammatical element that is required to create a plot:
 
+
 ```{r}
 #| eval: true
 
 ggplot(data = penguins)
 ```
+
 
 You can see that we only have a blank square. This is because we have not added any other layers yet, we have only specified the data layer. `ggplot()` doesn't yet know how to map the variables onto the axis scales. That is where the aesthetic mapping layer comes in.
 
@@ -78,6 +83,7 @@ The next grammatical element is the aesthetic layer, or **aes** for short. This 
 
 The aesthetic layer *maps* variables in our data onto scales in our graphical visualization, such as the x and y coordinates. In `ggplot2` the aesthetic layer is specified using the `aes()` function. Let's create a plot of the relationship between `bill_length_mm` and `flipper_length_mm`, putting them on the x and y axis respectively.
 
+
 ```{r}
 #| eval: true
 
@@ -86,9 +92,11 @@ ggplot(penguins,
 
 ```
 
+
 You can see we went from a blank box to a graph with the variable and scales of `bill_length_mm` mapped onto the x-axis and `flipper_length_mm` on the y-axis.
 
 The aesthetic layer also maps variables in our data to other elements in our graphical visualization, such as color, size, fill, etc. These other elements are useful for adding a third variable onto our graphical visualizations. For instance, we can add the variable of `species` by mapping `species` onto the color aesthetic.
+
 
 ```{r}
 #| eval: true
@@ -97,6 +105,7 @@ ggplot(penguins,
        mapping = aes(bill_length_mm, flipper_length_mm, color = species))
 
 ```
+
 
 You will notice that the plot has not changed. Species is not plotted by color. This is because `ggplot()` does not know the geometrical form the data should take - a bar plot, line plot, dot plot, etc.? It cannot add color to a geometrical form that is not specified yet. That is where the geometries layer comes in.
 
@@ -130,6 +139,7 @@ To create a scatterplot we can simply add `geom_point()` to our ggplot.
 Note that in `ggplot2` there is a special notation that is similar to the pipe operator `|>` seen before. Except in `ggplot2` you have to use a plus sign `+` .
 :::
 
+
 ```{r}
 #| eval: true
 
@@ -138,13 +148,18 @@ ggplot(penguins,
   geom_point()
 ```
 
+
 Note you can also specify the `color = species` aesthetic mapping on the geometric layer instead of the data layer:
+
 
 ```{r}
 
 ggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +
   geom_point(mapping = aes(color = species))
 ```
+
+
+You can change
 
 So you can see that the three essential grammatical elements for any graphical visualization are:
 
@@ -168,6 +183,7 @@ The previous three layers are the **essential** layers. The facet layer is not e
 
 Let's create a facet layer of our scatterplot with different panels for `sex`
 
+
 ```{r}
 #| eval: true
 #| source-line-numbers: "8"
@@ -181,6 +197,7 @@ ggplot(penguins,
   geom_point() +
   facet_wrap(vars(sex))
 ```
+
 
 You can see we are now conveying information about 4 different variables in our data; `bill_length_mm`, `flipper_length_mm`, `species`, and `sex` .
 
@@ -198,6 +215,7 @@ The statistics layer is used in combination with a **geom** to plot values that 
 
 `stat_smooth(method = "lm")` is used in scatterplots to plot the regression line on your data.
 
+
 ```{r}
 #| eval: true
 
@@ -206,7 +224,9 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
   stat_smooth(method = "lm")
 ```
 
+
 You can add separate regression lines if other variables are mapped to **aesthetics** and/or are wrapped in different **facets**
+
 
 ```{r}
 #| eval: true
@@ -218,6 +238,7 @@ ggplot(penguins,
   stat_smooth(method = "lm")
 ```
 
+
 `stat_summary()` can be used to plot things like the **mean** values in your data. There are two main arguments you need to specify in `stat_summary()`:
 
 -   **fun**: The function used to calculate an aggregated summary statistic. Functions like **mean**, **sum**, **min**, **max**, **sd** can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in `stat_summary()`. E.g., `stat_summary(fun = mean, na.rm = TRUE)`
@@ -226,6 +247,7 @@ ggplot(penguins,
 
 In the `penguins` data set, we have the raw values for each individual penguin but perhaps we are just interested in the average (mean) values for each `species`. This can be done easily using `stat_sumary()`
 
+
 ```{r}
 #| eval: true
 
@@ -233,7 +255,9 @@ ggplot(penguins, aes(species, flipper_length_mm)) +
   stat_summary(fun = mean, geom = "point")
 ```
 
+
 Using a combination of `geom_jitter()` and `stat_summary()` you can plot both the raw values for each individual penguin and the mean values for each species:
+
 
 ```{r}
 #| eval: true
@@ -244,9 +268,11 @@ ggplot(penguins, aes(species, flipper_length_mm)) +
                size = 4, color = "steelblue")
 ```
 
+
 The `stat_summary(fun = )` argument returns only a single summary statistic value (e.g., a mean). However, there are cases when you will want to return more than one value, for instance when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the **fun.data** argument instead:
 
 `mean_cl_normal` is a function to calculate 95% confidence limits from your data.
+
 
 ```{r}
 #| eval: true
@@ -255,6 +281,7 @@ ggplot(penguins, aes(species, flipper_length_mm)) +
   stat_summary(fun = mean, geom = "point") +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1)
 ```
+
 
 ## Coordinates Layer
 
@@ -277,6 +304,7 @@ If you want to compare two separate graphs, then they need to be on the same sca
 :::
 
 Compare these two sets of plots
+
 
 ```{r}
 #| eval: true
@@ -306,6 +334,7 @@ p1 + labs(title = "male") + p2 + labs(title = "female")
 
 ```
 
+
 A cursory look at this plot, you might conclude a couple things
 
 -   Female Gentoo penguins have the largest body mass
@@ -313,6 +342,7 @@ A cursory look at this plot, you might conclude a couple things
 -   There is a larger difference in body mass, relative to the other penguin species, for the Female Gentoo penguins than for Male Gentoo penguins.
 
 These are both false! Take a closer look at the y-axis on the two plots. Let's plot the **exact same data** but make the scales on the y-axis the same.
+
 
 ```{r}
 #| eval: true
@@ -342,12 +372,15 @@ p1 + labs(title = "male") + p2 + labs(title = "female")
 
 ```
 
+
 ::: callout-note
 `patchwork` is a convenient package to combine multiple plots into one image. The package can be used to create a more complex arrangement of multiple plots but the simplest use of it is to add plots side-by-side by simply using the `+` notation that is already used to add additional layers to a `ggplot()`
+
 
 ```{r}
 plot1 + plot2
 ```
+
 :::
 
 ### axis ticks and labels
@@ -359,6 +392,7 @@ You can adjust the scale (major and minor ticks) of the x and y axes using the `
 -   discrete: `scale_x_discrete(breaks = c())` and `scale_y_continuous(breaks = c())`
 
 For example:
+
 
 ```{r}
 #| eval: true
@@ -382,6 +416,7 @@ p2 <- ggplot(female, aes(species, body_mass_g)) +
 
 p1 + labs(title = "male") + p2 + labs(title = "female")
 ```
+
 
 ## Theme Layer
 
@@ -422,6 +457,7 @@ The `RColorBrewer` package offers several color palettes for R:
 
 You can access these palettes using `scale_color_brewer(palette = "palette name")`
 
+
 ```{r}
 #| eval: true
 #| source-line-numbers: "2,7"
@@ -435,6 +471,7 @@ ggplot(penguins, aes(species, body_mass_g,
   scale_color_brewer(palette = "Set1")
 ```
 
+
 ::: callout-note
 [Check out](https://nanx.me/ggsci/index.html){target="_blank"} the `ggsci` color palettes inspired by scientific journals, science fiction movies, and TV shows.
 :::
@@ -442,6 +479,7 @@ ggplot(penguins, aes(species, body_mass_g,
 ### Labels
 
 Changing labels and adding titles is easy using `labs()`
+
 
 ```{r}
 #| eval: true
@@ -456,7 +494,9 @@ ggplot(penguins, aes(species, body_mass_g)) +
        x = "Species", y = "Body Mass (g)")
 ```
 
+
 To change labels for legends you need to refer to the **aesthetic mapping** that was defined in `aes()` (e.g., color, shape).
+
 
 ```{r}
 #| eval: true
@@ -475,9 +515,11 @@ ggplot(adelie, aes(species, body_mass_g,
   scale_color_brewer(palette = "Set1")
 ```
 
+
 ### Theme templates
 
 Using a theme template is straightforward
+
 
 ```{r}
 #| eval: true
@@ -497,11 +539,13 @@ ggplot(adelie, aes(species, body_mass_g,
   theme_classic()
 ```
 
+
 ### Other theme elements
 
 In addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You will mostly due this using `theme()`
 
 For instance, to give the legend titles a bold face font:
+
 
 ```{r}
 #| eval: true
@@ -521,6 +565,7 @@ ggplot(adelie, aes(species, body_mass_g,
   theme_classic() +
   theme(legend.title = element_text(face = "bold"))
 ```
+
 
 Here is a list of different elements you can change. They are organized into text, line, and rectangle elements:
 
@@ -542,6 +587,7 @@ One convenient way of doing so is to use `theme_set()`
 
 For instance, if you want to make sure all your ggplots have a **bolded** legend title and use `theme_classic()` you can create a theme to do that:
 
+
 ```{r}
 #| eval: true
 
@@ -551,7 +597,9 @@ plot_theme <- theme_classic() + bold_legend
 
 ```
 
+
 Then you need to specify the theme object, `plot_theme`, in `theme_set()`
+
 
 ```{r}
 #| eval: true
@@ -560,7 +608,9 @@ theme_set(plot_theme)
 
 ```
 
+
 Now any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.
+
 
 ```{r}
 #| eval: true
@@ -577,11 +627,13 @@ ggplot(adelie, aes(species, body_mass_g,
 
 ```
 
+
 You can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use "bold" fonts for titles or not, etc.).
 
 Coming up with your own custom theme (or using someone else's) along with `theme_set()` is a great way to create consistency in the design across your plots without having to copy and paste the theme settings for every single ggplot you make. You can just do it once at the top of the document with `theme_set()`.
 
 Here is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).
+
 
 ```{r}
 #| eval: true
@@ -639,3 +691,4 @@ ggplot(adelie, aes(species, body_mass_g,
   scale_color_brewer(palette = "Set1")
 
 ```
+
