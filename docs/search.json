@@ -1240,21 +1240,21 @@
     "href": "lectures/lectures-class-4.html#geometries-layer",
     "title": "Class 4: Graphical Visualization",
     "section": "Geometries Layer",
-    "text": "Geometries Layer\nThe next essential grammatical element for graphical visualization is the geometries layer or geom for short. This layer specifies the visual elements that should be used to plot the actual data.\n\nThere are a lot of different types of geoms to use in ggplot2. Some of the most commonly used ones are:\n\nPoints or jittered points: geom_point() or geom_jitter()\nLines: geom_line()\nBars: geom_bar()\nViolin: geom_violin()\nError bars: geom_errobar() or geom_ribbon()\n\nFor a full list see the ggplot2 documentation\n\nFor now, let’s demonstrate this using geom_point(). We will create what is called a scatterplot - plotting the individual data points for two continuous variables.\nTo create a scatterplot we can simply add geom_point() to our ggplot.\n\n\n\n\n\n\nNote\n\n\n\nNote that in ggplot2 there is a special notation that is similar to the pipe operator |&gt; seen before. Except in ggplot2 you have to use a plus sign + .\n\n\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point()\n\n\n\n\n\n\n\n\nNote you can also specify the color = species aesthetic mapping on the geometric layer instead of the data layer:\n\nggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +\n  geom_point(mapping = aes(color = species))\n\nBesides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:\n\nColor related aesthetics\nSee mode details here\n\nColor: applies to most geoms geom_(color = )\nFill: applies to most geoms geom_(fill = )\nTransparency: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; geom_(alpha = )\n\nSee a full list of R colors here\n\n\nShape related aesthetics\nSee more details here\n\nShape: geom_point(shape = ), geom_jitter(shape = )\nSize: geom_point(size = ), geom_jitter(size = )\nLine Type: geom_line(linetype = )\nLine Width: geom_line(linewidth = )\nWidth: geom_errobar(width = ), geom_jitter(width = )\n\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point(shape = \"diamond filled\", size = 3, fill = \"white\")\n\n\n\n\n\n\n\n\nBesides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include."
+    "text": "Geometries Layer\nThe next essential grammatical element for graphical visualization is the geometries layer or geom for short. This layer specifies the visual elements that should be used to plot the actual data.\n\nThere are a lot of different types of geoms to use in ggplot2. Some of the most commonly used ones are:\n\nPoints or jittered points: geom_point() or geom_jitter()\nLines: geom_line()\nBars: geom_bar()\nViolin: geom_violin()\nError bars: geom_errobar() or geom_ribbon()\n\nFor a full list see the ggplot2 documentation\n\nFor now, let’s demonstrate this using geom_point(). We will create what is called a scatterplot - plotting the individual data points for two continuous variables.\nTo create a scatterplot we can simply add geom_point() to our ggplot.\n\n\n\n\n\n\nNote\n\n\n\nNote that in ggplot2 there is a special notation that is similar to the pipe operator |&gt; seen before. Except in ggplot2 you have to use a plus sign + .\n\n\n\nggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point()\n\n\n\n\n\n\n\n\nNote you can also specify the color = species aesthetic mapping on the geometric layer instead of the data layer:\n\nggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +\n  geom_point(mapping = aes(color = species))\n\nBesides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:\n\nColor related aesthetics\nSee more details here\n\nColor: applies to most geoms geom_(color = )\nFill: applies to most geoms geom_(fill = )\nTransparency: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; geom_(alpha = )\n\nSee a full list of R colors here\n\n\nShape related aesthetics\nSee more details here\n\nShape: geom_point(shape = ), geom_jitter(shape = )\nSize: geom_point(size = ), geom_jitter(size = )\nLine Type: geom_line(linetype = )\nLine Width: geom_line(linewidth = )\nWidth: geom_errobar(width = ), geom_jitter(width = )\n\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point(shape = \"diamond filled\", size = 3, fill = \"white\")\n\n\n\n\n\n\n\n\nBesides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include."
   },
   {
     "objectID": "lectures/lectures-class-4.html#facets-layer",
     "href": "lectures/lectures-class-4.html#facets-layer",
     "title": "Class 4: Graphical Visualization",
     "section": "Facets Layer",
-    "text": "Facets Layer\nThe facets layer allows you to create panels of subplots within the same graphic object\n\nThe previous three layers are the essential layers. The facet layer is not essential, but it can be useful when you want to communicate the relationship among 4 or more variables.\nLet’s create a facet layer of our scatterplot with different panels for sex\n\n# first let's remove any missing values for sex\nlibrary(dplyr)\npenguins &lt;- filter(penguins, !is.na(sex))\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_wrap(vars(sex))\n\n\n\n\n\n\n\n\nYou can see we are now conveying information about 4 different variables in our data; bill_length_mm, flipper_length_mm, species, and sex ."
+    "text": "Facets Layer\nThe facets layer allows you to create panels of subplots within the same graphic object\n\nThe previous three layers are the essential layers. The facet layer is not essential, but it can be useful when you want to communicate the relationship among 4 or more variables.\nLet’s create a facet layer of our scatterplot with different panels for sex\n\n# first let's remove any missing values for sex\nlibrary(dplyr)\npenguins &lt;- filter(penguins, !is.na(sex))\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_grid(cols = vars(sex))\n\n\n\n\n\n\n\n\nYou can see we are now conveying information about 4 different variables in our data; bill_length_mm, flipper_length_mm, species, and sex .\nSee the ggplot2 documentation on facet_grid and facet_wrap"
   },
   {
     "objectID": "lectures/lectures-class-4.html#statistics-layer",
     "href": "lectures/lectures-class-4.html#statistics-layer",
     "title": "Class 4: Graphical Visualization",
     "section": "Statistics Layer",
-    "text": "Statistics Layer\nThe statistics layer allows you plot aggregated statistical values calculated from your data\n\nThe statistics layer is used in combination with a geom to plot values that are a function (e.g., mean) of the values in your data. The two main stat functions are:\n\ngeom_(stat = \"summary\")\nstat_smooth()\n\n\ngeom_(stat = “summary”)\nIn the previous plots, we plotted the raw values for each individual penguin. However, statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the geom functions using stat = \"summary\". There are two main arguments you need to specify:\n\nstat: set this to “summary” to calculate a summary statistic\nfun: The function used to calculate an aggregated summary statistic. Functions like mean, sum, min, max, sd can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in geom_()\n\nIn the penguins data set, we have the raw values of body_mass_g for each individual penguin but perhaps we are just interested in the average (mean) values for each species. This can be done easily using geom_point(stat = \"summary\", fun = mean)\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")\n\n\n\n\n\n\n\n\nUsing multiple geoms you can plot both the raw values for each individual penguin and the summary statistic\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")\n\n\n\n\n\n\n\n\nThe fun = argument returns only a single summary statistic value (e.g., a mean). However, some geoms actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the fun.data argument instead:\nmean_cl_normal is a function to calculate 95% confidence limits from your data.\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\") +\n  geom_errorbar(stat = \"summary\", fun.data = mean_cl_normal, width = .1)\n\n\n\n\n\n\n\n\n\n\nstat_smooth(method = “lm”)\nstat_smooth(method = \"lm\") is used in scatterplots to plot the regression line on your data.\n\nggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +\n  geom_point() +\n  stat_smooth(method = \"lm\")\n\n\n\n\n\n\n\n\nYou can add separate regression lines if other variables are mapped to aesthetics and/or are wrapped in different facets\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_wrap(vars(sex)) +\n  stat_smooth(method = \"lm\")"
+    "text": "Statistics Layer\nThe statistics layer allows you plot aggregated statistical values calculated from your data\n\nThe statistics layer is used in combination with a geom to plot values that are a function (e.g., mean) of the values in your data. The two main stat functions are:\n\ngeom_(stat = \"summary\")\nstat_smooth()\n\n\ngeom_(stat = “summary”)\nIn the previous plots, we plotted the raw values for each individual penguin. However, statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the geom functions using stat = \"summary\". There are two main arguments you need to specify:\n\nstat: set this to “summary” to calculate a summary statistic\nfun: The function used to calculate an aggregated summary statistic. Functions like mean, sum, min, max, sd can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in geom_()\n\nIn the penguins data set, we have the raw values of body_mass_g for each individual penguin but perhaps we are just interested in the average (mean) values for each species. This can be done easily using geom_point(stat = \"summary\", fun = mean)\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")\n\n\n\n\n\n\n\n\nUsing multiple geoms you can plot both the raw values for each individual penguin and the summary statistic\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")\n\n\n\n\n\n\n\n\nThe fun = argument returns only a single summary statistic value (e.g., a mean). However, some geoms actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the fun.data argument instead:\nmean_cl_normal is a function to calculate 95% confidence limits from your data.\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\") +\n  geom_errorbar(stat = \"summary\", fun.data = mean_cl_normal, width = .1)\n\n\n\n\n\n\n\n\n\n\nstat_smooth(method = “lm”)\nstat_smooth(method = \"lm\") is used in scatterplots to plot the regression line on your data.\n\nggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +\n  geom_point() +\n  stat_smooth(method = \"lm\")\n\n\n\n\n\n\n\n\nYou can add separate regression lines if other variables are mapped to aesthetics and/or are wrapped in different facets\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_grid(cols = vars(sex)) +\n  stat_smooth(method = \"lm\")"
   },
   {
     "objectID": "lectures/lectures-class-4.html#coordinates-layer",
@@ -1275,7 +1275,7 @@
     "href": "lectures/lectures-class-4.html#theme-layer",
     "title": "Class 4: Graphical Visualization",
     "section": "Theme Layer",
-    "text": "Theme Layer\nThe theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot\n\nThere are three main set of functions that we can use to control the theme layer:\n\nColor: scale_color_ set of functions will change the color scheme of the geometric elements:\n\nscale_color_manual()\nscale_color_brewer()\n\nLabels: labs() is a convenient function for labeling the title, subtitle, axes, and legend\nTheme templates: There are predefined theme templates that come with ggplot2\nOther theme elements: theme() can be used to further customize the look of your plot\n\ntheme(legend.title = element_text(face = \"bold\"))\n\n\n\nColor\nChanging the color theme can get complicated but is an important design element in your plot.\nThe RColorBrewer package offers several color palettes for R:\n\nYou can access these palettes using scale_color_brewer(palette = \"palette name\")\n\nggplot(penguins, aes(species, body_mass_g, \n                     color = sex)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +\n  scale_color_brewer(palette = \"Set1\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nCheck out the ggsci color palettes inspired by scientific journals, science fiction movies, and TV shows.\n\n\n\n\nLabels\nChanging labels and adding titles is easy using labs()\n\nggplot(penguins, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\")\n\n\n\n\n\n\n\n\nTo change labels for legends you need to refer to the aesthetic mapping that was defined in aes() (e.g., color, shape).\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")\n\n\n\n\n\n\n\n\n\n\nTheme templates\nHere are some themes that come loaded with ggplot2\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\n\nUsing a theme template is straightforward\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\n\n\n\n\n\n\n\n\n\nOther theme elements\nIn addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You will mostly due this using theme()\nFor instance, to give the legend titles a bold face font:\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic() +\n  theme(legend.title = element_text(face = \"bold\"))\n\n\n\n\n\n\n\n\nHere is a list of different elements you can change. They are organized into text, line, and rectangle elements:\n\nText, line, and rectangle elements each have their corresponding element function e.g., element_text()\n\nObviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI’s for assistance.\n\n\nCreate your own theme template\nOften times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.\nOne convenient way of doing so is to use theme_set()\ntheme_set() will automatically apply the same theme settings across all ggplots created in a document.\nFor instance, if you want to make sure all your ggplots have a bolded legend title and use theme_classic() you can create a theme to do that:\n\nbold_legend &lt;- theme(legend.title = element_text(face = \"bold\"))\n\nplot_theme &lt;- theme_classic() + bold_legend\n\nThen you need to specify the theme object, plot_theme, in theme_set()\n\ntheme_set(plot_theme)\n\nNow any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")\n\n\n\n\n\n\n\n\nYou can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use “bold” fonts for titles or not, etc.).\nComing up with your own custom theme (or using someone else’s) along with theme_set() is a great way to create consistency in the design across your plots without having to copy and paste the theme settings for every single ggplot you make. You can just do it once at the top of the document with theme_set().\nHere is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).\n\n\nShow theme_spacious()\ntheme_spacious &lt;- function(font_size = 14, bold = TRUE) {\n  key_size &lt;- trunc(font_size * .8)\n  if (bold == TRUE) {\n    face.type &lt;- \"bold\"\n  } else {\n    face.type &lt;- \"plain\"\n  }\n\n  theme(text = element_text(size = font_size),\n        axis.title.x = element_text(margin = margin(t = 15, r = 0,\n                                                    b = 0, l = 0),\n                                    face = face.type),\n        axis.title.y = element_text(margin = margin(t = 0, r = 15,\n                                                    b = 0, l = 0),\n                                    face = face.type),\n        legend.title = element_text(face = face.type),\n        legend.spacing = unit(20, \"pt\"),\n        legend.text = element_text(size = key_size),\n        plot.title = element_text(face = face.type, hjust = .5,\n                                  margin = margin(b = 10)),\n        plot.subtitle = element_text(hjust = .5),\n        plot.caption = element_text(hjust = 0, size = key_size,\n                                    margin = margin(t = 20)),\n        strip.background = element_rect(fill = \"white\", color = \"white\"),\n        strip.text = element_text(color = \"black\",\n                                  face = face.type))\n}\n\n\n\noutput_theme &lt;- theme_linedraw() + \n  theme_spacious(font_size = 12, bold = TRUE) +\n  theme(panel.border = element_rect(color = \"gray\"),\n        axis.line.x = element_line(color = \"gray\"),\n        axis.line.y = element_line(color = \"gray\"),\n        panel.grid.major.x = element_blank(),\n        panel.grid.minor.y = element_blank())\n\ntheme_set(output_theme)\n\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")"
+    "text": "Theme Layer\nThe theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot\n\nThere are three main set of functions that we can use to control the theme layer:\n\nColor: scale_color_ set of functions will change the color scheme of the geometric elements:\n\nscale_color_manual() - see documentation here\nscale_color_brewer() - see documentation here\n\nLabels: labs() is a convenient function for labeling the title, subtitle, axes, and legend\nTheme templates: There are predefined theme templates that come with ggplot2\nOther theme elements: theme() can be used to further customize the look of your plot\n\ntheme(legend.title = element_text(face = \"bold\"))\n\n\n\nColor\nChanging the color theme can get complicated but is an important design element in your plot.\nThe RColorBrewer package offers several color palettes for R:\n\n\n\nYou can access these palettes using scale_color_brewer(palette = \"palette name\")\n\nggplot(penguins, aes(species, body_mass_g, color = sex)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +\n  scale_color_brewer(palette = \"Set1\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nCheck out the ggsci color palettes inspired by scientific journals, science fiction movies, and TV shows.\n\n\n\n\nLabels\nChanging labels and adding titles is easy using labs()\n\nggplot(penguins, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\")\n\n\n\n\n\n\n\n\nTo change labels for legends you need to refer to the aesthetic mapping that was defined in aes() (e.g., color, shape).\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")\n\n\n\n\n\n\n\n\n\n\nTheme templates\nHere are some themes that come loaded with ggplot2\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\n\nUsing a theme template is straightforward\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()\n\n\n\n\n\n\n\n\n\n\nOther theme elements\nIn addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You will mostly due this using theme()\nFor instance, to give the legend titles a bold face font:\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic() +\n  theme(legend.title = element_text(face = \"bold\"))\n\n\n\n\n\n\n\n\nHere is a list of different elements you can change. They are organized into text, line, and rectangle elements:\n\nText, line, and rectangle elements each have their corresponding element function e.g., element_text()\n\nObviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI’s for assistance.\nHere is the ggplot2 documentation on theme elements\n\n\nCreate your own theme template\nOften times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.\nOne convenient way of doing so is to use theme_set()\ntheme_set() will automatically apply the same theme settings across all ggplots created in a document.\nFor instance, if you want to make sure all your ggplots have a bolded legend title and use theme_classic() you can create a theme to do that:\n\nbold_legend &lt;- theme(legend.title = element_text(face = \"bold\"))\n\nplot_theme &lt;- theme_classic() + bold_legend\n\nThen you need to set the theme that will be applied across all ggplots\n\ntheme_set(plot_theme)\n\nNow any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")\n\n\n\n\n\n\n\n\nYou can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use “bold” fonts for titles or not, etc.).\nHere is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).\n\n\nShow theme_spacious()\ntheme_spacious &lt;- function(font_size = 14, bold = TRUE) {\n  key_size &lt;- trunc(font_size * .8)\n  if (bold == TRUE) {\n    face.type &lt;- \"bold\"\n  } else {\n    face.type &lt;- \"plain\"\n  }\n\n  theme(text = element_text(size = font_size),\n        axis.title.x = element_text(margin = margin(t = 15, r = 0,\n                                                    b = 0, l = 0),\n                                    face = face.type),\n        axis.title.y = element_text(margin = margin(t = 0, r = 15,\n                                                    b = 0, l = 0),\n                                    face = face.type),\n        legend.title = element_text(face = face.type),\n        legend.spacing = unit(20, \"pt\"),\n        legend.text = element_text(size = key_size),\n        plot.title = element_text(face = face.type, hjust = .5,\n                                  margin = margin(b = 10)),\n        plot.subtitle = element_text(hjust = .5),\n        plot.caption = element_text(hjust = 0, size = key_size,\n                                    margin = margin(t = 20)),\n        strip.background = element_rect(fill = \"white\", color = \"white\"),\n        strip.text = element_text(color = \"black\",\n                                  face = face.type))\n}\n\n\n\noutput_theme &lt;- theme_linedraw() + \n  theme_spacious(font_size = 12, bold = TRUE) +\n  theme(panel.border = element_rect(color = \"gray\"),\n        axis.line.x = element_line(color = \"gray\"),\n        axis.line.y = element_line(color = \"gray\"),\n        panel.grid.major.x = element_blank(),\n        panel.grid.minor.y = element_blank())\n\ntheme_set(output_theme)\n\n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")"
   },
   {
     "objectID": "activities/activities-class-2.html",
@@ -1374,5 +1374,474 @@
     "title": "Class 4: Graphical Visualization",
     "section": "Common Types of Plots",
     "text": "Common Types of Plots\n\nHistogram\n\nggplot(penguins, aes(body_mass_g)) +\n  geom_histogram(bins = 20, fill = \"white\", color = \"black\")\n\n\n\n\n\n\n\n\n\n\nBar, point, and line\nWhen you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.\n\nBar plot\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_bar(stat = \"summary\", fun = mean)\n\n\n\n\n\n\n\n\n\n\nPoint plot\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_point(stat = \"summary\", fun = mean)\n\n\n\n\n\n\n\n\n\n\nPoint plot - with raw values\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, \n             size = 4, color = \"steelblue\")\n\n\n\n\n\n\n\n\n\n\nLine plot\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_line(stat = \"summary\", fun = mean, group = 1)\n\n\n\n\n\n\n\n\n\n\nLine plot - with raw values\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_line(stat = \"summary\", fun = mean, group = 1) +\n  geom_point(stat = \"summary\", fun = mean, \n             size = 4, color = \"steelblue\")\n\n\n\n\n\n\n\n\n\n\n\nScatterplot\nWhen you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a scatterplot.\n\nggplot(penguins, aes(bill_length_mm, body_mass_g)) +\n  geom_point() +\n  stat_smooth(method = \"lm\", color = \"forestgreen\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#prepare",
+    "href": "slides/slides-class-4.html#prepare",
+    "title": "Class 4",
+    "section": "Prepare",
+    "text": "Prepare\n \nBefore starting this class:\n📦 Install the gt package\n \nDownload sample data files: (right-click to download linked file)\n⬇️ class_3_repetition_rawdata.txt\n⬇️ class_3_mnemonic_rawdata.csv"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#outline",
+    "href": "slides/slides-class-4.html#outline",
+    "title": "Class 4",
+    "section": "Outline",
+    "text": "Outline\n \n\n\nThe tidyverse and dplyr\nRename columns: rename()\nFilter rows: filter()\nSelect columns: select()\nCompute and transform values: mutate()\nAggregate data: summarise()"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#graphical-visualization",
+    "href": "slides/slides-class-4.html#graphical-visualization",
+    "title": "Class 4",
+    "section": "Graphical Visualization",
+    "text": "Graphical Visualization\n \nGraphical visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:\n \n\nData exploration: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.\nExplain and Communicate: Graphical visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#ggplot2",
+    "href": "slides/slides-class-4.html#ggplot2",
+    "title": "Class 4",
+    "section": "ggplot2",
+    "text": "ggplot2\n\n \nIn this class, we will learn about the fundamentals of graphical visualization using the ggplot2 package. This is by far the most popular package for graphical visualization in R.\nYou have already seen and used ggplot2 in previous classes, but now we will cover how to actually use this package."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#ggplot2-1",
+    "href": "slides/slides-class-4.html#ggplot2-1",
+    "title": "Class 4",
+    "section": "ggplot2",
+    "text": "ggplot2\n \nThe elements for creating a ggplot was largely inspired from the work of Leland Wilkinson (Grammar of Graphics, 1999), who formalized two main principles in plotting data:\n\nLayering\nMapping\n\nIn this framework, the essential grammatical elements required to create any visualization are:"
+  },
+  {
+    "objectID": "classes/class-4.html",
+    "href": "classes/class-4.html",
+    "title": "Class 4",
+    "section": "",
+    "text": "The main objective of this class is to get familiar with the basic functions in dplyr for performing basic data transformations."
+  },
+  {
+    "objectID": "classes/class-4.html#prepare",
+    "href": "classes/class-4.html#prepare",
+    "title": "Class 4",
+    "section": "Prepare",
+    "text": "Prepare\nBefore starting this class:\n📦 Install the gt package\nDownload sample data files:"
+  },
+  {
+    "objectID": "classes/class-4.html#outline",
+    "href": "classes/class-4.html#outline",
+    "title": "Class 4",
+    "section": "Outline",
+    "text": "Outline\n\nThe tidyverse and dplyr\nRename columns: rename()\nFilter rows: filter()\nSelect columns: select()\nCompute and transform values: mutate()\nAggregate data: summarise()"
+  },
+  {
+    "objectID": "classes/class-4.html#class-materials",
+    "href": "classes/class-4.html#class-materials",
+    "title": "Class 4",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 3: Data Transformation\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#section",
+    "href": "slides/slides-class-4.html#section",
+    "title": "Class 4",
+    "section": "",
+    "text": "In this class, we will learn about the fundamentals of graphical visualization using the ggplot2 package. This is by far the most popular package for graphical visualization in R.\n \nYou have already seen and used ggplot2 in previous classes, but now we will cover how to actually use this package."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#section-1",
+    "href": "slides/slides-class-4.html#section-1",
+    "title": "Class 4",
+    "section": "",
+    "text": "The elements for creating a ggplot was largely inspired from the work of Leland Wilkinson (Grammar of Graphics, 1999), who formalized two main principles in plotting data:\n\n\nLayering\nMapping\n\n\n\nIn this framework, the essential grammatical elements required to create any visualization are:"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#palmerpenguins",
+    "href": "slides/slides-class-4.html#palmerpenguins",
+    "title": "Class 4",
+    "section": "palmerpenguins",
+    "text": "palmerpenguins\n \nWe will use a data set from the palmerpenguins package"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#palmerpenguins-1",
+    "href": "slides/slides-class-4.html#palmerpenguins-1",
+    "title": "Class 4",
+    "section": "palmerpenguins",
+    "text": "palmerpenguins\n \n\n\nGo ahead and load the palmerpenguins and ggplot2 packages using library() .\nAdditionally, let’s make the penguins data set that is loaded with palmerpenguins visible in the environment by explicitly assigning it to an object.\n\n\n\n\nlibrary(palmerpenguins)\nlibrary(ggplot2)\n\npenguins &lt;- penguins"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#data-layer",
+    "href": "slides/slides-class-4.html#data-layer",
+    "title": "Class 4",
+    "section": "Data Layer",
+    "text": "Data Layer\nThe Data Layer specifies the data object that is being plotted.\n \n\n \nIt is the first grammatical element that is required to create a plot:\n\nggplot(data = penguins)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#data-layer-1",
+    "href": "slides/slides-class-4.html#data-layer-1",
+    "title": "Class 4",
+    "section": "Data Layer",
+    "text": "Data Layer\n\nggplot(data = penguins)\n\n\n\n\n\n\n\n\n\nThere is only a blank square because we have not added any other layers yet. ggplot() doesn’t yet know how to map the variables onto the axis scales. That is where the aesthetic mapping layer comes in."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#aesthetic-layer",
+    "href": "slides/slides-class-4.html#aesthetic-layer",
+    "title": "Class 4",
+    "section": "Aesthetic Layer",
+    "text": "Aesthetic Layer\nThe next grammatical element is the aesthetic layer, or aes for short. This layer specifies how we want to map our data onto the scales of the plot.\n \n\n \nThe aesthetic layer maps variables in our data onto scales in our graphical visualization, such as the x and y coordinates. In ggplot2 the aesthetic layer is specified using the aes() function.\n \n\nggplot(penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm))"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#aesthetic-layer-1",
+    "href": "slides/slides-class-4.html#aesthetic-layer-1",
+    "title": "Class 4",
+    "section": "Aesthetic Layer",
+    "text": "Aesthetic Layer\n\nggplot(penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm))\n\n\n\n\n\n\n\n\nYou can see we went from a blank box to a graph with the variable and scales of bill_length_mm mapped onto the x-axis and flipper_length_mm on the y-axis."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#aesthetic-layer-2",
+    "href": "slides/slides-class-4.html#aesthetic-layer-2",
+    "title": "Class 4",
+    "section": "Aesthetic Layer",
+    "text": "Aesthetic Layer\n \n\n\nThe aesthetic layer also maps variables in our data to other elements in our graphical visualization, such as color, size, fill, etc.\nThese other elements are useful for adding a third variable onto our graphical visualizations. For instance, we can add the variable of species by mapping species onto the color aesthetic.\n\n\n\nggplot(penguins, \n       mapping = aes(bill_length_mm, flipper_length_mm, color = species))"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#geometries-layer-1",
+    "href": "slides/slides-class-4.html#geometries-layer-1",
+    "title": "Class 4",
+    "section": "Geometries Layer",
+    "text": "Geometries Layer\nThe next essential grammatical element for graphical visualization is the geometries layer or geom for short. This layer specifies the visual elements that should be used to plot the actual data.\n \n\nThere are a lot of different types of geoms to use in ggplot2. Some of the most commonly used ones are:\n\nPoints or jittered points: geom_point() or geom_jitter()\nLines: geom_line()\nBars: geom_bar()\nViolin: geom_violin()\nError bars: geom_errobar() or geom_ribbon()\n\nFor a full list see the ggplot2 documentation"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#geom_point",
+    "href": "slides/slides-class-4.html#geom_point",
+    "title": "Class 4",
+    "section": "geom_point()",
+    "text": "geom_point()\n \nFor now, let’s demonstrate this using geom_point(). We will create what is called a scatterplot - plotting the individual data points for two continuous variables.\n\n \n\nggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point()\n\n \n\n\nYou can also specify the color = species aesthetic mapping on the geometric layer\n\nggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +\n  geom_point(mapping = aes(color = species))\n\n \n\n\n\n\n\n\n\n\nNote\n\n\nNote that in ggplot2 there is a special notation that is similar to the pipe operator |&gt; seen before. Except in ggplot2 you have to use a plus sign + ."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#geom_point-1",
+    "href": "slides/slides-class-4.html#geom_point-1",
+    "title": "Class 4",
+    "section": "geom_point()",
+    "text": "geom_point()\n \n\nggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#aesthetic-properties-of-geoms",
+    "href": "slides/slides-class-4.html#aesthetic-properties-of-geoms",
+    "title": "Class 4",
+    "section": "Aesthetic Properties of geoms",
+    "text": "Aesthetic Properties of geoms\nBesides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:\n \nColor related aesthetics: See more details here\n\nColor: applies to most geoms geom_(color = )\nFill: applies to most geoms geom_(fill = )\nTransparency: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; geom_(alpha = )\nSee a full list of R colors here\n\nShape related aesthetics: See more details here\n\n\nShape: geom_point(shape = ), geom_jitter(shape = )\nSize: geom_point(size = ), geom_jitter(size = )\nLine Type: geom_line(linetype = )\nLine Width: geom_line(linewidth = )\nWidth: geom_errobar(width = ), geom_jitter(width = )"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#aesthetic-properties-of-geoms-1",
+    "href": "slides/slides-class-4.html#aesthetic-properties-of-geoms-1",
+    "title": "Class 4",
+    "section": "Aesthetic Properties of geoms",
+    "text": "Aesthetic Properties of geoms\n \n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point(shape = \"diamond filled\", size = 3, fill = \"white\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#more-ggplot2-layers",
+    "href": "slides/slides-class-4.html#more-ggplot2-layers",
+    "title": "Class 4",
+    "section": "More ggplot2 layers",
+    "text": "More ggplot2 layers\n \nBesides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#facets-layer",
+    "href": "slides/slides-class-4.html#facets-layer",
+    "title": "Class 4",
+    "section": "Facets Layer",
+    "text": "Facets Layer\nThe facets layer allows you to create panels of subplots within the same graphic object\n \n\nThe previous three layers are the essential layers. The facet layer is not essential, but it can be useful when you want to communicate the relationship among 4 or more variables.\n \n\nLet’s create a facet layer of our scatterplot with different panels for sex\n\n# first let's remove any missing values for sex\nlibrary(dplyr)\npenguins &lt;- filter(penguins, !is.na(sex))\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_grid(cols = vars(sex))\n\nSee the ggplot2 documentation on facet_grid and facet_wrap"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#facets-layer-1",
+    "href": "slides/slides-class-4.html#facets-layer-1",
+    "title": "Class 4",
+    "section": "Facets Layer",
+    "text": "Facets Layer\n \n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_grid(cols = vars(sex))"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#statistics-layer",
+    "href": "slides/slides-class-4.html#statistics-layer",
+    "title": "Class 4",
+    "section": "Statistics Layer",
+    "text": "Statistics Layer\nThe statistics layer allows you plot aggregated statistical values calculated from your data\n \n\nThe statistics layer is used in combination with a geom to plot values that are a function (e.g., mean) of the values in your data. The two main stat functions are:\n\ngeom_(stat = \"summary\")\nstat_smooth()"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#geom_stat-summary",
+    "href": "slides/slides-class-4.html#geom_stat-summary",
+    "title": "Class 4",
+    "section": "geom_(stat = “summary”)",
+    "text": "geom_(stat = “summary”)\n \nStatistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the geom functions using stat = \"summary\". There are two main arguments you need to specify:\n\nstat: set this to “summary” to calculate a summary statistic\nfun: The function used to calculate an aggregated summary statistic. Functions like mean, sum, min, max, sd can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in geom_()\n\n\nTo plot the average (mean) body_mass_g for each species.\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")\n\n \n\n\nUsing multiple geoms you can plot both the raw values for each individual penguin and the summary statistic\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = 1, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#geom_stat-summary-1",
+    "href": "slides/slides-class-4.html#geom_stat-summary-1",
+    "title": "Class 4",
+    "section": "geom_(stat = “summary”)",
+    "text": "geom_(stat = “summary”)\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = 1, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#geom_stat-summary-2",
+    "href": "slides/slides-class-4.html#geom_stat-summary-2",
+    "title": "Class 4",
+    "section": "geom_(stat = “summary”)",
+    "text": "geom_(stat = “summary”)\n \nThe fun = argument returns only a single summary statistic value (e.g., a mean). However, some geoms actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the fun.data argument instead:\n \n\nmean_cl_normal is a function to calculate 95% confidence limits from your data.\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE,\n             shape = \"diamond\", size = 5, color = \"firebrick\") +\n  geom_errorbar(stat = \"summary\", fun.data = mean_cl_normal, width = .1)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#stat_smoothmethod-lm",
+    "href": "slides/slides-class-4.html#stat_smoothmethod-lm",
+    "title": "Class 4",
+    "section": "stat_smooth(method = “lm”)",
+    "text": "stat_smooth(method = “lm”)\n \nstat_smooth(method = \"lm\") is used in scatterplots to plot the regression line on your data.\n \n\nggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +\n  geom_point() +\n  stat_smooth(method = \"lm\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#stat_smoothmethod-lm-1",
+    "href": "slides/slides-class-4.html#stat_smoothmethod-lm-1",
+    "title": "Class 4",
+    "section": "stat_smooth(method = “lm”)",
+    "text": "stat_smooth(method = “lm”)\n \nYou can add separate regression lines if other variables are mapped to aesthetics and/or are wrapped in different facets\n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_grid(cols = vars(sex)) +\n  stat_smooth(method = \"lm\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#coordinates-layer",
+    "href": "slides/slides-class-4.html#coordinates-layer",
+    "title": "Class 4",
+    "section": "Coordinates Layer",
+    "text": "Coordinates Layer\nThe coordinate layer allows you to adjust the x and y coordinates\n \n\n \nThere are two main groups of functions that are useful for adjusting the x and y coordinates.\n\ncoord_cartesian() for adjusting the axis limits (zoom in and out)\nscale_x_ and scale_y_ for setting the axis ticks and labels"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#axis-limits",
+    "href": "slides/slides-class-4.html#axis-limits",
+    "title": "Class 4",
+    "section": "axis limits",
+    "text": "axis limits\nYou can adjust limits (min and max) of the x and y axes using coord_cartesian(xlim = c(), ylim = c())\n \n\n\n\n\n\n\nImportant\n\n\nIf you want to compare two separate graphs, then they need to be on the same scale. This an important design principle in graphical visualization."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#axis-limits-1",
+    "href": "slides/slides-class-4.html#axis-limits-1",
+    "title": "Class 4",
+    "section": "axis limits",
+    "text": "axis limits\n \n\np1 &lt;- ggplot(male, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  labs(title = \"male\")\n\np2 &lt;- ggplot(female, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) + \n  coord_cartesian(ylim = c(3000, 6000)) +\n  labs(title = \"female\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#axis-limits-2",
+    "href": "slides/slides-class-4.html#axis-limits-2",
+    "title": "Class 4",
+    "section": "axis limits",
+    "text": "axis limits"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#axis-ticks-and-labels",
+    "href": "slides/slides-class-4.html#axis-ticks-and-labels",
+    "title": "Class 4",
+    "section": "axis ticks and labels",
+    "text": "axis ticks and labels\n \nYou can adjust the scale (major and minor ticks) of the x and y axes using the scale_x_ and scale_y_ set of functions. The two main set of functions to know are for continuous and discrete scales:\n\ncontinuous: scale_x_continuous(breaks = seq()) and scale_y_continuous(breaks = seq())\ndiscrete: scale_x_discrete(breaks = seq()) and scale_y_continuous(breaks = seq())\n\n \n\nFor example:\n\nggplot(male, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500))"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#axis-ticks-and-labels-1",
+    "href": "slides/slides-class-4.html#axis-ticks-and-labels-1",
+    "title": "Class 4",
+    "section": "axis ticks and labels",
+    "text": "axis ticks and labels\n \n\nggplot(male, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500))"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#theme-layer",
+    "href": "slides/slides-class-4.html#theme-layer",
+    "title": "Class 4",
+    "section": "Theme Layer",
+    "text": "Theme Layer\nThe theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot\n \n\nThere are three main set of functions that we can use to control the theme layer:\n\nColor: scale_color_ set of functions will change the color scheme of the geometric elements:\nLabels: labs() is a convenient function for labeling the title, subtitle, axes, and legend\nTheme templates: There are predefined theme templates that come with ggplot2\nOther theme elements: theme() can be used to further customize the look of your plot"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#coordinates-layer-1",
+    "href": "slides/slides-class-4.html#coordinates-layer-1",
+    "title": "Class 4",
+    "section": "Coordinates Layer",
+    "text": "Coordinates Layer\nThe coordinate layer allows you to adjust the x and y coordinates\n \n\n \nThere are two main groups of functions that are useful for adjusting the x and y coordinates.\n\ncoord_cartesian() for adjusting the axis limits (zoom in and out)\nscale_x_ and scale_y_ for setting the axis ticks and labels"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#theme-layer-1",
+    "href": "slides/slides-class-4.html#theme-layer-1",
+    "title": "Class 4",
+    "section": "Theme Layer",
+    "text": "Theme Layer\nThe theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot\n \n\nThere are three main set of functions that we can use to control the theme layer:\n\nColor: scale_color_ set of functions will change the color scheme of the geometric elements:\nLabels: labs() is a convenient function for labeling the title, subtitle, axes, and legend\nTheme templates: There are predefined theme templates that come with ggplot2\nOther theme elements: theme() can be used to further customize the look of your plot"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#color",
+    "href": "slides/slides-class-4.html#color",
+    "title": "Class 4",
+    "section": "Color",
+    "text": "Color\n \nThe RColorBrewer package offers several color palettes for R:\n\n\n\n\n \nAlso, check out the ggsci color palettes inspired by scientific journals, science fiction movies, and TV shows."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#color-1",
+    "href": "slides/slides-class-4.html#color-1",
+    "title": "Class 4",
+    "section": "Color",
+    "text": "Color\nYou can access these palettes using scale_color_brewer(palette = \"palette name\")\n\nggplot(penguins, aes(species, body_mass_g, color = sex)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +\n  scale_color_brewer(palette = \"Set1\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#labels",
+    "href": "slides/slides-class-4.html#labels",
+    "title": "Class 4",
+    "section": "Labels",
+    "text": "Labels\nChanging labels and adding titles is easy using labs()\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 6000)) +\n  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#labels-1",
+    "href": "slides/slides-class-4.html#labels-1",
+    "title": "Class 4",
+    "section": "Labels",
+    "text": "Labels\nTo change labels for legends you need to refer to the aesthetic mapping that was defined in aes() (e.g., color, shape).\n \n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#theme-templates",
+    "href": "slides/slides-class-4.html#theme-templates",
+    "title": "Class 4",
+    "section": "Theme templates",
+    "text": "Theme templates\n \nHere are some themes that come loaded with ggplot2\n\ntheme_bw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#theme-templates-1",
+    "href": "slides/slides-class-4.html#theme-templates-1",
+    "title": "Class 4",
+    "section": "Theme templates",
+    "text": "Theme templates\n \nUsing a theme template is straightforward\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic()"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#other-theme-elements",
+    "href": "slides/slides-class-4.html#other-theme-elements",
+    "title": "Class 4",
+    "section": "Other Theme Elements",
+    "text": "Other Theme Elements\nIn addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You can do this using theme()\n\nadelie &lt;- filter(penguins, species != \"Gentoo\")\n\nggplot(adelie, aes(species, body_mass_g, color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\") +\n  theme_classic() +\n  theme(legend.title = element_text(face = \"bold\"))"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#other-theme-elements-1",
+    "href": "slides/slides-class-4.html#other-theme-elements-1",
+    "title": "Class 4",
+    "section": "Other Theme Elements",
+    "text": "Other Theme Elements\nHere is a list of different elements you can change. They are organized into text, line, and rectangle elements:"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#other-theme-elements-2",
+    "href": "slides/slides-class-4.html#other-theme-elements-2",
+    "title": "Class 4",
+    "section": "Other Theme Elements",
+    "text": "Other Theme Elements\nText, line, and rectangle elements each have their corresponding element function e.g., element_text()\n \n\nObviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI’s for assistance.\nHere is the ggplot2 documentation on theme elements"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#create-your-own-theme-template",
+    "href": "slides/slides-class-4.html#create-your-own-theme-template",
+    "title": "Class 4",
+    "section": "Create your own theme template",
+    "text": "Create your own theme template\nOften times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.\n \n\nOne convenient way of doing so is to use theme_set()\ntheme_set() will automatically apply the same theme settings across all ggplots created in a document."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#create-your-own-theme-template-1",
+    "href": "slides/slides-class-4.html#create-your-own-theme-template-1",
+    "title": "Class 4",
+    "section": "Create your own theme template",
+    "text": "Create your own theme template\n \nFor instance, if you want to make sure all your ggplots have a bolded legend title and use theme_classic() you can create a theme to do that:\n \n\nbold_legend &lt;- theme(legend.title = element_text(face = \"bold\"))\n\nplot_theme &lt;- theme_classic() + bold_legend\n\n \nThen you need to set the theme that will be applied across all ggplots\n\ntheme_set(plot_theme)\n\n \nNow any ggplots you create will be given this theme setting without you having to include it in the actual ggplot."
+  },
+  {
+    "objectID": "slides/slides-class-4.html#create-your-own-theme-template-2",
+    "href": "slides/slides-class-4.html#create-your-own-theme-template-2",
+    "title": "Class 4",
+    "section": "Create your own theme template",
+    "text": "Create your own theme template\n \n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#create-your-own-theme-template-3",
+    "href": "slides/slides-class-4.html#create-your-own-theme-template-3",
+    "title": "Class 4",
+    "section": "Create your own theme template",
+    "text": "Create your own theme template\n \n\n\nShow theme_spacious()\ntheme_spacious &lt;- function(font_size = 14, bold = TRUE) {\n  key_size &lt;- trunc(font_size * .8)\n  if (bold == TRUE) {\n    face.type &lt;- \"bold\"\n  } else {\n    face.type &lt;- \"plain\"\n  }\n\n  theme(text = element_text(size = font_size),\n        axis.title.x = element_text(margin = margin(t = 15, r = 0,\n                                                    b = 0, l = 0),\n                                    face = face.type),\n        axis.title.y = element_text(margin = margin(t = 0, r = 15,\n                                                    b = 0, l = 0),\n                                    face = face.type),\n        legend.title = element_text(face = face.type),\n        legend.spacing = unit(20, \"pt\"),\n        legend.text = element_text(size = key_size),\n        plot.title = element_text(face = face.type, hjust = .5,\n                                  margin = margin(b = 10)),\n        plot.subtitle = element_text(hjust = .5),\n        plot.caption = element_text(hjust = 0, size = key_size,\n                                    margin = margin(t = 20)),\n        strip.background = element_rect(fill = \"white\", color = \"white\"),\n        strip.text = element_text(color = \"black\",\n                                  face = face.type))\n}\n\n\n\noutput_theme &lt;- theme_linedraw() + \n  theme_spacious(font_size = 12, bold = TRUE) +\n  theme(panel.border = element_rect(color = \"gray\"),\n        axis.line.x = element_line(color = \"gray\"),\n        axis.line.y = element_line(color = \"gray\"),\n        panel.grid.major.x = element_blank(),\n        panel.grid.minor.y = element_blank())\n\ntheme_set(output_theme)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#create-your-own-theme-template-4",
+    "href": "slides/slides-class-4.html#create-your-own-theme-template-4",
+    "title": "Class 4",
+    "section": "Create your own theme template",
+    "text": "Create your own theme template\n \n\nggplot(adelie, aes(species, body_mass_g, \n                     color = sex, shape = island)) +\n  stat_summary(fun = mean, geom = \"point\") +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width = .1) +\n  coord_cartesian(ylim = c(3000, 4250)) +\n  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +\n  labs(title = \"A Plot Title\", subtitle = \"A subtitle\", tag = \"A)\",\n       x = \"Species\", y = \"Body Mass (g)\", color = \"Sex\", shape = \"Island\") +\n  scale_color_brewer(palette = \"Set1\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#histogram",
+    "href": "slides/slides-class-4.html#histogram",
+    "title": "Class 4",
+    "section": "Histogram",
+    "text": "Histogram\n \n\nggplot(penguins, aes(body_mass_g)) +\n  geom_histogram(bins = 20, fill = \"white\", color = \"black\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#bar-point-and-line",
+    "href": "slides/slides-class-4.html#bar-point-and-line",
+    "title": "Class 4",
+    "section": "Bar, point, and line",
+    "text": "Bar, point, and line\nWhen you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.\n \n\nBar plots\nPoint plots\nLine plots"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#bar-point-and-line-1",
+    "href": "slides/slides-class-4.html#bar-point-and-line-1",
+    "title": "Class 4",
+    "section": "Bar, point, and line",
+    "text": "Bar, point, and line\nWhen you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.\n \nPoint plot\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_point(stat = \"summary\", fun = mean)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#bar-point-and-line-2",
+    "href": "slides/slides-class-4.html#bar-point-and-line-2",
+    "title": "Class 4",
+    "section": "Bar, point, and line",
+    "text": "Bar, point, and line\nWhen you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.\n \nPoint plot - with raw values\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, \n             size = 4, color = \"steelblue\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#bar-point-and-line-3",
+    "href": "slides/slides-class-4.html#bar-point-and-line-3",
+    "title": "Class 4",
+    "section": "Bar, point, and line",
+    "text": "Bar, point, and line\nWhen you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.\nLine plot\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_line(stat = \"summary\", fun = mean, group = 1)\n\n\n\n\n\n\n\n\nLine plot - with raw values\n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_line(stat = \"summary\", fun = mean, group = 1) +\n  geom_point(stat = \"summary\", fun = mean, \n             size = 4, color = \"steelblue\")\n\n\n\n\n\n\n\n\nScatterplot\nWhen you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a scatterplot.\n\nggplot(penguins, aes(bill_length_mm, body_mass_g)) +\n  geom_point() +\n  stat_smooth(method = \"lm\", color = \"forestgreen\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#bar-plot",
+    "href": "slides/slides-class-4.html#bar-plot",
+    "title": "Class 4",
+    "section": "Bar plot",
+    "text": "Bar plot\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_bar(stat = \"summary\", fun = mean)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#point-plot",
+    "href": "slides/slides-class-4.html#point-plot",
+    "title": "Class 4",
+    "section": "Point plot",
+    "text": "Point plot\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_point(stat = \"summary\", fun = mean)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#point-plot---with-raw-values",
+    "href": "slides/slides-class-4.html#point-plot---with-raw-values",
+    "title": "Class 4",
+    "section": "Point plot - with raw values",
+    "text": "Point plot - with raw values\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_point(stat = \"summary\", fun = mean, \n             size = 4, color = \"steelblue\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#line-plot",
+    "href": "slides/slides-class-4.html#line-plot",
+    "title": "Class 4",
+    "section": "Line plot",
+    "text": "Line plot\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_line(stat = \"summary\", fun = mean, group = 1)"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#line-plot---with-raw-values",
+    "href": "slides/slides-class-4.html#line-plot---with-raw-values",
+    "title": "Class 4",
+    "section": "Line plot - with raw values",
+    "text": "Line plot - with raw values\n \n\nggplot(penguins, aes(species, body_mass_g)) +\n  geom_jitter(width = .1, size = .75, alpha = .2) +\n  geom_line(stat = \"summary\", fun = mean, group = 1) +\n  geom_point(stat = \"summary\", fun = mean, \n             size = 4, color = \"steelblue\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#scatterplot",
+    "href": "slides/slides-class-4.html#scatterplot",
+    "title": "Class 4",
+    "section": "Scatterplot",
+    "text": "Scatterplot\nWhen you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a scatterplot.\n \n\nggplot(penguins, aes(bill_length_mm, body_mass_g)) +\n  geom_point() +\n  stat_smooth(method = \"lm\", color = \"forestgreen\")"
+  },
+  {
+    "objectID": "slides/slides-class-4.html#stat_smoothmethod-lm-2",
+    "href": "slides/slides-class-4.html#stat_smoothmethod-lm-2",
+    "title": "Class 4",
+    "section": "stat_smooth(method = “lm”)",
+    "text": "stat_smooth(method = “lm”)\n \n\nggplot(penguins, \n       aes(bill_length_mm, flipper_length_mm, color = species)) +\n  geom_point() +\n  facet_grid(cols = vars(sex)) +\n  stat_smooth(method = \"lm\")"
   }
 ]

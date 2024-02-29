@@ -133,8 +133,7 @@ Note that in `ggplot2` there is a special notation that is similar to the pipe o
 ```{r}
 #| eval: true
 
-ggplot(penguins, 
-       aes(bill_length_mm, flipper_length_mm, color = species)) +
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +
   geom_point()
 ```
 
@@ -150,7 +149,7 @@ Besides mapping variables in your data to certain aesthetics, you can change the
 
 #### Color related aesthetics
 
-[See mode details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"}
+[See more details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"}
 
 -   **Color**: applies to most geoms `geom_(color = )`
 
@@ -208,10 +207,12 @@ penguins <- filter(penguins, !is.na(sex))
 ggplot(penguins, 
        aes(bill_length_mm, flipper_length_mm, color = species)) +
   geom_point() +
-  facet_wrap(vars(sex))
+  facet_grid(cols = vars(sex))
 ```
 
 You can see we are now conveying information about 4 different variables in our data; `bill_length_mm`, `flipper_length_mm`, `species`, and `sex` .
+
+See the ggplot2 documentation on [facet_grid](https://ggplot2.tidyverse.org/reference/facet_grid.html){target="_blank"} and [facet_wrap](https://ggplot2.tidyverse.org/reference/facet_wrap.html){target="_blank"}
 
 ## Statistics Layer
 
@@ -293,7 +294,7 @@ You can add separate regression lines if other variables are mapped to **aesthet
 ggplot(penguins, 
        aes(bill_length_mm, flipper_length_mm, color = species)) +
   geom_point() +
-  facet_wrap(vars(sex)) +
+  facet_grid(cols = vars(sex)) +
   stat_smooth(method = "lm")
 ```
 
@@ -434,9 +435,9 @@ There are three main set of functions that we can use to control the theme layer
 
 -   **Color**: `scale_color_` set of functions will change the color scheme of the geometric elements:
 
-    -   `scale_color_manual()`
+    -   `scale_color_manual()`  - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_manual.html){target="_blank"}
 
-    -   `scale_color_brewer()`
+    -   `scale_color_brewer()` - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_brewer.html){target="_blank"}
 
 -   **Labels**: `labs()` is a convenient function for labeling the title, subtitle, axes, and legend
 
@@ -454,14 +455,13 @@ The `RColorBrewer` package offers several color palettes for R:
 
 ![](images/RColorBrewer.png){width="537"}
 
-You can access these palettes using `scale_color_brewer(palette = "palette name")`
+### You can access these palettes using `scale_color_brewer(palette = "palette name")`
 
 ```{r}
 #| eval: true
-#| source-line-numbers: "2,7"
+#| source-line-numbers: "1,6"
 
-ggplot(penguins, aes(species, body_mass_g, 
-                     color = sex)) +
+ggplot(penguins, aes(species, body_mass_g, color = sex)) +
   stat_summary(fun = mean, geom = "point") +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
   coord_cartesian(ylim = c(3000, 6000)) +
@@ -575,6 +575,8 @@ Text, line, and rectangle elements each have their corresponding element functio
 
 Obviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI's for assistance.
 
+[Here is the ggplot2 documentation on theme elements](https://ggplot2.tidyverse.org/reference/theme.html){target="_blank"}
+
 ### Create your own theme template
 
 Often times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.
@@ -594,7 +596,7 @@ plot_theme <- theme_classic() + bold_legend
 
 ```
 
-Then you need to specify the theme object, `plot_theme`, in `theme_set()`
+Then you need to set the theme that will be applied across all ggplots
 
 ```{r}
 #| eval: true
@@ -621,8 +623,6 @@ ggplot(adelie, aes(species, body_mass_g,
 ```
 
 You can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use "bold" fonts for titles or not, etc.).
-
-Coming up with your own custom theme (or using someone else's) along with `theme_set()` is a great way to create consistency in the design across your plots without having to copy and paste the theme settings for every single ggplot you make. You can just do it once at the top of the document with `theme_set()`.
 
 Here is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).
 

@@ -1,0 +1,46 @@
+---
+title: "Class 4"
+subtitle: "Graphical Visualization"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to get familiar with the basic functions in `dplyr` for performing basic data transformations.
+
+## Prepare
+
+Before starting this class:
+
+📦 Install the `gt` package
+
+Download sample data files:
+
+## Outline
+
+-   The `tidyverse` and `dplyr`
+
+-   Rename columns: `rename()`
+
+-   Filter rows: `filter()`
+
+-   Select columns: `select()`
+
+-   Compute and transform values: `mutate()`
+
+-   Aggregate data: `summarise()`
+
+## Class Materials
+
+📘 [Class 3: Data Transformation](/lectures/lectures-class-3.html)
+
+🖥️ [Slides - Full Screen](/slides/slides-class-4.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-3.html"></iframe>
+```
+
+</div>

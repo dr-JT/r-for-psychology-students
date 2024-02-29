@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -129,7 +129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -227,6 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#theme-layer" id="toc-theme-layer" class="nav-link" data-scroll-target="#theme-layer">Theme Layer</a>
   <ul class="collapse">
   <li><a href="#color" id="toc-color" class="nav-link" data-scroll-target="#color">Color</a></li>
+  <li><a href="#you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name" id="toc-you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name" class="nav-link" data-scroll-target="#you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name">You can access these palettes using <code>scale_color_brewer(palette = "palette name")</code></a></li>
   <li><a href="#labels" id="toc-labels" class="nav-link" data-scroll-target="#labels">Labels</a></li>
   <li><a href="#theme-templates" id="toc-theme-templates" class="nav-link" data-scroll-target="#theme-templates">Theme templates</a></li>
   <li><a href="#other-theme-elements" id="toc-other-theme-elements" class="nav-link" data-scroll-target="#other-theme-elements">Other theme elements</a></li>
@@ -368,9 +369,8 @@ Note
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -387,7 +387,7 @@ Note
 <p>Besides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:</p>
 <section id="color-related-aesthetics" class="level4">
 <h4 class="anchored" data-anchor-id="color-related-aesthetics">Color related aesthetics</h4>
-<p><a href="https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html" target="_blank">See mode details here</a></p>
+<p><a href="https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html" target="_blank">See more details here</a></p>
 <ul>
 <li><p><strong>Color</strong>: applies to most geoms <code>geom_(color = )</code></p></li>
 <li><p><strong>Fill</strong>: applies to most geoms <code>geom_(fill = )</code></p></li>
@@ -435,7 +435,7 @@ Note
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -445,6 +445,7 @@ Note
 </div>
 </div>
 <p>You can see we are now conveying information about 4 different variables in our data; <code>bill_length_mm</code>, <code>flipper_length_mm</code>, <code>species</code>, and <code>sex</code> .</p>
+<p>See the ggplot2 documentation on <a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" target="_blank">facet_grid</a> and <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" target="_blank">facet_wrap</a></p>
 </section>
 <section id="statistics-layer" class="level2">
 <h2 class="anchored" data-anchor-id="statistics-layer">Statistics Layer</h2>
@@ -526,7 +527,7 @@ Note
 <div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(sex)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(sex)) <span class="sc">+</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -681,8 +682,8 @@ Note
 <ul>
 <li><p><strong>Color</strong>: <code>scale_color_</code> set of functions will change the color scheme of the geometric elements:</p>
 <ul>
-<li><p><code>scale_color_manual()</code></p></li>
-<li><p><code>scale_color_brewer()</code></p></li>
+<li><p><code>scale_color_manual()</code> - <a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" target="_blank">see documentation here</a></p></li>
+<li><p><code>scale_color_brewer()</code> - <a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" target="_blank">see documentation here</a></p></li>
 </ul></li>
 <li><p><strong>Labels</strong>: <code>labs()</code> is a convenient function for labeling the title, subtitle, axes, and legend</p></li>
 <li><p><strong>Theme templates</strong>: There are predefined theme templates that come with <code>ggplot2</code></p></li>
@@ -696,15 +697,16 @@ Note
 <p>Changing the color theme can get complicated but is an important design element in your plot.</p>
 <p>The <code>RColorBrewer</code> package offers several color palettes for R:</p>
 <p><img src="images/RColorBrewer.png" class="img-fluid" width="537"></p>
-<p>You can access these palettes using <code>scale_color_brewer(palette = "palette name")</code></p>
-<div class="cell" data-source-line-numbers="2,7">
-<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="2,7" data-code-line-numbers="2,7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g, </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">6000</span>, <span class="at">by =</span> <span class="dv">500</span>)) <span class="sc">+</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name" class="level3">
+<h3 class="anchored" data-anchor-id="you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name">You can access these palettes using <code>scale_color_brewer(palette = "palette name")</code></h3>
+<div class="cell" data-source-line-numbers="1,6">
+<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="1,6" data-code-line-numbers="1,6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">6000</span>, <span class="at">by =</span> <span class="dv">500</span>)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -833,6 +835,7 @@ Note
 <p>Text, line, and rectangle elements each have their corresponding element function e.g., <code>element_text()</code></p>
 <p><img src="images/element_func.png" class="img-fluid" width="724"></p>
 <p>Obviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI’s for assistance.</p>
+<p><a href="https://ggplot2.tidyverse.org/reference/theme.html" target="_blank">Here is the ggplot2 documentation on theme elements</a></p>
 </section>
 <section id="create-your-own-theme-template" class="level3">
 <h3 class="anchored" data-anchor-id="create-your-own-theme-template">Create your own theme template</h3>
@@ -845,7 +848,7 @@ Note
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plot_theme <span class="ot">&lt;-</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> bold_legend</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then you need to specify the theme object, <code>plot_theme</code>, in <code>theme_set()</code></p>
+<p>Then you need to set the theme that will be applied across all ggplots</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(plot_theme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -869,7 +872,6 @@ Note
 </div>
 </div>
 <p>You can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use “bold” fonts for titles or not, etc.).</p>
-<p>Coming up with your own custom theme (or using someone else’s) along with <code>theme_set()</code> is a great way to create consistency in the design across your plots without having to copy and paste the theme settings for every single ggplot you make. You can just do it once at the top of the document with <code>theme_set()</code>.</p>
 <p>Here is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).</p>
 <div class="cell">
 <details class="code-fold">
@@ -1211,7 +1213,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
