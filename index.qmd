@@ -2,7 +2,7 @@
 title: "Welcome!"
 ---
 
-The purpose of this course is for you to gain a [basic]{.underline} level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.
+The purpose of this course is for you to gain a [basic]{.underline} level of proficiency in 1) working with data, 2) data visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.
 
 Although it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.
 
@@ -34,7 +34,7 @@ and more
 
 [Class 3](/classes/class-3.html) - Data Transformation
 
-Class 4 - Data Visualization
+[Class 4](/classes/class-4.html) - Data Visualization
 
 Class 5 - Projects and Reproducible Workflows
 

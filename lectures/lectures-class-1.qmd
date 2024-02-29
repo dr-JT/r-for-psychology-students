@@ -426,4 +426,4 @@ cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
 
 ------------------------------------------------------------------------
 
-In the rest of the course, we will go into greater depth on transforming data, graphical visualization, and statistical analysis.
+In the rest of the course, we will go into greater depth on transforming data, data visualization, and statistical analysis.

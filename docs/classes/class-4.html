@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -29,6 +29,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../classes/class-3.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -80,9 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      R for the Psychology Student
-      </li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-4.html">Class 4</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -95,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -163,6 +162,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Class 3</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../classes/class-4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Class 4</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -175,8 +180,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#prepare" id="toc-prepare" class="nav-link active" data-scroll-target="#prepare">Prepare</a></li>
-  <li><a href="#outline" id="toc-outline" class="nav-link" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
   <li><a href="#class-materials" id="toc-class-materials" class="nav-link" data-scroll-target="#class-materials">Class Materials</a></li>
   </ul>
 </nav>
@@ -184,10 +188,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-4.html">Class 4</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Class 4</h1>
-<p class="subtitle lead">Graphical Visualization</p>
+<p class="subtitle lead">Data Visualization</p>
 </div>
 
 
@@ -204,31 +208,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The main objective of this class is to get familiar with the basic functions in <code>dplyr</code> for performing basic data transformations.</p>
-<section id="prepare" class="level2">
-<h2 class="anchored" data-anchor-id="prepare">Prepare</h2>
-<p>Before starting this class:</p>
-<p>📦 Install the <code>gt</code> package</p>
-<p>Download sample data files:</p>
-</section>
+<p>The main objective of this class is to get familiar with the basics of creating data visualizations in R.</p>
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
 <ul>
-<li><p>The <code>tidyverse</code> and <code>dplyr</code></p></li>
-<li><p>Rename columns: <code>rename()</code></p></li>
-<li><p>Filter rows: <code>filter()</code></p></li>
-<li><p>Select columns: <code>select()</code></p></li>
-<li><p>Compute and transform values: <code>mutate()</code></p></li>
-<li><p>Aggregate data: <code>summarise()</code></p></li>
+<li><p><code>ggplot2</code></p></li>
+<li><p>Data and Aesthetic Layers</p></li>
+<li><p>Geometries Layer</p></li>
+<li><p>Facets and Statistics Layer</p></li>
+<li><p>Coordinates Layer</p></li>
+<li><p>Theme Layer</p></li>
+<li><p>Common Types of Plots</p></li>
 </ul>
 </section>
 <section id="class-materials" class="level2">
 <h2 class="anchored" data-anchor-id="class-materials">Class Materials</h2>
-<p>📘 <a href="../lectures/lectures-class-3.html">Class 3: Data Transformation</a></p>
+<p>📘 <a href="../lectures/lectures-class-4.html">Class 4: Data Visualization</a></p>
 <p>🖥️ <a href="../slides/slides-class-4.html" target="_blank">Slides - Full Screen</a></p>
 <p>Press <strong>M</strong> on the slides to bring up the menu to access options such as navigating to different sections</p>
 <div>
-<iframe class="slide-deck" src="../slides/slides-class-3.html"></iframe>
+<iframe class="slide-deck" src="../slides/slides-class-4.html"></iframe>
 </div>
 
 
@@ -396,12 +395,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -622,6 +616,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../classes/class-3.html" class="pagination-link  aria-label=" 3"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Class 3</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

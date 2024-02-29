@@ -1,5 +1,5 @@
 ---
-title: "Class 4: Graphical Visualization"
+title: "Class 4: Data Visualization"
 execute:
   echo: true
   eval: false
@@ -15,14 +15,14 @@ source(here::here("prerender.R"))
 
 ```
 
-Graphical visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
+Data visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
 
 1)  **Data exploration**: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.
-2)  **Explain and Communicate**: Graphical visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
+2)  **Explain and Communicate**: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
 
 ## ggplot2
 
-In this class, we will learn about the fundamentals of graphical visualization using the `ggplot2` package. This is by far the most popular package for graphical visualization in R.
+In this class, we will learn about the fundamentals of data visualization using the `ggplot2` package. This is by far the most popular package for data visualization in R.
 
 ![](images/ggplot2.jpg){width="104"}
 
@@ -31,7 +31,7 @@ You have already seen and used `ggplot2` in previous classes, but now we will co
 1.  Layering: The idea of layering involves building plots by adding different layers of grammatical elements. Each layer can consist of components such as points, lines, bars, etc., and can be combined to create complex plots.
 2.  Mapping: This principle involves mapping variables in your data to aesthetic properties of the graphical objects, such as size, shape, color, position, and the scales on the x and y axes.
 
-In this framework, the essential grammatical elements required to create any visualization are:
+In this framework, the essential grammatical elements required to create any data visualization are:
 
 ![](images/ge_essentials.png){width="587"}
 
@@ -435,7 +435,7 @@ There are three main set of functions that we can use to control the theme layer
 
 -   **Color**: `scale_color_` set of functions will change the color scheme of the geometric elements:
 
-    -   `scale_color_manual()`  - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_manual.html){target="_blank"}
+    -   `scale_color_manual()` - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_manual.html){target="_blank"}
 
     -   `scale_color_brewer()` - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_brewer.html){target="_blank"}
 

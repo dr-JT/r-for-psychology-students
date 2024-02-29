@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student - Class 4: Graphical Visualization</title>
+<title>R for the Psychology Student - Class 4: Data Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -197,6 +197,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Class 3</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../classes/class-4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 4</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -247,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Class 4: Graphical Visualization</h1>
+<h1 class="title">Class 4: Data Visualization</h1>
 </div>
 
 
@@ -264,21 +270,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Graphical visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:</p>
+<p>Data visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:</p>
 <ol type="1">
 <li><strong>Data exploration</strong>: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.</li>
-<li><strong>Explain and Communicate</strong>: Graphical visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.</li>
+<li><strong>Explain and Communicate</strong>: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.</li>
 </ol>
 <section id="ggplot2" class="level2">
 <h2 class="anchored" data-anchor-id="ggplot2">ggplot2</h2>
-<p>In this class, we will learn about the fundamentals of graphical visualization using the <code>ggplot2</code> package. This is by far the most popular package for graphical visualization in R.</p>
+<p>In this class, we will learn about the fundamentals of data visualization using the <code>ggplot2</code> package. This is by far the most popular package for data visualization in R.</p>
 <p><img src="images/ggplot2.jpg" class="img-fluid" width="104"></p>
 <p>You have already seen and used <code>ggplot2</code> in previous classes, but now we will cover how to actually use this package. The elements for creating a ggplot was largely inspired from the work of Leland Wilkinson (Grammar of Graphics, 1999), who formalized two main principles in plotting data:</p>
 <ol type="1">
 <li>Layering: The idea of layering involves building plots by adding different layers of grammatical elements. Each layer can consist of components such as points, lines, bars, etc., and can be combined to create complex plots.</li>
 <li>Mapping: This principle involves mapping variables in your data to aesthetic properties of the graphical objects, such as size, shape, color, position, and the scales on the x and y axes.</li>
 </ol>
-<p>In this framework, the essential grammatical elements required to create any visualization are:</p>
+<p>In this framework, the essential grammatical elements required to create any data visualization are:</p>
 <p><img src="images/ge_essentials.png" class="img-fluid" width="587"></p>
 <p>Let’s take a look at how these elements work to create a simple visualization of data. In <a href="../classes/class-1.html">Class 1</a> I introduced you to the fun <code>palmerpenguins</code> data set. I will use this data set to illustrate how <code>ggplot2</code> works.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1213,12 +1219,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

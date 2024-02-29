@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -94,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for the Psychology Student</a> 
     </div>
@@ -162,6 +162,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Class 3</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classes/class-4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 4</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -203,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The purpose of this course is for you to gain a <u>basic</u> level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.</p>
+<p>The purpose of this course is for you to gain a <u>basic</u> level of proficiency in 1) working with data, 2) data visualization, and 3) statistical computation in R. This course will cover the basics in each of these areas and from there you should be equipped to continue learning more on your own and from other courses.</p>
 <p>Although it will be applicable to a wide-range of disciplines, it is aimed for the undergraduate student in psychology. As such, in terms of statistical computation, the course only covers how to perform the basics of ANOVA and Regression that is typically taught in the psychology curriculum.</p>
 <section id="course-format" class="level2">
 <h2 class="anchored" data-anchor-id="course-format">Course Format</h2>
@@ -221,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="./classes/class-1.html">Class 1</a> - An Introduction to Working with Data in R</p>
 <p><a href="./classes/class-2.html">Class 2</a> - Importing, Merging, and Restructuring Data</p>
 <p><a href="./classes/class-3.html">Class 3</a> - Data Transformation</p>
-<p>Class 4 - Data Visualization</p>
+<p><a href="./classes/class-4.html">Class 4</a> - Data Visualization</p>
 <p>Class 5 - Projects and Reproducible Workflows</p>
 <p>Class 6 - Quarto Documents</p>
 <p>Class 7 - Statistical Analysis: Regression</p>
@@ -393,12 +399,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

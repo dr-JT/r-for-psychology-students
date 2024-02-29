@@ -1,6 +1,6 @@
 ---
 title: "Class 4"
-subtitle: "Graphical Visualization"
+subtitle: "Data Visualization"
 format:
   revealjs:
     theme: [default, slides.scss]
@@ -31,52 +31,36 @@ library(dplyr)
 
 ```
 
-## Prepare
-
- 
-
-Before starting this class:
-
-📦 Install the `gt` package
-
- 
-
-Download sample data files: (right-click to download linked file)
-
-⬇️ <a href="/data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a>
-
-⬇️ <a href="/data/class_3_mnemonic_rawdata.csv" download="class_3_mnemonic_rawdata.csv">class_3_mnemonic_rawdata.csv</a>
-
 ## Outline
 
  
 
-::: nonincremental
--   The `tidyverse` and `dplyr`
+-   `ggplot2`
 
--   Rename columns: `rename()`
+-   Data and Aesthetic Layers
 
--   Filter rows: `filter()`
+-   Geometries Layer
 
--   Select columns: `select()`
+-   Facets and Statistics Layer
 
--   Compute and transform values: `mutate()`
+-   Coordinates Layer
 
--   Aggregate data: `summarise()`
-:::
+-   Theme Layer
+
+-   Common Types of Plots
 
 # ggplot2
 
-## Graphical Visualization
+## Data Visualization
 
  
 
-Graphical visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
+Data visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
 
  
 
 1)  **Data exploration**: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.
-2)  **Explain and Communicate**: Graphical visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
+2)  **Explain and Communicate**: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
 
 ## 
 
@@ -84,7 +68,7 @@ Graphical visualization is an essential skill for anyone working with data and r
 
  
 
-In this class, we will learn about the fundamentals of graphical visualization using the `ggplot2` package. This is by far the most popular package for graphical visualization in R.
+In this class, we will learn about the fundamentals of data visualization using the `ggplot2` package. This is by far the most popular package for data visualization in R.
 
  
 
@@ -103,7 +87,7 @@ The elements for creating a ggplot was largely inspired from the work of Leland 
 
 . . .
 
-In this framework, the essential grammatical elements required to create any visualization are:
+In this framework, the essential grammatical elements required to create any data visualization are:
 
 ![](images/ge_essentials.png){width="587"}
 
@@ -180,7 +164,9 @@ The aesthetic layer *maps* variables in our data onto scales in our graphical vi
 ggplot(penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm))
 ```
 
-## Aesthetic Layer
+## Aesthetic Layer {.smaller}
+
+ 
 
 ```{r}
 #| eval: true
@@ -201,6 +187,8 @@ You can see we went from a blank box to a graph with the variable and scales of 
 -   These other elements are useful for adding a third variable onto our graphical visualizations. For instance, we can add the variable of `species` by mapping `species` onto the color aesthetic.
 :::
 
+. . .
+
 ```{r}
 #| eval: true
 #| fig-width: 6
@@ -220,8 +208,11 @@ The next *essential* grammatical element for graphical visualization is the geom
 
 ![](images/ge_geom.png){width="400"}
 
+. . .
+
 There are a lot of different types of **geoms** to use in ggplot2. Some of the most commonly used ones are:
 
+::: incremental
 -   Points or jittered points: `geom_point()` or `geom_jitter()`
 
 -   Lines: `geom_line()`
@@ -231,6 +222,9 @@ There are a lot of different types of **geoms** to use in ggplot2. Some of the m
 -   Violin: `geom_violin()`
 
 -   Error bars: `geom_errobar()` or `geom_ribbon()`
+:::
+
+. . .
 
 For a full list see the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/#geoms){target="_blank"}
 
@@ -265,10 +259,10 @@ ggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +
 . . .
 
 ::: callout-note
-Note that in `ggplot2` there is a special notation that is similar to the pipe operator `|>` seen before. Except in `ggplot2` you have to use a plus sign `+` .
+Note that in `ggplot2` there is a special notation that is similar to the pipe operator `|>` seen in previous classes. Except in `ggplot2` you have to use a plus sign `+` .
 :::
 
-## geom_point()
+## geom_point() {.smaller}
 
  
 
@@ -286,8 +280,9 @@ Besides mapping variables in your data to certain aesthetics, you can change the
 
  
 
-#### Color related aesthetics: [See more details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"}
+#### Color related aesthetics: [See more details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"} {.fragment}
 
+::: incremental
 -   **Color**: applies to most geoms `geom_(color = )`
 
 -   **Fill**: applies to most geoms `geom_(fill = )`
@@ -295,6 +290,7 @@ Besides mapping variables in your data to certain aesthetics, you can change the
 -   **Transparency**: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; `geom_(alpha = )`
 
 -   [See a full list of R colors here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf){target="_blank"}
+:::
 
 #### Shape related aesthetics: [See more details here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html){target="_blank"} {.fragment}
 
@@ -310,7 +306,7 @@ Besides mapping variables in your data to certain aesthetics, you can change the
 -   **Width**: `geom_errobar(width = )`, `geom_jitter(width = )`
 :::
 
-## Aesthetic Properties of geoms
+## Aesthetic Properties of geoms {.smaller}
 
  
 
@@ -364,23 +360,19 @@ ggplot(penguins,
 
 See the ggplot2 documentation on [facet_grid](https://ggplot2.tidyverse.org/reference/facet_grid.html){target="_blank"} and [facet_wrap](https://ggplot2.tidyverse.org/reference/facet_wrap.html){target="_blank"}
 
-## Facets Layer
+## Facets Layer {.smaller}
 
  
 
 ```{r}
-#| echo: false
 #| eval: true
+#| fig-width: 10
+#| fig-height: 4.5
+#| code-line-numbers: "8"
 
 # first let's remove any missing values for sex
 library(dplyr)
 penguins <- filter(penguins, !is.na(sex))
-
-```
-
-```{r}
-#| eval: true
-#| code-line-numbers: "4"
 
 ggplot(penguins, 
        aes(bill_length_mm, flipper_length_mm, color = species)) +
@@ -388,7 +380,7 @@ ggplot(penguins,
   facet_grid(cols = vars(sex))
 ```
 
-## Statistics Layer
+## Statistics Layer {.smaller}
 
 The statistics layer allows you plot aggregated statistical values calculated from your data
 
@@ -478,7 +470,7 @@ ggplot(penguins, aes(species, body_mass_g)) +
   geom_errorbar(stat = "summary", fun.data = mean_cl_normal, width = .1)
 ```
 
-## stat_smooth(method = "lm")
+## stat_smooth(method = "lm") {.smaller}
 
  
 
@@ -494,7 +486,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
   stat_smooth(method = "lm")
 ```
 
-## stat_smooth(method = "lm")
+## stat_smooth(method = "lm") {.smaller}
 
  
 
@@ -510,7 +502,7 @@ ggplot(penguins,
   stat_smooth(method = "lm")
 ```
 
-## stat_smooth(method = "lm")
+## stat_smooth(method = "lm") {.smaller}
 
  
 
@@ -526,7 +518,7 @@ ggplot(penguins,
 
 # Coordinates Layer
 
-## Coordinates Layer
+## Coordinates Layer {.smaller}
 
 The coordinate layer allows you to adjust the x and y coordinates
 
@@ -542,7 +534,7 @@ There are two main groups of functions that are useful for adjusting the x and y
 
 -   `scale_x_` and `scale_y_` for setting the axis ticks and labels
 
-## axis limits
+## axis limits {.smaller}
 
 You can adjust limits (min and max) of the x and y axes using `coord_cartesian(xlim = c(), ylim = c())`
 
@@ -552,22 +544,18 @@ You can adjust limits (min and max) of the x and y axes using `coord_cartesian(x
 If you want to compare two separate graphs, then they need to be on the same scale. This an important design principle in graphical visualization.
 :::
 
-## axis limits
+## axis limits {.smaller}
 
  
 
+You can adjust limits (min and max) of the x and y axes using `coord_cartesian(xlim = c(), ylim = c())`
+
 ```{r}
-#| echo: false
 #| eval: true
+#| code-line-numbers: "7,13"
 
 male <- filter(penguins, sex == "male")
 female <- filter(penguins, sex == "female")
-```
-
-```{r}
-#| echo: true
-#| eval: true
-#| code-line-numbers: "4,10"
 
 p1 <- ggplot(male, aes(species, body_mass_g)) +
   stat_summary(fun = mean, geom = "point") +
@@ -582,7 +570,7 @@ p2 <- ggplot(female, aes(species, body_mass_g)) +
   labs(title = "female")
 ```
 
-## axis limits
+## axis limits {.smaller}
 
  
 
@@ -596,17 +584,47 @@ p1 + labs(title = "male") + p2 + labs(title = "female")
 
 ```
 
-## axis ticks and labels
+## axis limits {.smaller}
+
+ 
+
+```{r}
+#| echo: false
+#| eval: true
+
+male <- filter(penguins, sex == "male")
+female <- filter(penguins, sex == "female")
+
+p1 <- ggplot(male, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(2000, 10000)) +
+  labs(title = "male")
+
+p2 <- ggplot(female, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) + 
+  coord_cartesian(ylim = c(3000, 5000)) +
+  labs(title = "female")
+
+library(patchwork)
+
+p1 + labs(title = "male") + p2 + labs(title = "female")
+```
+
+## axis ticks and labels {.smaller}
 
  
 
 You can adjust the scale (major and minor ticks) of the x and y axes using the `scale_x_` and `scale_y_` set of functions. The two main set of functions to know are for continuous and discrete scales:
 
+ 
+
+::: incremental
 -   continuous: `scale_x_continuous(breaks = seq())` and `scale_y_continuous(breaks = seq())`
 
 -   discrete: `scale_x_discrete(breaks = seq())` and `scale_y_continuous(breaks = seq())`
-
- 
+:::
 
 . . .
 
@@ -622,7 +640,7 @@ ggplot(male, aes(species, body_mass_g)) +
   scale_y_continuous(breaks = seq(3000, 6000, by = 500))
 ```
 
-## axis ticks and labels
+## axis ticks and labels {.smaller}
 
  
 
@@ -681,6 +699,8 @@ Also, [check out](https://nanx.me/ggsci/index.html){target="_blank"} the `ggsci`
 
 You can access these palettes using `scale_color_brewer(palette = "palette name")`
 
+. . .
+
 ```{r}
 #| eval: true
 #| code-line-numbers: "6"
@@ -696,6 +716,8 @@ ggplot(penguins, aes(species, body_mass_g, color = sex)) +
 ## Labels {.smaller}
 
 Changing labels and adding titles is easy using `labs()`
+
+. . .
 
  
 
@@ -1055,7 +1077,7 @@ ggplot(penguins, aes(species, body_mass_g)) +
 
 ## Scatterplot {.smaller}
 
-When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a **scatterplot**.
+When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a **scatterplot**
 
  
 
@@ -1069,5 +1091,3 @@ ggplot(penguins, aes(bill_length_mm, body_mass_g)) +
   stat_smooth(method = "lm", color = "forestgreen")
 
 ```
-
-# ✏️ [Start Learning Activity -\>](/activities/activities-class-3.html){target="_blank"}

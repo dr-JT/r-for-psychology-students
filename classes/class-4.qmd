@@ -1,37 +1,31 @@
 ---
 title: "Class 4"
-subtitle: "Graphical Visualization"
+subtitle: "Data Visualization"
 slide-format: revealjs
 editor: visual
 ---
 
-The main objective of this class is to get familiar with the basic functions in `dplyr` for performing basic data transformations.
-
-## Prepare
-
-Before starting this class:
-
-📦 Install the `gt` package
-
-Download sample data files:
+The main objective of this class is to get familiar with the basics of creating data visualizations in R.
 
 ## Outline
 
--   The `tidyverse` and `dplyr`
+-   `ggplot2`
 
--   Rename columns: `rename()`
+-   Data and Aesthetic Layers
 
--   Filter rows: `filter()`
+-   Geometries Layer
 
--   Select columns: `select()`
+-   Facets and Statistics Layer
 
--   Compute and transform values: `mutate()`
+-   Coordinates Layer
 
--   Aggregate data: `summarise()`
+-   Theme Layer
+
+-   Common Types of Plots
 
 ## Class Materials
 
-📘 [Class 3: Data Transformation](/lectures/lectures-class-3.html)
+📘 [Class 4: Data Visualization](/lectures/lectures-class-4.html)
 
 🖥️ [Slides - Full Screen](/slides/slides-class-4.html){target="_blank"}
 
@@ -40,7 +34,7 @@ Press **M** on the slides to bring up the menu to access options such as navigat
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="/slides/slides-class-3.html"></iframe>
+<iframe class="slide-deck" src="/slides/slides-class-4.html"></iframe>
 ```
 
 </div>

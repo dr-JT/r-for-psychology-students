@@ -28,4 +28,4 @@ Debates on which programming language you should learn and use are rampant on th
 
 Regardless of which programming language you learn, working with data through code provides a challenge that will open you up to the world of **data**. You will gain an appreciation for the level of mundanity and complexity that is involved in processing the vast amounts of data in this world. Through working with data yourself, you will also become a better consumer of data and information that you see in your own work, the news, and social media.
 
-It all starts with gaining a [basic]{.underline} level of proficiency in 1) working with data, 2) graphical visualization, and 3) statistical computation. This course will cover the basics in each of these areas using R and from there you should be equipped to continue learning more on your own and from other courses.
+It all starts with gaining a [basic]{.underline} level of proficiency in 1) working with data, 2) data visualization, and 3) statistical computation. This course will cover the basics in each of these areas using R and from there you should be equipped to continue learning more on your own and from other courses.
