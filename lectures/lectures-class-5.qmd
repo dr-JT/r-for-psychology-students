@@ -1,0 +1,60 @@
+---
+title: "Class 5: Reproducible Projects"
+execute:
+  echo: true
+  eval: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+
+```
+
+Outline
+
+-   Up to this point we have done things without much thought for organization.
+
+-   Project organization
+
+    -   RStudio Projects
+
+    -   Directory structure
+
+-   Reproducible workflows
+
+    -   Importing data
+
+        -   here::here()
+
+    -   Separating out processing stages in different R scripts
+
+    -   What is real?
+
+-   Quarto Documents
+
+    -   Three sections
+
+    -   Running code chunks
+
+        -   Output to console
+
+    -   Rendering documnet to html
+
+    -   Use of headers
+
+    -   Tabs
+
+    -   Styling
+
+-   GitHub CoPilot
+
+-   
+
+Up to this point we have done things without much thought for organization and reproducibility.
+
+## RStudio Project

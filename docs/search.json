@@ -763,7 +763,7 @@
     "href": "index.html#course-format",
     "title": "Welcome!",
     "section": "Course Format",
-    "text": "Course Format\nBefore starting the course you should read the following sections\n📖 What is R?\n📖 Prerequisites\nYou can navigate to different sections of the course on the left sidebar.\nMost pages will also have a page navigation on the right sidebar where you can navigate to different sections of the page you are currently on.\n\nClasses\nThe landing page for each class contains the class materials:\n📘 the actual content of the class\n🖥️ slides\nand more\nClass 1 - An Introduction to Working with Data in R\nClass 2 - Importing, Merging, and Restructuring Data\nClass 3 - Data Transformation\nClass 4 - Data Visualization\nClass 5 - Projects and Reproducible Workflows\nClass 6 - Quarto Documents\nClass 7 - Statistical Analysis: Regression\nClass 8 - Statistical Analysis: ANOVA",
+    "text": "Course Format\nBefore starting the course you should read the following sections\n📖 What is R?\n📖 Prerequisites\nYou can navigate to different sections of the course on the left sidebar.\nMost pages will also have a page navigation on the right sidebar where you can navigate to different sections of the page you are currently on.\n\nClasses\nThe landing page for each class contains the class materials:\n📘 the actual content of the class\n🖥️ slides\nand more\nClass 1 - An Introduction to Working with Data in R\nClass 2 - Importing, Merging, and Restructuring Data\nClass 3 - Data Transformation\nClass 4 - Data Visualization\nClass 5 - Projects and Reproducible Workflows\nClass 6 - Statistical Analysis: Regression\nClass 7 - Statistical Analysis: ANOVA",
     "crumbs": [
       "Home"
     ]
@@ -1582,5 +1582,59 @@
     "title": "Class 3: Data Transformation",
     "section": "Reproducible Script",
     "text": "Reproducible Script\n\n\nShow Code\n# load packages\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gt)\nlibrary(ggplot2)\n\n# import data\nrepetition_import &lt;- read_delim(\"data/class_3_repetition_rawdata.txt\", \n                                delim = \"\\t\", escape_double = FALSE, \n                                trim_ws = TRUE)\n\nmnemonic_import &lt;- read_csv(\"data/class_3_mnemonic_rawdata.csv\")\n\n# trasnform data\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n# merge data\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)\n\n# aggregate data\ndata_scores &lt;- data_merged |&gt;\n  summarise(.by = c(participant_id, condition),\n            recall_correct_mean = mean(recall_correct))\n\n# plot aggregate data\nggplot(data_scores, aes(condition, recall_correct_mean)) +\n  geom_point(position = position_jitter(width = .1, seed = 88), alpha = .3) +\n  stat_summary(fun = mean, geom = \"point\", \n               color = \"firebrick\", size = 3) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", \n               color = \"firebrick\", width = .2) +\n  coord_cartesian(ylim = c(0, 10)) +\n  scale_x_discrete(labels = c(\"Mnemonic\", \"Spaced Recognition\")) +\n  labs(title = \"Recal Performance for Mnemonic and Spaced Recognition\",\n       y = \"Recall Performance\",\n       x = \"\") +\n  theme_classic() +\n  theme(axis.text.x = element_text(size = 14),\n        axis.title.y = element_text(size = 14),\n        axis.text.y = element_text(size = 12))\n\n\n\n✏️ Start Learning Activity -&gt;"
+  },
+  {
+    "objectID": "lectures/lectures-class-5.html",
+    "href": "lectures/lectures-class-5.html",
+    "title": "Class 5: Reproducible Projects",
+    "section": "",
+    "text": "Outline\nUp to this point we have done things without much thought for organization and reproducibility."
+  },
+  {
+    "objectID": "classes/class-5.html",
+    "href": "classes/class-5.html",
+    "title": "Class 4",
+    "section": "",
+    "text": "The main objective of this class is to get familiar with the basics of creating data visualizations in R.",
+    "crumbs": [
+      "Classes",
+      "Class 5"
+    ]
+  },
+  {
+    "objectID": "classes/class-5.html#outline",
+    "href": "classes/class-5.html#outline",
+    "title": "Class 4",
+    "section": "Outline",
+    "text": "Outline\n\nggplot2\nData and Aesthetic Layers\nGeometries Layer\nFacets and Statistics Layer\nCoordinates Layer\nTheme Layer\nCommon Types of Plots",
+    "crumbs": [
+      "Classes",
+      "Class 5"
+    ]
+  },
+  {
+    "objectID": "classes/class-5.html#class-materials",
+    "href": "classes/class-5.html#class-materials",
+    "title": "Class 4",
+    "section": "Class Materials",
+    "text": "Class Materials\n📘 Class 5: Projects and Reproducible Workflows\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "crumbs": [
+      "Classes",
+      "Class 5"
+    ]
+  },
+  {
+    "objectID": "lectures/lectures-class-5.html#reproducible-workflow",
+    "href": "lectures/lectures-class-5.html#reproducible-workflow",
+    "title": "Class 5: Reproducible Workflow",
+    "section": "Reproducible Workflow",
+    "text": "Reproducible Workflow"
+  },
+  {
+    "objectID": "lectures/lectures-class-5.html#rstudio-project",
+    "href": "lectures/lectures-class-5.html#rstudio-project",
+    "title": "Class 5: Reproducible Projects",
+    "section": "RStudio Project",
+    "text": "RStudio Project"
   }
 ]

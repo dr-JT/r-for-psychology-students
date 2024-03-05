@@ -36,10 +36,8 @@ and more
 
 [Class 4](/classes/class-4.html) - Data Visualization
 
-Class 5 - Projects and Reproducible Workflows
+[Class 5](/classes/class-5.html) - Projects and Reproducible Workflows
 
-Class 6 - Quarto Documents
+Class 6 - Statistical Analysis: Regression
 
-Class 7 - Statistical Analysis: Regression
-
-Class 8 - Statistical Analysis: ANOVA
+Class 7 - Statistical Analysis: ANOVA
