@@ -55,6 +55,61 @@ Outline
 
 -   
 
-Up to this point we have done things without much thought for organization and reproducibility.
+## Start
+
+Up to this point we have not had to give much thought to project organization and reproducibility because you have mainly been working with a single R script and importing one or two data files. However, working on a research project often involves a larger set of R scripts, multiple data files, and a report containing data visualizations and statistical analyses.
+
+Project organization is often overlooked at the expense of "just getting it done" because it takes more time and forethought to organize a project. However, the "just getting it done" approach can lead to a lot of unintended consequences:
+
+-   **Inefficient Workflow**: Disorganization can lead to a chaotic workflow where significant time is spent locating files, understanding what each script does, and figuring out the correct order of operations for running analyses. This inefficiency can drastically slow down the research progress.
+
+-   **Time Inefficiency**: Researchers may waste significant amounts of time searching for files, data, or specific pieces of code within a disorganized project. This inefficiency can extend project timelines and delay the dissemination of findings.
+
+-   **Increased Errors**: A lack of organization can lead to more mistakes. This is because it's easier to use the wrong data file, overlook important updates to scripts, or misinterpret results when there is no clear structure.
+
+-   **Difficulty in Scaling the Project**: As projects grow, the lack of initial organization can make it much more difficult to scale up. This can limit the scope of the research or lead to significant restructuring efforts down the line.
+
+-   **Barriers to Revising Analysis**: Research often requires revisiting and revising analyses as new data comes in or as hypotheses evolve. A lack of organization can make it difficult to update analyses or integrate new data seamlessly, stifling the dynamic nature of research.
+
+-   **Challenges in Publishing and Sharing**: When preparing research for publication or sharing with the broader scientific community, a well-organized project simplifies the process of compiling results, data, and methods. An unorganized project can impede these efforts, delaying or even jeopardizing publication.
+
+-   **Reproducibility Issues**: Without clear organization, reproducing the results of a project can become nearly impossible, both for the original researchers and for others who may want to build upon the work. This undermines the credibility and utility of the research.
+
+The thing is, simply using R does not get around any of this. In fact, sometimes it can exacerbate it because of the extra cognitive demand that people face writing code. This extra demand can make the "just getting it done" approach more tempting. So what is the solution?
+
+The solution is to slow down and give some thought to the organization of your project and it's reproducibility.
+
+> Frontloading effort saves future headaches.
+
+## Project Workflow
+
+A good starting point for organizing your project is to map out the steps required for processing and analyzing your data.
+
+A typical data analysis workflow looks something like this:
+
+![](images/data_steps.png){fig-align="center" width="1220"}
+
+You will always start with a **messy** raw data file. Messy raw data files are hard to understand, have poor column and value labels, contain way too many columns and rows, and are just hard to work with. The initial data preparation stage is all about getting raw data files that are easy to work with.
+
+The end product of the data preparation stage is **tidy** raw data files. Tidy raw data files are easy to understand, have sensible column and value labels, contain only relevant columns and rows, and are easy to work with.
+
+Once you have a **tidy** raw data file you can start on the data analysis stage. The workflow for this stage can vary widely depending on your particular research project. However, there are typically at least two end products of the data analysis stage:
+
+1.  A data file that is ready for statistical analysis
+2.  A report document of the results from your statistical analysis (also includes data visualizations)
+
+Use this typical data analysis workflow as a starting point for organizing your project.
+
+-   Organizing your folders and files that matches this workflow
+
+-   Create separate scripts for each stage
+
+## File Organization
+
+-   R scripts to create **tidy** raw data files from **messy** raw data files
+
+-   R scripts to **Process, aggregate, and clean** the **tidy** raw data files
+
+-   Quarto documents (more on this later) to create a report that contains data visualizations and results from statistical analyses
 
 ## RStudio Project

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -95,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R for the Psychology Student</a> 
     </div>
@@ -187,7 +187,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rstudio-project" id="toc-rstudio-project" class="nav-link active" data-scroll-target="#rstudio-project">RStudio Project</a></li>
+  <li><a href="#start" id="toc-start" class="nav-link active" data-scroll-target="#start">Start</a></li>
+  <li><a href="#project-workflow" id="toc-project-workflow" class="nav-link" data-scroll-target="#project-workflow">Project Workflow</a></li>
+  <li><a href="#file-organization" id="toc-file-organization" class="nav-link" data-scroll-target="#file-organization">File Organization</a></li>
+  <li><a href="#rstudio-project" id="toc-rstudio-project" class="nav-link" data-scroll-target="#rstudio-project">RStudio Project</a></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +248,55 @@ ul.task-list li input[type="checkbox"] {
 <li><p>GitHub CoPilot</p></li>
 <li></li>
 </ul>
-<p>Up to this point we have done things without much thought for organization and reproducibility.</p>
+<section id="start" class="level2">
+<h2 class="anchored" data-anchor-id="start">Start</h2>
+<p>Up to this point we have not had to give much thought to project organization and reproducibility because you have mainly been working with a single R script and importing one or two data files. However, working on a research project often involves a larger set of R scripts, multiple data files, and a report containing data visualizations and statistical analyses.</p>
+<p>Project organization is often overlooked at the expense of “just getting it done” because it takes more time and forethought to organize a project. However, the “just getting it done” approach can lead to a lot of unintended consequences:</p>
+<ul>
+<li><p><strong>Inefficient Workflow</strong>: Disorganization can lead to a chaotic workflow where significant time is spent locating files, understanding what each script does, and figuring out the correct order of operations for running analyses. This inefficiency can drastically slow down the research progress.</p></li>
+<li><p><strong>Time Inefficiency</strong>: Researchers may waste significant amounts of time searching for files, data, or specific pieces of code within a disorganized project. This inefficiency can extend project timelines and delay the dissemination of findings.</p></li>
+<li><p><strong>Increased Errors</strong>: A lack of organization can lead to more mistakes. This is because it’s easier to use the wrong data file, overlook important updates to scripts, or misinterpret results when there is no clear structure.</p></li>
+<li><p><strong>Difficulty in Scaling the Project</strong>: As projects grow, the lack of initial organization can make it much more difficult to scale up. This can limit the scope of the research or lead to significant restructuring efforts down the line.</p></li>
+<li><p><strong>Barriers to Revising Analysis</strong>: Research often requires revisiting and revising analyses as new data comes in or as hypotheses evolve. A lack of organization can make it difficult to update analyses or integrate new data seamlessly, stifling the dynamic nature of research.</p></li>
+<li><p><strong>Challenges in Publishing and Sharing</strong>: When preparing research for publication or sharing with the broader scientific community, a well-organized project simplifies the process of compiling results, data, and methods. An unorganized project can impede these efforts, delaying or even jeopardizing publication.</p></li>
+<li><p><strong>Reproducibility Issues</strong>: Without clear organization, reproducing the results of a project can become nearly impossible, both for the original researchers and for others who may want to build upon the work. This undermines the credibility and utility of the research.</p></li>
+</ul>
+<p>The thing is, simply using R does not get around any of this. In fact, sometimes it can exacerbate it because of the extra cognitive demand that people face writing code. This extra demand can make the “just getting it done” approach more tempting. So what is the solution?</p>
+<p>The solution is to slow down and give some thought to the organization of your project and it’s reproducibility.</p>
+<blockquote class="blockquote">
+<p>Frontloading effort saves future headaches.</p>
+</blockquote>
+</section>
+<section id="project-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="project-workflow">Project Workflow</h2>
+<p>A good starting point for organizing your project is to map out the steps required for processing and analyzing your data.</p>
+<p>A typical data analysis workflow looks something like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/data_steps.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1220"></p>
+</figure>
+</div>
+<p>You will always start with a <strong>messy</strong> raw data file. Messy raw data files are hard to understand, have poor column and value labels, contain way too many columns and rows, and are just hard to work with. The initial data preparation stage is all about getting raw data files that are easy to work with.</p>
+<p>The end product of the data preparation stage is <strong>tidy</strong> raw data files. Tidy raw data files are easy to understand, have sensible column and value labels, contain only relevant columns and rows, and are easy to work with.</p>
+<p>Once you have a <strong>tidy</strong> raw data file you can start on the data analysis stage. The workflow for this stage can vary widely depending on your particular research project. However, there are typically at least two end products of the data analysis stage:</p>
+<ol type="1">
+<li>A data file that is ready for statistical analysis</li>
+<li>A report document of the results from your statistical analysis (also includes data visualizations)</li>
+</ol>
+<p>Use this typical data analysis workflow as a starting point for organizing your project.</p>
+<ul>
+<li><p>Organizing your folders and files that matches this workflow</p></li>
+<li><p>Create separate scripts for each stage</p></li>
+</ul>
+</section>
+<section id="file-organization" class="level2">
+<h2 class="anchored" data-anchor-id="file-organization">File Organization</h2>
+<ul>
+<li><p>R scripts to create <strong>tidy</strong> raw data files from <strong>messy</strong> raw data files</p></li>
+<li><p>R scripts to <strong>Process, aggregate, and clean</strong> the <strong>tidy</strong> raw data files</p></li>
+<li><p>Quarto documents (more on this later) to create a report that contains data visualizations and results from statistical analyses</p></li>
+</ul>
+</section>
 <section id="rstudio-project" class="level2">
 <h2 class="anchored" data-anchor-id="rstudio-project">RStudio Project</h2>
 
@@ -414,12 +465,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
