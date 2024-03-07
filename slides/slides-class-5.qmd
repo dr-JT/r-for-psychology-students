@@ -1,0 +1,644 @@
+---
+title: "Class 5"
+subtitle: "Reproducible Projects"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    controls: true
+    embed-resources: true
+    incremental: false
+    smaller: false
+    slide-number: c
+    progress: true
+    preview-links: true
+    menu: true
+    auto-stretch: false
+    date-format: long
+    highlight-style: github
+    code-line-numbers: false
+execute:
+  echo: true
+  eval: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+library(gt)
+library(dplyr)
+
+```
+
+## Outline
+
+ 
+
+-   Reproducibility
+
+-   Project Workflow
+
+-   File Organization
+
+-   Importing Data
+
+# Reproducible Projects
+
+## Reproducibility vs. Just Getting it Done
+
+ 
+
+::: incremental
+-   Project organization is often overlooked at the expense of "just getting it done"
+
+-   However, the "just getting it done" approach can lead to a lot of unintended consequences:
+
+    -   **Inefficient Workflow**
+
+    -   **Time Inefficiency**
+
+    -   **Increased Errors**
+
+    -   **Difficulty in Scaling the Project**
+
+    -   **Barriers to Revising Analysis**
+
+    -   **Challenges in Publishing and Sharing**
+
+    -   **Reproducibility Issues**
+
+-   Simply using R does not get around any of this
+
+-   The extra demand of writing code can make the "just getting it done" approach more tempting
+:::
+
+## So What is the Solution?
+
+ 
+
+The solution is to [slow down]{.underline} and [give some thought]{.underline} to the organization of your project and it's reproducibility.
+
+ 
+
+> Frontloading effort saves future headaches.
+
+. . .
+
+ 
+
+Part of the scientific process involves carefully documenting every step in our procedures
+
+## What Does Reproducibility Mean?
+
+ 
+
+. . .
+
+Reproducibility means that all data processing and analysis steps can be fully reproduced using only the original raw data files and the execution of the R scripts. There are different levels of reproducibility (I made these up):
+
+ 
+
+::: incremental
+1.  **Partially reproducible** - only some data processing and analysis steps can be reproduced, which may be due to a lack of original raw data files, the "just get it done" approach, or the use of proprietary and non-reproducible software.
+
+2.  **Minimally reproducible** (acceptable) - all data processing and analysis steps can be reproduced on any research team members computer without any modifications needed.
+
+3.  **Moderately reproducible** (desired) - meets the minimal level plus other people not involved in the research project can reproduce the steps with minimal modifications.
+
+4.  **Highly reproducible** (good luck!) - fully reproducible without major modifications needed by people not involved in the research project 5 - 10+ years from now.
+:::
+
+## [Simply using R does not guarantee that your project is reproducible]{.r-fit-text}
+
+ 
+
+ 
+
+. . .
+
+To ensure at least a moderate level of reproducibility, consider the following criteria (this is not an exhaustive list):
+
+::: incremental
+-   Your statistical analysis (the final step) can be fully reproduced from the raw data files and your R scripts
+
+-   Your code can be reproduced on other computers without any modifications
+
+-   **Your data and R scripts are organized and documented in a way that makes them easily understandable**
+:::
+
+. . .
+
+It is important to take the time and think about the organization of your project, files, data, and scripts.
+
+# Project Workflow
+
+## Data Analysis Workflow
+
+A good starting point for organizing your project is to map out the steps required for processing and analyzing your data
+
+ 
+
+. . .
+
+A typical data analysis workflow looks something like this:
+
+![](images/data_steps.png){fig-align="center" width="1220"}
+
+ 
+
+. . .
+
+I suggest using this data analysis workflow as a starting point for organizing your project:
+
+-   Organize your folders and files to match this workflow
+
+-   Create separate scripts for each stage
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+ 
+
+::: columns
+::: {.column width="50%"}
+![](images/folder_organization.png){width="264"}
+:::
+
+::: {.column width="50%"}
+### data folder
+
+Notice how the structure of the **data** folder follows the data analysis workflow
+
+![](images/data_steps.png){fig-align="center" width="1220"}
+:::
+:::
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+ 
+
+::: columns
+::: {.column width="50%"}
+![](images/folder_organization.png){width="264"}
+:::
+
+::: {.column width="50%"}
+### R folder
+
+Put all your R scripts in one folder
+
+Append a prefix number and suffix corresponding to the order to be ran and what stage of the data analysis workflow it is in:
+
+-   **1_tidyraw.R**
+
+-   **2_score_clean.R**
+
+-   **3_merge.R**
+
+These should be cleaned up, commented, and easy to understand
+
+-   **Untitled.R**: scratchpad to test out code
+:::
+:::
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+ 
+
+::: columns
+::: {.column width="50%"}
+![](images/folder_organization.png){width="264"}
+:::
+
+::: {.column width="50%"}
+### analyses folder
+
+Quarto documents (more on these in the next class) that you will use to genearate reports for exploring your data, creating data visualizations, and conduct statistical analyses
+
+-   **Main Analyses.qmd**
+
+These documents should be cleaned up, well organized, and easy to understand.
+
+-   **Untitled.qmd**: scratchpad to test out code
+:::
+:::
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+ 
+
+::: columns
+::: {.column width="50%"}
+![](images/folder_organization.png){width="264"}
+:::
+
+::: {.column width="50%"}
+### mainscript
+
+You might also consider creating a **mainscript.R** or **mainscript.qmd** file to source all your R scripts and Quarto documents, rather than opening and sourcing each R script and Quarto document one at a time.
+
+```{r}
+## data preparation
+source("R/1_tidyraw.R")
+
+## data scoring
+source("R/2_score_clean.R")
+source("R/3_merge.R")
+
+## statistical analysis
+library(quarto)
+quarto_render("analyses/Main Analyses.qmd")
+```
+:::
+:::
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+ 
+
+::: columns
+::: {.column width="50%"}
+![](images/file_organization.png){width="272"}
+:::
+
+::: {.column width="50%"}
+### mainscript
+
+You might also consider creating a **mainscript.R** or **mainscript.qmd** file to source all your R scripts and Quarto documents, rather than opening and sourcing each R script and Quarto document one at a time.
+
+```{r}
+## data preparation
+source("R/1_tidyraw.R")
+
+## data scoring
+source("R/2_score_clean.R")
+source("R/3_merge.R")
+
+## statistical analysis
+library(quarto)
+quarto_render("analyses/Main Analyses.qmd")
+```
+:::
+:::
+
+# Importing Data
+
+## Using File Paths to Import Data
+
+ 
+
+1.  Use `setwd()`
+2.  Use the RStudio Import Dataset GUI
+3.  Use RProjects and `here()`
+
+## Using File Paths to Import Data
+
+ 
+
+1.  Use `setwd()`
+2.  Use the RStudio Import Dataset GUI
+3.  **Use RProjects and `here()`**
+
+## File Paths
+
+R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an **absolute** file path. Absolute file paths start at the root directory of your computer and might look something like:
+
+. . .
+
+ 
+
+> **On Macs**:
+>
+> Users/username/projects/project_name/data/a_file.csv
+>
+> **On Windows**:
+>
+> C:\\username\\projects\\project_name\\data\\a_file.csv
+
+**Relative file paths** on the other hand, start from a folder - typically a project folder
+
+> data/a_file.csv
+
+## File Paths
+
+ 
+
+::: incremental
+-   Relative file paths need to be used in order for your project to meet even a minimal level of reproducibility.
+
+-   However, at some point your computer does need to know the absolute file path to your project folder.
+
+-   A convenient and reproducible way of doing this is by using a combination of **RStudio Projects** and `here::here()` .
+:::
+
+## RStudio Projects
+
+[RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) are convenient for a number of reasons, but the most useful thing is setting a file marker for where the root directory of your project folder is located.
+
+ 
+
+. . .
+
+To create an RStudio Project:
+
+> Create a folder for your project (if you do not have one yet)
+>
+> File -\> New Project...
+>
+> Choose Existing Directory -\> Browse to your project folder -\> Create Project
+
+. . .
+
+ 
+
+![](images/RProj_file.png){width="241"}
+
+. . .
+
+When working on your project, you should **always open RStudio by opening the .Rproj file**
+
+## RStudio Projects
+
+ 
+
+You can also see which RStudio project is open and open RStudio projects in the very top-right corner of RStudio.
+
+![](images/rstudio_rproj.png){width="449"}
+
+## here::here()
+
+In combination with RStudio projects the `here` package offers a convenient way of specifying relative file paths.
+
+ 
+
+. . .
+
+When you load the `here` package with `library(here)` it will search for the .Rproj file and start file paths at that point whenever the `here()` function is used.
+
+ 
+
+```{r}
+#| eval: true
+#| message: true
+
+library(here)
+```
+
+ 
+
+::: incremental
+-   Notice how that where `here()` starts is an absolute file path to your project folder.
+
+-   You did not have to specify the absolute file path in code. Meaning this is a reproducible way for the absolute file path to automatically be set.
+:::
+
+## here::here()
+
+ 
+
+Now you can use a relative file path inside of `here()`
+
+ 
+
+```{r}
+#| eval: true
+
+here("data/a_file.csv")
+
+```
+
+ 
+
+Every time you use `here()` you know that the file path will start at where you have your .Rproj file saved.
+
+ 
+
+. . .
+
+You can visually separate the folder path and the file name, making your script easier to read.
+
+ 
+
+```{r}
+#| eval: true
+
+here("data", "a_file.csv")
+
+```
+
+## here::here()
+
+ 
+
+You can then use `here()` inside of import and and output functions:
+
+ 
+
+```{r}
+library(readr)
+library(here)
+
+data_import <- read_csv(here("data", "a_file.csv"))
+
+write_csv(data_import, here("data", "a_new_file.csv"))
+```
+
+# Using Templates
+
+## psyworkflow
+
+Writing organized, clean, and easy to understand R code is hard
+
+. . .
+
+ 
+
+I have developed an R package `psyworkflow` that contains R script templates you can use
+
+. . .
+
+ 
+
+### Install
+
+First, if you do not have the `devtools` package installed:
+
+```{r}
+install.packages("devtools")
+```
+
+ 
+
+Install the `psyworkflow` package from my GitHub repository using the `devtools` package:
+
+```{r}
+devtools::install_github("dr-JT/psyworkflow")
+
+```
+
+ 
+
+> Session -\> Restart R
+
+ 
+
+[See documentation on `psyworkflow`](https://dr-jt.github.io/psyworkflow/){target="_blank"}
+
+## Download R Script Templates
+
+If you already have an RProject setup and just want to download some of the R script templates you can do so with the `get_template()` function.
+
+ 
+
+```{r}
+psyworkflow::get_template()
+```
+
+ 
+
+To see what the options are type in the console window
+
+```{r}
+?psyworkflow::get_template
+```
+
+## Download R Script Templates
+
+ 
+
+```{r}
+# ---- Setup -------------------------------------------------------------------
+# packages
+library(here)
+library(readr)
+library(dplyr)
+library(purrr) # delete if not importing a batch of files
+
+# directories
+import_dir <- "data/raw/messy"
+output_dir <- "data/raw"
+
+# file names
+task <- "taskname"
+import_file <- paste(task, ".txt", sep = "")
+output_file <- paste(task, "raw.csv", sep = "_")
+# ------------------------------------------------------------------------------
+
+# ---- Import Data -------------------------------------------------------------
+# to import a single file
+data_import <- read_delim(here(import_dir, import_file), delim = "\t",
+                          escape_double = FALSE, trim_ws = TRUE)
+
+# alternatively to import a batch of files...
+# change the arguments in purrr::map_df() depending on type of data files
+# this example is for files created from eprime and needs encoding = "UCS-2LE"
+files <- list.files(here(import_dir, task), pattern = ".txt", full.names = TRUE)
+data_import <- files |>
+  map_df(read_delim, delim = "\t",
+         escape_double = FALSE, trim_ws = TRUE, na = "NULL",
+         locale = locale(encoding = "UCS-2LE"))
+# ------------------------------------------------------------------------------
+
+# ---- Tidy Data ---------------------------------------------------------------
+data_raw <- data_import |>
+  rename() |>
+  filter() |>
+  mutate() |>
+  select()
+# ------------------------------------------------------------------------------
+
+# ---- Save Data ---------------------------------------------------------------
+write_csv(data_raw, here(output_dir, output_file))
+# ------------------------------------------------------------------------------
+
+rm(list = ls())
+
+```
+
+## Create a New Project
+
+I have made a RStudio Project template that will setup a folder and file organization for you
+
+ 
+
+Close RStudio and reopen a new instance of RStudio (not from an RProject file).
+
+ 
+
+To create an RProject from this template:
+
+ 
+
+> File -\> New Project... -\> New Directory -\> Research Study (you might need to scroll down to see it)
+
+## Create a New Project
+
+This will bring up a window to customize the template:
+
+![](images/workflow_package.png){width="457"}
+
+Type in whatever you want for the **Directory Name** - this will end up being the name of the project folder and RProject file.
+
+Click on **Browse...** and create the project on your desktop, for now.
+
+Keep all the defaults and select **Create Project**.
+
+Give it some time, and it will reopen RStudio from the newly created RProject. Take a look at the file pane and you can see that the folders have been created, and R Script templates downloaded.
+
+# Recap
+
+## Reproducibility vs. Just Getting it Done
+
+ 
+
+<div>
+
+-   Project organization is often overlooked at the expense of "just getting it done"
+
+-   However, the "just getting it done" approach can lead to a lot of unintended consequences:
+
+    -   **Inefficient Workflow**
+
+    -   **Time Inefficiency**
+
+    -   **Increased Errors**
+
+    -   **Difficulty in Scaling the Project**
+
+    -   **Barriers to Revising Analysis**
+
+    -   **Challenges in Publishing and Sharing**
+
+    -   **Reproducibility Issues**
+
+</div>
+
+## [Simply using R does not guarantee that your project is reproducible]{.r-fit-text}
+
+ 
+
+ 
+
+To ensure at least a moderate level of reproducibility, consider the following criteria (this is not an exhaustive list):
+
+<div>
+
+-   Your statistical analysis (the final step) can be fully reproduced from the raw data files and your R scripts
+
+-   Your code can be reproduced on other computers without any modifications
+
+-   **Your data and R scripts are organized and documented in a way that makes them easily understandable**
+
+</div>
+
+It is important to take the time and think about the organization of your project, files, data, and scripts.

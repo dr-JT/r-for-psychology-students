@@ -1,0 +1,36 @@
+---
+title: "Class 6: Quarto Documents and GitHub Co-Pilot"
+execute:
+  echo: true
+  eval: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+
+```
+
+Interlude
+
+-   Quarto Documents
+
+    -   Three sections
+
+    -   Running code chunks
+
+        -   Output to console
+
+    -   Rendering documnet to html
+
+    -   Use of headers
+
+    -   Tabs
+
+    -   Styling
+
+-   GitHub CoPilot
