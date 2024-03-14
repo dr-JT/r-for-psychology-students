@@ -38,7 +38,7 @@ and more
 
 [Class 5](/classes/class-5.html) - Reproducible Projects
 
-Class 6 - Quarto Documents and GitHub Copilot
+[Class 6](/classes/class-6.html) - Quarto Documents
 
 Class 7 - Statistical Analysis: Regression
 

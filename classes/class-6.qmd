@@ -1,0 +1,36 @@
+---
+title: "Class 6"
+subtitle: "Quarto Documents"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to learn how to use Quarto Documents to create an HTML report that contains data visualizations and statistical analyses.
+
+## Outline
+
+-   YAML Header
+
+-   Markdown
+
+-   R Code Chunks
+
+-   Render Document
+
+-   Additional Elements
+
+## Class Materials
+
+📘 [Class 6: Quarto Documents](/lectures/lectures-class-6.html)
+
+🖥️ [Slides - Full Screen](/slides/slides-class-6.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-6.html"></iframe>
+```
+
+</div>

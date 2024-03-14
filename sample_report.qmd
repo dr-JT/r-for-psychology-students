@@ -1,0 +1,270 @@
+---
+title: "Example Report"
+author: Jason S. Tsukahara
+date: today
+theme: default
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-link: true
+    toc: false
+    toc-depth: 1
+    toc-location: left
+    page-layout: full
+    df-print: paged
+execute:
+  error: true
+  warning: true
+self-contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Setup
+
+::: panel-tabset
+## Required Packages
+
+```{r}
+#| warning: false
+#| code-fold: false
+
+library(here)
+library(readr)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(sjPlot)
+library(ggplot2)
+library(afex)
+library(lme4)
+library(lmerTest)
+library(parameters)
+library(effectsize)
+library(ggeffects)
+library(modelbased)
+library(modeloutput)
+```
+
+## Plot Theme
+
+```{r}
+#| code-fold: false
+
+# set global ggplot theme
+theme_spacious <- function(font.size = 14, bold = TRUE){
+  key.size <- trunc(font.size * .8)
+  if (bold == TRUE) {
+    face.type <- "bold"
+  } else {
+    face.type <- "plain"
+  }
+
+  theme(text = element_text(size = font.size),
+        axis.title.x = element_text(margin = margin(t = 15, r = 0,
+                                                    b = 0, l = 0),
+                                    face = face.type),
+        axis.title.y = element_text(margin = margin(t = 0, r = 15,
+                                                    b = 0, l = 0),
+                                    face = face.type),
+        legend.title = element_text(face = face.type),
+        legend.spacing = unit(20, "pt"),
+        legend.text = element_text(size = key.size),
+        plot.title = element_text(face = face.type, hjust = .5,
+                                  margin = margin(b = 10)),
+        plot.caption = element_text(hjust = 0, size = key.size,
+                                    margin = margin(t = 20)),
+        strip.background = element_rect(fill = "white", color = "white"),
+        strip.text = element_text(color = "black",
+                                  face = face.type))
+}
+
+output_theme <- theme_linedraw() + 
+  theme_spacious(font.size = 12) + 
+  theme(panel.border = element_rect(color = "gray"),
+        axis.line.x = element_line(color = "gray"),
+        axis.line.y = element_line(color = "gray"),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+theme_set(output_theme)
+```
+
+## Table Theme
+
+```{r}
+#| code-fold: false
+
+table_theme <- function(x, digits = 3, title = NULL, note = NULL) {
+  kable(x, digits = digits, caption = title) |>
+    kable_classic(position = "left") |>
+    kable_styling(full_width = FALSE, position = "left") |>
+    footnote(general = note)
+}
+```
+:::
+
+# Data
+
+::: panel-tabset
+## Import Data
+
+```{r}
+#| message: false
+#| code-fold: false
+
+recall_import <- read_csv(here("data", "Recall_Data.csv"))
+```
+
+## Get Data Ready For Models
+
+```{r}
+#| code-fold: false
+
+recall_data <- recall_import |>
+  mutate(Memory_Strategy = factor(Memory_Strategy,
+                                    levels = c("Rote Repetition", 
+                                               "Visual Imagery")),
+         Presentation_Rate = factor(Presentation_Rate,
+                                    levels = c(1, 2, 4)))
+
+```
+:::
+
+# ANOVA
+
+::: panel-tabset
+## Model
+
+```{r}
+#| code-fold: false
+
+anova_2way <- aov_car(Recall_Performance ~ 
+                      Presentation_Rate*Memory_Strategy + 
+                      Error(Subject/Presentation_Rate),
+                    data = recall_data)
+```
+
+```{r}
+anova_tables(anova_2way, 
+             contrast = c("Presentation_Rate", "Memory_Strategy"), 
+             at = c("Presentation_Rate", "Memory_Strategy"))
+
+```
+
+## Figures
+
+```{r}
+#| warning: false
+
+ggplot(recall_data, aes(x = Presentation_Rate, y = Recall_Performance,
+                 color = Memory_Strategy, fill = Memory_Strategy)) +
+  geom_flat_violin(aes(fill = Memory_Strategy),
+                   position = position_nudge(x = .1, y = 0),
+                   adjust = 1.5, trim = FALSE, 
+                   alpha = .5, colour = NA) +
+  geom_point(aes(as.numeric(Presentation_Rate) - .15), 
+             position = position_jitter(width = .05), alpha = .2) +
+  stat_summary(aes(group = Memory_Strategy),
+               fun = mean, geom = "line", linewidth = 1) +
+  stat_summary(fun = mean, geom = "point", size = 3) + 
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", 
+               width = .1) +
+  labs(x = "Presentation_Rate", y = "Recall Performance") +
+  scale_color_brewer(palette = "Set1", name = "Memory Strategy") +
+  scale_fill_brewer(palette = "Set1") +
+  guides(fill = "none")
+```
+
+## Summary Output
+
+```{r}
+
+summary(anova_2way)
+```
+:::
+
+# Footer
+
+::: panel-tabset
+## Session Info
+
+```{r}
+sessionInfo()
+```
+
+## Citations
+
+```{r}
+lapply(names(sessionInfo()$otherPkgs), citation)
+```
+
+## CSS Styling
+
+```{css}
+#| code-fold: false
+
+.tab-content {
+  border-style: none;
+}
+
+h1 {
+  color: #005098;
+}
+
+h2 {
+  color: #96834a !important;
+  font-weight: 600 !important;
+}
+
+a {
+  color: #005098;
+}
+
+a:hover {
+  color: #96834a !important;
+}
+
+.quarto-title-meta-heading {
+  color: #96834a;
+  font-weight: 600 !important;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a, .sidebar nav[role=doc-toc] ul>li>ul>li>a {
+  color: #005098 !important;
+  border-left: 2px solid #ECE5D7;
+  border-left-color: solid #ECE5D7;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+  color: #005098 !important;
+  font-weight: 600;
+  border-left: 2px solid #CBB879;
+  border-left-color: solid #CBB879;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a:hover, .sidebar nav[role=doc-toc] ul>li>ul>li>a:hover {
+  color: #005098 !important;
+  font-weight: 600;
+  border-left: 2px solid #CBB879;
+  border-left-color: solid #CBB879;
+}
+
+.nav-link {
+  color: #495057;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #96834a !important;
+}
+
+.code-tools-button {
+  color: #96834a !important;
+}
+
+.dropdown-toggle {
+  color: #005098 !important;
+}
+```
+:::
