@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-5.html</loc>
-    <lastmod>2024-03-07T00:43:09.832Z</lastmod>
+    <lastmod>2024-03-14T14:07:40.627Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-6.html</loc>
@@ -17,8 +17,12 @@
     <lastmod>2024-02-22T02:19:53.178Z</lastmod>
   </url>
   <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/supplemental/tips-tricks.html</loc>
+    <lastmod>2024-03-14T14:22:30.622Z</lastmod>
+  </url>
+  <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-5.html</loc>
-    <lastmod>2024-03-07T00:39:25.940Z</lastmod>
+    <lastmod>2024-03-14T14:14:24.432Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-6.html</loc>
@@ -79,6 +83,10 @@
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-4.html</loc>
     <lastmod>2024-03-05T00:51:56.724Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/supplemental/github_copilot.html</loc>
+    <lastmod>2024-03-14T13:55:37.134Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/activities/activities-class-2.html</loc>

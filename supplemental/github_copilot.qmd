@@ -1,0 +1,84 @@
+---
+title: "GitHub Copilot"
+---
+
+I highly recommend, I insist really, that you make use of generative AIs to assist you in writing code. They can be useful for:
+
+-   Explaining code
+
+-   Helping you understand a process of logical steps that you need to take
+
+-   Generating large amounts of code
+
+-   Generating small snippets of code
+
+-   And more...
+
+ChatGPT is obviously a great resource, but another generative AI specifically for writing code is GitHub Copilot.
+
+GitHub Copilot can be added as an extension in a lot of different IDE programming software, including RStudio.
+
+## Copilot in RStudio
+
+Before adding GitHub Copilot to RStudio, you will need to
+
+1.  Login to GitHub either through your [GT login](https://github.gatech.edu/){target="_blank"} or [your personal account](https://github.com){target="_blank"}
+
+2.  [Apply to GitHub Global Campus as a student](https://docs.github.com/en/education/explore-the-benefits-of-teaching-and-learning-with-github-education/github-global-campus-for-students/apply-to-github-global-campus-as-a-student){taget="_blank"}
+
+    -   You will need to verify your student status with documentation (picture of student ID will work)
+
+> Documents that prove your current student status include a picture of your school ID with current enrollment date, class schedule, transcript, and affiliation or enrollment verification letter.
+
+3.  [Setup GitHub Copilot in RStudio](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html#prerequisites){taget="_blank"}
+
+4.  [Using Copilot in RStudio](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html#using-copilot){taget="_blank"}
+
+Copilot offers autocomplete-style suggestions as you code as “ghost text”. 
+
+![](images/copilot-rstudio.png){width="600"}
+
+5.  [Using comments with Copilot](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html#comments){taget="_blank"}
+
+You can provide more extensive instructions, using comments, for Copilot to generate multiple lines of code
+
+```{r}
+# import Recall_Data.csv and plot the effect of Memory Strategy and
+# Presentation Rate on Recall Performance
+```
+
+Which might generate something like:
+
+```{r}
+#| eval: true
+#| message: false
+
+# load packages
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(here)
+
+# import data
+recall_data <- read_csv(here("data/Recall_Data.csv"))
+
+# plot data
+ggplot(recall_data, aes(x = Presentation_Rate, y = Recall_Performance, 
+                        color = Memory_Strategy, group = Memory_Strategy)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .25) +
+  stat_summary(fun = mean, geom = "line") +
+  stat_summary(fun = mean, geom = "point") +
+  coord_cartesian(ylim = c(0, 100)) +
+  theme_classic()
+```
+
+And this code works! I would probably modify the plot somewhat, such as the y-axis beeing too large.
+
+Also notice that the organization and packages used are the same as I have used in this workshop. This is because Copilot indexed my files in this project and used that as context.
+
+To allow Copilot to index files you need to turn on the option in
+
+> Tools -\> Global Options -\> Copilot
+
+![](images/copilot-settings.png){width="552"}

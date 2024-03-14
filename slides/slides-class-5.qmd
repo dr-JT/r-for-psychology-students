@@ -183,6 +183,26 @@ Good project organization starts with easy to understand folder and file organiz
 
 ::: columns
 ::: {.column width="50%"}
+![](images/folder_organization_alt.png){width="279"}
+:::
+
+::: {.column width="50%"}
+### data folder
+
+Notice how the structure of the **data** folder follows the data analysis workflow
+
+![](images/data_steps.png){fig-align="center" width="1220"}
+:::
+:::
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+ 
+
+::: columns
+::: {.column width="50%"}
 ![](images/folder_organization.png){width="264"}
 :::
 

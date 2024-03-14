@@ -23,7 +23,7 @@ Project organization is often overlooked at the expense of "just getting it done
 
 -   **Time Inefficiency**: Researchers may waste significant amounts of time searching for files, data, or specific pieces of code within a disorganized project. This inefficiency can extend project timelines and delay the dissemination of findings.
 
--   **Increased Errors**: A lack of organization can lead to more mistakes. This is because it's easier to lose critical pieces of ccode or overlook important updates to scripts. It is also harder to go back and check your work to make sure things were done correctly.
+-   **Increased Errors**: A lack of organization can lead to more mistakes. This is because it's easier to lose critical pieces of code or overlook important updates to scripts. It is also harder to go back and check your work to make sure things were done correctly.
 
 -   **Difficulty in Scaling the Project**: As projects grow, the lack of initial organization can make it much more difficult to scale up. This can limit the scope of the research or lead to significant restructuring efforts down the line.
 
