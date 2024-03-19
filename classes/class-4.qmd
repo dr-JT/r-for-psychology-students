@@ -1,31 +1,25 @@
 ---
 title: "Class 4"
-subtitle: "Data Visualization"
+subtitle: "Reproducible Projects"
 slide-format: revealjs
 editor: visual
 ---
 
-The main objective of this class is to get familiar with the basics of creating data visualizations in R.
+The main objective of this class is to learn what it means to have a reproducible project and how to organize a project to meet reproducibility requirements.
 
 ## Outline
 
--   `ggplot2`
+-   Reproducibility
 
--   Data and Aesthetic Layers
+-   Project Workflow
 
--   Geometries Layer
+-   File Organization
 
--   Facets and Statistics Layer
-
--   Coordinates Layer
-
--   Theme Layer
-
--   Common Types of Plots
+-   Importing Data
 
 ## Class Materials
 
-📘 [Class 4: Data Visualization](/lectures/lectures-class-4.html)
+📘 [Class 4: Reproducible Projects](/lectures/lectures-class-4.html)
 
 🖥️ [Slides - Full Screen](/slides/slides-class-4.html){target="_blank"}
 

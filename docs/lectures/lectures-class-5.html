@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student – Class 5: Reproducible Projects</title>
+<title>R for the Psychology Student – Class 5: Quarto Documents</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -238,6 +238,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">GitHub Copilot</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../supplemental/data-prep-qualtrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Prep - Qualtrics</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -250,29 +256,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#reproducible-projects" id="toc-reproducible-projects" class="nav-link active" data-scroll-target="#reproducible-projects">Reproducible Projects</a>
+  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link active" data-scroll-target="#yaml-header">YAML Header</a></li>
+  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text">Markdown Text</a></li>
+  <li><a href="#r-code-chunks" id="toc-r-code-chunks" class="nav-link" data-scroll-target="#r-code-chunks">R Code Chunks</a>
   <ul class="collapse">
-  <li><a href="#what-does-reproducibility-mean" id="toc-what-does-reproducibility-mean" class="nav-link" data-scroll-target="#what-does-reproducibility-mean">What does reproducibility mean?</a></li>
+  <li><a href="#create-an-r-code-chunk" id="toc-create-an-r-code-chunk" class="nav-link" data-scroll-target="#create-an-r-code-chunk">Create an R code chunk</a></li>
+  <li><a href="#execute-r-code-chunk" id="toc-execute-r-code-chunk" class="nav-link" data-scroll-target="#execute-r-code-chunk">Execute R code chunk</a></li>
   </ul></li>
-  <li><a href="#project-workflow" id="toc-project-workflow" class="nav-link" data-scroll-target="#project-workflow">Project Workflow</a></li>
-  <li><a href="#file-organization" id="toc-file-organization" class="nav-link" data-scroll-target="#file-organization">File Organization</a>
+  <li><a href="#visual-editor" id="toc-visual-editor" class="nav-link" data-scroll-target="#visual-editor">Visual Editor</a></li>
+  <li><a href="#render-document" id="toc-render-document" class="nav-link" data-scroll-target="#render-document">Render Document</a></li>
+  <li><a href="#additional-elements" id="toc-additional-elements" class="nav-link" data-scroll-target="#additional-elements">Additional Elements</a>
   <ul class="collapse">
-  <li><a href="#data-folder" id="toc-data-folder" class="nav-link" data-scroll-target="#data-folder">Data Folder</a></li>
-  <li><a href="#r-folder" id="toc-r-folder" class="nav-link" data-scroll-target="#r-folder">R Folder</a></li>
-  <li><a href="#analyses-folder" id="toc-analyses-folder" class="nav-link" data-scroll-target="#analyses-folder">Analyses Folder</a></li>
-  <li><a href="#mainscript" id="toc-mainscript" class="nav-link" data-scroll-target="#mainscript">mainscript</a></li>
-  </ul></li>
-  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing Data</a>
-  <ul class="collapse">
-  <li><a href="#file-paths" id="toc-file-paths" class="nav-link" data-scroll-target="#file-paths">File Paths</a></li>
-  <li><a href="#rstudio-projects" id="toc-rstudio-projects" class="nav-link" data-scroll-target="#rstudio-projects">RStudio Projects</a></li>
-  <li><a href="#herehere" id="toc-herehere" class="nav-link" data-scroll-target="#herehere">here::here()</a></li>
-  </ul></li>
-  <li><a href="#using-templates" id="toc-using-templates" class="nav-link" data-scroll-target="#using-templates">Using Templates</a>
-  <ul class="collapse">
-  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">Install</a></li>
-  <li><a href="#download-r-script-templates" id="toc-download-r-script-templates" class="nav-link" data-scroll-target="#download-r-script-templates">Download R Script Templates</a></li>
-  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link" data-scroll-target="#create-a-new-project">Create a New Project</a></li>
+  <li><a href="#headers" id="toc-headers" class="nav-link" data-scroll-target="#headers">Headers</a></li>
+  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
+  <li><a href="#tabs" id="toc-tabs" class="nav-link" data-scroll-target="#tabs">Tabs</a></li>
+  <li><a href="#code-tools" id="toc-code-tools" class="nav-link" data-scroll-target="#code-tools">Code Tools</a></li>
+  <li><a href="#code-folding" id="toc-code-folding" class="nav-link" data-scroll-target="#code-folding">Code Folding</a></li>
+  <li><a href="#r-chunk-options" id="toc-r-chunk-options" class="nav-link" data-scroll-target="#r-chunk-options">R Chunk Options</a></li>
+  <li><a href="#css-styling" id="toc-css-styling" class="nav-link" data-scroll-target="#css-styling">CSS Styling</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -282,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Class 5: Reproducible Projects</h1>
+<h1 class="title">Class 5: Quarto Documents</h1>
 </div>
 
 
@@ -299,290 +300,360 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Up to this point we have not had to give much thought to project organization and reproducibility because you have mainly been working with a single R script and importing one or two data files. However, working on a research project often involves a larger set of R scripts, multiple data files, and a report containing data visualizations and statistical analyses.</p>
-<p>Project organization is often overlooked at the expense of “just getting it done” because it takes more time and forethought to organize a project. However, the “just getting it done” approach can lead to a lot of unintended consequences:</p>
+<p><a href="https://quarto.org">Quarto documents</a> are a versatile way to create production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, ePub, and more. In fact, this R Workshop was created using Quarto documents.</p>
+<p>In this class, you will learn how to use Quarto documents to create an HTML report that contains data visualizations and statistical analyses. View a <a href="../sample_report.html" target="_blank">sample report</a> to see an example of this kind of document.</p>
+<p><strong>R Scripts vs.&nbsp;Quarto Documents</strong></p>
 <ul>
-<li><p><strong>Inefficient Workflow</strong>: Disorganization can lead to a chaotic workflow where significant time is spent locating files, understanding what each script does, and figuring out the correct order of operations for running analyses. This inefficiency can drastically slow down the research progress.</p></li>
-<li><p><strong>Time Inefficiency</strong>: Researchers may waste significant amounts of time searching for files, data, or specific pieces of code within a disorganized project. This inefficiency can extend project timelines and delay the dissemination of findings.</p></li>
-<li><p><strong>Increased Errors</strong>: A lack of organization can lead to more mistakes. This is because it’s easier to lose critical pieces of code or overlook important updates to scripts. It is also harder to go back and check your work to make sure things were done correctly.</p></li>
-<li><p><strong>Difficulty in Scaling the Project</strong>: As projects grow, the lack of initial organization can make it much more difficult to scale up. This can limit the scope of the research or lead to significant restructuring efforts down the line.</p></li>
-<li><p><strong>Barriers to Revising Analysis</strong>: Research often requires revisiting and revising analyses as new data comes in or as hypotheses evolve. A lack of organization can make it difficult to update analyses or integrate new data seamlessly, stifling the dynamic nature of research.</p></li>
-<li><p><strong>Challenges in Publishing and Sharing</strong>: When preparing research for publication or sharing with the broader scientific community, a well-organized project simplifies the process of compiling results, data, and methods. An unorganized project can impede these efforts, delaying or even jeopardizing publication.</p></li>
-<li><p><strong>Reproducibility Issues</strong>: Without clear organization, reproducing the results of a project can become nearly impossible, both for the original researchers and for others who may want to build upon the work. This undermines the credibility and utility of the research.</p></li>
+<li><p>R scripts are for processing data</p></li>
+<li><p>Quarto documents are for generating reports that contain figures, tables, and statistical analyses</p></li>
 </ul>
-<p>The thing is, simply using R does not get around any of this. In fact, sometimes it can exacerbate it because of the extra cognitive demand faced when writing code. This extra demand can make the “just getting it done” approach more tempting. So what is the solution?</p>
-<p>The solution is to <u>slow down</u> and <u>give some thought</u> to the organization of your project and it’s reproducibility.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may want to watch this <a href="https://quarto.org/docs/blog/posts/2023-05-15-get-started/" target="_blank">video</a> for a brief intro to Quarto</p>
+</div>
+</div>
+<p>To open a Quarto document:</p>
 <blockquote class="blockquote">
-<p>Frontloading effort saves future headaches.</p>
+<p>File -&gt; New File -&gt; Quarto Document…</p>
+<p>Click <strong>Create Empty Document</strong></p>
 </blockquote>
-<section id="reproducible-projects" class="level2">
-<h2 class="anchored" data-anchor-id="reproducible-projects">Reproducible Projects</h2>
-<p>Part of the scientific process involves carefully documenting every step in our procedures. Doing so not only ensures higher quality research, but also enables your future self and others to fully reproduce what you did, go back and analyze the data in a different way, or catch errors in the data analysis process. Without a fully reproducible project, it may be difficult or impossible to catch errors that were made.</p>
-<section id="what-does-reproducibility-mean" class="level3">
-<h3 class="anchored" data-anchor-id="what-does-reproducibility-mean">What does reproducibility mean?</h3>
-<p>Reproducibility means that all data processing and analysis steps can be fully reproduced using only the original raw data files and the execution of the R scripts. There are different levels of reproducibility (I made these up):</p>
+<p>There are three types of content that form the structure of a Quarto document.</p>
+<ul>
+<li><p>A YAML header</p></li>
+<li><p>Markdown formatted text</p></li>
+<li><p>R code chunks</p></li>
+</ul>
+<section id="yaml-header" class="level2">
+<h2 class="anchored" data-anchor-id="yaml-header">YAML Header</h2>
+<p>The YAML header contains metadata about how the document should be rendered and the output format. It is located at the very top of the document and is surrounded by lines of three dashes.</p>
+<pre data-code-line-numbers=""><code>---
+title: "Title of document"
+output: html_document
+---</code></pre>
+<p>There are various metadata options you can specify, such as if you want to include a table of contents. To learn about a few of them <a href="https://quarto.org/docs/output-formats/html-basics.html" target="_blank">see the documentation here</a>.</p>
+<p>Go ahead and include the <code>output: html_document</code> line in the YAML of the empty document you opened.</p>
+</section>
+<section id="markdown-text" class="level2">
+<h2 class="anchored" data-anchor-id="markdown-text">Markdown Text</h2>
+<p>The markdown text section is just as if you were writing content in Microsoft Word or Google Docs. You can write up paragraphs of text, create bullet or numbered lists, embed images or web links, create tables, and more.</p>
+<p>The text is formatted using a language known as <strong>Markdown</strong>. Markdown is a convenient and flexible way to format text. When a Markdown document is rendered into some output (such as HTML or PDF), the text will be formatted as specified by Markdown syntax.</p>
+<p>There are a lot of guides on how to use Markdown syntax. I will not cover this so you should check them out on your own. Here is one I reference often: <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheatsheet</a></p>
+<p>Add some markdown text below the YAML header in your open Quarto document</p>
+<pre data-code-line-numbers=""><code>Here is some sample text with a numbered list
+
+1. This is first
+2. Second
+3. Third</code></pre>
+</section>
+<section id="r-code-chunks" class="level2">
+<h2 class="anchored" data-anchor-id="r-code-chunks">R Code Chunks</h2>
+<p>A Quarto document (.qmd) is a mixture of markdown text and R code chunks.</p>
+<section id="create-an-r-code-chunk" class="level3">
+<h3 class="anchored" data-anchor-id="create-an-r-code-chunk">Create an R code chunk</h3>
+<p>R code chunks are enclosed with</p>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or might look like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>{r}</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can create R code chunks with the shortcut:</p>
+<blockquote class="blockquote">
+<p>Mac: ⌘ ⌥ i (command + alt/opt + i)</p>
+<p>Windows: ⌃ ⌥ i (ctrl + alt + i)</p>
+</blockquote>
+<p>Or in the toolbar of the Quarto document (same section area as Source and Visual)</p>
+<blockquote class="blockquote">
+<p>Insert -&gt; Excecutable Cell -&gt; R</p>
+</blockquote>
+<p><img src="images/quarto_toolbar.png" class="img-fluid" width="569"></p>
+<p>Notice that there are a lot of other options to <strong>Insert</strong> all sorts of other content like Figure/Image…</p>
+<p>Insert the following code in the R code chunk</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create another R code chunk with the following code</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">width =</span> .<span class="dv">05</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> mean_cl_normal, <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">label =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Body Mass of Penguin Species"</span>, </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="execute-r-code-chunk" class="level3">
+<h3 class="anchored" data-anchor-id="execute-r-code-chunk">Execute R code chunk</h3>
+<p>To run chunks of R code you can click on the green “play” button on the top right of the R code chunk.</p>
+<p><img src="images/excecute_code_chunk.png" class="img-fluid" width="293"></p>
+<p>Go ahead and do so. You can see that the results of the R code chunks are now displayed in the document.</p>
+</section>
+</section>
+<section id="visual-editor" class="level2">
+<h2 class="anchored" data-anchor-id="visual-editor">Visual Editor</h2>
+<p>By default, Quarto will open a new document in the <a href="https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch">visual editor mode</a>.){taget=“_blank”}. The Quarto visual editor provides a <a href="https://en.wikipedia.org/wiki/WYSIWYM" target="_blank">WYSIWYM</a> editing interface.</p>
+<p>In <strong>Source</strong> mode, you will see the <em>raw</em> markdown and code elements. On occassion you may find that it is easier to edit a document in Source mode rather than with the Visual editor. You can switch back and forth between the two easily at the top-left of the toolbar</p>
+<p><img src="images/visual-editing-switch-modes.png" class="img-fluid"></p>
+</section>
+<section id="render-document" class="level2">
+<h2 class="anchored" data-anchor-id="render-document">Render Document</h2>
+<p>When you have finalized the content of a Quarto document you will then want to generate the document into the specified output format (e.g., HTML).</p>
+<p>To render a Quarto document click on <strong>Render</strong> at the top. This will</p>
 <ol type="1">
-<li><p><strong>Partially reproducible</strong> - only some data processing and analysis steps can be reproduced, which may be due to a lack of original raw data files, the “just get it done” approach, or the use of proprietary and non-reproducible software.</p></li>
-<li><p><strong>Minimally reproducible</strong> (acceptable) - all data processing and analysis steps can be reproduced on any research team members computer without any modifications needed.</p></li>
-<li><p><strong>Moderately reproducible</strong> (desired) - meets the minimal level plus other people not involved in the research project can reproduce the steps with minimal modifications.</p></li>
-<li><p><strong>Highly reproducible</strong> (good luck!) - fully reproducible without major modifications needed by people not involved in the research project 5 - 10+ years from now.</p></li>
+<li>Generate a preview of the document in the Viewer pane</li>
+<li>Create an HTML file</li>
 </ol>
-<p>A minimal level of reproducibility is still acceptable, as achieving more requires significant time and effort. We should strive for a moderate amount of reproducibility but achieving it requires more than just writing code. Your code must be organized, easy to understand, and include notes and documentation. Even if you or someone else attempts to reproduce your steps in the future, they can modify the code to make it work. The highest level of reproducibility is difficult to achieve due to software and code updates. Your code may only work with the current version of R or other packages. There are solutions to this problem of software and code updates, but who knows if those will work in the future!</p>
-<hr>
-<p>Simply using R for data analysis does not guarantee that your workflow is reproducible. In fact, there are many non-reproducible ways to use R. To ensure at least a moderate level of reproducibility, consider the following criteria (this is not an exhaustive list):</p>
+<p>Go ahead and render the document you just created. Find the generated HTML file and open it. You will notice that it will open in your default web browser.</p>
+<p>There are some advantages to using an HTML format:</p>
 <ul>
-<li><p>Your statistical analysis (the final step) can be fully reproduced from the raw data files and your R scripts</p></li>
-<li><p>Your code can be reproduced on other computers without any modifications</p></li>
-<li><p><strong>Your data and R scripts are organized and documented in a way that makes them easily understandable</strong></p></li>
-</ul>
-<p>This last criterion is extremely important, but is often overlooked. If others cannot understand your workflow, then it is not moderately reproducible. Therefore, it is important to take the time and think about the organization of your project, files, data, and scripts.</p>
-</section>
-</section>
-<section id="project-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="project-workflow">Project Workflow</h2>
-<p>A good starting point for organizing your project is to map out the steps required for processing and analyzing your data.</p>
-<p>A typical data analysis workflow looks something like this:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/data_steps.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1220"></p>
-</figure>
-</div>
-<p>You will always start with a <strong>messy</strong> raw data file. Messy raw data files are hard to understand, have poor column and value labels, contain way too many columns and rows, and are just hard to work with. The initial data preparation stage is all about getting raw data files that are easy to work with.</p>
-<p>The end product of the data preparation stage is <strong>tidy</strong> raw data files. Tidy raw data files are easy to understand, have sensible column and value labels, contain only relevant columns and rows, and are easy to work with.</p>
-<p>Once you have a <strong>tidy</strong> raw data file you can start on the data analysis stage. The workflow for this stage can vary widely depending on your particular research project. However, there are typically at least two end products of the data analysis stage:</p>
-<ol type="1">
-<li>A data file that is ready for statistical analysis</li>
-<li>A report document of the results from your statistical analysis (also includes data visualizations)</li>
-</ol>
-<p>I suggest using this data analysis workflow as a starting point for organizing your project:</p>
+<li><p>Easily shareable, anyone can open it in a web browser (does not require some other application that might cost money like Microsoft Word)</p></li>
+<li><p>Can include elements like</p>
 <ul>
-<li><p>Organize your folders and files to match this workflow</p></li>
-<li><p>Create separate scripts for each stage</p></li>
+<li><p>Table of contents</p></li>
+<li><p>Tabs - can include a lot more content without taking up a lot of space and saves on scrolling through large documents</p></li>
+<li><p>Code folding - code chunks can be toggled to hide/show them</p></li>
+<li><p>Code download - link to download the Quarto document</p></li>
+<li><p>CSS styling</p></li>
+<li><p>and more</p></li>
+</ul></li>
 </ul>
+<p>Let’s take a look at some of these elements and more</p>
 </section>
-<section id="file-organization" class="level2">
-<h2 class="anchored" data-anchor-id="file-organization">File Organization</h2>
-<p>Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:</p>
-<p><img src="images/folder_organization.png" class="img-fluid" width="176"></p>
-<section id="data-folder" class="level3">
-<h3 class="anchored" data-anchor-id="data-folder">Data Folder</h3>
-<p>Notice how the structure of the <strong>data</strong> folder follows the data analysis workflow. The original <strong>messy</strong> raw data files are stored in <strong>data / raw / messy</strong>. The <strong>tidy</strong> raw data files are stored in <strong>data / raw</strong>. And the <strong>processed and cleaned</strong> data files are stored in <strong>data</strong></p>
-<p>Alternatively, if you only have one original messy raw data file that you are working with you can just put all the data files in <strong>data</strong> and name the data files appropriately:</p>
-<p><img src="images/folder_organization_alt.png" class="img-fluid" width="210"></p>
-<p>The basic priniciple here is that your <strong>data</strong> folder organization and <strong>data</strong> file naming maps onto the end products in your data analysis workflow.</p>
+<section id="additional-elements" class="level2">
+<h2 class="anchored" data-anchor-id="additional-elements">Additional Elements</h2>
+<section id="headers" class="level3">
+<h3 class="anchored" data-anchor-id="headers">Headers</h3>
+<p>Headers are a great way to organize the content in a Quarto document. Use <code>#</code> to create different header levels:</p>
+<pre data-code-line-numbers=""><code># This is a level 1 header
+
+## A level 2 header
+
+### And level 3 header</code></pre>
+<p>Headers become even more useful with a table of contents and using tabs</p>
 </section>
-<section id="r-folder" class="level3">
-<h3 class="anchored" data-anchor-id="r-folder">R Folder</h3>
-<p>I highly recommend that you put all your R scripts in one folder, rather than having them scattered across different folders.</p>
-<p>Additionally, I recommend that you append a prefix number corresponding to the order in which the scripts need to be ran and a suffix corresponding to what stage of the data analysis workflow it is in:</p>
-<ul>
-<li><p><strong>1_tidyraw.R</strong></p></li>
-<li><p><strong>2_score_clean.R</strong></p></li>
-<li><p><strong>3_merge.R</strong></p></li>
-</ul>
-<p>Utlimately these scripts should be cleaned up, commented, and easy to understand.</p>
-<p>Initially, coding can be messy as you grapple with determining the precise data processing approach. You might consider creating a script (or a folder of scripts) that are for messing around and figuring out how to process your data:</p>
-<ul>
-<li><strong>Untitled.R</strong></li>
-</ul>
+<section id="table-of-contents" class="level3">
+<h3 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h3>
+<p>A table of contents is useful to navigate longer documents. It also provides an outline for the viewer to understand the document. You can specify the table of contents layout in the YAML header:</p>
+<pre data-code-line-numbers=""><code>format:
+  html:
+    toc: true
+    toc-depth: 1
+    toc-location: left</code></pre>
+<p><code>toc-depth</code> will change how many header levels are displayed in the table of contents (toc).</p>
 </section>
-<section id="analyses-folder" class="level3">
-<h3 class="anchored" data-anchor-id="analyses-folder">Analyses Folder</h3>
-<p>The analyses folder will contain <strong>Quarto</strong> documents (more on these in the next class) that you will use to genearate reports for exploring your data, creating data visualizations, and conduct statistical analyses. This folder will have at least one file:</p>
-<ul>
-<li><strong>Main Analyses.qmd</strong></li>
-</ul>
-<p>These document should be cleaned up, well organized, and easy to understand.</p>
-<p>As with the R scripts, you might like to have a <strong>Quarto</strong> document (or folder of documents) just for messing around and figuring out how to analyze your data:</p>
-<ul>
-<li><strong>Untitled.qmd</strong></li>
-</ul>
-</section>
-<section id="mainscript" class="level3">
-<h3 class="anchored" data-anchor-id="mainscript">mainscript</h3>
-<p>You might also consider creating a <strong>mainscript.R</strong> or <strong>mainscript.qmd</strong> file to source all your R scripts and Quarto documents, rather than opening and sourcing each R script and Quarto document one at a time.</p>
-<p>It might be a file simply containing:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## data preparation</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/1_tidyraw.R"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## data scoring</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/2_score_clean.R"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/3_merge.R"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## statistical analysis</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quarto)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">quarto_render</span>(<span class="st">"analyses/Main Analyses.qmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>I typically just include the <strong>mainscript</strong> file in the root directory of the project rather than in the <strong>R</strong> script folder.</p>
-<p>A complete folder and file organization might look something like:</p>
-<p><img src="images/file_organization.png" class="img-fluid" width="220"></p>
-</section>
-</section>
-<section id="importing-data" class="level2">
-<h2 class="anchored" data-anchor-id="importing-data">Importing Data</h2>
-<p>Up until now, you have been using <strong>absolute</strong> file paths and the <strong>RStudio Import Dataset GUI</strong> for importing files into R. This is not a reproducible way of importing data into R. You can still use the RStudio Import Dataset GUI to figure out what type of data file you are importing (e.g., tab-delimited, csv) but I will now show you a simple and reproducible way of importing data into R.</p>
-<section id="file-paths" class="level3">
-<h3 class="anchored" data-anchor-id="file-paths">File Paths</h3>
-<p>R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an <strong>absolute</strong> file path. Absolute file paths start at the root directory of your computer and might look something like:</p>
+<section id="tabs" class="level3">
+<h3 class="anchored" data-anchor-id="tabs">Tabs</h3>
+<p>Tabs are a great way to add a lot of content while avoiding having to scroll endlessly through a large document. The syntax for a tabset is</p>
+<pre data-code-line-numbers=""><code>::: panel-tabset
+## First tab
+
+Here is some content
+
+## A second tab
+
+More content!
+
+## And third tab
+
+Hello!
+:::</code></pre>
+<p>The second level headers will be used to label the tabs in the document (see below)</p>
+<p>You can also add multiple tabs easily by going to</p>
 <blockquote class="blockquote">
-<p><strong>On Macs</strong>:</p>
-<p>Users/username/projects/project_name/data/a_file.csv</p>
-<p><strong>On Windows</strong>:</p>
-<p>C:\username\projects\project_name\data\a_file.csv</p>
+<p>Insert -&gt; Tabset…</p>
 </blockquote>
-<p><strong>Relative file paths</strong> on the other hand, start from a folder - typically a project folder</p>
-<blockquote class="blockquote">
-<p>data/a_file.csv</p>
-</blockquote>
-<p>Relative file paths need to be used in order for your project to meet even a minimal level of reproducibility. A relative file path can be used on different computers as long as the internal organization of folders and files for the project are the same.</p>
-<p>However, at some point your computer does need to know the absolute file path to your project folder. A convenient and reproducible way of doing this is by using a combination of <strong>RStudio Projects</strong> and <code>here::here()</code> .</p>
-</section>
-<section id="rstudio-projects" class="level3">
-<h3 class="anchored" data-anchor-id="rstudio-projects">RStudio Projects</h3>
-<p><a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">RStudio Projects</a> allow you to open isolated instances of R and RStudio for each of your projects. RStudio projects are convenient for a number of reasons, but the most useful thing is setting a file marker for where the root directory of your project folder is located.</p>
-<p>To create an RStudio Project:</p>
-<blockquote class="blockquote">
-<p>Create a folder for your project (if you do not have one yet)</p>
-<p>File -&gt; New Project…</p>
-<p>Choose Existing Directory -&gt; Browse to your project folder -&gt; Create Project</p>
-</blockquote>
-<p>Notice that there is now a <strong>.Rproj</strong> file in your project folder</p>
-<p><img src="images/RProj_file.png" class="img-fluid" width="200"></p>
-<p>When working on your project, you should <strong>always open RStudio by opening the .Rproj file</strong></p>
-<p>You can also see which RStudio project is open and open RStudio projects in the very top-right corner of RStudio.</p>
-<p><img src="images/rstudio_rproj.png" class="img-fluid" width="449"></p>
-</section>
-<section id="herehere" class="level3">
-<h3 class="anchored" data-anchor-id="herehere">here::here()</h3>
-<p>In combination with RStudio projects the <code>here</code> package offers a convenient way of specifying relative file paths.</p>
-<p>When you load the <code>here</code> package with <code>library(here)</code> it will search for the .Rproj file and start file paths at that point whenever the <code>here()</code> function is used.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>here() starts at /Users/jtsukahara3/GitHub Repos/r-for-psychology-students</code></pre>
+<p>Tabs look like this:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">First tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">A second tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">And third tab</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Here is some content</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>More content!</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Hello!</p>
 </div>
 </div>
-<p>Notice how that where <code>here()</code> starts is an absolute file path to your project folder. You did not have to specify the absolute file path in code. Meaning this is a reproducible way for the absolute file path to automatically be set.</p>
-<p>Now you can use a relative file path inside of <code>here()</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data/a_file.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/data/a_file.csv"</code></pre>
-</div>
-</div>
-<p>Every time you use <code>here()</code> you know that the file path will start at where you have your .Rproj file saved. Instead of messing around with working directories using <code>setwd()</code> or <code>getwd()</code>, just use <code>here()</code> and RStudio Projects. This becomes especially helpful when working with Quarto documents.</p>
-<p>You can visually separate the folder path and the file name, making your script easier to read.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"a_file.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/data/a_file.csv"</code></pre>
-</div>
-</div>
-<p>You can then use <code>here()</code> inside of import and and output functions:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"a_file.csv"</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data_import, <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"a_new_file.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="code-tools" class="level3">
+<h3 class="anchored" data-anchor-id="code-tools">Code Tools</h3>
+<p>You can include a&nbsp;<strong>Code</strong>&nbsp;menu in the header of your document that provides various tools for readers to interact with the source code. Specify in the YAML</p>
+<pre data-code-line-numbers=""><code>code-tools: true</code></pre>
 </section>
-<section id="using-templates" class="level2">
-<h2 class="anchored" data-anchor-id="using-templates">Using Templates</h2>
-<p>Writing organized, clean, and easy to understand R code is hard. Starting with a template R script can help a lot. For this purpose, I have developed an R package <code>psyworkflow</code> that contains R script templates you can use.</p>
-<p><a href="https://dr-jt.github.io/psyworkflow/" target="_blank">See documentation on <code>psyworkflow</code></a></p>
-<section id="install" class="level3">
-<h3 class="anchored" data-anchor-id="install">Install</h3>
-<p>First, if you do not have the <code>devtools</code> package installed:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Install the <code>psyworkflow</code> package from my GitHub repository using the <code>devtools</code> package:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dr-JT/psyworkflow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Restart R</p>
-<blockquote class="blockquote">
-<p>Session -&gt; Restart R</p>
-</blockquote>
+<section id="code-folding" class="level3">
+<h3 class="anchored" data-anchor-id="code-folding">Code Folding</h3>
+<p>You may not always want to show the R code chunks in the HTML output. Or you might want to give the viewer a choice to show/hide R code chunks. You can specify code folding in the top-level YAML header or in each code chunk individually</p>
+<pre data-code-line-numbers=""><code>code-fold: true</code></pre>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>false</code></td>
+<td>No folding (default)</td>
+</tr>
+<tr class="even">
+<td><code>true</code></td>
+<td>Fold code (initially hidden)</td>
+</tr>
+<tr class="odd">
+<td><code>show</code></td>
+<td>Fold code (initially shown)</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="download-r-script-templates" class="level3">
-<h3 class="anchored" data-anchor-id="download-r-script-templates">Download R Script Templates</h3>
-<p>If you already have an RProject setup and just want to download some of the R script templates you can do so with the <code>get_template()</code> function.</p>
+<section id="r-chunk-options" class="level3">
+<h3 class="anchored" data-anchor-id="r-chunk-options">R Chunk Options</h3>
+<p>Some settings you can change for individual R code chunks. The syntax to do this uses <code>#|</code> in the R code chunk:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>psyworkflow<span class="sc">::</span><span class="fu">get_template</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To see what the options are type in the console window</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>?psyworkflow<span class="sc">::</span>get_template</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show Tidy Template Script</summary>
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Setup -------------------------------------------------------------------</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr) <span class="co"># delete if not importing a batch of files</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># directories</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>import_dir <span class="ot">&lt;-</span> <span class="st">"data/raw/messy"</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="st">"data/raw"</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># file names</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>task <span class="ot">&lt;-</span> <span class="st">"taskname"</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>import_file <span class="ot">&lt;-</span> <span class="fu">paste</span>(task, <span class="st">".txt"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>output_file <span class="ot">&lt;-</span> <span class="fu">paste</span>(task, <span class="st">"raw.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------------------------</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Import Data -------------------------------------------------------------</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># to import a single file</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(import_dir, import_file), <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                          <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># alternatively to import a batch of files...</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># change the arguments in purrr::map_df() depending on type of data files</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># this example is for files created from eprime and needs encoding = "UCS-2LE"</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">here</span>(import_dir, task), <span class="at">pattern =</span> <span class="st">".txt"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> files <span class="sc">|&gt;</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(read_delim, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>, <span class="at">na =</span> <span class="st">"NULL"</span>,</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">"UCS-2LE"</span>))</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------------------------</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Tidy Data ---------------------------------------------------------------</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> data_import <span class="sc">|&gt;</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>() <span class="sc">|&gt;</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>() <span class="sc">|&gt;</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>() <span class="sc">|&gt;</span></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>()</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------------------------</span></span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Save Data ---------------------------------------------------------------</span></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data_raw, <span class="fu">here</span>(output_dir, output_file))</span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------------------------</span></span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold">
+<summary>Hide the code!</summary>
+<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: show</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Hide the code!"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="in">1 + 1</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>Some commone ones to change are:</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>eval</code></td>
+<td>Evaluate the code chunk (if&nbsp;<code>false</code>, just echos the code into the output).</td>
+</tr>
+<tr class="even">
+<td><code>echo</code></td>
+<td>Include the source code in output</td>
+</tr>
+<tr class="odd">
+<td><code>output</code></td>
+<td>Include the results of executing the code in the output (<code>true</code>,&nbsp;<code>false</code>, or&nbsp;<code>asis</code>&nbsp;to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown).</td>
+</tr>
+<tr class="even">
+<td><code>warning</code></td>
+<td>Include warnings in the output.</td>
+</tr>
+<tr class="odd">
+<td><code>error</code></td>
+<td>Include errors in the output (note that this implies that errors executing code will not halt processing of the document).</td>
+</tr>
+<tr class="even">
+<td><code>include</code></td>
+<td>Catch all for preventing any output (code or results) from being included (e.g.&nbsp;<code>include: false</code>&nbsp;suppresses all output from the code block).</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="https://quarto.org/docs/computations/execution-options.html" target="_blank">Quarto Documentation</a> for more details</p>
 </section>
-<section id="create-a-new-project" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-new-project">Create a New Project</h3>
-<p>Close RStudio and reopen a new instance of RStudio (not from an RProject file).</p>
-<p>Once you have the <code>psyworkflow</code> package installed you will be able to create a new RProject directory and file from my <strong>Research Study</strong> template. This will automatically create the directory structure outlined in the previous chapter. It will also add template R scripts in <strong>R / templates</strong> and a <strong>mainscript.qmd</strong> file.</p>
-<p>Using this template will allow you to get right to working with your data in R, without having to spend too much time thinking about organization (I have already done that for you).</p>
-<p>To create an RProject from this template:</p>
-<p>File -&gt; New Project… -&gt; New Directory -&gt; Research Study (you might need to scroll down to see it)</p>
-<p>This will bring up a window to customize the template:</p>
-<p><img src="images/workflow_package.png" class="img-fluid" width="457"></p>
-<p>Type in whatever you want for the <strong>Directory Name</strong> - this will end up being the name of the project folder and RProject file.</p>
-<p>Click on <strong>Browse…</strong> and create the project on your desktop, for now.</p>
-<p>Keep all the defaults and select <strong>Create Project</strong>.</p>
-<p>Give it some time, and it will reopen RStudio from the newly created RProject. Take a look at the file pane and you can see that the folders have been created, and R Script templates downloaded.</p>
+<section id="css-styling" class="level3">
+<h3 class="anchored" data-anchor-id="css-styling">CSS Styling</h3>
+<p>You can also add CSS styling, either as a separate .css document or at the end of the Quarto document.</p>
+<p>For instance, I used the following styling options in the <a href="../sample_report.html" target="_blank">sample report</a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tab-content</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-style</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>h1 {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span><span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>h2 {</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>a {</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span><span class="op">;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>a<span class="in">:hover</span> {</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">.quarto-title-meta-heading</span> {</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span><span class="op">;</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="op">,</span> <span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a {</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ECE5D7</span><span class="op">;</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left-color</span><span class="ch">:</span> <span class="dv">solid</span> <span class="cn">#ECE5D7</span><span class="op">;</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="fu">.active</span><span class="op">,</span> <span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="fu">.active</span> {</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span><span class="op">;</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left-color</span><span class="ch">:</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="in">:hover</span><span class="op">,</span> <span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="in">:hover</span> {</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span><span class="op">;</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left-color</span><span class="ch">:</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a><span class="fu">.nav-link</span> {</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#495057</span><span class="op">;</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="fu">.nav-tabs</span> <span class="fu">.nav-link.active</span><span class="op">,</span> <span class="fu">.nav-tabs</span> <span class="fu">.nav-item.show</span> <span class="fu">.nav-link</span> {</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a><span class="fu">.code-tools-button</span> {</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="fu">.dropdown-toggle</span> {</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

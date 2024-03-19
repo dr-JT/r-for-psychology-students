@@ -1,5 +1,5 @@
 ---
-title: "Class 5: Reproducible Projects"
+title: "Class 5: Quarto Documents"
 execute:
   echo: true
   eval: false
@@ -15,359 +15,366 @@ source(here::here("prerender.R"))
 
 ```
 
-Up to this point we have not had to give much thought to project organization and reproducibility because you have mainly been working with a single R script and importing one or two data files. However, working on a research project often involves a larger set of R scripts, multiple data files, and a report containing data visualizations and statistical analyses.
+[Quarto documents](https://quarto.org) are a versatile way to create production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, ePub, and more. In fact, this R Workshop was created using Quarto documents.
 
-Project organization is often overlooked at the expense of "just getting it done" because it takes more time and forethought to organize a project. However, the "just getting it done" approach can lead to a lot of unintended consequences:
+In this class, you will learn how to use Quarto documents to create an HTML report that contains data visualizations and statistical analyses. View a [sample report](/sample_report.html){target="_blank"} to see an example of this kind of document.
 
--   **Inefficient Workflow**: Disorganization can lead to a chaotic workflow where significant time is spent locating files, understanding what each script does, and figuring out the correct order of operations for running analyses. This inefficiency can drastically slow down the research progress.
+**R Scripts vs. Quarto Documents**
 
--   **Time Inefficiency**: Researchers may waste significant amounts of time searching for files, data, or specific pieces of code within a disorganized project. This inefficiency can extend project timelines and delay the dissemination of findings.
+-   R scripts are for processing data
 
--   **Increased Errors**: A lack of organization can lead to more mistakes. This is because it's easier to lose critical pieces of code or overlook important updates to scripts. It is also harder to go back and check your work to make sure things were done correctly.
+-   Quarto documents are for generating reports that contain figures, tables, and statistical analyses
 
--   **Difficulty in Scaling the Project**: As projects grow, the lack of initial organization can make it much more difficult to scale up. This can limit the scope of the research or lead to significant restructuring efforts down the line.
+::: callout-tip
+You may want to watch this [video](https://quarto.org/docs/blog/posts/2023-05-15-get-started/){target="_blank"} for a brief intro to Quarto
+:::
 
--   **Barriers to Revising Analysis**: Research often requires revisiting and revising analyses as new data comes in or as hypotheses evolve. A lack of organization can make it difficult to update analyses or integrate new data seamlessly, stifling the dynamic nature of research.
+To open a Quarto document:
 
--   **Challenges in Publishing and Sharing**: When preparing research for publication or sharing with the broader scientific community, a well-organized project simplifies the process of compiling results, data, and methods. An unorganized project can impede these efforts, delaying or even jeopardizing publication.
+> File -\> New File -\> Quarto Document...
+>
+> Click **Create Empty Document**
 
--   **Reproducibility Issues**: Without clear organization, reproducing the results of a project can become nearly impossible, both for the original researchers and for others who may want to build upon the work. This undermines the credibility and utility of the research.
+There are three types of content that form the structure of a Quarto document.
 
-The thing is, simply using R does not get around any of this. In fact, sometimes it can exacerbate it because of the extra cognitive demand faced when writing code. This extra demand can make the "just getting it done" approach more tempting. So what is the solution?
+-   A YAML header
 
-The solution is to [slow down]{.underline} and [give some thought]{.underline} to the organization of your project and it's reproducibility.
+-   Markdown formatted text
 
-> Frontloading effort saves future headaches.
+-   R code chunks
 
-## Reproducible Projects
+## YAML Header
 
-Part of the scientific process involves carefully documenting every step in our procedures. Doing so not only ensures higher quality research, but also enables your future self and others to fully reproduce what you did, go back and analyze the data in a different way, or catch errors in the data analysis process. Without a fully reproducible project, it may be difficult or impossible to catch errors that were made.
+The YAML header contains metadata about how the document should be rendered and the output format. It is located at the very top of the document and is surrounded by lines of three dashes.
 
-### What does reproducibility mean?
-
-Reproducibility means that all data processing and analysis steps can be fully reproduced using only the original raw data files and the execution of the R scripts. There are different levels of reproducibility (I made these up):
-
-1.  **Partially reproducible** - only some data processing and analysis steps can be reproduced, which may be due to a lack of original raw data files, the "just get it done" approach, or the use of proprietary and non-reproducible software.
-
-2.  **Minimally reproducible** (acceptable) - all data processing and analysis steps can be reproduced on any research team members computer without any modifications needed.
-
-3.  **Moderately reproducible** (desired) - meets the minimal level plus other people not involved in the research project can reproduce the steps with minimal modifications.
-
-4.  **Highly reproducible** (good luck!) - fully reproducible without major modifications needed by people not involved in the research project 5 - 10+ years from now.
-
-A minimal level of reproducibility is still acceptable, as achieving more requires significant time and effort. We should strive for a moderate amount of reproducibility but achieving it requires more than just writing code. Your code must be organized, easy to understand, and include notes and documentation. Even if you or someone else attempts to reproduce your steps in the future, they can modify the code to make it work. The highest level of reproducibility is difficult to achieve due to software and code updates. Your code may only work with the current version of R or other packages. There are solutions to this problem of software and code updates, but who knows if those will work in the future!
-
-------------------------------------------------------------------------
-
-Simply using R for data analysis does not guarantee that your workflow is reproducible. In fact, there are many non-reproducible ways to use R. To ensure at least a moderate level of reproducibility, consider the following criteria (this is not an exhaustive list):
-
--   Your statistical analysis (the final step) can be fully reproduced from the raw data files and your R scripts
-
--   Your code can be reproduced on other computers without any modifications
-
--   **Your data and R scripts are organized and documented in a way that makes them easily understandable**
-
-This last criterion is extremely important, but is often overlooked. If others cannot understand your workflow, then it is not moderately reproducible. Therefore, it is important to take the time and think about the organization of your project, files, data, and scripts.
-
-## Project Workflow
-
-A good starting point for organizing your project is to map out the steps required for processing and analyzing your data.
-
-A typical data analysis workflow looks something like this:
-
-![](images/data_steps.png){fig-align="center" width="1220"}
-
-You will always start with a **messy** raw data file. Messy raw data files are hard to understand, have poor column and value labels, contain way too many columns and rows, and are just hard to work with. The initial data preparation stage is all about getting raw data files that are easy to work with.
-
-The end product of the data preparation stage is **tidy** raw data files. Tidy raw data files are easy to understand, have sensible column and value labels, contain only relevant columns and rows, and are easy to work with.
-
-Once you have a **tidy** raw data file you can start on the data analysis stage. The workflow for this stage can vary widely depending on your particular research project. However, there are typically at least two end products of the data analysis stage:
-
-1.  A data file that is ready for statistical analysis
-2.  A report document of the results from your statistical analysis (also includes data visualizations)
-
-I suggest using this data analysis workflow as a starting point for organizing your project:
-
--   Organize your folders and files to match this workflow
-
--   Create separate scripts for each stage
-
-## File Organization
-
-Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
-
-![](images/folder_organization.png){width="176"}
-
-### Data Folder
-
-Notice how the structure of the **data** folder follows the data analysis workflow. The original **messy** raw data files are stored in **data / raw / messy**. The **tidy** raw data files are stored in **data / raw**. And the **processed and cleaned** data files are stored in **data**
-
-Alternatively, if you only have one original messy raw data file that you are working with you can just put all the data files in **data** and name the data files appropriately:
-
-![](images/folder_organization_alt.png){width="210"}
-
-The basic priniciple here is that your **data** folder organization and **data** file naming maps onto the end products in your data analysis workflow.
-
-### R Folder
-
-I highly recommend that you put all your R scripts in one folder, rather than having them scattered across different folders.
-
-Additionally, I recommend that you append a prefix number corresponding to the order in which the scripts need to be ran and a suffix corresponding to what stage of the data analysis workflow it is in:
-
--   **1_tidyraw.R**
-
--   **2_score_clean.R**
-
--   **3_merge.R**
-
-Utlimately these scripts should be cleaned up, commented, and easy to understand.
-
-Initially, coding can be messy as you grapple with determining the precise data processing approach. You might consider creating a script (or a folder of scripts) that are for messing around and figuring out how to process your data:
-
--   **Untitled.R**
-
-### Analyses Folder
-
-The analyses folder will contain **Quarto** documents (more on these in the next class) that you will use to genearate reports for exploring your data, creating data visualizations, and conduct statistical analyses. This folder will have at least one file:
-
--   **Main Analyses.qmd**
-
-These document should be cleaned up, well organized, and easy to understand.
-
-As with the R scripts, you might like to have a **Quarto** document (or folder of documents) just for messing around and figuring out how to analyze your data:
-
--   **Untitled.qmd**
-
-### mainscript
-
-You might also consider creating a **mainscript.R** or **mainscript.qmd** file to source all your R scripts and Quarto documents, rather than opening and sourcing each R script and Quarto document one at a time.
-
-It might be a file simply containing:
-
-```{r}
-## data preparation
-source("R/1_tidyraw.R")
-
-## data scoring
-source("R/2_score_clean.R")
-source("R/3_merge.R")
-
-## statistical analysis
-library(quarto)
-quarto_render("analyses/Main Analyses.qmd")
+```         
+---
+title: "Title of document"
+output: html_document
+---
 ```
 
-I typically just include the **mainscript** file in the root directory of the project rather than in the **R** script folder.
+There are various metadata options you can specify, such as if you want to include a table of contents. To learn about a few of them [see the documentation here](https://quarto.org/docs/output-formats/html-basics.html){target="_blank"}.
 
-A complete folder and file organization might look something like:
+Go ahead and include the `output: html_document` line in the YAML of the empty document you opened.
 
-![](images/file_organization.png){width="220"}
+## Markdown Text
 
-## Importing Data
+The markdown text section is just as if you were writing content in Microsoft Word or Google Docs. You can write up paragraphs of text, create bullet or numbered lists, embed images or web links, create tables, and more.
 
-Up until now, you have been using **absolute** file paths and the **RStudio Import Dataset GUI** for importing files into R. This is not a reproducible way of importing data into R. You can still use the RStudio Import Dataset GUI to figure out what type of data file you are importing (e.g., tab-delimited, csv) but I will now show you a simple and reproducible way of importing data into R.
+The text is formatted using a language known as **Markdown**. Markdown is a convenient and flexible way to format text. When a Markdown document is rendered into some output (such as HTML or PDF), the text will be formatted as specified by Markdown syntax.
 
-### File Paths
+There are a lot of guides on how to use Markdown syntax. I will not cover this so you should check them out on your own. Here is one I reference often: [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet){target="_blank"}
 
-R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an **absolute** file path. Absolute file paths start at the root directory of your computer and might look something like:
+Add some markdown text below the YAML header in your open Quarto document
 
-> **On Macs**:
->
-> Users/username/projects/project_name/data/a_file.csv
->
-> **On Windows**:
->
-> C:\\username\\projects\\project_name\\data\\a_file.csv
+```         
+Here is some sample text with a numbered list
 
-**Relative file paths** on the other hand, start from a folder - typically a project folder
+1. This is first
+2. Second
+3. Third
+```
 
-> data/a_file.csv
+## R Code Chunks
 
-Relative file paths need to be used in order for your project to meet even a minimal level of reproducibility. A relative file path can be used on different computers as long as the internal organization of folders and files for the project are the same.
+A Quarto document (.qmd) is a mixture of markdown text and R code chunks.
 
-However, at some point your computer does need to know the absolute file path to your project folder. A convenient and reproducible way of doing this is by using a combination of **RStudio Projects** and `here::here()` .
+### Create an R code chunk
 
-### RStudio Projects
+R code chunks are enclosed with
 
-[RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) allow you to open isolated instances of R and RStudio for each of your projects. RStudio projects are convenient for a number of reasons, but the most useful thing is setting a file marker for where the root directory of your project folder is located.
-
-To create an RStudio Project:
-
-> Create a folder for your project (if you do not have one yet)
->
-> File -\> New Project...
->
-> Choose Existing Directory -\> Browse to your project folder -\> Create Project
-
-Notice that there is now a **.Rproj** file in your project folder
-
-![](images/RProj_file.png){width="200"}
-
-When working on your project, you should **always open RStudio by opening the .Rproj file**
-
-You can also see which RStudio project is open and open RStudio projects in the very top-right corner of RStudio.
-
-![](images/rstudio_rproj.png){width="449"}
-
-### here::here()
-
-In combination with RStudio projects the `here` package offers a convenient way of specifying relative file paths.
-
-When you load the `here` package with `library(here)` it will search for the .Rproj file and start file paths at that point whenever the `here()` function is used.
-
-```{r}
-#| eval: true
-#| message: true
-
-library(here)
+```{{r}}
 
 ```
 
-Notice how that where `here()` starts is an absolute file path to your project folder. You did not have to specify the absolute file path in code. Meaning this is a reproducible way for the absolute file path to automatically be set.
-
-Now you can use a relative file path inside of `here()`
-
-```{r}
-#| eval: true
-
-here("data/a_file.csv")
-
-```
-
-Every time you use `here()` you know that the file path will start at where you have your .Rproj file saved. Instead of messing around with working directories using `setwd()` or `getwd()`, just use `here()` and RStudio Projects. This becomes especially helpful when working with Quarto documents.
-
-You can visually separate the folder path and the file name, making your script easier to read.
-
-```{r}
-#| eval: true
-
-here("data", "a_file.csv")
-
-```
-
-You can then use `here()` inside of import and and output functions:
-
-```{r}
-library(readr)
-library(here)
-
-data_import <- read_csv(here("data", "a_file.csv"))
-
-write_csv(data_import, here("data", "a_new_file.csv"))
-```
-
-## Using Templates
-
-Writing organized, clean, and easy to understand R code is hard. Starting with a template R script can help a lot. For this purpose, I have developed an R package `psyworkflow` that contains R script templates you can use.
-
-[See documentation on `psyworkflow`](https://dr-jt.github.io/psyworkflow/){target="_blank"}
-
-### Install
-
-First, if you do not have the `devtools` package installed:
+Or might look like:
 
 ```{r}
 #| eval: false
-install.packages("devtools")
+
+{r}
+
+a <- 1 + 6
+
 ```
 
-Install the `psyworkflow` package from my GitHub repository using the `devtools` package:
+You can create R code chunks with the shortcut:
+
+> Mac: ⌘ ⌥ i (command + alt/opt + i)
+>
+> Windows: ⌃ ⌥ i (ctrl + alt + i)
+
+Or in the toolbar of the Quarto document (same section area as Source and Visual)
+
+> Insert -\> Excecutable Cell -\> R
+
+![](images/quarto_toolbar.png){width="569"}
+
+Notice that there are a lot of other options to **Insert** all sorts of other content like Figure/Image...
+
+Insert the following code in the R code chunk
 
 ```{r}
+library(palmerpenguins)
+
+head(penguins)
+```
+
+Create another R code chunk with the following code
+
+```{r}
+library(ggplot2)
+
+ggplot(penguins, aes(species, body_mass_g, color = species)) +
+  geom_jitter(alpha = .7, width = .05, color = "gray") +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE, size = 3) +
+  geom_errorbar(stat = "summary", fun.data = mean_cl_normal, na.rm = TRUE,
+                width = .2) +
+  scale_color_brewer(palette = "Set1", label = "none") +
+  guides(color = "none") +
+  labs(title = "Body Mass of Penguin Species", 
+       x = "Species", y = "Body Mass (g)") +
+  theme_classic()
+```
+
+### Execute R code chunk
+
+To run chunks of R code you can click on the green "play" button on the top right of the R code chunk.
+
+![](images/excecute_code_chunk.png){width="293"}
+
+Go ahead and do so. You can see that the results of the R code chunks are now displayed in the document.
+
+## Visual Editor
+
+By default, Quarto will open a new document in the [visual editor mode](https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch).){taget="\_blank"}. The Quarto visual editor provides a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM){target="_blank"} editing interface.
+
+In **Source** mode, you will see the *raw* markdown and code elements. On occassion you may find that it is easier to edit a document in Source mode rather than with the Visual editor. You can switch back and forth between the two easily at the top-left of the toolbar
+
+![](images/visual-editing-switch-modes.png)
+
+## Render Document
+
+When you have finalized the content of a Quarto document you will then want to generate the document into the specified output format (e.g., HTML).
+
+To render a Quarto document click on **Render** at the top. This will
+
+1.  Generate a preview of the document in the Viewer pane
+2.  Create an HTML file
+
+Go ahead and render the document you just created. Find the generated HTML file and open it. You will notice that it will open in your default web browser.
+
+There are some advantages to using an HTML format:
+
+-   Easily shareable, anyone can open it in a web browser (does not require some other application that might cost money like Microsoft Word)
+
+-   Can include elements like
+
+    -   Table of contents
+
+    -   Tabs - can include a lot more content without taking up a lot of space and saves on scrolling through large documents
+
+    -   Code folding - code chunks can be toggled to hide/show them
+
+    -   Code download - link to download the Quarto document
+
+    -   CSS styling
+
+    -   and more
+
+Let's take a look at some of these elements and more
+
+## Additional Elements
+
+### Headers
+
+Headers are a great way to organize the content in a Quarto document. Use `#` to create different header levels:
+
+```         
+# This is a level 1 header
+
+## A level 2 header
+
+### And level 3 header
+```
+
+Headers become even more useful with a table of contents and using tabs
+
+### Table of Contents
+
+A table of contents is useful to navigate longer documents. It also provides an outline for the viewer to understand the document. You can specify the table of contents layout in the YAML header:
+
+```         
+format:
+  html:
+    toc: true
+    toc-depth: 1
+    toc-location: left
+```
+
+`toc-depth` will change how many header levels are displayed in the table of contents (toc).
+
+### Tabs
+
+Tabs are a great way to add a lot of content while avoiding having to scroll endlessly through a large document. The syntax for a tabset is
+
+```         
+::: panel-tabset
+## First tab
+
+Here is some content
+
+## A second tab
+
+More content!
+
+## And third tab
+
+Hello!
+:::
+```
+
+The second level headers will be used to label the tabs in the document (see below)
+
+You can also add multiple tabs easily by going to
+
+> Insert -\> Tabset...
+
+Tabs look like this:
+
+::: panel-tabset
+## First tab
+
+Here is some content
+
+## A second tab
+
+More content!
+
+## And third tab
+
+Hello!
+:::
+
+### Code Tools
+
+You can include a **Code** menu in the header of your document that provides various tools for readers to interact with the source code. Specify in the YAML
+
+```         
+code-tools: true
+```
+
+### Code Folding
+
+You may not always want to show the R code chunks in the HTML output. Or you might want to give the viewer a choice to show/hide R code chunks. You can specify code folding in the top-level YAML header or in each code chunk individually
+
+```         
+code-fold: true
+```
+
+| Value   | Behavior                     |
+|---------|------------------------------|
+| `false` | No folding (default)         |
+| `true`  | Fold code (initially hidden) |
+| `show`  | Fold code (initially shown)  |
+
+### R Chunk Options
+
+Some settings you can change for individual R code chunks. The syntax to do this uses `#|` in the R code chunk:
+
+```{r}
+#| echo: fenced
 #| eval: false
-devtools::install_github("dr-JT/psyworkflow")
+#| warning: false
+#| message: false
+#| code-fold: show
+#| code-summary: "Hide the code!"
+
+1 + 1
 ```
 
-Restart R
+Some commone ones to change are:
 
-> Session -\> Restart R
+| Option    | Description                                                                                                                                                                                       |
+|------------|------------------------------------------------------------|
+| `eval`    | Evaluate the code chunk (if `false`, just echos the code into the output).                                                                                                                        |
+| `echo`    | Include the source code in output                                                                                                                                                                 |
+| `output`  | Include the results of executing the code in the output (`true`, `false`, or `asis` to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown). |
+| `warning` | Include warnings in the output.                                                                                                                                                                   |
+| `error`   | Include errors in the output (note that this implies that errors executing code will not halt processing of the document).                                                                        |
+| `include` | Catch all for preventing any output (code or results) from being included (e.g. `include: false` suppresses all output from the code block).                                                      |
 
-### Download R Script Templates
+See the [Quarto Documentation](https://quarto.org/docs/computations/execution-options.html){target="_blank"} for more details
 
-If you already have an RProject setup and just want to download some of the R script templates you can do so with the `get_template()` function.
+### CSS Styling
 
-```{r}
-psyworkflow::get_template()
+You can also add CSS styling, either as a separate .css document or at the end of the Quarto document.
+
+For instance, I used the following styling options in the [sample report](/sample_report.html){target="_blank"}:
+
+```{css}
+#| eval: false
+
+.tab-content {
+  border-style: none;
+}
+
+h1 {
+  color: #005098;
+}
+
+h2 {
+  color: #96834a !important;
+  font-weight: 600 !important;
+}
+
+a {
+  color: #005098;
+}
+
+a:hover {
+  color: #96834a !important;
+}
+
+.quarto-title-meta-heading {
+  color: #96834a;
+  font-weight: 600 !important;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a, .sidebar nav[role=doc-toc] ul>li>ul>li>a {
+  color: #005098 !important;
+  border-left: 2px solid #ECE5D7;
+  border-left-color: solid #ECE5D7;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+  color: #005098 !important;
+  font-weight: 600;
+  border-left: 2px solid #CBB879;
+  border-left-color: solid #CBB879;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a:hover, .sidebar nav[role=doc-toc] ul>li>ul>li>a:hover {
+  color: #005098 !important;
+  font-weight: 600;
+  border-left: 2px solid #CBB879;
+  border-left-color: solid #CBB879;
+}
+
+.nav-link {
+  color: #495057;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #96834a !important;
+}
+
+.code-tools-button {
+  color: #96834a !important;
+}
+
+.dropdown-toggle {
+  color: #005098 !important;
+}
 ```
-
-To see what the options are type in the console window
-
-```{r}
-?psyworkflow::get_template
-```
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Tidy Template Script"
-
-# ---- Setup -------------------------------------------------------------------
-# packages
-library(here)
-library(readr)
-library(dplyr)
-library(purrr) # delete if not importing a batch of files
-
-# directories
-import_dir <- "data/raw/messy"
-output_dir <- "data/raw"
-
-# file names
-task <- "taskname"
-import_file <- paste(task, ".txt", sep = "")
-output_file <- paste(task, "raw.csv", sep = "_")
-# ------------------------------------------------------------------------------
-
-# ---- Import Data -------------------------------------------------------------
-# to import a single file
-data_import <- read_delim(here(import_dir, import_file), delim = "\t",
-                          escape_double = FALSE, trim_ws = TRUE)
-
-# alternatively to import a batch of files...
-# change the arguments in purrr::map_df() depending on type of data files
-# this example is for files created from eprime and needs encoding = "UCS-2LE"
-files <- list.files(here(import_dir, task), pattern = ".txt", full.names = TRUE)
-data_import <- files |>
-  map_df(read_delim, delim = "\t",
-         escape_double = FALSE, trim_ws = TRUE, na = "NULL",
-         locale = locale(encoding = "UCS-2LE"))
-# ------------------------------------------------------------------------------
-
-# ---- Tidy Data ---------------------------------------------------------------
-data_raw <- data_import |>
-  rename() |>
-  filter() |>
-  mutate() |>
-  select()
-# ------------------------------------------------------------------------------
-
-# ---- Save Data ---------------------------------------------------------------
-write_csv(data_raw, here(output_dir, output_file))
-# ------------------------------------------------------------------------------
-
-rm(list = ls())
-
-```
-
-### Create a New Project
-
-Close RStudio and reopen a new instance of RStudio (not from an RProject file).
-
-Once you have the `psyworkflow` package installed you will be able to create a new RProject directory and file from my **Research Study** template. This will automatically create the directory structure outlined in the previous chapter. It will also add template R scripts in **R / templates** and a **mainscript.qmd** file.
-
-Using this template will allow you to get right to working with your data in R, without having to spend too much time thinking about organization (I have already done that for you).
-
-To create an RProject from this template:
-
-File -\> New Project... -\> New Directory -\> Research Study (you might need to scroll down to see it)
-
-This will bring up a window to customize the template:
-
-![](images/workflow_package.png){width="457"}
-
-Type in whatever you want for the **Directory Name** - this will end up being the name of the project folder and RProject file.
-
-Click on **Browse...** and create the project on your desktop, for now.
-
-Keep all the defaults and select **Create Project**.
-
-Give it some time, and it will reopen RStudio from the newly created RProject. Take a look at the file pane and you can see that the folders have been created, and R Script templates downloaded.

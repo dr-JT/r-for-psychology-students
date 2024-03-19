@@ -34,11 +34,11 @@ and more
 
 [Class 3](/classes/class-3.html) - Data Transformation
 
-[Class 4](/classes/class-4.html) - Data Visualization
+[Class 4](/classes/class-4.html) - Reproducible Projects
 
-[Class 5](/classes/class-5.html) - Reproducible Projects
+[Class 5](/classes/class-5.html) - Quarto Documents
 
-[Class 6](/classes/class-6.html) - Quarto Documents
+[Class 6](/classes/class-6.html) - Data Visualization
 
 Class 7 - Statistical Analysis: Regression
 

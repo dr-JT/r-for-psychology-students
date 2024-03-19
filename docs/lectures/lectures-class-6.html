@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student – Class 6: Quarto Documents</title>
+<title>R for the Psychology Student – Class 6: Data Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -238,6 +238,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">GitHub Copilot</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../supplemental/data-prep-qualtrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Prep - Qualtrics</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -250,24 +256,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link active" data-scroll-target="#yaml-header">YAML Header</a></li>
-  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text">Markdown Text</a></li>
-  <li><a href="#r-code-chunks" id="toc-r-code-chunks" class="nav-link" data-scroll-target="#r-code-chunks">R Code Chunks</a>
+  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link active" data-scroll-target="#ggplot2">ggplot2</a></li>
+  <li><a href="#data-layer" id="toc-data-layer" class="nav-link" data-scroll-target="#data-layer">Data layer</a></li>
+  <li><a href="#aesthetics-layer" id="toc-aesthetics-layer" class="nav-link" data-scroll-target="#aesthetics-layer">Aesthetics Layer</a></li>
+  <li><a href="#geometries-layer" id="toc-geometries-layer" class="nav-link" data-scroll-target="#geometries-layer">Geometries Layer</a></li>
+  <li><a href="#facets-layer" id="toc-facets-layer" class="nav-link" data-scroll-target="#facets-layer">Facets Layer</a></li>
+  <li><a href="#statistics-layer" id="toc-statistics-layer" class="nav-link" data-scroll-target="#statistics-layer">Statistics Layer</a>
   <ul class="collapse">
-  <li><a href="#create-an-r-code-chunk" id="toc-create-an-r-code-chunk" class="nav-link" data-scroll-target="#create-an-r-code-chunk">Create an R code chunk</a></li>
-  <li><a href="#execute-r-code-chunk" id="toc-execute-r-code-chunk" class="nav-link" data-scroll-target="#execute-r-code-chunk">Execute R code chunk</a></li>
+  <li><a href="#geom_stat-summary" id="toc-geom_stat-summary" class="nav-link" data-scroll-target="#geom_stat-summary">geom_(stat = “summary”)</a></li>
+  <li><a href="#stat_smoothmethod-lm" id="toc-stat_smoothmethod-lm" class="nav-link" data-scroll-target="#stat_smoothmethod-lm">stat_smooth(method = “lm”)</a></li>
   </ul></li>
-  <li><a href="#visual-editor" id="toc-visual-editor" class="nav-link" data-scroll-target="#visual-editor">Visual Editor</a></li>
-  <li><a href="#render-document" id="toc-render-document" class="nav-link" data-scroll-target="#render-document">Render Document</a></li>
-  <li><a href="#additional-elements" id="toc-additional-elements" class="nav-link" data-scroll-target="#additional-elements">Additional Elements</a>
+  <li><a href="#coordinates-layer" id="toc-coordinates-layer" class="nav-link" data-scroll-target="#coordinates-layer">Coordinates Layer</a>
   <ul class="collapse">
-  <li><a href="#headers" id="toc-headers" class="nav-link" data-scroll-target="#headers">Headers</a></li>
-  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
-  <li><a href="#tabs" id="toc-tabs" class="nav-link" data-scroll-target="#tabs">Tabs</a></li>
-  <li><a href="#code-tools" id="toc-code-tools" class="nav-link" data-scroll-target="#code-tools">Code Tools</a></li>
-  <li><a href="#code-folding" id="toc-code-folding" class="nav-link" data-scroll-target="#code-folding">Code Folding</a></li>
-  <li><a href="#r-chunk-options" id="toc-r-chunk-options" class="nav-link" data-scroll-target="#r-chunk-options">R Chunk Options</a></li>
-  <li><a href="#css-styling" id="toc-css-styling" class="nav-link" data-scroll-target="#css-styling">CSS Styling</a></li>
+  <li><a href="#axis-limits" id="toc-axis-limits" class="nav-link" data-scroll-target="#axis-limits">axis limits</a></li>
+  <li><a href="#axis-ticks-and-labels" id="toc-axis-ticks-and-labels" class="nav-link" data-scroll-target="#axis-ticks-and-labels">axis ticks and labels</a></li>
+  </ul></li>
+  <li><a href="#theme-layer" id="toc-theme-layer" class="nav-link" data-scroll-target="#theme-layer">Theme Layer</a>
+  <ul class="collapse">
+  <li><a href="#color" id="toc-color" class="nav-link" data-scroll-target="#color">Color</a></li>
+  <li><a href="#you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name" id="toc-you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name" class="nav-link" data-scroll-target="#you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name">You can access these palettes using <code>scale_color_brewer(palette = "palette name")</code></a></li>
+  <li><a href="#labels" id="toc-labels" class="nav-link" data-scroll-target="#labels">Labels</a></li>
+  <li><a href="#theme-templates" id="toc-theme-templates" class="nav-link" data-scroll-target="#theme-templates">Theme templates</a></li>
+  <li><a href="#other-theme-elements" id="toc-other-theme-elements" class="nav-link" data-scroll-target="#other-theme-elements">Other theme elements</a></li>
+  <li><a href="#create-your-own-theme-template" id="toc-create-your-own-theme-template" class="nav-link" data-scroll-target="#create-your-own-theme-template">Create your own theme template</a></li>
+  </ul></li>
+  <li><a href="#common-types-of-plots" id="toc-common-types-of-plots" class="nav-link" data-scroll-target="#common-types-of-plots">Common Types of Plots</a>
+  <ul class="collapse">
+  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram">Histogram</a></li>
+  <li><a href="#bar-point-and-line" id="toc-bar-point-and-line" class="nav-link" data-scroll-target="#bar-point-and-line">Bar, point, and line</a></li>
+  <li><a href="#scatterplot" id="toc-scatterplot" class="nav-link" data-scroll-target="#scatterplot">Scatterplot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -277,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Class 6: Quarto Documents</h1>
+<h1 class="title">Class 6: Data Visualization</h1>
 </div>
 
 
@@ -294,359 +311,787 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://quarto.org">Quarto documents</a> are a versatile way to create production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, ePub, and more. In fact, this R Workshop was created using Quarto documents.</p>
-<p>In this class, you will learn how to use Quarto documents to create an HTML report that contains data visualizations and statistical analyses. View a <a href="../sample_report.html" target="_blank">sample report</a> to see an example of this kind of document.</p>
-<p><strong>R Scripts vs.&nbsp;Quarto Documents</strong></p>
+<p>Data visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:</p>
+<ol type="1">
+<li><strong>Data exploration</strong>: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.</li>
+<li><strong>Explain and Communicate</strong>: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.</li>
+</ol>
+<section id="ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="ggplot2">ggplot2</h2>
+<p>In this class, we will learn about the fundamentals of data visualization using the <code>ggplot2</code> package. This is by far the most popular package for data visualization in R.</p>
+<p><img src="images/ggplot2.jpg" class="img-fluid" width="104"></p>
+<p>You have already seen and used <code>ggplot2</code> in previous classes, but now we will cover how to actually use this package. The elements for creating a ggplot was largely inspired from the work of Leland Wilkinson (Grammar of Graphics, 1999), who formalized two main principles in plotting data:</p>
+<ol type="1">
+<li>Layering: The idea of layering involves building plots by adding different layers of grammatical elements. Each layer can consist of components such as points, lines, bars, etc., and can be combined to create complex plots.</li>
+<li>Mapping: This principle involves mapping variables in your data to aesthetic properties of the graphical objects, such as size, shape, color, position, and the scales on the x and y axes.</li>
+</ol>
+<p>In this framework, the essential grammatical elements required to create any data visualization are:</p>
+<p><img src="images/ge_essentials.png" class="img-fluid" width="587"></p>
+<p>Let’s take a look at how these elements work to create a simple visualization of data. In <a href="../classes/class-1.html">Class 1</a> I introduced you to the fun <code>palmerpenguins</code> data set. I will use this data set to illustrate how <code>ggplot2</code> works.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/lter_penguins.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="677"></p>
+</figure>
+</div>
+<p>Go ahead and load the <code>palmerpenguins</code> and <code>ggplot2</code> packages using <code>library()</code> . Additionally, let’s make the <code>penguins</code> data set that is loaded with <code>palmerpenguins</code> visible in the environment by explicitly assigning it to an object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-layer" class="level2">
+<h2 class="anchored" data-anchor-id="data-layer">Data layer</h2>
+<p>The Data Layer specifies the data object that is being plotted.</p>
+<p><img src="images/ge_data.png" class="img-fluid" width="400"></p>
+<p>It is the first grammatical element that is required to create a plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can see that we only have a blank square. This is because we have not added any other layers yet, we have only specified the data layer. <code>ggplot()</code> doesn’t yet know how to map the variables onto the axis scales. That is where the aesthetic mapping layer comes in.</p>
+</section>
+<section id="aesthetics-layer" class="level2">
+<h2 class="anchored" data-anchor-id="aesthetics-layer">Aesthetics Layer</h2>
+<p>The next grammatical element is the aesthetic layer, or <strong>aes</strong> for short. This layer specifies how we want to <em>map</em> our data onto the scales of the plot.</p>
+<p><img src="images/ge_aes.png" class="img-fluid" width="400"></p>
+<p>The aesthetic layer <em>maps</em> variables in our data onto scales in our graphical visualization, such as the x and y coordinates. In <code>ggplot2</code> the aesthetic layer is specified using the <code>aes()</code> function. Let’s create a plot of the relationship between <code>bill_length_mm</code> and <code>flipper_length_mm</code>, putting them on the x and y axis respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can see we went from a blank box to a graph with the variable and scales of <code>bill_length_mm</code> mapped onto the x-axis and <code>flipper_length_mm</code> on the y-axis.</p>
+<p>The aesthetic layer also maps variables in our data to other elements in our graphical visualization, such as color, size, fill, etc. These other elements are useful for adding a third variable onto our graphical visualizations. For instance, we can add the variable of <code>species</code> by mapping <code>species</code> onto the color aesthetic.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You will notice that the plot has not changed. Species is not plotted by color. This is because <code>ggplot()</code> does not know the geometrical form the data should take - a bar plot, line plot, dot plot, etc.? It cannot add color to a geometrical form that is not specified yet. That is where the geometries layer comes in.</p>
+</section>
+<section id="geometries-layer" class="level2">
+<h2 class="anchored" data-anchor-id="geometries-layer">Geometries Layer</h2>
+<p>The next <em>essential</em> grammatical element for graphical visualization is the geometries layer or <strong>geom</strong> for short. This layer specifies the visual elements that should be used to plot the actual data.</p>
+<p><img src="images/ge_geom.png" class="img-fluid" width="400"></p>
+<p>There are a lot of different types of <strong>geoms</strong> to use in ggplot2. Some of the most commonly used ones are:</p>
 <ul>
-<li><p>R scripts are for processing data</p></li>
-<li><p>Quarto documents are for generating reports that contain figures, tables, and statistical analyses</p></li>
+<li><p>Points or jittered points: <code>geom_point()</code> or <code>geom_jitter()</code></p></li>
+<li><p>Lines: <code>geom_line()</code></p></li>
+<li><p>Bars: <code>geom_bar()</code></p></li>
+<li><p>Violin: <code>geom_violin()</code></p></li>
+<li><p>Error bars: <code>geom_errobar()</code> or <code>geom_ribbon()</code></p></li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>For a full list see the <a href="https://ggplot2.tidyverse.org/reference/#geoms" target="_blank">ggplot2 documentation</a></p>
+<hr>
+<p>For now, let’s demonstrate this using <code>geom_point()</code>. We will create what is called a <strong>scatterplot</strong> - plotting the individual data points for two continuous variables.</p>
+<p>To create a scatterplot we can simply add <code>geom_point()</code> to our ggplot.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You may want to watch this <a href="https://quarto.org/docs/blog/posts/2023-05-15-get-started/" target="_blank">video</a> for a brief intro to Quarto</p>
+<p>Note that in <code>ggplot2</code> there is a special notation that is similar to the pipe operator <code>|&gt;</code> seen before. Except in <code>ggplot2</code> you have to use a plus sign <code>+</code> .</p>
 </div>
 </div>
-<p>To open a Quarto document:</p>
-<blockquote class="blockquote">
-<p>File -&gt; New File -&gt; Quarto Document…</p>
-<p>Click <strong>Create Empty Document</strong></p>
-</blockquote>
-<p>There are three types of content that form the structure of a Quarto document.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note you can also specify the <code>color = species</code> aesthetic mapping on the geometric layer instead of the data layer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(bill_length_mm, flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Besides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:</p>
+<section id="color-related-aesthetics" class="level4">
+<h4 class="anchored" data-anchor-id="color-related-aesthetics">Color related aesthetics</h4>
+<p><a href="https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html" target="_blank">See more details here</a></p>
 <ul>
-<li><p>A YAML header</p></li>
-<li><p>Markdown formatted text</p></li>
-<li><p>R code chunks</p></li>
+<li><p><strong>Color</strong>: applies to most geoms <code>geom_(color = )</code></p></li>
+<li><p><strong>Fill</strong>: applies to most geoms <code>geom_(fill = )</code></p></li>
+<li><p><strong>Transparency</strong>: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; <code>geom_(alpha = )</code></p></li>
 </ul>
-<section id="yaml-header" class="level2">
-<h2 class="anchored" data-anchor-id="yaml-header">YAML Header</h2>
-<p>The YAML header contains metadata about how the document should be rendered and the output format. It is located at the very top of the document and is surrounded by lines of three dashes.</p>
-<pre data-code-line-numbers=""><code>---
-title: "Title of document"
-output: html_document
----</code></pre>
-<p>There are various metadata options you can specify, such as if you want to include a table of contents. To learn about a few of them <a href="https://quarto.org/docs/output-formats/html-basics.html" target="_blank">see the documentation here</a>.</p>
-<p>Go ahead and include the <code>output: html_document</code> line in the YAML of the empty document you opened.</p>
+<p><a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" target="_blank">See a full list of R colors here</a></p>
 </section>
-<section id="markdown-text" class="level2">
-<h2 class="anchored" data-anchor-id="markdown-text">Markdown Text</h2>
-<p>The markdown text section is just as if you were writing content in Microsoft Word or Google Docs. You can write up paragraphs of text, create bullet or numbered lists, embed images or web links, create tables, and more.</p>
-<p>The text is formatted using a language known as <strong>Markdown</strong>. Markdown is a convenient and flexible way to format text. When a Markdown document is rendered into some output (such as HTML or PDF), the text will be formatted as specified by Markdown syntax.</p>
-<p>There are a lot of guides on how to use Markdown syntax. I will not cover this so you should check them out on your own. Here is one I reference often: <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheatsheet</a></p>
-<p>Add some markdown text below the YAML header in your open Quarto document</p>
-<pre data-code-line-numbers=""><code>Here is some sample text with a numbered list
-
-1. This is first
-2. Second
-3. Third</code></pre>
-</section>
-<section id="r-code-chunks" class="level2">
-<h2 class="anchored" data-anchor-id="r-code-chunks">R Code Chunks</h2>
-<p>A Quarto document (.qmd) is a mixture of markdown text and R code chunks.</p>
-<section id="create-an-r-code-chunk" class="level3">
-<h3 class="anchored" data-anchor-id="create-an-r-code-chunk">Create an R code chunk</h3>
-<p>R code chunks are enclosed with</p>
-<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Or might look like:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>{r}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>You can create R code chunks with the shortcut:</p>
-<blockquote class="blockquote">
-<p>Mac: ⌘ ⌥ i (command + alt/opt + i)</p>
-<p>Windows: ⌃ ⌥ i (ctrl + alt + i)</p>
-</blockquote>
-<p>Or in the toolbar of the Quarto document (same section area as Source and Visual)</p>
-<blockquote class="blockquote">
-<p>Insert -&gt; Excecutable Cell -&gt; R</p>
-</blockquote>
-<p><img src="images/quarto_toolbar.png" class="img-fluid" width="569"></p>
-<p>Notice that there are a lot of other options to <strong>Insert</strong> all sorts of other content like Figure/Image…</p>
-<p>Insert the following code in the R code chunk</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Create another R code chunk with the following code</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">width =</span> .<span class="dv">05</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> mean_cl_normal, <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">label =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Body Mass of Penguin Species"</span>, </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>) <span class="sc">+</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="execute-r-code-chunk" class="level3">
-<h3 class="anchored" data-anchor-id="execute-r-code-chunk">Execute R code chunk</h3>
-<p>To run chunks of R code you can click on the green “play” button on the top right of the R code chunk.</p>
-<p><img src="images/excecute_code_chunk.png" class="img-fluid" width="293"></p>
-<p>Go ahead and do so. You can see that the results of the R code chunks are now displayed in the document.</p>
-</section>
-</section>
-<section id="visual-editor" class="level2">
-<h2 class="anchored" data-anchor-id="visual-editor">Visual Editor</h2>
-<p>By default, Quarto will open a new document in the <a href="https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch">visual editor mode</a>.){taget=“_blank”}. The Quarto visual editor provides a <a href="https://en.wikipedia.org/wiki/WYSIWYM" target="_blank">WYSIWYM</a> editing interface.</p>
-<p>In <strong>Source</strong> mode, you will see the <em>raw</em> markdown and code elements. On occassion you may find that it is easier to edit a document in Source mode rather than with the Visual editor. You can switch back and forth between the two easily at the top-left of the toolbar</p>
-<p><img src="images/visual-editing-switch-modes.png" class="img-fluid"></p>
-</section>
-<section id="render-document" class="level2">
-<h2 class="anchored" data-anchor-id="render-document">Render Document</h2>
-<p>When you have finalized the content of a Quarto document you will then want to generate the document into the specified output format (e.g., HTML).</p>
-<p>To render a Quarto document click on <strong>Render</strong> at the top. This will</p>
-<ol type="1">
-<li>Generate a preview of the document in the Viewer pane</li>
-<li>Create an HTML file</li>
-</ol>
-<p>Go ahead and render the document you just created. Find the generated HTML file and open it. You will notice that it will open in your default web browser.</p>
-<p>There are some advantages to using an HTML format:</p>
+<section id="shape-related-aesthetics" class="level4">
+<h4 class="anchored" data-anchor-id="shape-related-aesthetics">Shape related aesthetics</h4>
+<p><a href="https://ggplot2.tidyverse.org/articles/ggplot2-specs.html" target="_blank">See more details here</a></p>
 <ul>
-<li><p>Easily shareable, anyone can open it in a web browser (does not require some other application that might cost money like Microsoft Word)</p></li>
-<li><p>Can include elements like</p>
+<li><p><strong>Shape</strong>: <code>geom_point(shape = )</code>, <code>geom_jitter(shape = )</code></p></li>
+<li><p><strong>Size</strong>: <code>geom_point(size = )</code>, <code>geom_jitter(size = )</code></p></li>
+<li><p><strong>Line Type</strong>: <code>geom_line(linetype = )</code></p></li>
+<li><p><strong>Line Width</strong>: <code>geom_line(linewidth = )</code></p></li>
+<li><p><strong>Width</strong>: <code>geom_errobar(width = )</code>, <code>geom_jitter(width = )</code></p></li>
+</ul>
+<div class="cell" data-source-line-numbers="3">
+<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="3" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="st">"diamond filled"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">fill =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Besides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include.</p>
+<p><img src="images/ge_all.png" class="img-fluid" width="550"></p>
+</section>
+</section>
+<section id="facets-layer" class="level2">
+<h2 class="anchored" data-anchor-id="facets-layer">Facets Layer</h2>
+<p>The facets layer allows you to create panels of subplots within the same graphic object</p>
+<p><img src="images/ge_facet.png" class="img-fluid" width="400"></p>
+<p>The previous three layers are the <strong>essential</strong> layers. The facet layer is not essential, but it can be useful when you want to communicate the relationship among 4 or more variables.</p>
+<p>Let’s create a facet layer of our scatterplot with different panels for <code>sex</code></p>
+<div class="cell" data-source-line-numbers="8">
+<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="8" data-code-line-numbers="8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first let's remove any missing values for sex</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can see we are now conveying information about 4 different variables in our data; <code>bill_length_mm</code>, <code>flipper_length_mm</code>, <code>species</code>, and <code>sex</code> .</p>
+<p>See the ggplot2 documentation on <a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" target="_blank">facet_grid</a> and <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" target="_blank">facet_wrap</a></p>
+</section>
+<section id="statistics-layer" class="level2">
+<h2 class="anchored" data-anchor-id="statistics-layer">Statistics Layer</h2>
+<p>The statistics layer allows you plot aggregated statistical values calculated from your data</p>
+<p><img src="images/ge_stats.png" class="img-fluid" width="400"></p>
+<p>The statistics layer is used in combination with a <strong>geom</strong> to plot values that are a function (e.g., mean) of the values in your data. The two main <strong>stat</strong> functions are:</p>
 <ul>
-<li><p>Table of contents</p></li>
-<li><p>Tabs - can include a lot more content without taking up a lot of space and saves on scrolling through large documents</p></li>
-<li><p>Code folding - code chunks can be toggled to hide/show them</p></li>
-<li><p>Code download - link to download the Quarto document</p></li>
-<li><p>CSS styling</p></li>
-<li><p>and more</p></li>
+<li><p><code>geom_(stat = "summary")</code></p></li>
+<li><p><code>stat_smooth()</code></p></li>
+</ul>
+<section id="geom_stat-summary" class="level3">
+<h3 class="anchored" data-anchor-id="geom_stat-summary">geom_(stat = “summary”)</h3>
+<p>In the previous plots, we plotted the raw values for each individual penguin. However, statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the <strong>geom</strong> functions using <code>stat = "summary"</code>. There are two main arguments you need to specify:</p>
+<ul>
+<li><p><strong>stat</strong>: set this to “summary” to calculate a summary statistic</p></li>
+<li><p><strong>fun</strong>: The function used to calculate an aggregated summary statistic. Functions like <strong>mean</strong>, <strong>sum</strong>, <strong>min</strong>, <strong>max</strong>, <strong>sd</strong> can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in <code>geom_()</code></p></li>
+</ul>
+<p>In the <code>penguins</code> data set, we have the raw values of <code>body_mass_g</code> for each individual penguin but perhaps we are just interested in the average (mean) values for each <code>species</code>. This can be done easily using <code>geom_point(stat = "summary", fun = mean)</code></p>
+<div class="cell" data-source-line-numbers="2">
+<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="2" data-code-line-numbers="2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="st">"diamond"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using multiple <strong>geoms</strong> you can plot both the raw values for each individual penguin and the summary statistic</p>
+<div class="cell" data-source-line-numbers="2-3">
+<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="2-3" data-code-line-numbers="2-3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">1</span>, <span class="at">size =</span> .<span class="dv">75</span>, <span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="st">"diamond"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>fun =</code> argument returns only a single summary statistic value (e.g., a mean). However, some <strong>geoms</strong> actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the <strong>fun.data</strong> argument instead:</p>
+<p><code>mean_cl_normal</code> is a function to calculate 95% confidence limits from your data.</p>
+<div class="cell" data-source-line-numbers="5">
+<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="5" data-code-line-numbers="5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">1</span>, <span class="at">size =</span> .<span class="dv">75</span>, <span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="st">"diamond"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> mean_cl_normal, <span class="at">width =</span> .<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="stat_smoothmethod-lm" class="level3">
+<h3 class="anchored" data-anchor-id="stat_smoothmethod-lm">stat_smooth(method = “lm”)</h3>
+<p><code>stat_smooth(method = "lm")</code> is used in scatterplots to plot the regression line on your data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can add separate regression lines if other variables are mapped to <strong>aesthetics</strong> and/or are wrapped in different <strong>facets</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(bill_length_mm, flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(sex)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="coordinates-layer" class="level2">
+<h2 class="anchored" data-anchor-id="coordinates-layer">Coordinates Layer</h2>
+<p>The coordinate layer allows you to adjust the x and y coordinates</p>
+<p><img src="images/ge_coord.png" class="img-fluid" width="400"></p>
+<p>There are two main groups of functions that are useful for adjusting the x and y coordinates.</p>
+<ul>
+<li><p><code>coord_cartesian()</code> for adjusting the axis limits (zoom in and out)</p></li>
+<li><p><code>scale_x_</code> and <code>scale_y_</code> for setting the axis ticks and labels</p></li>
+</ul>
+<section id="axis-limits" class="level3">
+<h3 class="anchored" data-anchor-id="axis-limits">axis limits</h3>
+<p>You can adjust limits (min and max) of the x and y axes using the <code>coord_cartesian(xlim = c(), ylim = c())</code> function.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you want to compare two separate graphs, then they need to be on the same scale. This an important design principle in graphical visualization.</p>
+</div>
+</div>
+<p>Compare these two sets of plots</p>
+<div class="cell" data-source-line-numbers="7,12">
+<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="7,12" data-code-line-numbers="7,12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>male <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, sex <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>female <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, sex <span class="sc">==</span> <span class="st">"female"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(male, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">10000</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(female, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">5000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># patchwork can be used to combine multiple plots into one image</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"male"</span>) <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A cursory look at this plot, you might conclude a couple things</p>
+<ul>
+<li><p>Female Gentoo penguins have the largest body mass</p></li>
+<li><p>There is a larger difference in body mass, relative to the other penguin species, for the Female Gentoo penguins than for Male Gentoo penguins.</p></li>
+</ul>
+<p>These are both false! Take a closer look at the y-axis on the two plots. Let’s plot the <strong>exact same data</strong> but make the scales on the y-axis the same.</p>
+<div class="cell" data-source-line-numbers="4,10">
+<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="4,10" data-code-line-numbers="4,10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(male, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"male"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(female, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># patchwork can be used to combine multiple plots into one image</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"male"</span>) <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>patchwork</code> is a convenient package to combine multiple plots into one image. The package can be used to create a more complex arrangement of multiple plots but the simplest use of it is to add plots side-by-side by simply using the <code>+</code> notation that is already used to add additional layers to a <code>ggplot()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="axis-ticks-and-labels" class="level3">
+<h3 class="anchored" data-anchor-id="axis-ticks-and-labels">axis ticks and labels</h3>
+<p>You can adjust the scale (major and minor ticks) of the x and y axes using the <code>scale_x_</code> and <code>scale_y_</code> set of functions. The two main set of functions to know are for continuous and discrete scales:</p>
+<ul>
+<li><p>continuous: <code>scale_x_continuous(breaks = seq())</code> and <code>scale_y_continuous(breaks = seq())</code></p></li>
+<li><p>discrete: <code>scale_x_discrete(breaks = seq())</code> and <code>scale_y_continuous(breaks = seq())</code></p></li>
+</ul>
+<p>For example:</p>
+<div class="cell" data-source-line-numbers="5,11">
+<div class="sourceCode cell-code" id="cb19" data-source-line-numbers="5,11" data-code-line-numbers="5,11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(male, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">6000</span>, <span class="at">by =</span> <span class="dv">500</span>))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(female, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">6000</span>, <span class="at">by =</span> <span class="dv">500</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"male"</span>) <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="theme-layer" class="level2">
+<h2 class="anchored" data-anchor-id="theme-layer">Theme Layer</h2>
+<p>The theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot</p>
+<p><img src="images/ge_themes.png" class="img-fluid" width="400"></p>
+<p>There are three main set of functions that we can use to control the theme layer:</p>
+<ul>
+<li><p><strong>Color</strong>: <code>scale_color_</code> set of functions will change the color scheme of the geometric elements:</p>
+<ul>
+<li><p><code>scale_color_manual()</code> - <a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" target="_blank">see documentation here</a></p></li>
+<li><p><code>scale_color_brewer()</code> - <a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" target="_blank">see documentation here</a></p></li>
+</ul></li>
+<li><p><strong>Labels</strong>: <code>labs()</code> is a convenient function for labeling the title, subtitle, axes, and legend</p></li>
+<li><p><strong>Theme templates</strong>: There are predefined theme templates that come with <code>ggplot2</code></p></li>
+<li><p><strong>Other theme elements</strong>: <code>theme()</code> can be used to further customize the look of your plot</p>
+<ul>
+<li><code>theme(legend.title = element_text(face = "bold"))</code></li>
 </ul></li>
 </ul>
-<p>Let’s take a look at some of these elements and more</p>
+<section id="color" class="level3">
+<h3 class="anchored" data-anchor-id="color">Color</h3>
+<p>Changing the color theme can get complicated but is an important design element in your plot.</p>
+<p>The <code>RColorBrewer</code> package offers several color palettes for R:</p>
+<p><img src="images/RColorBrewer.png" class="img-fluid" width="537"></p>
 </section>
-<section id="additional-elements" class="level2">
-<h2 class="anchored" data-anchor-id="additional-elements">Additional Elements</h2>
-<section id="headers" class="level3">
-<h3 class="anchored" data-anchor-id="headers">Headers</h3>
-<p>Headers are a great way to organize the content in a Quarto document. Use <code>#</code> to create different header levels:</p>
-<pre data-code-line-numbers=""><code># This is a level 1 header
-
-## A level 2 header
-
-### And level 3 header</code></pre>
-<p>Headers become even more useful with a table of contents and using tabs</p>
-</section>
-<section id="table-of-contents" class="level3">
-<h3 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h3>
-<p>A table of contents is useful to navigate longer documents. It also provides an outline for the viewer to understand the document. You can specify the table of contents layout in the YAML header:</p>
-<pre data-code-line-numbers=""><code>format:
-  html:
-    toc: true
-    toc-depth: 1
-    toc-location: left</code></pre>
-<p><code>toc-depth</code> will change how many header levels are displayed in the table of contents (toc).</p>
-</section>
-<section id="tabs" class="level3">
-<h3 class="anchored" data-anchor-id="tabs">Tabs</h3>
-<p>Tabs are a great way to add a lot of content while avoiding having to scroll endlessly through a large document. The syntax for a tabset is</p>
-<pre data-code-line-numbers=""><code>::: panel-tabset
-## First tab
-
-Here is some content
-
-## A second tab
-
-More content!
-
-## And third tab
-
-Hello!
-:::</code></pre>
-<p>The second level headers will be used to label the tabs in the document (see below)</p>
-<p>You can also add multiple tabs easily by going to</p>
-<blockquote class="blockquote">
-<p>Insert -&gt; Tabset…</p>
-</blockquote>
-<p>Tabs look like this:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">First tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">A second tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">And third tab</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Here is some content</p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>More content!</p>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>Hello!</p>
+<section id="you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name" class="level3">
+<h3 class="anchored" data-anchor-id="you-can-access-these-palettes-using-scale_color_brewerpalette-palette-name">You can access these palettes using <code>scale_color_brewer(palette = "palette name")</code></h3>
+<div class="cell" data-source-line-numbers="1,6">
+<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="1,6" data-code-line-numbers="1,6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">6000</span>, <span class="at">by =</span> <span class="dv">500</span>)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://nanx.me/ggsci/index.html" target="_blank">Check out</a> the <code>ggsci</code> color palettes inspired by scientific journals, science fiction movies, and TV shows.</p>
+</div>
+</div>
 </section>
-<section id="code-tools" class="level3">
-<h3 class="anchored" data-anchor-id="code-tools">Code Tools</h3>
-<p>You can include a&nbsp;<strong>Code</strong>&nbsp;menu in the header of your document that provides various tools for readers to interact with the source code. Specify in the YAML</p>
-<pre data-code-line-numbers=""><code>code-tools: true</code></pre>
+<section id="labels" class="level3">
+<h3 class="anchored" data-anchor-id="labels">Labels</h3>
+<p>Changing labels and adding titles is easy using <code>labs()</code></p>
+<div class="cell" data-source-line-numbers="6-7">
+<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="6-7" data-code-line-numbers="6-7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">6000</span>)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">6000</span>, <span class="at">by =</span> <span class="dv">500</span>)) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Plot Title"</span>, <span class="at">subtitle =</span> <span class="st">"A subtitle"</span>, <span class="at">tag =</span> <span class="st">"A)"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To change labels for legends you need to refer to the <strong>aesthetic mapping</strong> that was defined in <code>aes()</code> (e.g., color, shape).</p>
+<div class="cell" data-source-line-numbers="4,9-11">
+<div class="sourceCode cell-code" id="cb23" data-source-line-numbers="4,9-11" data-code-line-numbers="4,9-11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>adelie <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, species <span class="sc">!=</span> <span class="st">"Gentoo"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(species, body_mass_g, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> sex, <span class="at">shape =</span> island)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4250</span>)) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">4250</span>, <span class="at">by =</span> <span class="dv">250</span>)) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Plot Title"</span>, <span class="at">subtitle =</span> <span class="st">"A subtitle"</span>, <span class="at">tag =</span> <span class="st">"A)"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Sex"</span>, <span class="at">shape =</span> <span class="st">"Island"</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="code-folding" class="level3">
-<h3 class="anchored" data-anchor-id="code-folding">Code Folding</h3>
-<p>You may not always want to show the R code chunks in the HTML output. Or you might want to give the viewer a choice to show/hide R code chunks. You can specify code folding in the top-level YAML header or in each code chunk individually</p>
-<pre data-code-line-numbers=""><code>code-fold: true</code></pre>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Value</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>false</code></td>
-<td>No folding (default)</td>
-</tr>
-<tr class="even">
-<td><code>true</code></td>
-<td>Fold code (initially hidden)</td>
-</tr>
-<tr class="odd">
-<td><code>show</code></td>
-<td>Fold code (initially shown)</td>
-</tr>
-</tbody>
-</table>
+<section id="theme-templates" class="level3">
+<h3 class="anchored" data-anchor-id="theme-templates">Theme templates</h3>
+<p>Here are some themes that come loaded with <code>ggplot2</code></p>
+<ul>
+<li><code>theme_bw()</code></li>
+<li><code>theme_light()</code></li>
+<li><code>theme_dark()</code></li>
+<li><code>theme_minimal()</code></li>
+<li><code>theme_classic()</code></li>
+<li><code>theme_void()</code></li>
+</ul>
+<p>Using a theme template is straightforward</p>
+<div class="cell" data-source-line-numbers="12">
+<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="12" data-code-line-numbers="12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>adelie <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, species <span class="sc">!=</span> <span class="st">"Gentoo"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(species, body_mass_g, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> sex, <span class="at">shape =</span> island)) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4250</span>)) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">4250</span>, <span class="at">by =</span> <span class="dv">250</span>)) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Plot Title"</span>, <span class="at">subtitle =</span> <span class="st">"A subtitle"</span>, <span class="at">tag =</span> <span class="st">"A)"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Sex"</span>, <span class="at">shape =</span> <span class="st">"Island"</span>) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="r-chunk-options" class="level3">
-<h3 class="anchored" data-anchor-id="r-chunk-options">R Chunk Options</h3>
-<p>Some settings you can change for individual R code chunks. The syntax to do this uses <code>#|</code> in the R code chunk:</p>
+<section id="other-theme-elements" class="level3">
+<h3 class="anchored" data-anchor-id="other-theme-elements">Other theme elements</h3>
+<p>In addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You will mostly due this using <code>theme()</code></p>
+<p>For instance, to give the legend titles a bold face font:</p>
+<div class="cell" data-source-line-numbers="13">
+<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="13" data-code-line-numbers="13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>adelie <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, species <span class="sc">!=</span> <span class="st">"Gentoo"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(species, body_mass_g, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> sex, <span class="at">shape =</span> island)) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4250</span>)) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">4250</span>, <span class="at">by =</span> <span class="dv">250</span>)) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Plot Title"</span>, <span class="at">subtitle =</span> <span class="st">"A subtitle"</span>, <span class="at">tag =</span> <span class="st">"A)"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Sex"</span>, <span class="at">shape =</span> <span class="st">"Island"</span>) <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here is a list of different elements you can change. They are organized into text, line, and rectangle elements:</p>
+<p><img src="images/theme_elements.png" class="img-fluid" width="645"></p>
+<p>Text, line, and rectangle elements each have their corresponding element function e.g., <code>element_text()</code></p>
+<p><img src="images/element_func.png" class="img-fluid" width="724"></p>
+<p>Obviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI’s for assistance.</p>
+<p><a href="https://ggplot2.tidyverse.org/reference/theme.html" target="_blank">Here is the ggplot2 documentation on theme elements</a></p>
+</section>
+<section id="create-your-own-theme-template" class="level3">
+<h3 class="anchored" data-anchor-id="create-your-own-theme-template">Create your own theme template</h3>
+<p>Often times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.</p>
+<p>One convenient way of doing so is to use <code>theme_set()</code></p>
+<p><code>theme_set()</code> will automatically apply the same theme settings across all ggplots created in a document.</p>
+<p>For instance, if you want to make sure all your ggplots have a <strong>bolded</strong> legend title and use <code>theme_classic()</code> you can create a theme to do that:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Hide the code!</summary>
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: show</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Hide the code!"</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="in">1 + 1</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>bold_legend <span class="ot">&lt;-</span> <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plot_theme <span class="ot">&lt;-</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> bold_legend</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then you need to set the theme that will be applied across all ggplots</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(plot_theme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(species, body_mass_g, </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> sex, <span class="at">shape =</span> island)) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4250</span>)) <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">4250</span>, <span class="at">by =</span> <span class="dv">250</span>)) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Plot Title"</span>, <span class="at">subtitle =</span> <span class="st">"A subtitle"</span>, <span class="at">tag =</span> <span class="st">"A)"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Sex"</span>, <span class="at">shape =</span> <span class="st">"Island"</span>) <span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use “bold” fonts for titles or not, etc.).</p>
+<p>Here is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show theme_spacious()</summary>
+<div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>theme_spacious <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">font_size =</span> <span class="dv">14</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  key_size <span class="ot">&lt;-</span> <span class="fu">trunc</span>(font_size <span class="sc">*</span> .<span class="dv">8</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (bold <span class="sc">==</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    face.type <span class="ot">&lt;-</span> <span class="st">"bold"</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    face.type <span class="ot">&lt;-</span> <span class="st">"plain"</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> font_size),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">15</span>, <span class="at">r =</span> <span class="dv">0</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> face.type),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">15</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> face.type),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> face.type),</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.spacing =</span> <span class="fu">unit</span>(<span class="dv">20</span>, <span class="st">"pt"</span>),</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> key_size),</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> face.type, <span class="at">hjust =</span> .<span class="dv">5</span>,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>),</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> key_size,</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">20</span>)),</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"white"</span>),</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">face =</span> face.type))</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Some commone ones to change are:</p>
-<table class="table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 94%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>eval</code></td>
-<td>Evaluate the code chunk (if&nbsp;<code>false</code>, just echos the code into the output).</td>
-</tr>
-<tr class="even">
-<td><code>echo</code></td>
-<td>Include the source code in output</td>
-</tr>
-<tr class="odd">
-<td><code>output</code></td>
-<td>Include the results of executing the code in the output (<code>true</code>,&nbsp;<code>false</code>, or&nbsp;<code>asis</code>&nbsp;to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown).</td>
-</tr>
-<tr class="even">
-<td><code>warning</code></td>
-<td>Include warnings in the output.</td>
-</tr>
-<tr class="odd">
-<td><code>error</code></td>
-<td>Include errors in the output (note that this implies that errors executing code will not halt processing of the document).</td>
-</tr>
-<tr class="even">
-<td><code>include</code></td>
-<td>Catch all for preventing any output (code or results) from being included (e.g.&nbsp;<code>include: false</code>&nbsp;suppresses all output from the code block).</td>
-</tr>
-</tbody>
-</table>
-<p>See the <a href="https://quarto.org/docs/computations/execution-options.html" target="_blank">Quarto Documentation</a> for more details</p>
-</section>
-<section id="css-styling" class="level3">
-<h3 class="anchored" data-anchor-id="css-styling">CSS Styling</h3>
-<p>You can also add CSS styling, either as a separate .css document or at the end of the Quarto document.</p>
-<p>For instance, I used the following styling options in the <a href="../sample_report.html" target="_blank">sample report</a>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tab-content</span> {</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-style</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>h1 {</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span><span class="op">;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>h2 {</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>a {</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span><span class="op">;</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>a<span class="in">:hover</span> {</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">.quarto-title-meta-heading</span> {</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span><span class="op">;</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="op">,</span> <span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a {</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ECE5D7</span><span class="op">;</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left-color</span><span class="ch">:</span> <span class="dv">solid</span> <span class="cn">#ECE5D7</span><span class="op">;</span></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="fu">.active</span><span class="op">,</span> <span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="fu">.active</span> {</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span><span class="op">;</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left-color</span><span class="ch">:</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="in">:hover</span><span class="op">,</span> <span class="fu">.sidebar</span> nav<span class="ex">[</span><span class="ss">role</span><span class="op">=</span><span class="st">doc-toc</span><span class="ex">]</span> ul<span class="op">&gt;</span>li<span class="op">&gt;</span>ul<span class="op">&gt;</span>li<span class="op">&gt;</span>a<span class="in">:hover</span> {</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span><span class="op">;</span></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-left-color</span><span class="ch">:</span> <span class="dv">solid</span> <span class="cn">#CBB879</span><span class="op">;</span></span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a><span class="fu">.nav-link</span> {</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#495057</span><span class="op">;</span></span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="fu">.nav-tabs</span> <span class="fu">.nav-link.active</span><span class="op">,</span> <span class="fu">.nav-tabs</span> <span class="fu">.nav-item.show</span> <span class="fu">.nav-link</span> {</span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a><span class="fu">.code-tools-button</span> {</span>
-<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="fu">.dropdown-toggle</span> {</span>
-<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>output_theme <span class="ot">&lt;-</span> <span class="fu">theme_linedraw</span>() <span class="sc">+</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_spacious</span>(<span class="at">font_size =</span> <span class="dv">12</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"gray"</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray"</span>),</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray"</span>),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(output_theme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(species, body_mass_g, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> sex, <span class="at">shape =</span> island)) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4250</span>)) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3000</span>, <span class="dv">4250</span>, <span class="at">by =</span> <span class="dv">250</span>)) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Plot Title"</span>, <span class="at">subtitle =</span> <span class="st">"A subtitle"</span>, <span class="at">tag =</span> <span class="st">"A)"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Sex"</span>, <span class="at">shape =</span> <span class="st">"Island"</span>) <span class="sc">+</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="common-types-of-plots" class="level2">
+<h2 class="anchored" data-anchor-id="common-types-of-plots">Common Types of Plots</h2>
+<section id="histogram" class="level3">
+<h3 class="anchored" data-anchor-id="histogram">Histogram</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(body_mass_g)) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bar-point-and-line" class="level3">
+<h3 class="anchored" data-anchor-id="bar-point-and-line">Bar, point, and line</h3>
+<p>When you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.</p>
+<section id="bar-plot" class="level4">
+<h4 class="anchored" data-anchor-id="bar-plot">Bar plot</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="point-plot" class="level4">
+<h4 class="anchored" data-anchor-id="point-plot">Point plot</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="point-plot---with-raw-values" class="level4">
+<h4 class="anchored" data-anchor-id="point-plot---with-raw-values">Point plot - with raw values</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">1</span>, <span class="at">size =</span> .<span class="dv">75</span>, <span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="line-plot" class="level4">
+<h4 class="anchored" data-anchor-id="line-plot">Line plot</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">group =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="line-plot---with-raw-values" class="level4">
+<h4 class="anchored" data-anchor-id="line-plot---with-raw-values">Line plot - with raw values</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">1</span>, <span class="at">size =</span> .<span class="dv">75</span>, <span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">group =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="scatterplot" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplot">Scatterplot</h3>
+<p>When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a <strong>scatterplot</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(bill_length_mm, body_mass_g)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"forestgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lectures-class-6_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 
 

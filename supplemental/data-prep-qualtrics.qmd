@@ -1,0 +1,617 @@
+---
+title: "Data Preparation - Qualtrics"
+execute:
+  echo: true
+  eval: false
+  message: false
+  warning: false
+---
+
+In [Class 4](lectures/lectures-class-4.html), we saw that the first stage in the data processing workflow is **data preparation**. This is a critical, though often overlooked stepped.
+
+There are certain considerations that need to be made when working with data generated from a Qualtrics Survey (a popular survey tool used in psychology and other fields). This guide is meant to help you figure out the steps you need to take in order to **prepare** your data from a Qualtrics Survey for scoring and analysis. The end product of this **data preparation** stage is one or more tidy raw data files.
+
+This guide assumes you have completed Classes 1 - 4. You should reference materials in those classes to help you at this stage.
+
+# GitHub Copilot in RStudio
+
+Not required, but you might find it useful to [setup GitHub Copilot in RStudio](https://dr-jt.github.io/r-for-psychology-students/supplemental/github_copilot.html){target="_blank"} to have an AI assistant help you write code. I find it useful for writing tedious repetitive code that is often required during this data preparation stage.
+
+# Setup Project
+
+Your project should be stored on a shared drive (e.g., Dropbox, OneDrive, Google Drive) so that all your team members can access it.
+
+1.  Create a folder for your project that contains the three following folders
+
+📁 analyses
+
+📁 data
+
+📁 R
+
+2.  Inside of the **data** folder create a **raw** folder
+
+📁 data
+
+   📁 raw
+
+2.  Create an [RStudio Project](/lectures/lectures-class-4.html#rstudio-projects):
+
+> File -\> New Project... -\> Existing Directory
+
+# Data
+
+1.  In your study on Qualtrics go to the **Data & Analysis** tab
+
+2.  Download the data as a **.csv** file
+
+3.  Move the downloaded data file to your **data/raw** folder
+
+    -   If you have multiple raw data files you may consider creating an organization like this
+
+        ![](images/folder_organization.png){width="117"}
+
+4.  Rename the data file to something shorter (e.g., rawdata_messy.csv)
+
+# Template R Script
+
+The main goal at this stage is to complete an R script to create tidy raw data files from messy raw data files. A tidy raw data file is just a cleaned up version of the original raw data file that is easier to understand and is formatted in a way that makes it easy to use.
+
+1.  Create a new R script file named: **1_tidyraw.R**
+2.  Save it in the **R** folder
+3.  Copy and paste this template into your script: (use the copy icon button on the top-right)
+
+```{r}
+# ---- Setup -------------------------------------------------------------------
+# packages
+library(here)
+library(qualtRics) # you will need to first install this package
+library(dplyr)
+library(tidyr)
+library(stringr)
+# ------------------------------------------------------------------------------
+
+# ---- Import Data -------------------------------------------------------------
+data_import <- read_survey(here("data/raw", "rawdata_messy.csv"))
+# ------------------------------------------------------------------------------
+
+# ---- Tidy Data ---------------------------------------------------------------
+data_survery1 <- data_import |>
+  select() |>
+  pivot_longer() |>
+  mutate()
+
+data_survey2 <- data_import |>
+  select() |>
+  pivot_longer() |>
+  mutate()
+# ------------------------------------------------------------------------------
+
+# ---- Save Data ---------------------------------------------------------------
+write_csv(data_survery1, here("data/raw", "survey1_tidy.csv"))
+write_csv(data_survery2, here("data/raw", "survey2_tidy.csv"))
+# ------------------------------------------------------------------------------
+
+rm(list = ls())
+
+```
+
+4.  Use the 1_tidyraw.R script template to get **started**. It is just a template, you will need to modify it for your data specifically. The template contains 4 main sections:
+    -   Setup
+    -   Import Data
+    -   Tidy Data
+    -   Save Data
+
+::: callout-important
+If you have multiple messy raw data files then you should create a separate **tidyraw** script for each one.
+
+However, if you only have one raw data file because your data is all collected on a single Qualtrics survey then you can just create one **tidyraw** script
+:::
+
+# Setup
+
+The **Setup** section is to load any packages used in the script.
+
+Qualtrics does not make it easy to import data into R. Read about it [here](https://www.adrianbruegger.com/post/import-qualtrics-csv-files/){target="_blank"}
+
+However, someone has created a function `read_survey()` to import data from Qualtrics. You will need to install the `qualtRics` package first.
+
+```{r}
+install.packages("qualtRics")
+```
+
+You might also need to install the `stringr` package for later on
+
+```{r}
+install.packages("stringr")
+```
+
+::: callout-warning
+These should not go in your R script! Just type them directly in the Console window
+:::
+
+# Import Data
+
+The **Import Data** section is simply to import the data. Use `read_survey()` to import your Qualtrics Survey data.
+
+I suggest using the `here()` package to specify the file path. This was covered in [Class 4](/lectures/lectures-class-4.html#herehere).
+
+# Tidy Data
+
+The **Tidy Data** section is where most of the work needs to be done. You should be using `dplyr` and `tidyr` to do most of the work here, though you may need other packages and functions. You can delete whatever is in there now, that is just a placeholder as an example of the type of functions you might use. See the following class materials to help you in this section:
+
+-   [Class 2: Importing, Merging, and Restructuring](https://dr-jt.github.io/r-for-psychology-students/classes/class-2.html){target="_blank"}
+
+-   [Class 3: Data Transformation](https://dr-jt.github.io/r-for-psychology-students/classes/class-3.html){taget="_blank"}
+
+## Understanding the Messy Raw Data File
+
+You should take some time to better understand your messy raw data file:
+
+Use functions, such as `colnames()` and `unique()`, that we learned in [Class 1: An Introduction to Working with Data in R](https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-1.html#sec-data-frames){target="_blank"} to explore your imported data file.
+
+1.  In a document, write down the column names that go with each questionnaire/scale. If the scale has subscales within it, note which column names go with those subscales.
+2.  Which column is associated with unique IDs for each participant?
+3.  Are there any other columns that are important?
+4.  For **each** questionnaire/scale how are responses recorded?
+    -   Numeric? What is the range of possible values?
+    -   Character? What are the response options?
+        -   e.g. strongly disagree, disagree, agree, strongly disagree
+
+The amount of time it took for you to do those steps is **the reason** we are doing this data preparation step. The end product will hopefully be a tidy raw data file that is way easier to understand, even for someone that was not involved in the project.
+
+For example you might have a data frame that is structured like this
+
+| ID  | Q21..     | Q22..  | Q23..        | SQ_S1          | SQ_S2             | SQ_P3    |
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| 13  | sometimes | rarely | sometimes    |                |                   |          |
+| 14  | always    | often  | never        | strongly agree | agree             | disagree |
+| 15  | never     | always | almost never | disagree       | strongly disagree | agree    |
+
+Are you able to understand what questionnaires/scales this data contain? And which questions go together?
+
+There is a bit of structure in the column names but that is about it. By the end of this guide we will create a **tidy** version of this **messy** data file.
+
+## Tidying Up
+
+How you need to tidy up your data file will depend on the nature of your Qualtrics study used to generate your data. However, there are some common messy problems we can address for Qualtrics Survey data.
+
+One problem is that if you have multiple questionnaires with many items, then there are probably way too many columns to sort through.
+
+Another major problem with the messy raw data from Qualtrics is that everything is spread across columns (wide format). When that is the case, we cannot visually group certain columns together making it challenging to understand which column go together. Let alone, the column names are often times meaningless.
+
+Finally, there is information missing from the **messy** raw data file that we can add.
+
+-   The name or acronym of the questionnaire
+
+-   If there are subscales: the name of those scales and which items correspond to which subscale
+
+You can address these problems with your data by:
+
+1.  Creating a separate data frame for each questionnaire: `select()`
+2.  Converting the data frame to long format: `pivot_longer()`
+3.  Add and modify columns to make the data easier to understand `mutate()` and `case_when()`
+
+Notice in the script template I laid out the general format for this.
+
+```{r}
+data_survery1 <- data_import |>
+  select() |>
+  pivot_longer() |>
+  mutate()
+
+data_survey2 <- data_import |>
+  select() |>
+  pivot_longer() |>
+  mutate()
+```
+
+### Separate Questionnaires
+
+Separating the questionnaires into different data frames is easy, but you need to know which column names go with which questionnaire first (which is why I had you do this above).
+
+Use the `select()` function from `dplyr` . This will create a separate data frame that only contains columns corresponding to a single questionnaire.
+
+For example
+
+::: panel-tabset
+## Code
+
+```{r}
+data_survery1 <- data_import |>
+  select(ID, Q21.., Q22.., Q23..)
+
+data_survery2 <- data_import |>
+  select(ID, SQ_S1, SQ_S2, SQ_P3)
+```
+
+::: callout-important
+-   You need to use the special type of quotation marks `` ` ` `` if your column names contain special charaters like: a space, `$`, `%`, `-`, and more...
+
+-   You should also keep a column corresponding to the unique participant ID
+:::
+
+View the **Data Frames** tab to see the resulting data frames
+
+## Data Frames
+
+For example, we might create two data frames from the sample table above:
+
+| ID  | Q21..     | Q22..  | Q23..        |
+|-----|-----------|--------|--------------|
+| 13  | sometimes | rarely | sometimes    |
+| 14  | always    | often  | never        |
+| 15  | never     | always | almost never |
+
+ 
+
+| ID  | SQ_S1          | SQ_S2             | SQ_P3    |
+|-----|----------------|-------------------|----------|
+| 13  |                |                   |          |
+| 14  | strongly agree | agree             | disagree |
+| 15  | disagree       | strongly disagree | agree    |
+:::
+
+## Convert to Long Format
+
+It is still not clear from the data frame whether there are subscales and which items go together. This is where converting the data frame to a long format can make this data easy to understand and work with.
+
+Use the `pivot_longer()` function from `tidyr` to do this. Again, notice in the script template I laid out the general format for this. You can pipe the result of `select()` onto `pivot_longer()` . This will produce a data frame that has one row for every item in the questionnaire/scale and a single column with all the responses.
+
+::: callout-note
+Reference materials from [Class 2](/lectures/lectures-class-2.html) for how to use `pivot_longer()`
+:::
+
+Using the sample tables from above we might do something like
+
+::: panel-tabset
+## Code
+
+```{r}
+data_survery1 <- data_import |>
+  select(ID, Q21.., Q22.., Q23..) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response")
+
+data_survey2 <- data_import |>
+  select(ID, starts_with("SQ_S")) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response")
+```
+
+View the **Data Frames** tab to see the resulting data frames
+
+## Data Frames
+
+| ID  | Item  | Response     |
+|-----|-------|--------------|
+| 13  | Q21.. | sometimes    |
+| 13  | Q22.. | rarely       |
+| 13  | Q23.. | sometimes    |
+| 14  | Q21.. | always       |
+| 14  | Q22.. | often        |
+| 14  | Q23.. | never        |
+| 15  | Q21.. | never        |
+| 15  | Q22.. | always       |
+| 15  | Q23.. | almost never |
+
+: data_survey1
+
+ 
+
+| ID  | Item  | Response          |
+|-----|-------|-------------------|
+| 13  | SQ_S1 |                   |
+| 13  | SQ_S2 |                   |
+| 13  | SQ_P3 |                   |
+| 14  | SQ_S1 | strongly agree    |
+| 14  | SQ_S2 | agree             |
+| 14  | SQ_P3 | disagree          |
+| 15  | SQ_S1 | disagree          |
+| 15  | SQ_S2 | strongly disagree |
+| 15  | SQ_P3 | agree             |
+
+: data_survey2
+:::
+
+## Add and Modify Columns
+
+We can then:
+
+-   Create a column for the name of the questionnaire
+
+-   Clean up the values in the `Item` column
+
+-   Create a column containing information about subscales (if there are any)
+
+-   Recode values int he `Response` column
+
+Creating the name of the questionnaire is easy using `mutate()`
+
+::: panel-tabset
+## Code
+
+```{r}
+data_survery1 <- data_import |>
+  select(ID, Q21.., Q22.., Q23..) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "ERI")
+
+data_survey2 <- data_import |>
+  select(ID, starts_with("SQ_S")) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "SCS")
+```
+
+## Data Frames
+
+| ID  | Item  | Response     | Questionnaire |
+|-----|-------|--------------|---------------|
+| 13  | Q21.. | sometimes    | ERI           |
+| 13  | Q22.. | rarely       | ERI           |
+| 13  | Q23.. | sometimes    | ERI           |
+| 14  | Q21.. | always       | ERI           |
+| 14  | Q22.. | often        | ERI           |
+| 14  | Q23.. | never        | ERI           |
+| 15  | Q21.. | never        | ERI           |
+| 15  | Q22.. | always       | ERI           |
+| 15  | Q23.. | almost never | ERI           |
+
+: data_survey1
+
+ 
+
+| ID  | Item  | Response          | Questionnaire |
+|-----|-------|-------------------|---------------|
+| 13  | SQ_S1 |                   | SCS           |
+| 13  | SQ_S2 |                   | SCS           |
+| 13  | SQ_P3 |                   | SCS           |
+| 14  | SQ_S1 | strongly agree    | SCS           |
+| 14  | SQ_S2 | agree             | SCS           |
+| 14  | SQ_P3 | disagree          | SCS           |
+| 15  | SQ_S1 | disagree          | SCS           |
+| 15  | SQ_S2 | strongly disagree | SCS           |
+| 15  | SQ_P3 | agree             | SCS           |
+
+: data_survey2
+:::
+
+To clean up values in `Item` you can use the `str_remove()` function from `stringr` . You might want to convert `Item` to numeric if you remove **all** string character values.
+
+[See the stringr documentation](https://stringr.tidyverse.org/reference/index.html){target="_blank"} for convenient functions for working with non-numeric values.
+
+::: panel-tabset
+## Code
+
+```{r}
+data_survery1 <- data_import |>
+  select(ID, Q21.., Q22.., Q23..) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "ERI",
+         Item = str_remove(Item, "Q2"),
+         Item = str_remove(Item, ".."),
+         Item = as.numeric(Item))
+
+data_survey2 <- data_import |>
+  select(ID, starts_with("SQ_S")) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "SCS",
+         Item = str_remove(Item, "SQ_"))
+```
+
+## Data Frames
+
+| ID  | Item | Response     | Questionnaire |
+|-----|------|--------------|---------------|
+| 13  | 1    | sometimes    | ERI           |
+| 13  | 2    | rarely       | ERI           |
+| 13  | 3    | sometimes    | ERI           |
+| 14  | 1    | always       | ERI           |
+| 14  | 2    | often        | ERI           |
+| 14  | 3    | never        | ERI           |
+| 15  | 1    | never        | ERI           |
+| 15  | 2    | always       | ERI           |
+| 15  | 3    | almost never | ERI           |
+
+: data_survey1
+
+ 
+
+| ID  | Item | Response          | Questionnaire |
+|-----|------|-------------------|---------------|
+| 13  | S1   |                   | SCS           |
+| 13  | S2   |                   | SCS           |
+| 13  | P3   |                   | SCS           |
+| 14  | S1   | strongly agree    | SCS           |
+| 14  | S2   | agree             | SCS           |
+| 14  | P3   | disagree          | SCS           |
+| 15  | S1   | disagree          | SCS           |
+| 15  | S2   | strongly disagree | SCS           |
+| 15  | P3   | agree             | SCS           |
+
+: data_survey2
+:::
+
+If there are subscale, we can create a column with information about which items belong to which subscale. You should have identified this information for your data in the steps above. (If there are no subscales then you do not need this step).
+
+We can use `case_when()` from `dplyr()` to do this.
+
+For this sample data:
+
+::: panel-tabset
+## Code
+
+```{r}
+data_survery1 <- data_import |>
+  select(ID, Q21.., Q22.., Q23..) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "ERI",
+         Item = str_remove(Item, "Q2"),
+         Item = str_remove(Item, ".."),
+         Item = as.numeric(Item),
+         Subscale = case_when(between(Item, 1,2) ~ "Emotion_Regulation",
+                              Item == 3 ~ "Emotion_Reappraisal"))
+
+data_survey2 <- data_import |>
+  select(ID, starts_with("SQ_S")) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "SCS",
+         Item = str_remove(Item, "SQ_"),
+         Subscale = 
+           case_when(Item %in% c("S1", "S2") ~ "Friendship_Quality",
+                     Item == "P3" ~ "Community_Engagement"))
+```
+
+## Data Frames
+
+| ID  | Item | Response     | Questionnaire | Subscale            |
+|-----|------|--------------|---------------|---------------------|
+| 13  | 1    | sometimes    | ERI           | Emotion_Regulation  |
+| 13  | 2    | rarely       | ERI           | Emotion_Regulation  |
+| 13  | 3    | sometimes    | ERI           | Emotion_Reappraisal |
+| 14  | 1    | always       | ERI           | Emotion_Regulation  |
+| 14  | 2    | often        | ERI           | Emotion_Regulation  |
+| 14  | 3    | never        | ERI           | Emotion_Reappraisal |
+| 15  | 1    | never        | ERI           | Emotion_Regulation  |
+| 15  | 2    | always       | ERI           | Emotion_Regulation  |
+| 15  | 3    | almost never | ERI           | Emotion_Reappraisal |
+
+: data_survey1
+
+ 
+
+| ID  | Item | Response          | Questionnaire | Subscale             |
+|-----|------|-------------------|---------------|----------------------|
+| 13  | S1   |                   | SCS           | Friendship_Quality   |
+| 13  | S2   |                   | SCS           | Friendship_Quality   |
+| 13  | P3   |                   | SCS           | Community_Engagement |
+| 14  | S1   | strongly agree    | SCS           | Friendship_Quality   |
+| 14  | S2   | agree             | SCS           | Friendship_Quality   |
+| 14  | P3   | disagree          | SCS           | Community_Engagement |
+| 15  | S1   | disagree          | SCS           | Friendship_Quality   |
+| 15  | S2   | strongly disagree | SCS           | Friendship_Quality   |
+| 15  | P3   | agree             | SCS           | Community_Engagement |
+
+: data_survey2
+:::
+
+::: callout-note
+Note that in `case_when()` I am just providing you with different options you can use as a shorthand.
+
+-   `between()` is for numeric values and results in TRUE when a value is within a certain range. In this example the range is dumb, just 1 to 2.
+
+-   `Item %in% c("S1", "S2")` reads as: Is Item in this list of "S1", "S2"?. If Item is in this list, then set Subscale to "Friendship_Quality"
+
+Alternatively, you can do this in a longer format using a series of `==` for every single item:
+
+```{r}
+case_when(Item == 1 ~ "Emotion_Regulation",
+          Item == 2 ~ "Emotoin_Regulation",
+          Item == 3 ~ "Emotion_Reappraisal")
+```
+:::
+
+Finally, you may want to create an additional column that converts the `Response` into numeric (or vice versa if it is already in numeric you may want to convert it to a character string).
+
+Again we can use `case_when()`
+
+```{r}
+data_survery1 <- data_import |>
+  select(ID, Q21.., Q22.., Q23..) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "ERI",
+         Item = str_remove(Item, "Q2"),
+         Item = str_remove(Item, ".."),
+         Item = as.numeric(Item),
+         Subscale = case_when(between(Item, 1,2) ~ "Emotion_Regulation",
+                              Item == 3 ~ "Emotion_Reappraisal"),
+         Response_Code = case_when(Response == "never" ~ 1,
+                                   Response == "almost never" ~ 2,
+                                   Response == "rarely" ~ 3,
+                                   Response == "sometimes" ~ 4,
+                                   Response == "often" ~ 5,
+                                   Response == "almost always" ~ 6,
+                                   Response == "always" ~ 7))
+
+data_survey2 <- data_import |>
+  select(ID, starts_with("SQ_S")) |>
+  pivot_longer(cols = starts_with("Q"),
+               names_to = "Item",
+               values_to = "Response") |>
+  mutate(Questionnaire = "SCS",
+         Item = str_remove(Item, "SQ_"),
+         Subscale = 
+           case_when(Item %in% c("S1", "S2") ~ "Friendship_Quality",
+                     Item == "P3" ~ "Community_Engagement"),
+         Response_Code = 
+           case_when(Response == "strongly disagree" ~ 1,
+                     Response == "disagree" ~ 2,
+                     Response == "neither agree nor disagree" ~ 3,
+                     Response == "agree" ~ 4,
+                     Response == "strongly agree" ~ 5))
+```
+
+We now end up with tidy raw data frames
+
+| ID  | Item | Response     | Questionnaire | Subscale            | Response_Code |
+|-----|------|--------------|---------------|---------------------|---------------|
+| 13  | 1    | sometimes    | ERI           | Emotion_Regulation  | 4             |
+| 13  | 2    | rarely       | ERI           | Emotion_Regulation  | 3             |
+| 13  | 3    | sometimes    | ERI           | Emotion_Reappraisal | 4             |
+| 14  | 1    | always       | ERI           | Emotion_Regulation  | 7             |
+| 14  | 2    | often        | ERI           | Emotion_Regulation  | 5             |
+| 14  | 3    | never        | ERI           | Emotion_Reappraisal | 1             |
+| 15  | 1    | never        | ERI           | Emotion_Regulation  | 1             |
+| 15  | 2    | always       | ERI           | Emotion_Regulation  | 7             |
+| 15  | 3    | almost never | ERI           | Emotion_Reappraisal | 2             |
+
+: data_survey1
+
+ 
+
+| ID  | Item | Response          | Questionnaire | Subscale             | Response_Code |
+|------------|------------|------------|------------|------------|------------|
+| 13  | S1   |                   | SCS           | Friendship_Quality   |               |
+| 13  | S2   |                   | SCS           | Friendship_Quality   |               |
+| 13  | P3   |                   | SCS           | Community_Engagement |               |
+| 14  | S1   | strongly agree    | SCS           | Friendship_Quality   | 5             |
+| 14  | S2   | agree             | SCS           | Friendship_Quality   | 4             |
+| 14  | P3   | disagree          | SCS           | Community_Engagement | 2             |
+| 15  | S1   | disagree          | SCS           | Friendship_Quality   | 2             |
+| 15  | S2   | strongly disagree | SCS           | Friendship_Quality   | 1             |
+| 15  | P3   | agree             | SCS           | Community_Engagement | 4             |
+
+: data_survey2
+
+You can see these data frames are much easier to understand and to work with. Someone outside of your project would have a decent understanding of what information is contained and what is being measured.
+
+**You need to have your data in this type of format as it will be easier for you to start thinking about scoring and analyzing your data**
+
+# Save Data
+
+I suggest saving a different **tidy raw** data file for each questionnaire/scale you have. This is because each one may have different ways of scoring the data, and different things to think about. It will also help keep your data files and scripts organized if you need to go back and modify them.
+
+Store your tidy raw data files in **data/raw** and use the name of the scale in the file name.
+
+We have not talked about the `write_csv()` function but it is pretty simple to use as you can see.
+
+```{r}
+write_csv(data_survery1, here("data/raw", "ERI_tidy.csv"))
+write_csv(data_survery2, here("data/raw", "SCS_tidy.csv"))
+```

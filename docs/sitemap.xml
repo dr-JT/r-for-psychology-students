@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-5.html</loc>
-    <lastmod>2024-03-14T14:07:40.627Z</lastmod>
+    <lastmod>2024-03-19T20:53:16.598Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-6.html</loc>
-    <lastmod>2024-03-14T02:19:04.089Z</lastmod>
+    <lastmod>2024-03-19T20:53:58.718Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-2.html</loc>
@@ -21,72 +21,76 @@
     <lastmod>2024-03-14T14:22:30.622Z</lastmod>
   </url>
   <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-5.html</loc>
-    <lastmod>2024-03-14T14:14:24.432Z</lastmod>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/supplemental/github_copilot.html</loc>
+    <lastmod>2024-03-14T13:55:37.134Z</lastmod>
   </url>
   <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-6.html</loc>
-    <lastmod>2024-03-14T02:23:22.950Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-2.html</loc>
-    <lastmod>2024-02-22T02:11:29.337Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/index.html</loc>
-    <lastmod>2024-03-14T02:24:12.109Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-4.html</loc>
-    <lastmod>2024-03-05T00:51:56.611Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-6.html</loc>
-    <lastmod>2024-03-14T02:23:44.659Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-3.html</loc>
-    <lastmod>2024-02-16T14:30:07.975Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/sample_report.html</loc>
-    <lastmod>2024-03-14T01:43:26.414Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/what-is-R.html</loc>
-    <lastmod>2024-03-05T00:51:56.725Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-1.html</loc>
-    <lastmod>2024-02-06T17:42:28.964Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-2.html</loc>
-    <lastmod>2024-02-22T01:41:35.459Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-5.html</loc>
-    <lastmod>2024-03-07T00:44:03.477Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/prerequisites.html</loc>
-    <lastmod>2024-01-05T02:32:26.576Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-1.html</loc>
-    <lastmod>2024-02-05T19:09:34.164Z</lastmod>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-4.html</loc>
+    <lastmod>2024-03-19T20:57:22.218Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-3.html</loc>
     <lastmod>2024-02-22T02:20:17.973Z</lastmod>
   </url>
   <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-4.html</loc>
-    <lastmod>2024-03-05T00:51:56.724Z</lastmod>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-1.html</loc>
+    <lastmod>2024-02-05T19:09:34.164Z</lastmod>
   </url>
   <url>
-    <loc>https://dr-jt.github.io/r-for-psychology-students/supplemental/github_copilot.html</loc>
-    <lastmod>2024-03-14T13:55:37.134Z</lastmod>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/prerequisites.html</loc>
+    <lastmod>2024-01-05T02:32:26.576Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-5.html</loc>
+    <lastmod>2024-03-19T21:02:16.758Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-2.html</loc>
+    <lastmod>2024-02-22T01:41:35.459Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-1.html</loc>
+    <lastmod>2024-02-06T17:42:28.964Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/what-is-R.html</loc>
+    <lastmod>2024-03-05T00:51:56.725Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/sample_report.html</loc>
+    <lastmod>2024-03-14T01:43:26.414Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-3.html</loc>
+    <lastmod>2024-02-16T14:30:07.975Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-6.html</loc>
+    <lastmod>2024-03-19T21:02:36.902Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/classes/class-4.html</loc>
+    <lastmod>2024-03-19T21:01:40.862Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/index.html</loc>
+    <lastmod>2024-03-19T21:03:24.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-2.html</loc>
+    <lastmod>2024-02-22T02:11:29.337Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-6.html</loc>
+    <lastmod>2024-03-19T20:58:09.781Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/slides/slides-class-5.html</loc>
+    <lastmod>2024-03-19T20:57:42.523Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dr-jt.github.io/r-for-psychology-students/supplemental/data-prep-qualtrics.html</loc>
+    <lastmod>2024-03-19T21:56:13.516Z</lastmod>
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/activities/activities-class-2.html</loc>
@@ -102,6 +106,6 @@
   </url>
   <url>
     <loc>https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-4.html</loc>
-    <lastmod>2024-03-05T00:51:56.723Z</lastmod>
+    <lastmod>2024-03-19T20:51:41.815Z</lastmod>
   </url>
 </urlset>

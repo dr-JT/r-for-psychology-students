@@ -1,5 +1,5 @@
 ---
-title: "Class 4: Data Visualization"
+title: "Class 4: Reproducible Projects"
 execute:
   echo: true
   eval: false
@@ -15,756 +15,359 @@ source(here::here("prerender.R"))
 
 ```
 
-Data visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
+Up to this point we have not had to give much thought to project organization and reproducibility because you have mainly been working with a single R script and importing one or two data files. However, working on a research project often involves a larger set of R scripts, multiple data files, and a report containing data visualizations and statistical analyses.
 
-1)  **Data exploration**: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.
-2)  **Explain and Communicate**: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
+Project organization is often overlooked at the expense of "just getting it done" because it takes more time and forethought to organize a project. However, the "just getting it done" approach can lead to a lot of unintended consequences:
 
-## ggplot2
+-   **Inefficient Workflow**: Disorganization can lead to a chaotic workflow where significant time is spent locating files, understanding what each script does, and figuring out the correct order of operations for running analyses. This inefficiency can drastically slow down the research progress.
 
-In this class, we will learn about the fundamentals of data visualization using the `ggplot2` package. This is by far the most popular package for data visualization in R.
+-   **Time Inefficiency**: Researchers may waste significant amounts of time searching for files, data, or specific pieces of code within a disorganized project. This inefficiency can extend project timelines and delay the dissemination of findings.
 
-![](images/ggplot2.jpg){width="104"}
+-   **Increased Errors**: A lack of organization can lead to more mistakes. This is because it's easier to lose critical pieces of code or overlook important updates to scripts. It is also harder to go back and check your work to make sure things were done correctly.
 
-You have already seen and used `ggplot2` in previous classes, but now we will cover how to actually use this package. The elements for creating a ggplot was largely inspired from the work of Leland Wilkinson (Grammar of Graphics, 1999), who formalized two main principles in plotting data:
+-   **Difficulty in Scaling the Project**: As projects grow, the lack of initial organization can make it much more difficult to scale up. This can limit the scope of the research or lead to significant restructuring efforts down the line.
 
-1.  Layering: The idea of layering involves building plots by adding different layers of grammatical elements. Each layer can consist of components such as points, lines, bars, etc., and can be combined to create complex plots.
-2.  Mapping: This principle involves mapping variables in your data to aesthetic properties of the graphical objects, such as size, shape, color, position, and the scales on the x and y axes.
+-   **Barriers to Revising Analysis**: Research often requires revisiting and revising analyses as new data comes in or as hypotheses evolve. A lack of organization can make it difficult to update analyses or integrate new data seamlessly, stifling the dynamic nature of research.
 
-In this framework, the essential grammatical elements required to create any data visualization are:
+-   **Challenges in Publishing and Sharing**: When preparing research for publication or sharing with the broader scientific community, a well-organized project simplifies the process of compiling results, data, and methods. An unorganized project can impede these efforts, delaying or even jeopardizing publication.
 
-![](images/ge_essentials.png){width="587"}
+-   **Reproducibility Issues**: Without clear organization, reproducing the results of a project can become nearly impossible, both for the original researchers and for others who may want to build upon the work. This undermines the credibility and utility of the research.
 
-Let's take a look at how these elements work to create a simple visualization of data. In [Class 1](/classes/class-1.html) I introduced you to the fun `palmerpenguins` data set. I will use this data set to illustrate how `ggplot2` works.
+The thing is, simply using R does not get around any of this. In fact, sometimes it can exacerbate it because of the extra cognitive demand faced when writing code. This extra demand can make the "just getting it done" approach more tempting. So what is the solution?
 
-![](images/lter_penguins.png){fig-align="center" width="677"}
+The solution is to [slow down]{.underline} and [give some thought]{.underline} to the organization of your project and it's reproducibility.
 
-Go ahead and load the `palmerpenguins` and `ggplot2` packages using `library()` . Additionally, let's make the `penguins` data set that is loaded with `palmerpenguins` visible in the environment by explicitly assigning it to an object.
+> Frontloading effort saves future headaches.
 
-```{r}
-#| echo: false
-#| eval: true
+## Reproducible Projects
 
-library(palmerpenguins)
-library(ggplot2)
+Part of the scientific process involves carefully documenting every step in our procedures. Doing so not only ensures higher quality research, but also enables your future self and others to fully reproduce what you did, go back and analyze the data in a different way, or catch errors in the data analysis process. Without a fully reproducible project, it may be difficult or impossible to catch errors that were made.
 
-```
+### What does reproducibility mean?
 
-```{r}
-penguins <- penguins
-```
+Reproducibility means that all data processing and analysis steps can be fully reproduced using only the original raw data files and the execution of the R scripts. There are different levels of reproducibility (I made these up):
 
-## Data layer
+1.  **Partially reproducible** - only some data processing and analysis steps can be reproduced, which may be due to a lack of original raw data files, the "just get it done" approach, or the use of proprietary and non-reproducible software.
 
-The Data Layer specifies the data object that is being plotted.
+2.  **Minimally reproducible** (acceptable) - all data processing and analysis steps can be reproduced on any research team members computer without any modifications needed.
 
-![](images/ge_data.png){width="400"}
+3.  **Moderately reproducible** (desired) - meets the minimal level plus other people not involved in the research project can reproduce the steps with minimal modifications.
 
-It is the first grammatical element that is required to create a plot:
+4.  **Highly reproducible** (good luck!) - fully reproducible without major modifications needed by people not involved in the research project 5 - 10+ years from now.
 
-```{r}
-#| eval: true
-
-ggplot(data = penguins)
-```
-
-You can see that we only have a blank square. This is because we have not added any other layers yet, we have only specified the data layer. `ggplot()` doesn't yet know how to map the variables onto the axis scales. That is where the aesthetic mapping layer comes in.
-
-## Aesthetics Layer
-
-The next grammatical element is the aesthetic layer, or **aes** for short. This layer specifies how we want to *map* our data onto the scales of the plot.
-
-![](images/ge_aes.png){width="400"}
-
-The aesthetic layer *maps* variables in our data onto scales in our graphical visualization, such as the x and y coordinates. In `ggplot2` the aesthetic layer is specified using the `aes()` function. Let's create a plot of the relationship between `bill_length_mm` and `flipper_length_mm`, putting them on the x and y axis respectively.
-
-```{r}
-#| eval: true
-
-ggplot(penguins, 
-       mapping = aes(x = bill_length_mm, y = flipper_length_mm))
-
-```
-
-You can see we went from a blank box to a graph with the variable and scales of `bill_length_mm` mapped onto the x-axis and `flipper_length_mm` on the y-axis.
-
-The aesthetic layer also maps variables in our data to other elements in our graphical visualization, such as color, size, fill, etc. These other elements are useful for adding a third variable onto our graphical visualizations. For instance, we can add the variable of `species` by mapping `species` onto the color aesthetic.
-
-```{r}
-#| eval: true
-
-ggplot(penguins, 
-       mapping = aes(bill_length_mm, flipper_length_mm, color = species))
-
-```
-
-You will notice that the plot has not changed. Species is not plotted by color. This is because `ggplot()` does not know the geometrical form the data should take - a bar plot, line plot, dot plot, etc.? It cannot add color to a geometrical form that is not specified yet. That is where the geometries layer comes in.
-
-## Geometries Layer
-
-The next *essential* grammatical element for graphical visualization is the geometries layer or **geom** for short. This layer specifies the visual elements that should be used to plot the actual data.
-
-![](images/ge_geom.png){width="400"}
-
-There are a lot of different types of **geoms** to use in ggplot2. Some of the most commonly used ones are:
-
--   Points or jittered points: `geom_point()` or `geom_jitter()`
-
--   Lines: `geom_line()`
-
--   Bars: `geom_bar()`
-
--   Violin: `geom_violin()`
-
--   Error bars: `geom_errobar()` or `geom_ribbon()`
-
-For a full list see the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/#geoms){target="_blank"}
+A minimal level of reproducibility is still acceptable, as achieving more requires significant time and effort. We should strive for a moderate amount of reproducibility but achieving it requires more than just writing code. Your code must be organized, easy to understand, and include notes and documentation. Even if you or someone else attempts to reproduce your steps in the future, they can modify the code to make it work. The highest level of reproducibility is difficult to achieve due to software and code updates. Your code may only work with the current version of R or other packages. There are solutions to this problem of software and code updates, but who knows if those will work in the future!
 
 ------------------------------------------------------------------------
 
-For now, let's demonstrate this using `geom_point()`. We will create what is called a **scatterplot** - plotting the individual data points for two continuous variables.
+Simply using R for data analysis does not guarantee that your workflow is reproducible. In fact, there are many non-reproducible ways to use R. To ensure at least a moderate level of reproducibility, consider the following criteria (this is not an exhaustive list):
 
-To create a scatterplot we can simply add `geom_point()` to our ggplot.
+-   Your statistical analysis (the final step) can be fully reproduced from the raw data files and your R scripts
 
-::: callout-note
-Note that in `ggplot2` there is a special notation that is similar to the pipe operator `|>` seen before. Except in `ggplot2` you have to use a plus sign `+` .
-:::
+-   Your code can be reproduced on other computers without any modifications
+
+-   **Your data and R scripts are organized and documented in a way that makes them easily understandable**
+
+This last criterion is extremely important, but is often overlooked. If others cannot understand your workflow, then it is not moderately reproducible. Therefore, it is important to take the time and think about the organization of your project, files, data, and scripts.
+
+## Project Workflow
+
+A good starting point for organizing your project is to map out the steps required for processing and analyzing your data.
+
+A typical data analysis workflow looks something like this:
+
+![](images/data_steps.png){fig-align="center" width="1220"}
+
+You will always start with a **messy** raw data file. Messy raw data files are hard to understand, have poor column and value labels, contain way too many columns and rows, and are just hard to work with. The initial data preparation stage is all about getting raw data files that are easy to work with.
+
+The end product of the data preparation stage is **tidy** raw data files. Tidy raw data files are easy to understand, have sensible column and value labels, contain only relevant columns and rows, and are easy to work with.
+
+Once you have a **tidy** raw data file you can start on the data analysis stage. The workflow for this stage can vary widely depending on your particular research project. However, there are typically at least two end products of the data analysis stage:
+
+1.  A data file that is ready for statistical analysis
+2.  A report document of the results from your statistical analysis (also includes data visualizations)
+
+I suggest using this data analysis workflow as a starting point for organizing your project:
+
+-   Organize your folders and files to match this workflow
+
+-   Create separate scripts for each stage
+
+## File Organization
+
+Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:
+
+![](images/folder_organization.png){width="176"}
+
+### Data Folder
+
+Notice how the structure of the **data** folder follows the data analysis workflow. The original **messy** raw data files are stored in **data / raw / messy**. The **tidy** raw data files are stored in **data / raw**. And the **processed and cleaned** data files are stored in **data**
+
+Alternatively, if you only have one original messy raw data file that you are working with you can just put all the data files in **data** and name the data files appropriately:
+
+![](images/folder_organization_alt.png){width="210"}
+
+The basic priniciple here is that your **data** folder organization and **data** file naming maps onto the end products in your data analysis workflow.
+
+### R Folder
+
+I highly recommend that you put all your R scripts in one folder, rather than having them scattered across different folders.
+
+Additionally, I recommend that you append a prefix number corresponding to the order in which the scripts need to be ran and a suffix corresponding to what stage of the data analysis workflow it is in:
+
+-   **1_tidyraw.R**
+
+-   **2_score_clean.R**
+
+-   **3_merge.R**
+
+Utlimately these scripts should be cleaned up, commented, and easy to understand.
+
+Initially, coding can be messy as you grapple with determining the precise data processing approach. You might consider creating a script (or a folder of scripts) that are for messing around and figuring out how to process your data:
+
+-   **Untitled.R**
+
+### Analyses Folder
+
+The analyses folder will contain **Quarto** documents (more on these in the next class) that you will use to genearate reports for exploring your data, creating data visualizations, and conduct statistical analyses. This folder will have at least one file:
+
+-   **Main Analyses.qmd**
+
+These document should be cleaned up, well organized, and easy to understand.
+
+As with the R scripts, you might like to have a **Quarto** document (or folder of documents) just for messing around and figuring out how to analyze your data:
+
+-   **Untitled.qmd**
+
+### mainscript
+
+You might also consider creating a **mainscript.R** or **mainscript.qmd** file to source all your R scripts and Quarto documents, rather than opening and sourcing each R script and Quarto document one at a time.
+
+It might be a file simply containing:
+
+```{r}
+## data preparation
+source("R/1_tidyraw.R")
+
+## data scoring
+source("R/2_score_clean.R")
+source("R/3_merge.R")
+
+## statistical analysis
+library(quarto)
+quarto_render("analyses/Main Analyses.qmd")
+```
+
+I typically just include the **mainscript** file in the root directory of the project rather than in the **R** script folder.
+
+A complete folder and file organization might look something like:
+
+![](images/file_organization.png){width="220"}
+
+## Importing Data
+
+Up until now, you have been using **absolute** file paths and the **RStudio Import Dataset GUI** for importing files into R. This is not a reproducible way of importing data into R. You can still use the RStudio Import Dataset GUI to figure out what type of data file you are importing (e.g., tab-delimited, csv) but I will now show you a simple and reproducible way of importing data into R.
+
+### File Paths
+
+R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an **absolute** file path. Absolute file paths start at the root directory of your computer and might look something like:
+
+> **On Macs**:
+>
+> Users/username/projects/project_name/data/a_file.csv
+>
+> **On Windows**:
+>
+> C:\\username\\projects\\project_name\\data\\a_file.csv
+
+**Relative file paths** on the other hand, start from a folder - typically a project folder
+
+> data/a_file.csv
+
+Relative file paths need to be used in order for your project to meet even a minimal level of reproducibility. A relative file path can be used on different computers as long as the internal organization of folders and files for the project are the same.
+
+However, at some point your computer does need to know the absolute file path to your project folder. A convenient and reproducible way of doing this is by using a combination of **RStudio Projects** and `here::here()` .
+
+### RStudio Projects
+
+[RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) allow you to open isolated instances of R and RStudio for each of your projects. RStudio projects are convenient for a number of reasons, but the most useful thing is setting a file marker for where the root directory of your project folder is located.
+
+To create an RStudio Project:
+
+> Create a folder for your project (if you do not have one yet)
+>
+> File -\> New Project...
+>
+> Choose Existing Directory -\> Browse to your project folder -\> Create Project
+
+Notice that there is now a **.Rproj** file in your project folder
+
+![](images/RProj_file.png){width="200"}
+
+When working on your project, you should **always open RStudio by opening the .Rproj file**
+
+You can also see which RStudio project is open and open RStudio projects in the very top-right corner of RStudio.
+
+![](images/rstudio_rproj.png){width="449"}
+
+### here::here()
+
+In combination with RStudio projects the `here` package offers a convenient way of specifying relative file paths.
+
+When you load the `here` package with `library(here)` it will search for the .Rproj file and start file paths at that point whenever the `here()` function is used.
+
+```{r}
+#| eval: true
+#| message: true
+
+library(here)
+
+```
+
+Notice how that where `here()` starts is an absolute file path to your project folder. You did not have to specify the absolute file path in code. Meaning this is a reproducible way for the absolute file path to automatically be set.
+
+Now you can use a relative file path inside of `here()`
 
 ```{r}
 #| eval: true
 
-ggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +
-  geom_point()
-```
-
-Note you can also specify the `color = species` aesthetic mapping on the geometric layer instead of the data layer:
-
-```{r}
-
-ggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +
-  geom_point(mapping = aes(color = species))
-```
-
-Besides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:
-
-#### Color related aesthetics
-
-[See more details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"}
-
--   **Color**: applies to most geoms `geom_(color = )`
-
--   **Fill**: applies to most geoms `geom_(fill = )`
-
--   **Transparency**: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; `geom_(alpha = )`
-
-[See a full list of R colors here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf){target="_blank"}
-
-#### Shape related aesthetics
-
-[See more details here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html){target="_blank"}
-
--   **Shape**: `geom_point(shape = )`, `geom_jitter(shape = )`
-
--   **Size**: `geom_point(size = )`, `geom_jitter(size = )`
-
--   **Line Type**: `geom_line(linetype = )`
-
--   **Line Width**: `geom_line(linewidth = )`
-
--   **Width**: `geom_errobar(width = )`, `geom_jitter(width = )`
-
-```{r}
-#| eval: true
-#| source-line-numbers: "3"
-
-ggplot(penguins, 
-       aes(bill_length_mm, flipper_length_mm, color = species)) +
-  geom_point(shape = "diamond filled", size = 3, fill = "white")
-```
-
-Besides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include.
-
-![](images/ge_all.png){width="550"}
-
-## Facets Layer
-
-The facets layer allows you to create panels of subplots within the same graphic object
-
-![](images/ge_facet.png){width="400"}
-
-The previous three layers are the **essential** layers. The facet layer is not essential, but it can be useful when you want to communicate the relationship among 4 or more variables.
-
-Let's create a facet layer of our scatterplot with different panels for `sex`
-
-```{r}
-#| eval: true
-#| source-line-numbers: "8"
-
-# first let's remove any missing values for sex
-library(dplyr)
-penguins <- filter(penguins, !is.na(sex))
-
-ggplot(penguins, 
-       aes(bill_length_mm, flipper_length_mm, color = species)) +
-  geom_point() +
-  facet_grid(cols = vars(sex))
-```
-
-You can see we are now conveying information about 4 different variables in our data; `bill_length_mm`, `flipper_length_mm`, `species`, and `sex` .
-
-See the ggplot2 documentation on [facet_grid](https://ggplot2.tidyverse.org/reference/facet_grid.html){target="_blank"} and [facet_wrap](https://ggplot2.tidyverse.org/reference/facet_wrap.html){target="_blank"}
-
-## Statistics Layer
-
-The statistics layer allows you plot aggregated statistical values calculated from your data
-
-![](images/ge_stats.png){width="400"}
-
-The statistics layer is used in combination with a **geom** to plot values that are a function (e.g., mean) of the values in your data. The two main **stat** functions are:
-
--   `geom_(stat = "summary")`
-
--   `stat_smooth()`
-
-### geom\_(stat = "summary")
-
-In the previous plots, we plotted the raw values for each individual penguin. However, statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the **geom** functions using `stat = "summary"`. There are two main arguments you need to specify:
-
--   **stat**: set this to "summary" to calculate a summary statistic
-
--   **fun**: The function used to calculate an aggregated summary statistic. Functions like **mean**, **sum**, **min**, **max**, **sd** can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in `geom_()`
-
-In the `penguins` data set, we have the raw values of `body_mass_g` for each individual penguin but perhaps we are just interested in the average (mean) values for each `species`. This can be done easily using `geom_point(stat = "summary", fun = mean)`
-
-```{r}
-#| eval: true
-#| source-line-numbers: "2"
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
-             shape = "diamond", size = 5, color = "firebrick")
-```
-
-Using multiple **geoms** you can plot both the raw values for each individual penguin and the summary statistic
-
-```{r}
-#| eval: true
-#| source-line-numbers: "2-3"
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_jitter(width = .1, size = .75, alpha = .2) +
-  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
-             shape = "diamond", size = 5, color = "firebrick")
+here("data/a_file.csv")
 
 ```
 
-The `fun =` argument returns only a single summary statistic value (e.g., a mean). However, some **geoms** actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the **fun.data** argument instead:
+Every time you use `here()` you know that the file path will start at where you have your .Rproj file saved. Instead of messing around with working directories using `setwd()` or `getwd()`, just use `here()` and RStudio Projects. This becomes especially helpful when working with Quarto documents.
 
-`mean_cl_normal` is a function to calculate 95% confidence limits from your data.
-
-```{r}
-#| eval: true
-#| source-line-numbers: "5"
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_jitter(width = .1, size = .75, alpha = .2) +
-  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
-             shape = "diamond", size = 5, color = "firebrick") +
-  geom_errorbar(stat = "summary", fun.data = mean_cl_normal, width = .1)
-
-```
-
-### stat_smooth(method = "lm")
-
-`stat_smooth(method = "lm")` is used in scatterplots to plot the regression line on your data.
+You can visually separate the folder path and the file name, making your script easier to read.
 
 ```{r}
 #| eval: true
 
-ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
-  geom_point() +
-  stat_smooth(method = "lm")
-```
-
-You can add separate regression lines if other variables are mapped to **aesthetics** and/or are wrapped in different **facets**
-
-```{r}
-#| eval: true
-
-ggplot(penguins, 
-       aes(bill_length_mm, flipper_length_mm, color = species)) +
-  geom_point() +
-  facet_grid(cols = vars(sex)) +
-  stat_smooth(method = "lm")
-```
-
-## Coordinates Layer
-
-The coordinate layer allows you to adjust the x and y coordinates
-
-![](images/ge_coord.png){width="400"}
-
-There are two main groups of functions that are useful for adjusting the x and y coordinates.
-
--   `coord_cartesian()` for adjusting the axis limits (zoom in and out)
-
--   `scale_x_` and `scale_y_` for setting the axis ticks and labels
-
-### axis limits
-
-You can adjust limits (min and max) of the x and y axes using the `coord_cartesian(xlim = c(), ylim = c())` function.
-
-::: callout-note
-If you want to compare two separate graphs, then they need to be on the same scale. This an important design principle in graphical visualization.
-:::
-
-Compare these two sets of plots
-
-```{r}
-#| eval: true
-#| source-line-numbers: "7,12"
-
-male <- filter(penguins, sex == "male")
-female <- filter(penguins, sex == "female")
-
-p1 <- ggplot(male, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(2000, 10000))
-
-p2 <- ggplot(female, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) + 
-  coord_cartesian(ylim = c(3000, 5000))
-```
-
-```{r}
-#| eval: true
-
-# patchwork can be used to combine multiple plots into one image
-library(patchwork)
-
-p1 + labs(title = "male") + p2 + labs(title = "female")
+here("data", "a_file.csv")
 
 ```
 
-A cursory look at this plot, you might conclude a couple things
-
--   Female Gentoo penguins have the largest body mass
-
--   There is a larger difference in body mass, relative to the other penguin species, for the Female Gentoo penguins than for Male Gentoo penguins.
-
-These are both false! Take a closer look at the y-axis on the two plots. Let's plot the **exact same data** but make the scales on the y-axis the same.
+You can then use `here()` inside of import and and output functions:
 
 ```{r}
-#| eval: true
-#| source-line-numbers: "4,10"
+library(readr)
+library(here)
 
-p1 <- ggplot(male, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 6000)) +
-  labs(title = "male")
+data_import <- read_csv(here("data", "a_file.csv"))
 
-p2 <- ggplot(female, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) + 
-  coord_cartesian(ylim = c(3000, 6000)) +
-  labs(title = "female")
+write_csv(data_import, here("data", "a_new_file.csv"))
+```
 
+## Using Templates
+
+Writing organized, clean, and easy to understand R code is hard. Starting with a template R script can help a lot. For this purpose, I have developed an R package `psyworkflow` that contains R script templates you can use.
+
+[See documentation on `psyworkflow`](https://dr-jt.github.io/psyworkflow/){target="_blank"}
+
+### Install
+
+First, if you do not have the `devtools` package installed:
+
+```{r}
+#| eval: false
+install.packages("devtools")
+```
+
+Install the `psyworkflow` package from my GitHub repository using the `devtools` package:
+
+```{r}
+#| eval: false
+devtools::install_github("dr-JT/psyworkflow")
+```
+
+Restart R
+
+> Session -\> Restart R
+
+### Download R Script Templates
+
+If you already have an RProject setup and just want to download some of the R script templates you can do so with the `get_template()` function.
+
+```{r}
+psyworkflow::get_template()
+```
+
+To see what the options are type in the console window
+
+```{r}
+?psyworkflow::get_template
 ```
 
 ```{r}
-#| eval: true
-
-# patchwork can be used to combine multiple plots into one image
-library(patchwork)
-
-p1 + labs(title = "male") + p2 + labs(title = "female")
-
-```
-
-::: callout-note
-`patchwork` is a convenient package to combine multiple plots into one image. The package can be used to create a more complex arrangement of multiple plots but the simplest use of it is to add plots side-by-side by simply using the `+` notation that is already used to add additional layers to a `ggplot()`
-
-```{r}
-plot1 + plot2
-```
-:::
-
-### axis ticks and labels
-
-You can adjust the scale (major and minor ticks) of the x and y axes using the `scale_x_` and `scale_y_` set of functions. The two main set of functions to know are for continuous and discrete scales:
-
--   continuous: `scale_x_continuous(breaks = seq())` and `scale_y_continuous(breaks = seq())`
-
--   discrete: `scale_x_discrete(breaks = seq())` and `scale_y_continuous(breaks = seq())`
-
-For example:
-
-```{r}
-#| eval: true
-#| source-line-numbers: "5,11"
-
-p1 <- ggplot(male, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 6000)) +
-  scale_y_continuous(breaks = seq(3000, 6000, by = 500))
-
-p2 <- ggplot(female, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) + 
-  coord_cartesian(ylim = c(3000, 6000)) +
-  scale_y_continuous(breaks = seq(3000, 6000, by = 500))
-```
-
-```{r}
-#| eval: true
-
-p1 + labs(title = "male") + p2 + labs(title = "female")
-```
-
-## Theme Layer
-
-The theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot
-
-![](images/ge_themes.png){width="400"}
-
-There are three main set of functions that we can use to control the theme layer:
-
--   **Color**: `scale_color_` set of functions will change the color scheme of the geometric elements:
-
-    -   `scale_color_manual()` - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_manual.html){target="_blank"}
-
-    -   `scale_color_brewer()` - [see documentation here](https://ggplot2.tidyverse.org/reference/scale_brewer.html){target="_blank"}
-
--   **Labels**: `labs()` is a convenient function for labeling the title, subtitle, axes, and legend
-
--   **Theme templates**: There are predefined theme templates that come with `ggplot2`
-
--   **Other theme elements**: `theme()` can be used to further customize the look of your plot
-
-    -   `theme(legend.title = element_text(face = "bold"))`
-
-### Color
-
-Changing the color theme can get complicated but is an important design element in your plot.
-
-The `RColorBrewer` package offers several color palettes for R:
-
-![](images/RColorBrewer.png){width="537"}
-
-### You can access these palettes using `scale_color_brewer(palette = "palette name")`
-
-```{r}
-#| eval: true
-#| source-line-numbers: "1,6"
-
-ggplot(penguins, aes(species, body_mass_g, color = sex)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 6000)) +
-  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +
-  scale_color_brewer(palette = "Set1")
-```
-
-::: callout-note
-[Check out](https://nanx.me/ggsci/index.html){target="_blank"} the `ggsci` color palettes inspired by scientific journals, science fiction movies, and TV shows.
-:::
-
-### Labels
-
-Changing labels and adding titles is easy using `labs()`
-
-```{r}
-#| eval: true
-#| source-line-numbers: "6-7"
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 6000)) +
-  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +
-  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
-       x = "Species", y = "Body Mass (g)")
-```
-
-To change labels for legends you need to refer to the **aesthetic mapping** that was defined in `aes()` (e.g., color, shape).
-
-```{r}
-#| eval: true
-#| source-line-numbers: "4,9-11"
-
-adelie <- filter(penguins, species != "Gentoo")
-
-ggplot(adelie, aes(species, body_mass_g, 
-                     color = sex, shape = island)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 4250)) +
-  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
-  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
-       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
-  scale_color_brewer(palette = "Set1")
-```
-
-### Theme templates
-
-Here are some themes that come loaded with `ggplot2`
-
--   `theme_bw()`
--   `theme_light()`
--   `theme_dark()`
--   `theme_minimal()`
--   `theme_classic()`
--   `theme_void()`
-
-Using a theme template is straightforward
-
-```{r}
-#| eval: true
-#| source-line-numbers: "12"
-
-adelie <- filter(penguins, species != "Gentoo")
-
-ggplot(adelie, aes(species, body_mass_g, 
-                     color = sex, shape = island)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 4250)) +
-  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
-  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
-       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
-  scale_color_brewer(palette = "Set1") +
-  theme_classic()
-```
-
-### Other theme elements
-
-In addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You will mostly due this using `theme()`
-
-For instance, to give the legend titles a bold face font:
-
-```{r}
-#| eval: true
-#| source-line-numbers: "13"
-
-adelie <- filter(penguins, species != "Gentoo")
-
-ggplot(adelie, aes(species, body_mass_g, 
-                     color = sex, shape = island)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 4250)) +
-  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
-  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
-       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
-  scale_color_brewer(palette = "Set1") +
-  theme_classic() +
-  theme(legend.title = element_text(face = "bold"))
-```
-
-Here is a list of different elements you can change. They are organized into text, line, and rectangle elements:
-
-![](images/theme_elements.png){width="645"}
-
-Text, line, and rectangle elements each have their corresponding element function e.g., `element_text()`
-
-![](images/element_func.png){width="724"}
-
-Obviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI's for assistance.
-
-[Here is the ggplot2 documentation on theme elements](https://ggplot2.tidyverse.org/reference/theme.html){target="_blank"}
-
-### Create your own theme template
-
-Often times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.
-
-One convenient way of doing so is to use `theme_set()`
-
-`theme_set()` will automatically apply the same theme settings across all ggplots created in a document.
-
-For instance, if you want to make sure all your ggplots have a **bolded** legend title and use `theme_classic()` you can create a theme to do that:
-
-```{r}
-#| eval: true
-
-bold_legend <- theme(legend.title = element_text(face = "bold"))
-
-plot_theme <- theme_classic() + bold_legend
-
-```
-
-Then you need to set the theme that will be applied across all ggplots
-
-```{r}
-#| eval: true
-
-theme_set(plot_theme)
-
-```
-
-Now any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.
-
-```{r}
-#| eval: true
-
-ggplot(adelie, aes(species, body_mass_g, 
-                     color = sex, shape = island)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 4250)) +
-  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
-  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
-       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
-  scale_color_brewer(palette = "Set1")
-
-```
-
-You can also create theme functions to give you more flexibility from one document/project to another (change the font size, whether to use "bold" fonts for titles or not, etc.).
-
-Here is a custom theme I made. One of the things it does is increases the amount of white space betwen plot elements, such as the axis labels and the axis ticks (it annoys me how close the y-axis label is to the axis tick labels by default).
-
-```{r}
-#| eval: true
 #| code-fold: true
-#| code-summary: "Show theme_spacious()"
+#| code-summary: "Show Tidy Template Script"
 
-theme_spacious <- function(font_size = 14, bold = TRUE) {
-  key_size <- trunc(font_size * .8)
-  if (bold == TRUE) {
-    face.type <- "bold"
-  } else {
-    face.type <- "plain"
-  }
+# ---- Setup -------------------------------------------------------------------
+# packages
+library(here)
+library(readr)
+library(dplyr)
+library(purrr) # delete if not importing a batch of files
 
-  theme(text = element_text(size = font_size),
-        axis.title.x = element_text(margin = margin(t = 15, r = 0,
-                                                    b = 0, l = 0),
-                                    face = face.type),
-        axis.title.y = element_text(margin = margin(t = 0, r = 15,
-                                                    b = 0, l = 0),
-                                    face = face.type),
-        legend.title = element_text(face = face.type),
-        legend.spacing = unit(20, "pt"),
-        legend.text = element_text(size = key_size),
-        plot.title = element_text(face = face.type, hjust = .5,
-                                  margin = margin(b = 10)),
-        plot.subtitle = element_text(hjust = .5),
-        plot.caption = element_text(hjust = 0, size = key_size,
-                                    margin = margin(t = 20)),
-        strip.background = element_rect(fill = "white", color = "white"),
-        strip.text = element_text(color = "black",
-                                  face = face.type))
-}
-```
+# directories
+import_dir <- "data/raw/messy"
+output_dir <- "data/raw"
 
-```{r}
-#| eval: true
+# file names
+task <- "taskname"
+import_file <- paste(task, ".txt", sep = "")
+output_file <- paste(task, "raw.csv", sep = "_")
+# ------------------------------------------------------------------------------
 
-output_theme <- theme_linedraw() + 
-  theme_spacious(font_size = 12, bold = TRUE) +
-  theme(panel.border = element_rect(color = "gray"),
-        axis.line.x = element_line(color = "gray"),
-        axis.line.y = element_line(color = "gray"),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.y = element_blank())
+# ---- Import Data -------------------------------------------------------------
+# to import a single file
+data_import <- read_delim(here(import_dir, import_file), delim = "\t",
+                          escape_double = FALSE, trim_ws = TRUE)
 
-theme_set(output_theme)
-```
+# alternatively to import a batch of files...
+# change the arguments in purrr::map_df() depending on type of data files
+# this example is for files created from eprime and needs encoding = "UCS-2LE"
+files <- list.files(here(import_dir, task), pattern = ".txt", full.names = TRUE)
+data_import <- files |>
+  map_df(read_delim, delim = "\t",
+         escape_double = FALSE, trim_ws = TRUE, na = "NULL",
+         locale = locale(encoding = "UCS-2LE"))
+# ------------------------------------------------------------------------------
 
-```{r}
-#| eval: true
+# ---- Tidy Data ---------------------------------------------------------------
+data_raw <- data_import |>
+  rename() |>
+  filter() |>
+  mutate() |>
+  select()
+# ------------------------------------------------------------------------------
 
-ggplot(adelie, aes(species, body_mass_g, 
-                     color = sex, shape = island)) +
-  stat_summary(fun = mean, geom = "point") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
-  coord_cartesian(ylim = c(3000, 4250)) +
-  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
-  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
-       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
-  scale_color_brewer(palette = "Set1")
+# ---- Save Data ---------------------------------------------------------------
+write_csv(data_raw, here(output_dir, output_file))
+# ------------------------------------------------------------------------------
+
+rm(list = ls())
 
 ```
 
-## Common Types of Plots
+### Create a New Project
 
-### Histogram
+Close RStudio and reopen a new instance of RStudio (not from an RProject file).
 
-```{r}
-#| eval: true
+Once you have the `psyworkflow` package installed you will be able to create a new RProject directory and file from my **Research Study** template. This will automatically create the directory structure outlined in the previous chapter. It will also add template R scripts in **R / templates** and a **mainscript.qmd** file.
 
-ggplot(penguins, aes(body_mass_g)) +
-  geom_histogram(bins = 20, fill = "white", color = "black")
-```
+Using this template will allow you to get right to working with your data in R, without having to spend too much time thinking about organization (I have already done that for you).
 
-### Bar, point, and line
+To create an RProject from this template:
 
-When you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.
+File -\> New Project... -\> New Directory -\> Research Study (you might need to scroll down to see it)
 
-#### Bar plot
+This will bring up a window to customize the template:
 
-```{r}
-#| eval: true
+![](images/workflow_package.png){width="457"}
 
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_bar(stat = "summary", fun = mean)
-```
+Type in whatever you want for the **Directory Name** - this will end up being the name of the project folder and RProject file.
 
-#### Point plot
+Click on **Browse...** and create the project on your desktop, for now.
 
-```{r}
-#| eval: true
+Keep all the defaults and select **Create Project**.
 
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_point(stat = "summary", fun = mean)
-
-```
-
-#### Point plot - with raw values
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_jitter(width = .1, size = .75, alpha = .2) +
-  geom_point(stat = "summary", fun = mean, 
-             size = 4, color = "steelblue")
-```
-
-#### Line plot
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_line(stat = "summary", fun = mean, group = 1)
-
-```
-
-#### Line plot - with raw values
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_jitter(width = .1, size = .75, alpha = .2) +
-  geom_line(stat = "summary", fun = mean, group = 1) +
-  geom_point(stat = "summary", fun = mean, 
-             size = 4, color = "steelblue")
-```
-
-### Scatterplot
-
-When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a **scatterplot**.
-
-```{r}
-#| eval: true
-
-ggplot(penguins, aes(bill_length_mm, body_mass_g)) +
-  geom_point() +
-  stat_smooth(method = "lm", color = "forestgreen")
-
-```
+Give it some time, and it will reopen RStudio from the newly created RProject. Take a look at the file pane and you can see that the folders have been created, and R Script templates downloaded.

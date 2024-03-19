@@ -1,25 +1,27 @@
 ---
 title: "Class 5"
-subtitle: "Reproducible Projects"
+subtitle: "Quarto Documents"
 slide-format: revealjs
 editor: visual
 ---
 
-The main objective of this class is to learn what it means to have a reproducible project and how to organize a project to meet reproducibility requirements.
+The main objective of this class is to learn how to use Quarto Documents to create an HTML report that contains data visualizations and statistical analyses.
 
 ## Outline
 
--   Reproducibility
+-   YAML Header
 
--   Project Workflow
+-   Markdown
 
--   File Organization
+-   R Code Chunks
 
--   Importing Data
+-   Render Document
+
+-   Additional Elements
 
 ## Class Materials
 
-📘 [Class 5: Reproducible Projects](/lectures/lectures-class-5.html)
+📘 [Class 5: Quarto Documents](/lectures/lectures-class-5.html)
 
 🖥️ [Slides - Full Screen](/slides/slides-class-5.html){target="_blank"}
 

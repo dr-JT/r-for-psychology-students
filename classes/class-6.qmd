@@ -1,27 +1,31 @@
 ---
 title: "Class 6"
-subtitle: "Quarto Documents"
+subtitle: "Data Visualization"
 slide-format: revealjs
 editor: visual
 ---
 
-The main objective of this class is to learn how to use Quarto Documents to create an HTML report that contains data visualizations and statistical analyses.
+The main objective of this class is to get familiar with the basics of creating data visualizations in R.
 
 ## Outline
 
--   YAML Header
+-   `ggplot2`
 
--   Markdown
+-   Data and Aesthetic Layers
 
--   R Code Chunks
+-   Geometries Layer
 
--   Render Document
+-   Facets and Statistics Layer
 
--   Additional Elements
+-   Coordinates Layer
+
+-   Theme Layer
+
+-   Common Types of Plots
 
 ## Class Materials
 
-📘 [Class 6: Quarto Documents](/lectures/lectures-class-6.html)
+📘 [Class 6: Data Visualization](/lectures/lectures-class-6.html)
 
 🖥️ [Slides - Full Screen](/slides/slides-class-6.html){target="_blank"}
 

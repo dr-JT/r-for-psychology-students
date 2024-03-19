@@ -46,6 +46,8 @@ website:
             text: "Tips & Tricks"
           - href: supplemental/github_copilot.qmd
             text: "GitHub Copilot"
+          - href: supplemental/data-prep-qualtrics.qmd
+            text: "Data Prep - Qualtrics"
     
 format:
   html:
