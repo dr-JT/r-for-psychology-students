@@ -124,7 +124,7 @@ rm(list = ls())
 ::: callout-important
 If you have multiple messy raw data files then you should create a separate **tidyraw** script for each one.
 
-However, if you only have one raw data file because your data is all collected in a single task/measure then you can just create one **tidyraw** script
+However, if you only have one raw data file because your data was all collected in a single task/measure then you can just create one **tidyraw** script
 :::
 
 # Setup
@@ -202,8 +202,8 @@ data_import <-
                         NA, 5,5,6,5,6,6,5,6),
              slide1.rt = c(NA, 560,670,400, rep(NA, 5),
                            NA, 332,434,536, rep(NA, 5)),
-             slide2.rt = c(rep(NA, 4), 431,223,643,742,667, 
-                           rep(NA, 4), 455,743,456,826,342))
+             slide2.rt = c(rep(NA, 4), 431,23,643,742,9452, 
+                           rep(NA, 4), 455,743,456,186,342))
 
 paged_table(data_import, options = list(cols.print = 9))
 
@@ -537,7 +537,7 @@ You can see that this data frame is much easier to understand and to work with. 
 
 # Save Data
 
-Finally, you just need to save this tidy data frame to a .csv file in your **data/raw** folder and use the name of the task/measure that it came from.
+Finally, you just need to save this tidy data frame to a .csv file in your **data** or **data/raw** folder and use the name of the task/measure that it came from.
 
 We have not talked about the `write_csv()` function but it is pretty simple to use as you can see:
 

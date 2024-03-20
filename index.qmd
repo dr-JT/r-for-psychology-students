@@ -38,7 +38,7 @@ and more
 
 [Class 5](/classes/class-5.html) - Data Preparation
 
-Class 6 - Data Scoring
+[Class 6](/classes/class-6.html) - Data Scoring
 
 [Class 7](/classes/class-7.html) - Quarto Documents
 

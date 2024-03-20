@@ -1,0 +1,477 @@
+---
+title: "Class 6: Data Scoring"
+execute:
+  echo: true
+  eval: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+
+library(tidyverse)
+library(rmarkdown)
+```
+
+After data preparation, the next stage in the data processing workflow is to score the data.
+
+![](images/data_steps.png)
+
+By score the data, I mean create variables that are an aggregate (summary statistic) across multiple responses. In general, there are multiple types of summary statistics that can be computed. Common ones are:
+
+-   Sum: `sum()`
+
+-   Mean (average): `mean()`
+
+-   Median: `median()`
+
+-   Standard deviation: `sd()`
+
+For questionnaires and surveys, this typically a sum or average is computed on items that belong to the same scale or subscale.
+
+For behavioral and cognitive tasks, summary statistics are aggregated over trials that belong to the same condition.
+
+In this class will focus on general principles and common data scoring steps.
+
+In [Class 5](/lectures/lectures-class-5.html) you setup a project with a folder organization and RStudio Project file:
+
+📁 analyses
+
+📁 data
+
+   📁 raw
+
+📁 R
+
+If you have multiple raw data files to score, you may consider creating a **scored** folder in **data**
+
+📁 data
+
+   📁 raw
+
+   📁 scored
+
+This class assumes you have this project organization setup and a tidy raw data file to work with.
+
+In Class 5, we ended up with a tidy raw data file:
+
+```{r}
+#| echo: false
+#| eval: true
+
+data_import <- 
+  data.frame(ID = c(rep(1, 9), 
+                    rep(2, 9)),
+             trial = c(NA, seq(1,8,1), 
+                       NA, seq(1,8,1)),
+             COND = c(NA, 1,1,0, 1,0,0,1,1,
+                     NA, 1,0,1, 1,1,0,1,1),
+             List = c("inst", rep("prac", 3), rep("task", 5), 
+                      "inst", rep("prac", 3), rep("task", 5)),
+             slide1.resp = c(NA, 5,6,5, rep(NA, 5), 
+                              NA, 5,5,6, rep(NA, 5)), 
+             slide2.resp = c(rep(NA, 4), 5,6,5,5,5, 
+                              rep(NA, 4), 5,5,5,5,5),
+             Ans = c(NA, 5,5,6,5,6,6,5,6,
+                        NA, 5,5,6,5,6,6,5,6),
+             slide1.rt = c(NA, 560,670,400, rep(NA, 5),
+                           NA, 332,434,536, rep(NA, 5)),
+             slide2.rt = c(rep(NA, 4), 431,23,643,742,9452, 
+                           rep(NA, 4), 455,743,456,186,342))
+
+data_import <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst") |>
+  mutate(.by = c(ID, Procedure),
+         Trial = row_number()) |>
+  mutate(Condition = case_when(Condition == 0 ~ "word_match",
+                               Condition == 1 ~ "word_mismatch"),
+         Procedure = case_when(Procedure == "prac" ~ "practice",
+                               Procedure == "task" ~ "real"),
+         Correct_Response = case_when(Correct_Response == 5 ~ "yes",
+                                      Correct_Response == 6 ~ "no"),
+         Response = coalesce(slide1.resp, slide2.resp),
+         Response = case_when(Response == 5 ~ "yes",
+                              Response == 6 ~ "no"),
+         RT = coalesce(slide1.rt, slide2.rt),
+         Accuracy = case_when(Response == Correct_Response ~ 1,
+                              Response != Correct_Response ~ 0)) |>
+  select(ID, Procedure, Trial, Condition, Response, 
+         Correct_Response, Accuracy, RT)
+
+paged_table(data_import, options = list(rows.print = 20))
+```
+
+# Template R Script
+
+The main goal at this stage is to complete an R script to create a data file that contains aggregated scores from a tidy raw data file.
+
+1.  Create a new R script file named: **2_score.R**
+    -   If you have multiple tidy raw data files to score, then you should create separate scripts for each one and name the script file with the measure that it comes from (you can keep the 2\_ prefix for all of them).
+2.  Save it in the **R** folder
+3.  Copy and paste this template into your script: (use the copy icon button on the top-right)
+
+```{r}
+# ---- Setup -------------------------------------------------------------------
+# packages
+library(here)
+library(readr)
+library(dplyr)
+
+# directories
+import_dir <- "data/raw"
+output_dir <- "data/scored"
+
+# file names
+import_file <- ""
+output_file <- ""
+# ------------------------------------------------------------------------------
+
+# ---- Import Data -------------------------------------------------------------
+data_import <- read_csv(here(import_dir, import_file))
+# ------------------------------------------------------------------------------
+
+# ---- Score Data --------------------------------------------------------------
+data_scores <- data_import |>
+  filter() |>
+  summarise(.by = Subject)
+# ------------------------------------------------------------------------------
+
+# ---- Save Data ---------------------------------------------------------------
+write_csv(data_scores, here(output_dir, output_file))
+# ------------------------------------------------------------------------------
+
+rm(list = ls())
+
+```
+
+4.  Use the 2_score.R script template to get **started**. It is just a template, you will need to modify it for your data specifically. The template contains 4 main sections:
+    -   Setup
+    -   Import Data
+    -   Score Data
+    -   Save Data
+
+::: callout-important
+If you have multiple tidy raw data files that need to be scored, then you should create a separate **score** script for each one.
+
+However, if you only have one tidy raw data file because your data was all collected in a single task/measure then you can just create one **score** script
+:::
+
+# Setup
+
+The **Setup** section is to:
+
+-   Load any packages used in the script
+
+-   Set the directories of where to import and output data files to
+
+-   Set the file names of the data files to be imported and outputted
+
+I like to include the directory and file names at the top of the script that way it is easy to see what is being imported/outputted and from where right at the top of the script rather than having to search through the script for this information.
+
+We can then use the `import_dir` , `output_dir`, `import_file`, and `output_file` variables in the script when we import and output a data file.
+
+# Import Data
+
+The **Import Data** section is simply to import the data.
+
+I suggest using the `here()` package to specify the file path. This was covered in [Class 4](/lectures/lectures-class-4.html#herehere).
+
+Given that 1) you created a tidy raw data file in .csv format, and 2) you specified `import_dir` and `import_file` in the setup section, you most likely do not need to change anything here.
+
+# Score Data
+
+The **Score Data** section is where most of the work needs to be done. You should be using `dplyr` and possibly `tidyr` to do most of the work here, though you may need other packages and functions. You can delete whatever is in there now, that is just a placeholder as an example of the type of functions you might use. See the following class materials to help you in this section:
+
+-   [Class 2: Importing, Merging, and Restructuring](https://dr-jt.github.io/r-for-psychology-students/classes/class-2.html){target="_blank"}
+
+-   [Class 3: Data Transformation](https://dr-jt.github.io/r-for-psychology-students/classes/class-3.html){taget="_blank"}
+
+How you need to score your data depends on what you are measuring and what type of conditions you have. However, most approaches require calculating a summary statistic at some point. We will cover how to use `summarise(.by = )` to calculate summary statistics.
+
+With this sample data let's calculate a few different scores
+
+-   Mean accuracy
+
+-   Mean reaction time
+
+-   Hit rate
+
+-   False alarm rate
+
+But first, it can be a good idea to do some **data cleaning** before scoring the data to make sure we are using only quality data.
+
+## Data Cleaning
+
+The data cleaning that you need to do will of course depend on the nature of your data and study. Give some thought to the type of data cleaning steps you might want to take. Think about what would identify an observation or participant as having low quality data.
+
+### Attention Checks
+
+For surveys, researchers will often include "attention checks" just to make sure participants are actually reading the questions and items and not just mindlessly responding. This would likely include removing data for an entire participant. In this scenario, you could:
+
+1.  Create a column, `attention_check` , using `mutate()` and `case_when()` that identifies whether an attention check item passed (coded as 0) or failed (coded as 1).
+2.  Create another column, `attention_check_failures` using `mutate(.by = ID)` (ID is the column containing participant IDs) to calculate a sum of `attention_check` per each participant.
+3.  Come up with a criterion for how many attention checks a participant can fail and use that criterion with `filter(attention_check_failures <= criterion)`
+
+```{r}
+# you can set this criterion in the setup section of the R script
+# you should come up with your own criterion though, I gave this no thought
+attention_check_criterion <- 1
+
+# let's say item 4 is an attention check
+# and "agree" is the correct response if they were paying attention
+data <- import |>
+  mutate(.by = ID,
+         attention_check = case_when(Item == 4 & Response == "agree" ~ 0,
+                                     Item == 4 & response != "agree" ~ 1,
+                                     .default = as.numeric(NA)),
+         attention_check_failures = sum(attention_check, na.rm = TRUE)) |>
+  filter(attention_check_failures <= attention_check_criterion)
+```
+
+### Missing Data
+
+There is a possibility that a participant has missing data. Maybe they did not answer all the questions on a survey. You can use a similar approach as with attention checks.
+
+1.  Create a column, `missing` , using `mutate()` , `case_when()` , and `is.na()` that identifies whether an item has missing data (coded as 1) or not (coded as 0).
+2.  Create another column, `missing_total` using `mutate(.by = ID)` (ID is the column containing participant IDs) to calculate a sum of `missing` per each participant.
+3.  Come up with a criterion for how many missing items a participant can have and use that criterion with `filter(missing_total <= criterion)`
+
+```{r}
+# you can set this criterion in the setup section of the R script
+# you should come up with your own criterion though, I gave this no thought
+missing_criterion <- .2
+
+# let's say item 4 is an attention check
+# and "agree" is the correct response if they were paying attention
+data <- import |>
+  mutate(.by = ID,
+         missing = case_when(is.na(Item) ~ 1,
+                             !is.na(Item) ~ 0),
+         missing_total = sum(missing, na.rm = TRUE)) |>
+  filter(missing_total <= missing_criterion)
+```
+
+### Reaction Times
+
+For behavioral and cognitive tasks that include measures of reaction time, researchers will often exclude trials that have unrealistically fast reaction times or extremely long reaction times.
+
+You will notice that in the tidy raw data file created in Class 5 (see the data frame above), there are a few trials that contain unrealistically fast reaction times and extremely long reaction times.
+
+A common criterion for unrealistically fast reaction times is anything less than 200 milliseconds. For extremely long reaction times, we can just use 5000 milliseconds (5 seconds) as the criterion.
+
+There are two general strategies to do this:
+
+-   use `filter()` to get rid of the rows entirely
+
+-   use `mutate()` and `case_when()` to set the reaction time and accuracy values to missing `NA`
+
+#### Using filter
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+# set criterion in setup section of script
+rt_short_criterion <- 200
+rt_long_criterion <- 5000
+
+data_scores <- data_import |>
+  filter(RT >= rt_short_criterion, RT <= rt_long_criterion)
+```
+
+## Data Frame
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_scores, options = list(rows.print = 20))
+```
+:::
+
+#### Set to missing
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+# set criterion in setup section of script
+rt_short_criterion <- 200
+rt_long_criterion <- 5000
+
+data_scores <- data_import |>
+  mutate(RT = case_when(RT < rt_short_criterion ~ NA,
+                        RT > rt_long_criterion ~ NA,
+                        .default = RT),
+         Accuracy = case_when(is.na(RT) ~ NA,
+                              .default = Accuracy))
+```
+
+## Data Frame
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_scores, options = list(rows.print = 20))
+```
+:::
+
+# Data Scoring
+
+After doing some initial data cleaning (optional), you can then create summary statistics of your measured variables.
+
+The same approach applies here for scale and subscale survey data as with behavioral data.
+
+With this sample data, let's start off by calculating:
+
+-   Mean reaction time for each participant `ID` and for each `Condition`
+
+-   Mean accuracy for each participant `ID` and for each `Condition`
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+# set criterion in setup section of script
+rt_short_criterion <- 200
+rt_long_criterion <- 5000
+
+data_scores <- data_import |>
+  mutate(RT = case_when(RT < rt_short_criterion ~ NA,
+                        RT > rt_long_criterion ~ NA,
+                        .default = RT),
+         Accuracy = case_when(is.na(RT) ~ NA,
+                              .default = Accuracy)) |>
+  summarise(.by = c(ID, Condition),
+            RT_mean = mean(RT, na.rm = TRUE),
+            Accuracy_mean = mean(RT, na.rm = TRUE))
+```
+
+## Data Frame
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_scores, options = list(rows.print = 20))
+```
+:::
+
+Now, depending on how this data is going to be analyzed (and even what statistical software you are using to analyze the data) you may want this data frame in either long (its current form) or wide format.
+
+## Between-Subjects ANOVA
+
+`Condition` is not a between-subject variable in this sample data but if you have a between-subject variable or design, you will want to keep the column(s) for that variable(s) in long format.
+
+## Within-Subjects ANOVA
+
+`Condition` is a within-subject variable in this sample data. Whether you want this variable in long or wide format depends on whether you will use R or JASP to analyze the data.
+
+-   For R, you can keep it in long format
+
+-   For JASP, you will need to restructure it to wide format
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+# load tidyr in setup section of script
+library(tidyr)
+
+# set criterion in setup section of script
+rt_short_criterion <- 200
+rt_long_criterion <- 5000
+
+data_scores <- data_import |>
+  mutate(RT = case_when(RT < rt_short_criterion ~ NA,
+                        RT > rt_long_criterion ~ NA,
+                        .default = RT),
+         Accuracy = case_when(is.na(RT) ~ NA,
+                              .default = Accuracy)) |>
+  summarise(.by = c(ID, Condition),
+            RT_mean = mean(RT, na.rm = TRUE),
+            Accuracy_mean = mean(RT, na.rm = TRUE)) |>
+  pivot_wider(id_cols = ID,
+              names_from = Condition,
+              values_from = c(RT_mean, Accuracy_mean),
+              names_glue = "{Condition}.{.value}")
+```
+
+## Data Frame
+
+*Use the small arrow ▸ at the end of the column names to see more columns*
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_scores, options = list(rows.print = 20))
+```
+:::
+
+## Correlation and Regression
+
+For correlation and regression you will want to restructure the data to wide format (same as the code above).
+
+If you have multiple data files from different measures or tasks, that you eventually want to merge into a single data frame for analysis, it is a good idea to add the measure or task name to the column names. That way when you merge the data you know which column corresponds to which task.
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+# load tidyr in setup section of script
+library(tidyr)
+
+# set criterion in setup section of script
+rt_short_criterion <- 200
+rt_long_criterion <- 5000
+
+data_scores <- data_import |>
+  mutate(RT = case_when(RT < rt_short_criterion ~ NA,
+                        RT > rt_long_criterion ~ NA,
+                        .default = RT),
+         Accuracy = case_when(is.na(RT) ~ NA,
+                              .default = Accuracy)) |>
+  summarise(.by = c(ID, Condition),
+            RT_mean = mean(RT, na.rm = TRUE),
+            Accuracy_mean = mean(RT, na.rm = TRUE)) |>
+  pivot_wider(id_cols = ID,
+              names_from = Condition,
+              values_from = c(RT_mean, Accuracy_mean),
+              names_glue = "TaskName_{Condition}.{.value}")
+```
+
+## Data Frame
+
+*Use the small arrow ▸ at the end of the column names to see more columns*
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_scores, options = list(rows.print = 20))
+```
+:::
+
+# Save Data
+
+Finally, you just need to save this scored data frame to a .csv file in your **data** or **data/scored** folder and use the name of the task/measure that it came from in the file name.
+
+Set the `output_dir` and `output_file` in the setup section of the R script, and you should not need to modify this section at all.

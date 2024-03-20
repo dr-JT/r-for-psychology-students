@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.24">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student – Class 2: Importing, Merging, and Restructuring Data</title>
+<title>R for the Psychology Student - Class 2: Importing, Merging, and Restructuring Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -358,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You will see a data import window open up that looks like this</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/rstudioGUI-readr.png" class="img-fluid figure-img"></p>
+<p><img src="images/rstudioGUI-readr.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 <figcaption>RStudio Import Dataset GUI</figcaption>
 </figure>
 </div>
@@ -424,7 +424,7 @@ Exploring Your Data
 <p>A row “bind” takes data frames that have the same columns but different rows and stacks them on top of each other. This will happen if you have separate data files for each subject from the same task. Each subject data file will have their unique rows but all subjects will have the same columns.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/row_bind.png" class="img-fluid figure-img" width="677"></p>
+<p><img src="images/row_bind.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="677"></p>
 <figcaption>Illustration of a row bind</figcaption>
 </figure>
 </div>
@@ -443,7 +443,7 @@ Exploring Your Data
 <p>There are lots of different kinds of joins, some of which are:</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/dplyr-joins.png" class="img-fluid figure-img" width="405"></p>
+<p><img src="images/dplyr-joins.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="405"></p>
 <figcaption>Types of joins using dplyr</figcaption>
 </figure>
 </div>
@@ -846,24 +846,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/dr-jt\.github\.io\/r-for-psychology-students\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -898,11 +880,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -950,12 +928,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
