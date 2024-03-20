@@ -1,5 +1,5 @@
 ---
-title: "Class 5: Quarto Documents"
+title: "Class 5: Data Preparation"
 execute:
   echo: true
   eval: false
@@ -13,368 +13,534 @@ execute:
 
 source(here::here("prerender.R"))
 
+library(tidyverse)
+library(rmarkdown)
 ```
 
-[Quarto documents](https://quarto.org) are a versatile way to create production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, ePub, and more. In fact, this R Workshop was created using Quarto documents.
+In [Class 4](lectures/lectures-class-4.html), we saw that the first stage in the data processing workflow is **data preparation**. This is a critical, though often overlooked stepped. This class will focus on some general principals and common data preparation steps.
 
-In this class, you will learn how to use Quarto documents to create an HTML report that contains data visualizations and statistical analyses. View a [sample report](/sample_report.html){target="_blank"} to see an example of this kind of document.
-
-**R Scripts vs. Quarto Documents**
-
--   R scripts are for processing data
-
--   Quarto documents are for generating reports that contain figures, tables, and statistical analyses
-
-::: callout-tip
-You may want to watch this [video](https://quarto.org/docs/blog/posts/2023-05-15-get-started/){target="_blank"} for a brief intro to Quarto
+::: callout-note
+If you expect to be working with Survey data from Qualtrics, then you should take a look at the [Data Preparation - Qualtrics](/supplemental/data-prep-qualtrics.html) in Supplemental Materials instead.
 :::
 
-To open a Quarto document:
+This guide is meant to help you figure out the steps you need to take in order to **prepare** your data for scoring and analysis. The end product of this **data preparation** stage is one or more tidy raw data files.
 
-> File -\> New File -\> Quarto Document...
->
-> Click **Create Empty Document**
+This guide assumes you have completed Classes 1 - 4. You should reference materials in those classes to help you at this stage.
 
-There are three types of content that form the structure of a Quarto document.
+# GitHub Copilot in RStudio
 
--   A YAML header
+Not required, but you might find it useful to [setup GitHub Copilot in RStudio](https://dr-jt.github.io/r-for-psychology-students/supplemental/github_copilot.html){target="_blank"} to have an AI assistant help you write code. I find it useful for writing tedious repetitive code that is often required during this data preparation stage.
 
--   Markdown formatted text
+# Setup Project
 
--   R code chunks
+Your project should be stored on a shared drive (e.g., Dropbox, OneDrive, Google Drive) so that all your team members can access it.
 
-## YAML Header
+1.  Create a folder for your project that contains the three following folders (you can use whatever folder naming scheme you like)
 
-The YAML header contains metadata about how the document should be rendered and the output format. It is located at the very top of the document and is surrounded by lines of three dashes.
+📁 analyses
 
-```         
----
-title: "Title of document"
-output: html_document
----
-```
+📁 data
 
-There are various metadata options you can specify, such as if you want to include a table of contents. To learn about a few of them [see the documentation here](https://quarto.org/docs/output-formats/html-basics.html){target="_blank"}.
+📁 R
 
-Go ahead and include the `output: html_document` line in the YAML of the empty document you opened.
+2.  Inside of the **data** folder create a **raw** folder
 
-## Markdown Text
+📁 data
 
-The markdown text section is just as if you were writing content in Microsoft Word or Google Docs. You can write up paragraphs of text, create bullet or numbered lists, embed images or web links, create tables, and more.
+   📁 raw
 
-The text is formatted using a language known as **Markdown**. Markdown is a convenient and flexible way to format text. When a Markdown document is rendered into some output (such as HTML or PDF), the text will be formatted as specified by Markdown syntax.
+-   If you have multiple raw data files you may consider creating an organization like this
 
-There are a lot of guides on how to use Markdown syntax. I will not cover this so you should check them out on your own. Here is one I reference often: [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet){target="_blank"}
+    ![](images/folder_organization.png){width="173"}
 
-Add some markdown text below the YAML header in your open Quarto document
+2.  Create an [RStudio Project](/lectures/lectures-class-4.html#rstudio-projects):
 
-```         
-Here is some sample text with a numbered list
+> File -\> New Project... -\> Existing Directory
 
-1. This is first
-2. Second
-3. Third
-```
+# Data
 
-## R Code Chunks
+1.  Get access to the original raw data files
 
-A Quarto document (.qmd) is a mixture of markdown text and R code chunks.
+2.  Move the data files to your **data/raw** or **data/raw/messy** folder
 
-### Create an R code chunk
+3.  (Optional) Rename the data file to something shorter (e.g., rawdata_messy.csv)
 
-R code chunks are enclosed with
+    -   If you have multiple raw data files you should name the data files that correspond to what measure it came from
 
-```{{r}}
+# Template R Script
 
-```
+The main goal at this stage is to complete an R script to create tidy raw data files from messy raw data files. A tidy raw data file is just a cleaned up version of the original raw data file that is easier to understand and is formatted in a way that makes it easy to use.
 
-Or might look like:
+1.  Create a new R script file named: **1_tidyraw.R**
+    -   If you have multiple messy raw data files, you should create separate tidy scripts for each one and name the script file with the measure that it comes from (you can keep the 1\_ prefix for all of them).
+2.  Save it in the **R** folder
+3.  Copy and paste this template into your script: (use the copy icon button on the top-right)
 
 ```{r}
-#| eval: false
+# ---- Setup -------------------------------------------------------------------
+# packages
+library(here)
+library(readr)
+library(dplyr)
+library(tidyr)
 
-{r}
+# directories
+import_dir <- "data/raw/messy"
+output_dir <- "data/raw"
 
-a <- 1 + 6
+# file names
+import_file <- ""
+output_file <- ""
+# ------------------------------------------------------------------------------
+
+# ---- Import Data -------------------------------------------------------------
+# use read_csv() for a .csv file
+data_import <- read_delim(here(import_dir, import_file), delim = "\t",
+                          escape_double = FALSE, trim_ws = TRUE)
+# ------------------------------------------------------------------------------
+
+# ---- Tidy Data ---------------------------------------------------------------
+data_raw <- data_import |>
+  rename() |>
+  filter() |>
+  mutate() |>
+  select()
+# ------------------------------------------------------------------------------
+
+# ---- Save Data ---------------------------------------------------------------
+write_csv(data_raw, here(output_dir, output_file))
+# ------------------------------------------------------------------------------
+
+rm(list = ls())
 
 ```
 
-You can create R code chunks with the shortcut:
+4.  Use the 1_tidyraw.R script template to get **started**. It is just a template, you will need to modify it for your data specifically. The template contains 4 main sections:
+    -   Setup
+    -   Import Data
+    -   Tidy Data
+    -   Save Data
 
-> Mac: ⌘ ⌥ i (command + alt/opt + i)
->
-> Windows: ⌃ ⌥ i (ctrl + alt + i)
+::: callout-important
+If you have multiple messy raw data files then you should create a separate **tidyraw** script for each one.
 
-Or in the toolbar of the Quarto document (same section area as Source and Visual)
+However, if you only have one raw data file because your data is all collected in a single task/measure then you can just create one **tidyraw** script
+:::
 
-> Insert -\> Excecutable Cell -\> R
+# Setup
 
-![](images/quarto_toolbar.png){width="569"}
+The **Setup** section is to:
 
-Notice that there are a lot of other options to **Insert** all sorts of other content like Figure/Image...
+-   Load any packages used in the script
 
-Insert the following code in the R code chunk
+-   Set the directories of where to import and output data files to
+
+-   Set the file names of the data files to be imported and outputted
+
+I like to include the directory and file names at the top of the script that way it is easy to see what is being imported/outputted and from where right at the top of the script rather than having to search through the script for this information.
+
+We can then use the `import_dir` , `output_dir`, `import_file`, and `output_file` variables in the script when we import and output a data file.
+
+# Import Data
+
+The **Import Data** section is simply to import the data.
+
+I suggest using the `here()` package to specify the file path. This was covered in [Class 4](/lectures/lectures-class-4.html#herehere).
+
+# Tidy Data
+
+The **Tidy Data** section is where most of the work needs to be done. You should be using `dplyr` and `tidyr` to do most of the work here, though you may need other packages and functions. You can delete whatever is in there now, that is just a placeholder as an example of the type of functions you might use. See the following class materials to help you in this section:
+
+-   [Class 2: Importing, Merging, and Restructuring](https://dr-jt.github.io/r-for-psychology-students/classes/class-2.html){target="_blank"}
+
+-   [Class 3: Data Transformation](https://dr-jt.github.io/r-for-psychology-students/classes/class-3.html){taget="_blank"}
+
+## Understanding the Messy Raw Data File
+
+You should take some time to better understand your messy raw data file:
+
+Use functions, such as `colnames()` and `unique()`, that we learned in [Class 1: An Introduction to Working with Data in R](https://dr-jt.github.io/r-for-psychology-students/lectures/lectures-class-1.html#sec-data-frames){target="_blank"} to explore your imported data file.
+
+1.  Identify the essential columns you want to keep. Some examples:
+    -   Unique IDs for each participant
+    -   If there are multiple trials or items adminstered, what column identifies the trial or item number?
+        -   Same thing if there were multiple blocks or sessions adminstered
+    -   Different experimental conditions or counterbalancing condition
+    -   Stimulus information (e.g., red square) for individual trials / items
+    -   Response information
+        -   Response made
+        -   Correct response (if there is one)
+        -   Accuracy (if there is one)
+        -   Response time
+    -   Adminstration date and time?
+    -   And more...
+2.  What kind of values do each of those columns contain?
+    -   Numeric? Character strings?
+
+The amount of time it took for you to do those steps is **the reason** we are doing this data preparation step. The end product will hopefully be a tidy raw data file that is way easier to understand and work with, even for someone that was not involved in the project.
+
+For example you might have a data frame that is structured like this
 
 ```{r}
-library(palmerpenguins)
+#| echo: false
+#| eval: true
 
-head(penguins)
+data_import <- 
+  data.frame(ID = c(rep(1, 9), 
+                    rep(2, 9)),
+             trial = c(NA, seq(1,8,1), 
+                       NA, seq(1,8,1)),
+             COND = c(NA, 1,1,0, 1,0,0,1,1,
+                     NA, 1,0,1, 1,1,0,1,1),
+             List = c("inst", rep("prac", 3), rep("task", 5), 
+                      "inst", rep("prac", 3), rep("task", 5)),
+             slide1.resp = c(NA, 5,6,5, rep(NA, 5), 
+                              NA, 5,5,6, rep(NA, 5)), 
+             slide2.resp = c(rep(NA, 4), 5,6,5,5,5, 
+                              rep(NA, 4), 5,5,5,5,5),
+             Ans = c(NA, 5,5,6,5,6,6,5,6,
+                        NA, 5,5,6,5,6,6,5,6),
+             slide1.rt = c(NA, 560,670,400, rep(NA, 5),
+                           NA, 332,434,536, rep(NA, 5)),
+             slide2.rt = c(rep(NA, 4), 431,223,643,742,667, 
+                           rep(NA, 4), 455,743,456,826,342))
+
+paged_table(data_import, options = list(cols.print = 9))
+
 ```
 
-Create another R code chunk with the following code
+Are you able to understand what this data frame contains?
+
+There is a bit of structure in the column names but that is about it. By the end of this guide we will create a **tidy** version of this **messy** data file.
+
+## Tidying Up
+
+How you need to tidy up your data file will depend on the nature of your program used to generate your data. However, there are some common messy problems we can address.
+
+-   Column names that are not clear: `rename()`
+
+-   Rows that are not needed: `filter()`
+
+-   Add or modify values in columns: `mutate()` and `case_when()`
+
+-   Columns that are not needed: `select()`
+
+Notice in the script template I laid out the general format for this.
 
 ```{r}
-library(ggplot2)
-
-ggplot(penguins, aes(species, body_mass_g, color = species)) +
-  geom_jitter(alpha = .7, width = .05, color = "gray") +
-  geom_point(stat = "summary", fun = mean, na.rm = TRUE, size = 3) +
-  geom_errorbar(stat = "summary", fun.data = mean_cl_normal, na.rm = TRUE,
-                width = .2) +
-  scale_color_brewer(palette = "Set1", label = "none") +
-  guides(color = "none") +
-  labs(title = "Body Mass of Penguin Species", 
-       x = "Species", y = "Body Mass (g)") +
-  theme_classic()
+data_raw <- data_import |>
+  rename() |>
+  filter() |>
+  mutate() |>
+  select()
 ```
 
-### Execute R code chunk
+## Rename Columns
 
-To run chunks of R code you can click on the green "play" button on the top right of the R code chunk.
+This step can actually be completed in the rest of the steps below but occasionally can be useful to do upfront.
 
-![](images/excecute_code_chunk.png){width="293"}
+One thing you might want to do at this point though is consider a standard naming scheme for your columns. Do you want to use capital letters? All lower case? Snake_case? CamelCase? etc.
 
-Go ahead and do so. You can see that the results of the R code chunks are now displayed in the document.
+Let's go ahead and rename some columns so they are more clear what information they contain:
 
-## Visual Editor
-
-By default, Quarto will open a new document in the [visual editor mode](https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch).){taget="\_blank"}. The Quarto visual editor provides a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM){target="_blank"} editing interface.
-
-In **Source** mode, you will see the *raw* markdown and code elements. On occassion you may find that it is easier to edit a document in Source mode rather than with the Visual editor. You can switch back and forth between the two easily at the top-left of the toolbar
-
-![](images/visual-editing-switch-modes.png)
-
-## Render Document
-
-When you have finalized the content of a Quarto document you will then want to generate the document into the specified output format (e.g., HTML).
-
-To render a Quarto document click on **Render** at the top. This will
-
-1.  Generate a preview of the document in the Viewer pane
-2.  Create an HTML file
-
-Go ahead and render the document you just created. Find the generated HTML file and open it. You will notice that it will open in your default web browser.
-
-There are some advantages to using an HTML format:
-
--   Easily shareable, anyone can open it in a web browser (does not require some other application that might cost money like Microsoft Word)
-
--   Can include elements like
-
-    -   Table of contents
-
-    -   Tabs - can include a lot more content without taking up a lot of space and saves on scrolling through large documents
-
-    -   Code folding - code chunks can be toggled to hide/show them
-
-    -   Code download - link to download the Quarto document
-
-    -   CSS styling
-
-    -   and more
-
-Let's take a look at some of these elements and more
-
-## Additional Elements
-
-### Headers
-
-Headers are a great way to organize the content in a Quarto document. Use `#` to create different header levels:
-
-```         
-# This is a level 1 header
-
-## A level 2 header
-
-### And level 3 header
-```
-
-Headers become even more useful with a table of contents and using tabs
-
-### Table of Contents
-
-A table of contents is useful to navigate longer documents. It also provides an outline for the viewer to understand the document. You can specify the table of contents layout in the YAML header:
-
-```         
-format:
-  html:
-    toc: true
-    toc-depth: 1
-    toc-location: left
-```
-
-`toc-depth` will change how many header levels are displayed in the table of contents (toc).
-
-### Tabs
-
-Tabs are a great way to add a lot of content while avoiding having to scroll endlessly through a large document. The syntax for a tabset is
-
-```         
 ::: panel-tabset
-## First tab
-
-Here is some content
-
-## A second tab
-
-More content!
-
-## And third tab
-
-Hello!
-:::
-```
-
-The second level headers will be used to label the tabs in the document (see below)
-
-You can also add multiple tabs easily by going to
-
-> Insert -\> Tabset...
-
-Tabs look like this:
-
-::: panel-tabset
-## First tab
-
-Here is some content
-
-## A second tab
-
-More content!
-
-## And third tab
-
-Hello!
-:::
-
-### Code Tools
-
-You can include a **Code** menu in the header of your document that provides various tools for readers to interact with the source code. Specify in the YAML
-
-```         
-code-tools: true
-```
-
-### Code Folding
-
-You may not always want to show the R code chunks in the HTML output. Or you might want to give the viewer a choice to show/hide R code chunks. You can specify code folding in the top-level YAML header or in each code chunk individually
-
-```         
-code-fold: true
-```
-
-| Value   | Behavior                     |
-|---------|------------------------------|
-| `false` | No folding (default)         |
-| `true`  | Fold code (initially hidden) |
-| `show`  | Fold code (initially shown)  |
-
-### R Chunk Options
-
-Some settings you can change for individual R code chunks. The syntax to do this uses `#|` in the R code chunk:
+## Code
 
 ```{r}
-#| echo: fenced
-#| eval: false
-#| warning: false
-#| message: false
-#| code-fold: show
-#| code-summary: "Hide the code!"
+#| eval: true
 
-1 + 1
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans)
 ```
 
-Some commone ones to change are:
+::: callout-important
+-   You need to use the special type of quotation marks `` ` ` `` if your column names contain special charaters like: a space, `$`, `%`, `-`, and more...
+:::
 
-| Option    | Description                                                                                                                                                                                       |
-|------------|------------------------------------------------------------|
-| `eval`    | Evaluate the code chunk (if `false`, just echos the code into the output).                                                                                                                        |
-| `echo`    | Include the source code in output                                                                                                                                                                 |
-| `output`  | Include the results of executing the code in the output (`true`, `false`, or `asis` to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown). |
-| `warning` | Include warnings in the output.                                                                                                                                                                   |
-| `error`   | Include errors in the output (note that this implies that errors executing code will not halt processing of the document).                                                                        |
-| `include` | Catch all for preventing any output (code or results) from being included (e.g. `include: false` suppresses all output from the code block).                                                      |
+View the **Data Frame** tab to see the resulting data frames
 
-See the [Quarto Documentation](https://quarto.org/docs/computations/execution-options.html){target="_blank"} for more details
+## Data Frame
 
-### CSS Styling
+*Use the small arrow ▸ at the end of the column names to see more columns*
 
-You can also add CSS styling, either as a separate .css document or at the end of the Quarto document.
+```{r}
+#| echo: false
+#| eval: true
 
-For instance, I used the following styling options in the [sample report](/sample_report.html){target="_blank"}:
+paged_table(data_raw)
+```
+:::
 
-```{css}
-#| eval: false
+## Filter Rows
 
-.tab-content {
-  border-style: none;
-}
+Occasionally there might be additional rows that are not needed. In this example the first row for each participant is not needed and corresponds to an "Instructions" screen. Let's remove this
 
-h1 {
-  color: #005098;
-}
+::: panel-tabset
+## Code
 
-h2 {
-  color: #96834a !important;
-  font-weight: 600 !important;
-}
+```{r}
+#| eval: true
 
-a {
-  color: #005098;
-}
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst")
+```
 
-a:hover {
-  color: #96834a !important;
-}
+View the **Data Frame** tab to see the resulting data frames
 
-.quarto-title-meta-heading {
-  color: #96834a;
-  font-weight: 600 !important;
-}
+## Data Frame
 
-.sidebar nav[role=doc-toc] ul>li>a, .sidebar nav[role=doc-toc] ul>li>ul>li>a {
-  color: #005098 !important;
-  border-left: 2px solid #ECE5D7;
-  border-left-color: solid #ECE5D7;
-}
+*Use the small arrow ▸ at the end of the column names to see more columns*
 
-.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
-  color: #005098 !important;
-  font-weight: 600;
-  border-left: 2px solid #CBB879;
-  border-left-color: solid #CBB879;
-}
+```{r}
+#| echo: false
+#| eval: true
 
-.sidebar nav[role=doc-toc] ul>li>a:hover, .sidebar nav[role=doc-toc] ul>li>ul>li>a:hover {
-  color: #005098 !important;
-  font-weight: 600;
-  border-left: 2px solid #CBB879;
-  border-left-color: solid #CBB879;
-}
+paged_table(data_raw)
+```
+:::
 
-.nav-link {
-  color: #495057;
-}
+## Add and Modify Columns
 
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-  color: #96834a !important;
-}
+This is where most of the work will be done for data preparation. Some common problems with messy raw data files:
 
-.code-tools-button {
-  color: #96834a !important;
-}
+-   Values in columns don't make sense and/or require understanding how the program was setup
 
-.dropdown-toggle {
-  color: #005098 !important;
-}
+-   The same information is contained across different columns BUT in different rows
+
+-   Missing columns that should be there
+
+### Values in columns don't make sense
+
+In this sample data:
+
+-   The `Trial` number continues across practice `prac` and real `task` trials
+
+-   `Condition` has values of 0 and 1. What do 0 and 1 mean???
+
+-   `Procedure` has values that can be more clear (don't abbreviate!)
+
+-   Columns with `.resp` and `Correct Response` contain values that do not make sense (we will deal with this later though). What do 5 and 6 mean???
+
+For the `Trial` number we will use a combination of `mutate(.by = )` and `dplyr::row_number()`
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst") |>
+  mutate(.by = c(ID, Procedure),
+         Trial = row_number())
+```
+
+View the **Data Frame** tab to see the resulting data frames
+
+## Data Frame
+
+*Use the small arrow ▸ at the end of the column names to see more columns*
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_raw)
+```
+:::
+
+For the other ones we can use a combination of `mutate()` and `case_when()`:
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst") |>
+  mutate(.by = c(ID, Procedure),
+         Trial = row_number()) |>
+  mutate(Condition = case_when(Condition == 0 ~ "word_match",
+                               Condition == 1 ~ "word_mismatch"),
+         Procedure = case_when(Procedure == "prac" ~ "practice",
+                               Procedure == "task" ~ "real"),
+         Correct_Response = case_when(Correct_Response == 5 ~ "yes",
+                                      Correct_Response == 6 ~ "no"))
+```
+
+View the **Data Frame** tab to see the resulting data frames
+
+## Data Frame
+
+*Use the small arrow ▸ at the end of the column names to see more columns*
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_raw)
+```
+:::
+
+I haven't even told you anything about the task that generated this data (I am making this up as I go so I don't know either), yet it is already easier to understand what kind of data it contains.
+
+### Combine information across columns
+
+You can probably guess that the data contained in `slide1.resp` and `slide2.resp` contains the same information about what response was made. But one is for practice trials and the other for real trials. This should just be combined in one column. Same thing with `slide1.rt` and `slide2.rt`.
+
+There is a convenient function to do this, `dplyr::coalesce()`
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst") |>
+  mutate(.by = c(ID, Procedure),
+         Trial = row_number()) |>
+  mutate(Condition = case_when(Condition == 0 ~ "word_match",
+                               Condition == 1 ~ "word_mismatch"),
+         Procedure = case_when(Procedure == "prac" ~ "practice",
+                               Procedure == "task" ~ "real"),
+         Correct_Response = case_when(Correct_Response == 5 ~ "yes",
+                                      Correct_Response == 6 ~ "no"),
+         Response = coalesce(slide1.resp, slide2.resp),
+         Response = case_when(Response == 5 ~ "yes",
+                              Response == 6 ~ "no"),
+         RT = coalesce(slide1.rt, slide2.rt))
+```
+
+View the **Data Frames** tab to see the resulting data frames
+
+## Data Frame
+
+*Use the small arrow ▸ at the end of the column names to see more columns*
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_raw)
+```
+:::
+
+### Add additional columns
+
+You may have noticed that there is no column corresponding to accuracy. We have `Response` and `Correct_Response` information so we can create a new column for `Accuracy`
+
+::: panel-tabset
+## Code
+
+```{r}
+#| eval: true
+
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst") |>
+  mutate(.by = c(ID, Procedure),
+         Trial = row_number()) |>
+  mutate(Condition = case_when(Condition == 0 ~ "word_match",
+                               Condition == 1 ~ "word_mismatch"),
+         Procedure = case_when(Procedure == "prac" ~ "practice",
+                               Procedure == "task" ~ "real"),
+         Correct_Response = case_when(Correct_Response == 5 ~ "yes",
+                                      Correct_Response == 6 ~ "no"),
+         Response = coalesce(slide1.resp, slide2.resp),
+         Response = case_when(Response == 5 ~ "yes",
+                              Response == 6 ~ "no"),
+         RT = coalesce(slide1.rt, slide2.rt),
+         Accuracy = case_when(Response == Correct_Response ~ 1,
+                              Response != Correct_Response ~ 0))
+```
+
+View the **Data Frame** tab to see the resulting data frames
+
+## Data Frame
+
+*Use the small arrow ▸ at the end of the column names to see more columns*
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_raw)
+```
+:::
+
+## Remove Columns
+
+Finally, we can remove and reorder columns using `select()`:
+
+```{r}
+#| eval: true
+
+data_raw <- data_import |>
+  rename(Trial = trial, Procedure = List,
+         Condition = COND, Correct_Response = Ans) |>
+  filter(Procedure != "inst") |>
+  mutate(.by = c(ID, Procedure),
+         Trial = row_number()) |>
+  mutate(Condition = case_when(Condition == 0 ~ "word_match",
+                               Condition == 1 ~ "word_mismatch"),
+         Procedure = case_when(Procedure == "prac" ~ "practice",
+                               Procedure == "task" ~ "real"),
+         Correct_Response = case_when(Correct_Response == 5 ~ "yes",
+                                      Correct_Response == 6 ~ "no"),
+         Response = coalesce(slide1.resp, slide2.resp),
+         Response = case_when(Response == 5 ~ "yes",
+                              Response == 6 ~ "no"),
+         RT = coalesce(slide1.rt, slide2.rt),
+         Accuracy = case_when(Response == Correct_Response ~ 1,
+                              Response != Correct_Response ~ 0)) |>
+  select(ID, Procedure, Trial, Condition, Response, 
+         Correct_Response, Accuracy, RT)
+```
+
+We now end up with a tidy raw data frame!
+
+::: panel-tabset
+## Tidy
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_raw, options = list(rows.print = 20))
+```
+
+## Messy
+
+```{r}
+#| echo: false
+#| eval: true
+
+paged_table(data_import, options = list(rows.print = 20))
+```
+:::
+
+You can see that this data frame is much easier to understand and to work with. Someone outside of your project would have a decent understanding of what information is contained and what is being measured.
+
+**You need to have your data in this type of format as it will be easier for you to start thinking about scoring and analyzing your data**
+
+# Save Data
+
+Finally, you just need to save this tidy data frame to a .csv file in your **data/raw** folder and use the name of the task/measure that it came from.
+
+We have not talked about the `write_csv()` function but it is pretty simple to use as you can see:
+
+```{r}
+write_csv(data_raw, here(output_dir, output_file))
 ```

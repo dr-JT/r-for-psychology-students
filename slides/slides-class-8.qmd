@@ -1,0 +1,1093 @@
+---
+title: "Class 8"
+subtitle: "Data Visualization"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    controls: true
+    embed-resources: true
+    incremental: false
+    smaller: false
+    slide-number: c
+    progress: true
+    preview-links: true
+    menu: true
+    auto-stretch: false
+    date-format: long
+    highlight-style: github
+    code-line-numbers: false
+execute:
+  echo: true
+  eval: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+library(gt)
+library(dplyr)
+
+```
+
+## Outline
+
+ 
+
+-   `ggplot2`
+
+-   Data and Aesthetic Layers
+
+-   Geometries Layer
+
+-   Facets and Statistics Layer
+
+-   Coordinates Layer
+
+-   Theme Layer
+
+-   Common Types of Plots
+
+# ggplot2
+
+## Data Visualization
+
+ 
+
+Data visualization is an essential skill for anyone working with data and requires a combination of design principles with statistical understanding. In general there are two purposes for needing to graphically visualize data:
+
+ 
+
+1)  **Data exploration**: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.
+2)  **Explain and Communicate**: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
+
+## 
+
+![](images/ggplot2.jpg){width="104"}
+
+ 
+
+In this class, we will learn about the fundamentals of data visualization using the `ggplot2` package. This is by far the most popular package for data visualization in R.
+
+ 
+
+You have already seen and used `ggplot2` in previous classes, but now we will cover how to actually use this package.
+
+## 
+
+![](images/ggplot2.jpg){width="104"}
+
+The elements for creating a ggplot was largely inspired from the work of Leland Wilkinson (Grammar of Graphics, 1999), who formalized two main principles in plotting data:
+
+::: nonincremental
+1.  **Layering**
+2.  **Mapping**
+:::
+
+. . .
+
+In this framework, the essential grammatical elements required to create any data visualization are:
+
+![](images/ge_essentials.png){width="587"}
+
+## palmerpenguins
+
+ 
+
+We will use a data set from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html) package
+
+ 
+
+![](images/lter_penguins.png){fig-align="center" width="849"}
+
+## palmerpenguins
+
+ 
+
+::: nonincremental
+-   Go ahead and load the `palmerpenguins` and `ggplot2` packages using `library()` .
+
+-   Additionally, let's make the `penguins` data set that is loaded with `palmerpenguins` visible in the environment by explicitly assigning it to an object.
+:::
+
+. . .
+
+```{r}
+#| eval: true
+
+library(palmerpenguins)
+library(ggplot2)
+
+penguins <- penguins
+
+```
+
+# Data and Aesthetic Layers
+
+## Data Layer
+
+The Data Layer specifies the data object that is being plotted.
+
+ 
+
+![](images/ge_data.png){width="400"}
+
+ 
+
+It is the first grammatical element that is required to create a plot:
+
+```{r}
+#| eval: true
+#| fig-width: 6
+#| fig-height: 3
+
+ggplot(data = penguins)
+```
+
+## Aesthetic Layer
+
+The next grammatical element is the aesthetic layer, or **aes** for short. This layer specifies how we want to *map* our data onto the scales of the plot.
+
+ 
+
+![](images/ge_aes.png){width="400"}
+
+ 
+
+The aesthetic layer *maps* variables in our data onto scales in our graphical visualization, such as the x and y coordinates. In `ggplot2` the aesthetic layer is specified using the `aes()` function.
+
+ 
+
+```{r}
+
+ggplot(penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm))
+```
+
+## Aesthetic Layer {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+
+ggplot(penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm))
+
+```
+
+You can see we went from a blank box to a graph with the variable and scales of `bill_length_mm` mapped onto the x-axis and `flipper_length_mm` on the y-axis.
+
+## Aesthetic Layer
+
+ 
+
+::: nonincremental
+-   The aesthetic layer also maps variables in our data to other elements in our graphical visualization, such as color, size, fill, etc.
+
+-   These other elements are useful for adding a third variable onto our graphical visualizations. For instance, we can add the variable of `species` by mapping `species` onto the color aesthetic.
+:::
+
+. . .
+
+```{r}
+#| eval: true
+#| fig-width: 6
+#| fig-height: 3.5
+
+ggplot(penguins, 
+       mapping = aes(bill_length_mm, flipper_length_mm, color = species))
+```
+
+# Geometries Layer
+
+## Geometries Layer {.smaller}
+
+The next *essential* grammatical element for graphical visualization is the geometries layer or **geom** for short. This layer specifies the visual elements that should be used to plot the actual data.
+
+ 
+
+![](images/ge_geom.png){width="400"}
+
+. . .
+
+There are a lot of different types of **geoms** to use in ggplot2. Some of the most commonly used ones are:
+
+::: incremental
+-   Points or jittered points: `geom_point()` or `geom_jitter()`
+
+-   Lines: `geom_line()`
+
+-   Bars: `geom_bar()`
+
+-   Violin: `geom_violin()`
+
+-   Error bars: `geom_errobar()` or `geom_ribbon()`
+:::
+
+. . .
+
+For a full list see the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/#geoms){target="_blank"}
+
+## geom_point()
+
+ 
+
+For now, let's demonstrate this using `geom_point()`. We will create what is called a **scatterplot** - plotting the individual data points for two continuous variables.
+
+. . .
+
+ 
+
+```{r}
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point()
+```
+
+ 
+
+. . .
+
+You can also specify the `color = species` aesthetic mapping on the geometric layer
+
+```{r}
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +
+  geom_point(mapping = aes(color = species))
+```
+
+ 
+
+. . .
+
+::: callout-note
+Note that in `ggplot2` there is a special notation that is similar to the pipe operator `|>` seen in previous classes. Except in `ggplot2` you have to use a plus sign `+` .
+:::
+
+## geom_point() {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point()
+
+```
+
+## Aesthetic Properties of geoms {.smaller}
+
+Besides mapping variables in your data to certain aesthetics, you can change the aesthetic properties of geometrical elements. Common aesthetic properties include:
+
+ 
+
+#### Color related aesthetics: [See more details here](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"} {.fragment}
+
+::: incremental
+-   **Color**: applies to most geoms `geom_(color = )`
+
+-   **Fill**: applies to most geoms `geom_(fill = )`
+
+-   **Transparency**: applies to most geoms. values can range from 0 to 1, 0 = transparent; 1 = opaque; `geom_(alpha = )`
+
+-   [See a full list of R colors here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf){target="_blank"}
+:::
+
+#### Shape related aesthetics: [See more details here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html){target="_blank"} {.fragment}
+
+::: incremental
+-   **Shape**: `geom_point(shape = )`, `geom_jitter(shape = )`
+
+-   **Size**: `geom_point(size = )`, `geom_jitter(size = )`
+
+-   **Line Type**: `geom_line(linetype = )`
+
+-   **Line Width**: `geom_line(linewidth = )`
+
+-   **Width**: `geom_errobar(width = )`, `geom_jitter(width = )`
+:::
+
+## Aesthetic Properties of geoms {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| code-line-numbers: "3"
+
+ggplot(penguins, 
+       aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point(shape = "diamond filled", size = 3, fill = "white")
+```
+
+## More ggplot2 layers
+
+ 
+
+Besides the data, aesthetics, and geometries layers, there are often other types of elements you may want to include.
+
+![](images/ge_all.png){width="550"}
+
+# Facets and Statistics Layer
+
+## Facets Layer {.smaller}
+
+The facets layer allows you to create panels of subplots within the same graphic object
+
+ 
+
+![](images/ge_facet.png){width="400"}
+
+The previous three layers are the **essential** layers. The facet layer is not essential, but it can be useful when you want to communicate the relationship among 4 or more variables.
+
+ 
+
+. . .
+
+Let's create a facet layer of our scatterplot with different panels for `sex`
+
+```{r}
+#| code-line-numbers: "8"
+
+# first let's remove any missing values for sex
+library(dplyr)
+penguins <- filter(penguins, !is.na(sex))
+
+ggplot(penguins, 
+       aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point() +
+  facet_grid(cols = vars(sex))
+```
+
+See the ggplot2 documentation on [facet_grid](https://ggplot2.tidyverse.org/reference/facet_grid.html){target="_blank"} and [facet_wrap](https://ggplot2.tidyverse.org/reference/facet_wrap.html){target="_blank"}
+
+## Facets Layer {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 4.5
+#| code-line-numbers: "8"
+
+# first let's remove any missing values for sex
+library(dplyr)
+penguins <- filter(penguins, !is.na(sex))
+
+ggplot(penguins, 
+       aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point() +
+  facet_grid(cols = vars(sex))
+```
+
+## Statistics Layer {.smaller}
+
+The statistics layer allows you plot aggregated statistical values calculated from your data
+
+ 
+
+![](images/ge_stats.png){width="400"}
+
+The statistics layer is used in combination with a **geom** to plot values that are a function (e.g., mean) of the values in your data. The two main **stat** functions are:
+
+-   `geom_(stat = "summary")`
+
+-   `stat_smooth()`
+
+## geom\_(stat = "summary") {.smaller}
+
+ 
+
+Statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the **geom** functions using `stat = "summary"`. There are two main arguments you need to specify:
+
+-   **stat**: set this to "summary" to calculate a summary statistic
+
+-   **fun**: The function used to calculate an aggregated summary statistic. Functions like **mean**, **sum**, **min**, **max**, **sd** can all be specified. You can then specify additional argument that should be passed into these functions as regular arguments in `geom_()`
+
+. . .
+
+To plot the average (mean) `body_mass_g` for each `species`.
+
+```{r}
+#| code-line-numbers: "2"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick")
+```
+
+ 
+
+. . .
+
+Using multiple **geoms** you can plot both the raw values for each individual penguin and the summary statistic
+
+```{r}
+#| code-line-numbers: "2-3"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = 1, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick")
+```
+
+## geom\_(stat = "summary")
+
+ 
+
+```{r}
+#| eval: true
+#| code-line-numbers: "2-3"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = 1, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick")
+```
+
+## geom\_(stat = "summary") {.smaller}
+
+ 
+
+The `fun =` argument returns only a single summary statistic value (e.g., a mean). However, some **geoms** actually require two values. For instance, when plotting errorbars you will need both ymin and ymax values returned. For these types of cases, you need to use the **fun.data** argument instead:
+
+ 
+
+. . .
+
+`mean_cl_normal` is a function to calculate 95% confidence limits from your data.
+
+```{r}
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+#| code-line-numbers: "5"
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, na.rm = TRUE,
+             shape = "diamond", size = 5, color = "firebrick") +
+  geom_errorbar(stat = "summary", fun.data = mean_cl_normal, width = .1)
+```
+
+## stat_smooth(method = "lm") {.smaller}
+
+ 
+
+`stat_smooth(method = "lm")` is used in scatterplots to plot the regression line on your data.
+
+ 
+
+```{r}
+#| eval: true
+
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
+  geom_point() +
+  stat_smooth(method = "lm")
+```
+
+## stat_smooth(method = "lm") {.smaller}
+
+ 
+
+You can add separate regression lines if other variables are mapped to **aesthetics** and/or are wrapped in different **facets**
+
+```{r}
+#| eval: true
+
+ggplot(penguins, 
+       aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point() +
+  facet_grid(cols = vars(sex)) +
+  stat_smooth(method = "lm")
+```
+
+## stat_smooth(method = "lm") {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+
+ggplot(penguins, 
+       aes(bill_length_mm, flipper_length_mm, color = species)) +
+  geom_point() +
+  facet_grid(cols = vars(sex)) +
+  stat_smooth(method = "lm")
+```
+
+# Coordinates Layer
+
+## Coordinates Layer {.smaller}
+
+The coordinate layer allows you to adjust the x and y coordinates
+
+ 
+
+![](images/ge_coord.png){width="400"}
+
+ 
+
+There are two main groups of functions that are useful for adjusting the x and y coordinates.
+
+-   `coord_cartesian()` for adjusting the axis limits (zoom in and out)
+
+-   `scale_x_` and `scale_y_` for setting the axis ticks and labels
+
+## axis limits {.smaller}
+
+You can adjust limits (min and max) of the x and y axes using `coord_cartesian(xlim = c(), ylim = c())`
+
+ 
+
+::: callout-important
+If you want to compare two separate graphs, then they need to be on the same scale. This an important design principle in graphical visualization.
+:::
+
+## axis limits {.smaller}
+
+ 
+
+You can adjust limits (min and max) of the x and y axes using `coord_cartesian(xlim = c(), ylim = c())`
+
+```{r}
+#| eval: true
+#| code-line-numbers: "7,13"
+
+male <- filter(penguins, sex == "male")
+female <- filter(penguins, sex == "female")
+
+p1 <- ggplot(male, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 6000)) +
+  labs(title = "male")
+
+p2 <- ggplot(female, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) + 
+  coord_cartesian(ylim = c(3000, 6000)) +
+  labs(title = "female")
+```
+
+## axis limits {.smaller}
+
+ 
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(patchwork)
+
+p1 + labs(title = "male") + p2 + labs(title = "female")
+
+```
+
+## axis limits {.smaller}
+
+ 
+
+```{r}
+#| echo: false
+#| eval: true
+
+male <- filter(penguins, sex == "male")
+female <- filter(penguins, sex == "female")
+
+p1 <- ggplot(male, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(2000, 10000)) +
+  labs(title = "male")
+
+p2 <- ggplot(female, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) + 
+  coord_cartesian(ylim = c(3000, 5000)) +
+  labs(title = "female")
+
+library(patchwork)
+
+p1 + labs(title = "male") + p2 + labs(title = "female")
+```
+
+## axis ticks and labels {.smaller}
+
+ 
+
+You can adjust the scale (major and minor ticks) of the x and y axes using the `scale_x_` and `scale_y_` set of functions. The two main set of functions to know are for continuous and discrete scales:
+
+ 
+
+::: incremental
+-   continuous: `scale_x_continuous(breaks = seq())` and `scale_y_continuous(breaks = seq())`
+
+-   discrete: `scale_x_discrete(breaks = seq())` and `scale_y_continuous(breaks = seq())`
+:::
+
+. . .
+
+For example:
+
+```{r}
+#| code-line-numbers: "5"
+
+ggplot(male, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 6000)) +
+  scale_y_continuous(breaks = seq(3000, 6000, by = 500))
+```
+
+## axis ticks and labels {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| code-line-numbers: "5"
+
+ggplot(male, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 6000)) +
+  scale_y_continuous(breaks = seq(3000, 6000, by = 500))
+```
+
+# Theme Layer
+
+## Theme Layer {.smaller}
+
+The theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot
+
+ 
+
+![](images/ge_themes.png){width="400"}
+
+There are three main set of functions that we can use to control the theme layer:
+
+-   **Color**: `scale_color_` set of functions will change the color scheme of the geometric elements:
+
+-   **Labels**: `labs()` is a convenient function for labeling the title, subtitle, axes, and legend
+
+-   **Theme templates**: There are predefined theme templates that come with `ggplot2`
+
+-   **Other theme elements**: `theme()` can be used to further customize the look of your plot
+
+## Color {.smaller}
+
+ 
+
+The `RColorBrewer` package offers several color palettes for R:
+
+::: columns
+::: {.column width="50%"}
+![](images/RColorBrewer.png){width="526"}
+:::
+
+::: {.column .fragment width="50%"}
+ 
+
+Also, [check out](https://nanx.me/ggsci/index.html){target="_blank"} the `ggsci` color palettes inspired by scientific journals, science fiction movies, and TV shows.
+
+[![](images/ggsci_palettes.png){width="709"}](https://nanx.me/ggsci/index.html)
+:::
+:::
+
+## Color {.smaller}
+
+You can access these palettes using `scale_color_brewer(palette = "palette name")`
+
+. . .
+
+```{r}
+#| eval: true
+#| code-line-numbers: "6"
+
+ggplot(penguins, aes(species, body_mass_g, color = sex)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 6000)) +
+  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +
+  scale_color_brewer(palette = "Set1")
+```
+
+## Labels {.smaller}
+
+Changing labels and adding titles is easy using `labs()`
+
+. . .
+
+ 
+
+```{r}
+#| eval: true
+#| code-line-numbers: "6-7"
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 6000)) +
+  scale_y_continuous(breaks = seq(3000, 6000, by = 500)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)")
+```
+
+## Labels {.smaller}
+
+To change labels for legends you need to refer to the **aesthetic mapping** that was defined in `aes()` (e.g., color, shape).
+
+ 
+
+```{r}
+#| eval: true
+#| code-line-numbers: "3,8,9"
+#| fig-width: 6
+#| fig-height: 4
+
+adelie <- filter(penguins, species != "Gentoo")
+
+ggplot(adelie, aes(species, body_mass_g, color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1")
+```
+
+## Theme templates
+
+ 
+
+Here are some themes that come loaded with `ggplot2`
+
+-   `theme_bw()`
+-   `theme_light()`
+-   `theme_dark()`
+-   `theme_minimal()`
+-   `theme_classic()`
+-   `theme_void()`
+
+## Theme templates {.smaller}
+
+ 
+
+Using a theme template is straightforward
+
+```{r}
+#| eval: true
+#| code-line-numbers: "11"
+#| fig-width: 6
+#| fig-height: 3.75
+
+adelie <- filter(penguins, species != "Gentoo")
+
+ggplot(adelie, aes(species, body_mass_g, color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1") +
+  theme_classic()
+```
+
+## Other Theme Elements {.smaller}
+
+In addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You can do this using `theme()`
+
+```{r}
+#| eval: true
+#| code-line-numbers: "12"
+#| fig-width: 6
+#| fig-height: 3.75
+
+adelie <- filter(penguins, species != "Gentoo")
+
+ggplot(adelie, aes(species, body_mass_g, color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1") +
+  theme_classic() +
+  theme(legend.title = element_text(face = "bold"))
+```
+
+## Other Theme Elements {.smaller}
+
+Here is a list of different elements you can change. They are organized into text, line, and rectangle elements:
+
+ 
+
+![](images/theme_elements.png){width="645"}
+
+## Other Theme Elements {.smaller}
+
+Text, line, and rectangle elements each have their corresponding element function e.g., `element_text()`
+
+ 
+
+![](images/element_func.png){width="724"}
+
+Obviously, there are a lot of different theme elements you can tweak and it is hard to memorize them all. Make use of Google, ggplot2 documentation, and Generative AI's for assistance.
+
+[Here is the ggplot2 documentation on theme elements](https://ggplot2.tidyverse.org/reference/theme.html){target="_blank"}
+
+## Create your own theme template
+
+Often times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.
+
+ 
+
+-   One convenient way of doing so is to use `theme_set()`
+
+-   `theme_set()` will automatically apply the same theme settings across all ggplots created in a document.
+
+## Create your own theme template
+
+ 
+
+For instance, if you want to make sure all your ggplots have a **bolded** legend title and use `theme_classic()` you can create a theme to do that:
+
+ 
+
+```{r}
+#| eval: true
+
+bold_legend <- theme(legend.title = element_text(face = "bold"))
+
+plot_theme <- theme_classic() + bold_legend
+
+```
+
+ 
+
+Then you need to set the theme that will be applied across all ggplots
+
+```{r}
+#| eval: true
+
+theme_set(plot_theme)
+
+```
+
+ 
+
+Now any ggplots you create will be given this theme setting without you having to include it in the actual ggplot.
+
+## Create your own theme template {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(adelie, aes(species, body_mass_g, 
+                     color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1")
+```
+
+## Create your own theme template {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| code-fold: true
+#| code-summary: "Show theme_spacious()"
+
+theme_spacious <- function(font_size = 14, bold = TRUE) {
+  key_size <- trunc(font_size * .8)
+  if (bold == TRUE) {
+    face.type <- "bold"
+  } else {
+    face.type <- "plain"
+  }
+
+  theme(text = element_text(size = font_size),
+        axis.title.x = element_text(margin = margin(t = 15, r = 0,
+                                                    b = 0, l = 0),
+                                    face = face.type),
+        axis.title.y = element_text(margin = margin(t = 0, r = 15,
+                                                    b = 0, l = 0),
+                                    face = face.type),
+        legend.title = element_text(face = face.type),
+        legend.spacing = unit(20, "pt"),
+        legend.text = element_text(size = key_size),
+        plot.title = element_text(face = face.type, hjust = .5,
+                                  margin = margin(b = 10)),
+        plot.subtitle = element_text(hjust = .5),
+        plot.caption = element_text(hjust = 0, size = key_size,
+                                    margin = margin(t = 20)),
+        strip.background = element_rect(fill = "white", color = "white"),
+        strip.text = element_text(color = "black",
+                                  face = face.type))
+}
+```
+
+```{r}
+#| eval: true
+
+output_theme <- theme_linedraw() + 
+  theme_spacious(font_size = 12, bold = TRUE) +
+  theme(panel.border = element_rect(color = "gray"),
+        axis.line.x = element_line(color = "gray"),
+        axis.line.y = element_line(color = "gray"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+theme_set(output_theme)
+```
+
+## Create your own theme template {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(adelie, aes(species, body_mass_g, 
+                     color = sex, shape = island)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = .1) +
+  coord_cartesian(ylim = c(3000, 4250)) +
+  scale_y_continuous(breaks = seq(3000, 4250, by = 250)) +
+  labs(title = "A Plot Title", subtitle = "A subtitle", tag = "A)",
+       x = "Species", y = "Body Mass (g)", color = "Sex", shape = "Island") +
+  scale_color_brewer(palette = "Set1")
+```
+
+# Common Types of Plots
+
+## Histogram {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(body_mass_g)) +
+  geom_histogram(bins = 20, fill = "white", color = "black")
+```
+
+## Bar, point, and line {.smaller}
+
+When you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.
+
+ 
+
+-   Bar plots
+
+-   Point plots
+
+-   Line plots
+
+## Bar plot {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_bar(stat = "summary", fun = mean)
+```
+
+## Point plot {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_point(stat = "summary", fun = mean)
+
+```
+
+## Point plot - with raw values {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_point(stat = "summary", fun = mean, 
+             size = 4, color = "steelblue")
+```
+
+## Line plot {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_line(stat = "summary", fun = mean, group = 1)
+
+```
+
+## Line plot - with raw values {.smaller}
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = .1, size = .75, alpha = .2) +
+  geom_line(stat = "summary", fun = mean, group = 1) +
+  geom_point(stat = "summary", fun = mean, 
+             size = 4, color = "steelblue")
+```
+
+## Scatterplot {.smaller}
+
+When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a **scatterplot**
+
+ 
+
+```{r}
+#| eval: true
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(penguins, aes(bill_length_mm, body_mass_g)) +
+  geom_point() +
+  stat_smooth(method = "lm", color = "forestgreen")
+
+```

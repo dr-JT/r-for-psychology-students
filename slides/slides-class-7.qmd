@@ -1,0 +1,44 @@
+---
+title: "Class 7"
+subtitle: "Quarto Documents"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    controls: true
+    embed-resources: true
+    incremental: false
+    smaller: false
+    slide-number: c
+    progress: true
+    preview-links: true
+    menu: true
+    auto-stretch: false
+    date-format: long
+    highlight-style: github
+    code-line-numbers: false
+execute:
+  echo: true
+  eval: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+library(gt)
+library(dplyr)
+
+```
+
+## Outline
+
+-   YAML Header
+
+-   Markdown
+
+-   R Code Chunks
+
+-   Render Document
+
+-   Additional Elements

@@ -36,10 +36,14 @@ and more
 
 [Class 4](/classes/class-4.html) - Reproducible Projects
 
-[Class 5](/classes/class-5.html) - Quarto Documents
+[Class 5](/classes/class-5.html) - Data Preparation
 
-[Class 6](/classes/class-6.html) - Data Visualization
+Class 6 - Data Scoring
 
-Class 7 - Statistical Analysis: Regression
+[Class 7](/classes/class-7.html) - Quarto Documents
 
-Class 8 - Statistical Analysis: ANOVA
+[Class 8](/classes/class-8.html) - Data Visualization
+
+Class 9 - Statistical Analysis: Regression
+
+Class 10 - Statistical Analysis: ANOVA

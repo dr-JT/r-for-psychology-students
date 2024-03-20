@@ -1,36 +1,28 @@
 ---
 title: "Class 5"
-subtitle: "Quarto Documents"
+subtitle: "Data Preparation"
 slide-format: revealjs
 editor: visual
 ---
 
-The main objective of this class is to learn how to use Quarto Documents to create an HTML report that contains data visualizations and statistical analyses.
+The main objective of this class is to understand the steps typically involved in the data preparation stage: creating a tidy raw data file from a messy raw data file.
 
 ## Outline
 
--   YAML Header
+-   Setup Project
 
--   Markdown
+-   Data
 
--   R Code Chunks
+-   Template R Script
 
--   Render Document
+-   Setup
 
--   Additional Elements
+-   Import Data
+
+-   Tidy Data
+
+-   Save Data
 
 ## Class Materials
 
-📘 [Class 5: Quarto Documents](/lectures/lectures-class-5.html)
-
-🖥️ [Slides - Full Screen](/slides/slides-class-5.html){target="_blank"}
-
-Press **M** on the slides to bring up the menu to access options such as navigating to different sections
-
-<div>
-
-```{=html}
-<iframe class="slide-deck" src="/slides/slides-class-5.html"></iframe>
-```
-
-</div>
+📘 [Class 5: Data Preparation](/lectures/lectures-class-5.html)

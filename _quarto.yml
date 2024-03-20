@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
 
 website:
   title: "R for the Psychology Student"
@@ -38,8 +38,10 @@ website:
             text: "Class 4"
           - href: classes/class-5.qmd
             text: "Class 5"
-          - href: classes/class-6.qmd
-            text: "Class 6"
+          - href: classes/class-7.qmd
+            text: "Class 7"
+          - href: classes/class-8.qmd
+            text: "Class 8"
       - section: "Supplemental"
         contents:
           - href: supplemental/tips-tricks.qmd
