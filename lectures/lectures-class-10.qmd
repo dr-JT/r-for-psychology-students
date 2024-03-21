@@ -1,0 +1,16 @@
+---
+title: "Class 10: Statistical Analysis - Regression"
+execute:
+  echo: true
+  eval: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+source(here::here("prerender.R"))
+
+```

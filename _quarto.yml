@@ -9,8 +9,8 @@ website:
   site-url: "https://dr-jt.github.io/r-for-psychology-students/"
   
   sidebar:
-    background: "#4676a3"
-    font-color: "#ffffff"
+    background: "#F2F2F2"
+    font-color: "#005098"
     pinned: true
     align: center
     style: "docked"
@@ -20,7 +20,7 @@ website:
     contents:
       - href: index.qmd
         text: "Home"
-      - section: "Course Information"
+      - section: "Course Prep"
         contents:
           - href: what-is-R.qmd
             text: "What is R?"
@@ -44,6 +44,10 @@ website:
             text: "Class 7"
           - href: classes/class-8.qmd
             text: "Class 8"
+          - href: classes/class-9.qmd
+            text: "Class 9"
+          - href: classes/class-10.qmd
+            text: "Class 10"
       - section: "Supplemental"
         contents:
           - href: supplemental/tips-tricks.qmd
@@ -57,13 +61,14 @@ format:
   html:
     css: styles.css
     foreground: "#4676a3"
-    linkcolor: "#4676a3"
+    linkcolor: "#005098"
     theme: 
       light: [cosmo, theme.css]
     mainfont: "Atkinson Hyperlegible"
     code-copy: true
     code-overflow: wrap
     toc: true
+    df-print: paged
     
 filters:
   - line-highlight

@@ -11,7 +11,7 @@ This course does not require that you already have experience with R, but it wou
 
 As you go through the classes in this course, I encourage you to experiment. If you are curious what happens if you write the code slightly differently, go ahead and try it out. See what happens. If it is not what you expected spend some time figuring out why.
 
-## New Script File {#sec-new-script-file}
+# New Script File
 
 To create a new R script go to
 
@@ -40,7 +40,7 @@ Create two script files for this class.
 -   The other will be a scratchpad script file. You can choose whether you want to save that script or not.
 :::
 
-## Running R Code {#sec-running-r-code}
+# Running R Code
 
 Throughout this course you will be introduced to several ways of executing or "running" R code. For now, you need to be aware of two ways of doing so.
 
@@ -62,7 +62,7 @@ Notice how the lines of code and their output were printed to the Console window
 
 Type the same lines of code as above but this time directly in the Console window, one at a time, and hit enter.
 
-## Creating R Objects {#sec-creating-r-objects}
+# Creating R Objects
 
 In R, you will create what are called **objects** that store some information. That could be a single value like `5`, an entire table of data with rows and columns, and even more complex objects. Objects are created using the assignment operator, `<-`.
 
@@ -82,7 +82,7 @@ You just assigned the value `"hello"` to an object named `my_first_object`. Note
 
 You also created `my_second_object` that stores a **vector** of four values: 5, 6, 7, and 8. The `c()` function can be used to create a vector of values.
 
-## Using Functions {#sec-using-functions}
+# Using Functions
 
 Anything you do in R is by using **functions**. In fact, learning R is just learning what functions are available and how to use them.
 
@@ -125,13 +125,13 @@ seq(to = 100, by = 10)
 
 What this means is that it can be important to know what the default values are for functions you are using and you can figure that out with the helper function `?`
 
-## R Packages {#sec-r-packages}
+# R Packages
 
 The community of R users have developed a vast number of functions that expand on the functions that come with R. Many of the functions developed by R users allow you to do more complicated things with your data without having to be an advanced R programmer. And the great thing is that as more psychology researchers use R, the more functions there are specifically for psychological research.
 
 Functions that R users develop are collected in what are called **packages**. Most R packages are hosted on The Comprehensive R Archive Network - **CRAN**. Some other packages, ones that are in more developmental stages and may not be as stable, are hosted on GitHub.
 
-### Install and Load Packages
+## Install and Load Packages
 
 To install packages from **CRAN** is easy. Simply type into the console window: `install.packages("packagename")`
 
@@ -153,7 +153,7 @@ For example:
 library(dplyr)
 ```
 
-## Data Frames {#sec-data-frames}
+# Data Frames
 
 The main type of R object that you will be working with are data frames. You are probably already familiar with data frames. Excel uses this type of data structure, it is just rows and columns of data.
 
@@ -198,7 +198,7 @@ data_import <- penguins
 I prefer to name data frames that I import with "import" that way it is clear which data frame is the original one. Then I create new data frames (R objects) with a different name. This allows me to easily identify and go back to the original data after I have done some transformations on it.
 :::
 
-### Viewing the Data
+## Viewing the Data
 
 Let's first get to know this data, how it is structured, and what kind of values it stores. You can view a data frame by selecting it in the Environment window or by using the `View()` function.
 
@@ -256,7 +256,7 @@ It looks like there are three unique values in the `species` column, Adelie, Gen
 What are the unique values in the `year` column? Does this column seem like it is a factor? What about `sex`?
 :::
 
-### Types of Values
+## Types of Values
 
 Classes are types of values that exist in R. Here are a list of some common value types:
 
@@ -286,7 +286,7 @@ as.character(data_import$bill_depth_mm)
 
 ```
 
-### Factors
+## Factors
 
 Notice that if you evaluate the type of values in `species` you get an "integer". This is probably surprising to you because 1) They look like character values (non-numeric), and 2) I told you earlier that the `species` column is a **factor**. Factors are a special type of column, that represent levels of a category with an order to those levels. The actual values in Factors can be of type character, double, integer, or logical. However, they are represented as integers corresponding to the order of the levels. Factors become especially important in data visualization and statistical analysis.
 
@@ -309,7 +309,7 @@ It is because we did not use the assignment operator. We simply printed the resu
 How did I know how to use the argument name `levels =` in `factor()`? You can learn about arguments a function can take, and what they do using the helper function `?`. For instance type `?factor()` in the console. In the Help window, you can see there are a number of arguments that can be specified in `factor()`. For `levels`, it states that it is an optional vector of the unique values that x might have taken. This tells us we need to supply a vector of unique values. You can use the `c()` function to create a vector of values. Type `c(2007, 2008, 2009)` in the Console. You can see there are three elements in the vector for each year. We specify this vector in the `levels` argument to tell `factor()` that these are the unique values in the `data_import$year` column.
 :::
 
-## Transforming Data
+# Transforming Data
 
 Just for the fun of it, let's do a simple transformation on the data, visualize a relationship between three variables, and statistically test a relationship between two variables. Three variables that we will look at are `species`, `flipper_length_mm` , and `body_mass_g`.
 
@@ -330,7 +330,7 @@ What about that first line of code? The `|>` notation at the end of the line say
 
 Go ahead and view `data_plot`. You can see that it is the same as `data_import` except it has two new columns, `flipper_length_mm.mean` and `body_mass_g.mean`.
 
-## Visualizing Data
+# Visualizing Data
 
 We will use the `ggplot2` package to visualize the relationship between `species`, `flipper_length_mm` , and `body_mass_g`. Let's do this step-by-step. First let's build the **data** and **aesthetic** layers. These layers tell `ggplot()` what data to plot and how we map them onto the scales (e.g., x-axis and y-axis) of the graphic.
 
@@ -377,7 +377,7 @@ ggplot(data_plot, aes(x = flipper_length_mm, y = body_mass_g,
   theme_classic()
 ```
 
-## Statistical Analysis
+# Statistical Analysis
 
 Based on the graphic visualization, it looks like there is a strong relationship between **body mass** and **flipper length**, perhaps unsurprisingly. Let's calculate the correlation between these two variables and test whether it is statistically significant or not.
 
@@ -391,7 +391,7 @@ cor.test(data_import$body_mass_g, data_import$flipper_length_mm)
 
 That was easy!
 
-## Class 1: Reproducible Script
+# Class 1: Reproducible Script
 
  
 

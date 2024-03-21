@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.5.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student - Class 4: Reproducible Projects</title>
+<title>R for the Psychology Student – Class 4: Reproducible Projects</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Course Information</span></a>
+ <span class="menu-text">Course Prep</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -225,6 +225,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../classes/class-8.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Class 8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../classes/class-9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 9</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../classes/class-10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 10</span></a>
   </div>
 </li>
       </ul>
@@ -333,11 +345,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Frontloading effort saves future headaches.</p>
 </blockquote>
-<section id="reproducible-projects" class="level2">
-<h2 class="anchored" data-anchor-id="reproducible-projects">Reproducible Projects</h2>
+<section id="reproducible-projects" class="level1">
+<h1>Reproducible Projects</h1>
 <p>Part of the scientific process involves carefully documenting every step in our procedures. Doing so not only ensures higher quality research, but also enables your future self and others to fully reproduce what you did, go back and analyze the data in a different way, or catch errors in the data analysis process. Without a fully reproducible project, it may be difficult or impossible to catch errors that were made.</p>
-<section id="what-does-reproducibility-mean" class="level3">
-<h3 class="anchored" data-anchor-id="what-does-reproducibility-mean">What does reproducibility mean?</h3>
+<section id="what-does-reproducibility-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-reproducibility-mean">What does reproducibility mean?</h2>
 <p>Reproducibility means that all data processing and analysis steps can be fully reproduced using only the original raw data files and the execution of the R scripts. There are different levels of reproducibility (I made these up):</p>
 <ol type="1">
 <li><p><strong>Partially reproducible</strong> - only some data processing and analysis steps can be reproduced, which may be due to a lack of original raw data files, the “just get it done” approach, or the use of proprietary and non-reproducible software.</p></li>
@@ -356,8 +368,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This last criterion is extremely important, but is often overlooked. If others cannot understand your workflow, then it is not moderately reproducible. Therefore, it is important to take the time and think about the organization of your project, files, data, and scripts.</p>
 </section>
 </section>
-<section id="project-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="project-workflow">Project Workflow</h2>
+<section id="project-workflow" class="level1">
+<h1>Project Workflow</h1>
 <p>A good starting point for organizing your project is to map out the steps required for processing and analyzing your data.</p>
 <p>A typical data analysis workflow looks something like this:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -378,19 +390,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Create separate scripts for each stage</p></li>
 </ul>
 </section>
-<section id="file-organization" class="level2">
-<h2 class="anchored" data-anchor-id="file-organization">File Organization</h2>
+<section id="file-organization" class="level1">
+<h1>File Organization</h1>
 <p>Good project organization starts with easy to understand folder and file organization. You want this organization to match your data analysis workflow:</p>
 <p><img src="images/folder_organization.png" class="img-fluid" width="176"></p>
-<section id="data-folder" class="level3">
-<h3 class="anchored" data-anchor-id="data-folder">Data Folder</h3>
+<section id="data-folder" class="level2">
+<h2 class="anchored" data-anchor-id="data-folder">Data Folder</h2>
 <p>Notice how the structure of the <strong>data</strong> folder follows the data analysis workflow. The original <strong>messy</strong> raw data files are stored in <strong>data / raw / messy</strong>. The <strong>tidy</strong> raw data files are stored in <strong>data / raw</strong>. And the <strong>processed and cleaned</strong> data files are stored in <strong>data</strong></p>
 <p>Alternatively, if you only have one original messy raw data file that you are working with you can just put all the data files in <strong>data</strong> and name the data files appropriately:</p>
 <p><img src="images/folder_organization_alt.png" class="img-fluid" width="210"></p>
 <p>The basic priniciple here is that your <strong>data</strong> folder organization and <strong>data</strong> file naming maps onto the end products in your data analysis workflow.</p>
 </section>
-<section id="r-folder" class="level3">
-<h3 class="anchored" data-anchor-id="r-folder">R Folder</h3>
+<section id="r-folder" class="level2">
+<h2 class="anchored" data-anchor-id="r-folder">R Folder</h2>
 <p>I highly recommend that you put all your R scripts in one folder, rather than having them scattered across different folders.</p>
 <p>Additionally, I recommend that you append a prefix number corresponding to the order in which the scripts need to be ran and a suffix corresponding to what stage of the data analysis workflow it is in:</p>
 <ul>
@@ -404,8 +416,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Untitled.R</strong></li>
 </ul>
 </section>
-<section id="analyses-folder" class="level3">
-<h3 class="anchored" data-anchor-id="analyses-folder">Analyses Folder</h3>
+<section id="analyses-folder" class="level2">
+<h2 class="anchored" data-anchor-id="analyses-folder">Analyses Folder</h2>
 <p>The analyses folder will contain <strong>Quarto</strong> documents (more on these in the next class) that you will use to genearate reports for exploring your data, creating data visualizations, and conduct statistical analyses. This folder will have at least one file:</p>
 <ul>
 <li><strong>Main Analyses.qmd</strong></li>
@@ -416,8 +428,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Untitled.qmd</strong></li>
 </ul>
 </section>
-<section id="mainscript" class="level3">
-<h3 class="anchored" data-anchor-id="mainscript">mainscript</h3>
+<section id="mainscript" class="level2">
+<h2 class="anchored" data-anchor-id="mainscript">mainscript</h2>
 <p>You might also consider creating a <strong>mainscript.R</strong> or <strong>mainscript.qmd</strong> file to source all your R scripts and Quarto documents, rather than opening and sourcing each R script and Quarto document one at a time.</p>
 <p>It might be a file simply containing:</p>
 <div class="cell">
@@ -437,11 +449,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/file_organization.png" class="img-fluid" width="220"></p>
 </section>
 </section>
-<section id="importing-data" class="level2">
-<h2 class="anchored" data-anchor-id="importing-data">Importing Data</h2>
+<section id="importing-data" class="level1">
+<h1>Importing Data</h1>
 <p>Up until now, you have been using <strong>absolute</strong> file paths and the <strong>RStudio Import Dataset GUI</strong> for importing files into R. This is not a reproducible way of importing data into R. You can still use the RStudio Import Dataset GUI to figure out what type of data file you are importing (e.g., tab-delimited, csv) but I will now show you a simple and reproducible way of importing data into R.</p>
-<section id="file-paths" class="level3">
-<h3 class="anchored" data-anchor-id="file-paths">File Paths</h3>
+<section id="file-paths" class="level2">
+<h2 class="anchored" data-anchor-id="file-paths">File Paths</h2>
 <p>R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an <strong>absolute</strong> file path. Absolute file paths start at the root directory of your computer and might look something like:</p>
 <blockquote class="blockquote">
 <p><strong>On Macs</strong>:</p>
@@ -456,8 +468,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Relative file paths need to be used in order for your project to meet even a minimal level of reproducibility. A relative file path can be used on different computers as long as the internal organization of folders and files for the project are the same.</p>
 <p>However, at some point your computer does need to know the absolute file path to your project folder. A convenient and reproducible way of doing this is by using a combination of <strong>RStudio Projects</strong> and <code>here::here()</code> .</p>
 </section>
-<section id="rstudio-projects" class="level3">
-<h3 class="anchored" data-anchor-id="rstudio-projects">RStudio Projects</h3>
+<section id="rstudio-projects" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-projects">RStudio Projects</h2>
 <p><a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">RStudio Projects</a> allow you to open isolated instances of R and RStudio for each of your projects. RStudio projects are convenient for a number of reasons, but the most useful thing is setting a file marker for where the root directory of your project folder is located.</p>
 <p>To create an RStudio Project:</p>
 <blockquote class="blockquote">
@@ -471,14 +483,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can also see which RStudio project is open and open RStudio projects in the very top-right corner of RStudio.</p>
 <p><img src="images/rstudio_rproj.png" class="img-fluid" width="449"></p>
 </section>
-<section id="herehere" class="level3">
-<h3 class="anchored" data-anchor-id="herehere">here::here()</h3>
+<section id="herehere" class="level2">
+<h2 class="anchored" data-anchor-id="herehere">here::here()</h2>
 <p>In combination with RStudio projects the <code>here</code> package offers a convenient way of specifying relative file paths.</p>
 <p>When you load the <code>here</code> package with <code>library(here)</code> it will search for the .Rproj file and start file paths at that point whenever the <code>here()</code> function is used.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>here() starts at /Users/jtsukahara3/GitHub/r-for-psychology-students</code></pre>
+<pre data-code-line-numbers=""><code>here() starts at /Users/jtsukahara3/GitHub Repos/r-for-psychology-students</code></pre>
 </div>
 </div>
 <p>Notice how that where <code>here()</code> starts is an absolute file path to your project folder. You did not have to specify the absolute file path in code. Meaning this is a reproducible way for the absolute file path to automatically be set.</p>
@@ -486,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data/a_file.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "/Users/jtsukahara3/GitHub/r-for-psychology-students/data/a_file.csv"</code></pre>
+<pre data-code-line-numbers=""><code>[1] "/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/data/a_file.csv"</code></pre>
 </div>
 </div>
 <p>Every time you use <code>here()</code> you know that the file path will start at where you have your .Rproj file saved. Instead of messing around with working directories using <code>setwd()</code> or <code>getwd()</code>, just use <code>here()</code> and RStudio Projects. This becomes especially helpful when working with Quarto documents.</p>
@@ -494,7 +506,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"a_file.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "/Users/jtsukahara3/GitHub/r-for-psychology-students/data/a_file.csv"</code></pre>
+<pre data-code-line-numbers=""><code>[1] "/Users/jtsukahara3/GitHub Repos/r-for-psychology-students/data/a_file.csv"</code></pre>
 </div>
 </div>
 <p>You can then use <code>here()</code> inside of import and and output functions:</p>
@@ -508,12 +520,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="using-templates" class="level2">
-<h2 class="anchored" data-anchor-id="using-templates">Using Templates</h2>
+<section id="using-templates" class="level1">
+<h1>Using Templates</h1>
 <p>Writing organized, clean, and easy to understand R code is hard. Starting with a template R script can help a lot. For this purpose, I have developed an R package <code>psyworkflow</code> that contains R script templates you can use.</p>
 <p><a href="https://dr-jt.github.io/psyworkflow/" target="_blank">See documentation on <code>psyworkflow</code></a></p>
-<section id="install" class="level3">
-<h3 class="anchored" data-anchor-id="install">Install</h3>
+<section id="install" class="level2">
+<h2 class="anchored" data-anchor-id="install">Install</h2>
 <p>First, if you do not have the <code>devtools</code> package installed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -527,8 +539,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Session -&gt; Restart R</p>
 </blockquote>
 </section>
-<section id="download-r-script-templates" class="level3">
-<h3 class="anchored" data-anchor-id="download-r-script-templates">Download R Script Templates</h3>
+<section id="download-r-script-templates" class="level2">
+<h2 class="anchored" data-anchor-id="download-r-script-templates">Download R Script Templates</h2>
 <p>If you already have an RProject setup and just want to download some of the R script templates you can do so with the <code>get_template()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>psyworkflow<span class="sc">::</span><span class="fu">get_template</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -588,8 +600,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="create-a-new-project" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-new-project">Create a New Project</h3>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">Create a New Project</h2>
 <p>Close RStudio and reopen a new instance of RStudio (not from an RProject file).</p>
 <p>Once you have the <code>psyworkflow</code> package installed you will be able to create a new RProject directory and file from my <strong>Research Study</strong> template. This will automatically create the directory structure outlined in the previous chapter. It will also add template R scripts in <strong>R / templates</strong> and a <strong>mainscript.qmd</strong> file.</p>
 <p>Using this template will allow you to get right to working with your data in R, without having to spend too much time thinking about organization (I have already done that for you).</p>
@@ -686,6 +698,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/dr-jt\.github\.io\/r-for-psychology-students\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -720,7 +750,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -768,7 +802,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

@@ -17,7 +17,7 @@ source(here::here("prerender.R"))
 
 We will cover the basics of data transformation in this class.
 
-## This is The Way
+# This is The Way
 
 Although you will be learning R in this class, it might be more appropriate to say that you are learning the **tidyverse**.
 
@@ -25,7 +25,7 @@ Although you will be learning R in this class, it might be more appropriate to s
 
 The [tidyverse](#0){target="_blank"} is a set of packages that share an underlying design philosophy, grammar, and data structures. The tidyverse consists of packages that are simple and intuitive to use and will take you from importing data (with `readr`), restructuring and transforming data (with `tidyr` and `dplyr`), and to graphically visualizing data (with `ggplot2`).
 
-## dplyr
+# dplyr
 
 The language of `dplyr` will be the underlying framework for how you will think about manipulating and transforming data in R.
 
@@ -47,7 +47,7 @@ For more information on these functions [Visit the dplyr webpage](https://dplyr.
 
 For more detailed instructions on how to use the `dplyr` functions see the [Data Transformation](https://r4ds.had.co.nz/transform.html){target="_blank"} chapter in the popular [R for Data Science](https://r4ds.had.co.nz/index.html){target="_blank"} book.
 
-## Stay within the Data Frame
+# Stay within the Data Frame
 
 Not only is the language of `dplyr` intuitive but it allows you to perform data manipulations all within the `data frame` itself, without having to create external variables, lists, for loops, etc.
 
@@ -113,7 +113,7 @@ head(data) |>
   table_theme()
 ```
 
-## Example Data Set
+# Example Data Set
 
 Let's use what we learned in [Class 2](/lectures/lectures-class-2.html){target="_blank"} and import two data files.
 
@@ -164,7 +164,7 @@ You will recognize there are some differences between these two data sets even t
 
 They used wrong column names, recorded the memory tests as X, Y, and Z (A, B, and C, respectively), they left out what condition these data were from, and they gave some particpants less than 3 memory tests! 🤬
 
-## rename()
+# rename()
 
 First, let's fix the RA's mistake by renaming the columns in the **spaced repetition** data as they are named in the **mnemonic** data. We can do so using the `rename()` function. The format for this function looks something like:
 
@@ -185,7 +185,7 @@ repetition_data <- repetition_import |>
 
 For more options on how to use `rename()` see the [documentation here](https://dplyr.tidyverse.org/reference/rename.html){target="_blank"}
 
-## filter()
+# filter()
 
 `filter()` is an inclusive filter and requires the use of *logical* statements. Here are a list of some commone logical operators in R:
 
@@ -210,7 +210,7 @@ repetition_data <- repetition_data |>
   filter(day != "Thursday", day != "Friday")
 ```
 
-## select()
+# select()
 
 `select()` allows you to select which columns to keep and/or remove.
 
@@ -245,7 +245,7 @@ repetition_data <- repetition_data |>
   select(-day, -time, -computer_station)
 ```
 
-## mutate()
+# mutate()
 
 `mutate()` is a very powerful function. It basically allows you to do any computation or transformation on the values in the data frame. See the full [documentation here](https://dplyr.tidyverse.org/reference/mutate.html){target="_blank"}.
 
@@ -272,7 +272,7 @@ Easy!
 
 Now let's do something a little more complicated.
 
-### case_when()
+## case_when()
 
 `case_when()` is basically a sequence of `if else` type of statements where each statement is evaluated, if it is true then it is given a certain value, else the next statement is evaluated, and so on. The basic format of `case_when()` looks like:
 
@@ -300,7 +300,7 @@ repetition_data <- repetition_data |>
                                    word_list == "Z" ~ "C"))
 ```
 
-### .by =
+## .by =
 
 This next computation is not necessary for our example data set but I want to demonstrate the use of `mutate(.by = )`. This option is very handy if you want to perform functions separately on different groups or splits of the data frame.
 
@@ -331,7 +331,7 @@ repetition_data <- repetition_data |>
 
 The `.by =` option becomes extremely useful when used in `summarise()` which we will get to in a bit.
 
-### rowwise()
+## rowwise()
 
 While `.by =` is used when performing functions on groups of rows, `rowwise()` is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., `mean()`) across multiple columns.
 
@@ -434,7 +434,7 @@ data_merged <- bind_rows(mnemonic_data, repetition_data) |>
   arrange(participant_id)
 ```
 
-## summarise()
+# summarise()
 
 The thing is, we don't really care about performance on each individual `word_list` (A, B, and C). We care about the participant's overall performance, **aggregated** across all three word lists. To aggregrate data using `dplyr` we can use `summarise()`. The result of `summarise()` is a reduced data frame with fewer rows. In this example, we will essentially collapse the three rows corresponding to each word list into a single row containing an aggregated summary statistic (such as a sum or mean value).
 
@@ -496,7 +496,7 @@ gt(data_demo) |>
   table_theme()
 ```
 
-## ggplot2
+# ggplot2
 
 Let's plot the data to see what the difference in memory recall is for the two types of strategy:
 
@@ -522,7 +522,7 @@ ggplot(data_scores, aes(condition, recall_correct_mean)) +
         axis.text.y = element_text(size = 12))
 ```
 
-## Reproducible Script
+# Reproducible Script
 
 ```{r}
 #| code-fold: true
@@ -586,5 +586,7 @@ ggplot(data_scores, aes(condition, recall_correct_mean)) +
 ```
 
 ------------------------------------------------------------------------
+
+# Learning Activity
 
 ✏️ [Start Learning Activity -\>](/activities/activities-class-3.html){target="_blank"}

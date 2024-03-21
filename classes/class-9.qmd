@@ -1,0 +1,42 @@
+---
+title: "Class 9"
+subtitle: "Statistical Analysis - ANOVA"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to learn how to perfom different types of ANOVAs and generate tables and figures of statistical models.
+
+## Outline
+
+-   Setup
+
+-   t-tests
+
+    -   Independent Samples
+
+    -   Dependent (paired) Samples
+
+-   ANOVA
+
+    -   Between-Subjects
+
+    -   Within-Subjects
+
+    -   Mixed Factors
+
+## Class Materials
+
+📘 [Class 9: Statistical Analysis - ANOVA](/lectures/lectures-class-9.html)
+
+🖥️ [Slides - Full Screen](/slides/slides-class-9.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-9.html"></iframe>
+```
+
+</div>

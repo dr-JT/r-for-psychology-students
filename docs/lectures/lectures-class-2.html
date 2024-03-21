@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.5.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student - Class 2: Importing, Merging, and Restructuring Data</title>
+<title>R for the Psychology Student – Class 2: Importing, Merging, and Restructuring Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Course Information</span></a>
+ <span class="menu-text">Course Prep</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,6 +227,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Class 8</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../classes/class-9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 9</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../classes/class-10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 10</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -285,6 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pivot-wider" id="toc-pivot-wider" class="nav-link" data-scroll-target="#pivot-wider">Pivot Wider</a></li>
   <li><a href="#pivot-longer" id="toc-pivot-longer" class="nav-link" data-scroll-target="#pivot-longer">Pivot Longer</a></li>
   </ul></li>
+  <li><a href="#learning-activity" id="toc-learning-activity" class="nav-link" data-scroll-target="#learning-activity">Learning Activity</a></li>
   </ul>
 </nav>
     </div>
@@ -311,8 +324,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>We will cover importing data, merging data frames, and restructuring data in this class.</p>
-<section id="pipe-operator" class="level2">
-<h2 class="anchored" data-anchor-id="pipe-operator">Pipe Operator</h2>
+<section id="pipe-operator" class="level1">
+<h1>Pipe Operator</h1>
 <p>First, however, we need to talk about the pipe operator <code>|&gt;</code> .</p>
 <p>There are actually two pipe operators now. The original <code>dplyr</code> pipe operator, <code>%&gt;%</code> , and the newer base R pipe operator, <code>|&gt;</code> . You can use either one.</p>
 <p>The pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like</p>
@@ -340,14 +353,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>With the pipe operator, the result of the previous line gets passed (or piped) onto the next function. The first line in this example is simply specifying the data frame that is being passed from one line to the next. Notice how I did not have to specify <code>data</code> inside the <code>filter()</code>, <code>mutate()</code>, and <code>select()</code>, functions. This makes the code more concise and easier to read. The end result of the last function, then gets assigned to <code>data_new &lt;-</code>.</p>
 </section>
-<section id="import" class="level2">
-<h2 class="anchored" data-anchor-id="import">Import</h2>
+<section id="import" class="level1">
+<h1>Import</h1>
 <p>R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an <strong>absolute</strong> file path. Absolute file paths start at the root directory of your computer and might look something like:</p>
+<blockquote class="blockquote">
 <p><strong>On Macs</strong>:</p>
 <p>Users/username/projects/project_name/a_file.csv</p>
 <p><strong>On Windows</strong>:</p>
 <p>C:\username\projects\project_name\a_file.csv</p>
-<hr>
+</blockquote>
 <p>What if you don’t know the full <strong>absolute</strong> file path to your data?</p>
 <p>I want to point out three approaches to specifying file paths in R:</p>
 <ol type="1">
@@ -357,14 +371,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Never… ever… ever… use option 1, <code>setwd()</code>.</p>
 <p>Instead, you should use RProjects and <code>here()</code>. But we will not cover this until Class 5. For now, we can just use the RStudio Import Dataset GUI to find the <strong>absolute</strong> file path.</p>
-<section id="rstudio-gui" class="level3">
-<h3 class="anchored" data-anchor-id="rstudio-gui">RStudio GUI</h3>
+<section id="rstudio-gui" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-gui">RStudio GUI</h2>
 <p>When you are having difficulty importing a file correctly or unsure of the file format the RStudio Import Dataset GUI can be really useful.</p>
 <p>In the <strong>Environment</strong> window click on <strong>“Import Dataset”</strong>. You will see several options available, these options all rely on different packages. For now, select the <strong>From Text (readr)…</strong> option.</p>
 <p>You will see a data import window open up that looks like this</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/rstudioGUI-readr.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="images/rstudioGUI-readr.png" class="img-fluid figure-img"></p>
 <figcaption>RStudio Import Dataset GUI</figcaption>
 </figure>
 </div>
@@ -392,8 +406,8 @@ Exploring Your Data
 </div>
 </div>
 </section>
-<section id="csv-files" class="level3">
-<h3 class="anchored" data-anchor-id="csv-files">CSV Files</h3>
+<section id="csv-files" class="level2">
+<h2 class="anchored" data-anchor-id="csv-files">CSV Files</h2>
 <p><code>csv</code> files are by far the easiest files to import into R and most software programs. For this reason, I suggest any time you want to save/output a data file to your computer, do it in <code>csv</code> format.</p>
 <p>CSV stands for “Comma-Separated Values.” It’s a simple file format used to store data in a table. Each line in the file is a row of the table, and commas are used to separate columns. Think of it like a spreadsheet where each piece of information is lined up in rows and columns, but instead of seeing the grid like in Excel, each row is just a line of text with commas between the values that would go into different columns.</p>
 <p><code>csv</code> files are typically saved with <strong>.csv</strong> file extension (e.g., data file.csv)</p>
@@ -404,8 +418,8 @@ Exploring Your Data
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"filepath/datafile.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="tab-delimited-files" class="level3">
-<h3 class="anchored" data-anchor-id="tab-delimited-files">Tab-Delimited Files</h3>
+<section id="tab-delimited-files" class="level2">
+<h2 class="anchored" data-anchor-id="tab-delimited-files">Tab-Delimited Files</h2>
 <p><code>tab-delimited</code> files are a little more tedious to import just because they require specifying more arguments. Which means you have to memorize more to import <code>tab-delimited</code> files.</p>
 <p>Tab-delimited files use <strong>tabs</strong> between items in a row to separate columns. In general, the delimiter is the type of value that is used between items in a row to separate columns. There are a lot of different types of delimiters with tab and comma (csv) being the most common.</p>
 <p>Tab-delimited files are typically saved with the more standard <strong>.txt</strong> file extension (e.g., data file.txt) but a lot of other file formats might also have the <strong>.txt</strong> extension. This can create some ambiguity as to how the data is stored and formatted for .txt files.</p>
@@ -417,20 +431,20 @@ Exploring Your Data
 <p>There are three additional arguments we have to specify: <code>delim</code>, <code>escape_double</code>, and <code>trim_ws</code>. The notation for <code>tab-delimted</code> files is <code>"\t"</code>. I always forget how to specify each of these arguments so I frequently use the RStudio Import Dataset GUI to copy the code needed to import a tab-delimited file.</p>
 </section>
 </section>
-<section id="merge" class="level2">
-<h2 class="anchored" data-anchor-id="merge">Merge</h2>
+<section id="merge" class="level1">
+<h1>Merge</h1>
 <p>You might find yourself in a situation where you need to import multiple data files and merge them into a single data frame. There are two general classes of merging data</p>
 <ul>
 <li><p>Bind</p></li>
 <li><p>Join</p></li>
 </ul>
-<section id="bind" class="level3">
-<h3 class="anchored" data-anchor-id="bind">Bind</h3>
+<section id="bind" class="level2">
+<h2 class="anchored" data-anchor-id="bind">Bind</h2>
 <p>In R, a “bind” is combining data frames together by stacking either the rows or columns.</p>
 <p>A row “bind” takes data frames that have the same columns but different rows and stacks them on top of each other. This will happen if you have separate data files for each subject from the same task. Each subject data file will have their unique rows but all subjects will have the same columns.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/row_bind.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="677"></p>
+<p><img src="images/row_bind.png" class="img-fluid figure-img" width="677"></p>
 <figcaption>Illustration of a row bind</figcaption>
 </figure>
 </div>
@@ -443,13 +457,13 @@ Exploring Your Data
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>data_merged <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(data_1, data_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="join" class="level3">
-<h3 class="anchored" data-anchor-id="join">Join</h3>
+<section id="join" class="level2">
+<h2 class="anchored" data-anchor-id="join">Join</h2>
 <p>In R, a “join” is merging data frames together that have at least one column in common with a mix of shared and unique entries in that column (e.g.&nbsp;Subject IDs).</p>
 <p>There are lots of different kinds of joins, some of which are:</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/dplyr-joins.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="405"></p>
+<p><img src="images/dplyr-joins.png" class="img-fluid figure-img" width="405"></p>
 <figcaption>Types of joins using dplyr</figcaption>
 </figure>
 </div>
@@ -464,16 +478,16 @@ Exploring Your Data
 </div>
 </section>
 </section>
-<section id="restructure" class="level2">
-<h2 class="anchored" data-anchor-id="restructure">Restructure</h2>
+<section id="restructure" class="level1">
+<h1>Restructure</h1>
 <p>The exact same data can be structured in different ways. There are two main formats that any data set can be structured as:</p>
 <p><strong>Wide</strong>: Variables are spread out across columns, making the data frame wider</p>
 <table class="table">
 <colgroup>
 <col style="width: 23%">
-<col style="width: 28%">
-<col style="width: 26%">
-<col style="width: 21%">
+<col style="width: 27%">
+<col style="width: 25%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -566,11 +580,11 @@ Exploring Your Data
 <p>And actually, you can have a <strong>mix of wide and long</strong> formatted data in a single data frame.</p>
 <table class="table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 16%">
-<col style="width: 22%">
 <col style="width: 20%">
-<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -664,8 +678,8 @@ Exploring Your Data
 <li><p><code>pivot_longer()</code> “lengthens” data from wide-to-long</p></li>
 </ul>
 <p>The <code>tidyr</code> package, like <code>readr</code> and <code>dplyr</code>, is from the <strong>tidyverse</strong> set of packages.</p>
-<section id="pivot-wider" class="level3">
-<h3 class="anchored" data-anchor-id="pivot-wider">Pivot Wider</h3>
+<section id="pivot-wider" class="level2">
+<h2 class="anchored" data-anchor-id="pivot-wider">Pivot Wider</h2>
 <p>Using the example data sets above, let’s restructure the long data frame to a wide format:</p>
 <p>First let’s create the data frame - you can just copy and paste this code</p>
 <div class="cell">
@@ -709,8 +723,8 @@ Column Names
 </div>
 </div>
 </section>
-<section id="pivot-longer" class="level3">
-<h3 class="anchored" data-anchor-id="pivot-longer">Pivot Longer</h3>
+<section id="pivot-longer" class="level2">
+<h2 class="anchored" data-anchor-id="pivot-longer">Pivot Longer</h2>
 <p>The three main arguments to specify in <code>pivot_longer()</code> are:</p>
 <ul>
 <li><p><strong>cols</strong>: The column names that will be restructured to a longer format</p></li>
@@ -766,10 +780,13 @@ Column Names
 <p>This can be very useful in functions like <code>pivot_longer()</code>. In the examples provided on above, we used some tidy select functions: <code>any_of()</code> and <code>contains()</code>.</p>
 <p>To learn more about what tidy select functions are available and what they do read the <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" target="_blank">tidy select documentation</a>.</p>
 <hr>
+</section>
+</section>
+<section id="learning-activity" class="level1">
+<h1>Learning Activity</h1>
 <p>✏️ <a href="../activities/activities-class-2.html" target="_blank">Start Learning Activity -&gt;</a></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -852,6 +869,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/dr-jt\.github\.io\/r-for-psychology-students\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -886,7 +921,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -934,7 +973,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

@@ -9,7 +9,7 @@ execute:
 
 We will cover importing data, merging data frames, and restructuring data in this class.
 
-## Pipe Operator
+# Pipe Operator
 
 First, however, we need to talk about the pipe operator `|>` .
 
@@ -47,19 +47,17 @@ data_new <- data |>
 
 With the pipe operator, the result of the previous line gets passed (or piped) onto the next function. The first line in this example is simply specifying the data frame that is being passed from one line to the next. Notice how I did not have to specify `data` inside the `filter()`, `mutate()`, and `select()`, functions. This makes the code more concise and easier to read. The end result of the last function, then gets assigned to `data_new <-`.
 
-## Import
+# Import
 
 R needs to know the full file path to the file on your computer in order to import it - this is what is referred to as an **absolute** file path. Absolute file paths start at the root directory of your computer and might look something like:
 
-**On Macs**:
-
-Users/username/projects/project_name/a_file.csv
-
-**On Windows**:
-
-C:\\username\\projects\\project_name\\a_file.csv
-
-------------------------------------------------------------------------
+> **On Macs**:
+>
+> Users/username/projects/project_name/a_file.csv
+>
+> **On Windows**:
+>
+> C:\\username\\projects\\project_name\\a_file.csv
 
 What if you don't know the full **absolute** file path to your data?
 
@@ -73,7 +71,7 @@ Never... ever... ever... use option 1, `setwd()`.
 
 Instead, you should use RProjects and `here()`. But we will not cover this until Class 5. For now, we can just use the RStudio Import Dataset GUI to find the **absolute** file path.
 
-### RStudio GUI
+## RStudio GUI
 
 When you are having difficulty importing a file correctly or unsure of the file format the RStudio Import Dataset GUI can be really useful.
 
@@ -101,7 +99,7 @@ You will see a data import window open up that looks like this
 When you want to just explore some data and don't care about creating a reproducible script it can be perfectly acceptable to not copy and paste the code from **Code Preview** window and just select the **Import** button.
 :::
 
-### CSV Files
+## CSV Files
 
 `csv` files are by far the easiest files to import into R and most software programs. For this reason, I suggest any time you want to save/output a data file to your computer, do it in `csv` format.
 
@@ -118,7 +116,7 @@ library(readr)
 data_import <- read_csv("filepath/datafile.csv")
 ```
 
-### Tab-Delimited Files
+## Tab-Delimited Files
 
 `tab-delimited` files are a little more tedious to import just because they require specifying more arguments. Which means you have to memorize more to import `tab-delimited` files.
 
@@ -136,7 +134,7 @@ data_import <- read_delim("filepath/datafile.txt", delim = "\t",
 
 There are three additional arguments we have to specify: `delim`, `escape_double`, and `trim_ws`. The notation for `tab-delimted` files is `"\t"`. I always forget how to specify each of these arguments so I frequently use the RStudio Import Dataset GUI to copy the code needed to import a tab-delimited file.
 
-## Merge
+# Merge
 
 You might find yourself in a situation where you need to import multiple data files and merge them into a single data frame. There are two general classes of merging data
 
@@ -144,7 +142,7 @@ You might find yourself in a situation where you need to import multiple data fi
 
 -   Join
 
-### Bind
+## Bind
 
 In R, a "bind" is combining data frames together by stacking either the rows or columns.
 
@@ -164,7 +162,7 @@ data_merged <- bind_rows(data_1, data_2)
 data_merged <- bind_cols(data_1, data_2)
 ```
 
-### Join
+## Join
 
 In R, a "join" is merging data frames together that have at least one column in common with a mix of shared and unique entries in that column (e.g. Subject IDs).
 
@@ -188,14 +186,14 @@ Whenever joining, you need to specify what are the **key** column(s) to join by 
 data_merged <- full_join(data_1, data_2, by = c("Subject", "Session"))
 ```
 
-## Restructure
+# Restructure
 
 The exact same data can be structured in different ways. There are two main formats that any data set can be structured as:
 
 **Wide**: Variables are spread out across columns, making the data frame wider
 
 | **Participant ID** | **Stress Level Score** | **Creativity Score** | **Memory Score** |
-|--------------------|------------------------|----------------------|------------------|
+|-----------------|--------------------|------------------|-----------------|
 | 1                  | 5                      | 7                    | 8                |
 | 2                  | 3                      | 6                    | 7                |
 | 3                  | 4                      | 8                    | 6                |
@@ -221,7 +219,7 @@ The exact same data can be structured in different ways. There are two main form
 And actually, you can have a **mix of wide and long** formatted data in a single data frame.
 
 | **Participant ID** | **Session** | **Stress Level** | **Creativity** | **Memory** |
-|--------------------|-------------|------------------|----------------|------------|
+|---------------|---------------|---------------|---------------|---------------|
 | 1                  | 1           | 5                | 7              | 8          |
 | 1                  | 2           | 4                | 8              | 9          |
 | 1                  | 3           | 3                | 9              | 10         |
@@ -254,7 +252,7 @@ Restructuring data involves changing the structure from long-to-wide (wider) or 
 
 The `tidyr` package, like `readr` and `dplyr`, is from the **tidyverse** set of packages.
 
-### Pivot Wider
+## Pivot Wider
 
 Using the example data sets above, let's restructure the long data frame to a wide format:
 
@@ -309,7 +307,7 @@ data_wide_clean <- clean_names(data_wide, case = "parse")
 ```
 :::
 
-### Pivot Longer
+## Pivot Longer
 
 The three main arguments to specify in `pivot_longer()` are:
 
@@ -384,5 +382,7 @@ This can be very useful in functions like `pivot_longer()`. In the examples prov
 To learn more about what tidy select functions are available and what they do read the [tidy select documentation](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html){target="_blank"}.
 
 ------------------------------------------------------------------------
+
+# Learning Activity
 
 ✏️ [Start Learning Activity -\>](/activities/activities-class-2.html){target="_blank"}

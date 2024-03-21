@@ -19,5 +19,61 @@ iframe.reveal-demo {
 }
 
 .sidebar-title {
-  color: white !important;
+  color: #005098 !important;
+}
+
+a:hover {
+  color: #96834a !important;
+}
+
+/* Target the headers specifically */
+.sidebar-item-section > .sidebar-item-container > .sidebar-item-text {
+  font-weight: 600;
+  color: #005098 !important;
+}
+
+/* Apply font-weight: 400 to all other sidebar text by default */
+.sidebar-item-text {
+  font-weight: 400;
+}
+
+/* Ensure nested sidebar items (not headers) revert to font-weight: 400 */
+.sidebar-item-section .sidebar-item-section .sidebar-item-text {
+  font-weight: 400;
+}
+
+.sidebar-item-toggle {
+  color: #96834a !important;
+}
+
+.sidebar-item .sidebar-item-toggle .bi {
+  font-size: .9rem;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a, .sidebar nav[role=doc-toc] ul>li>ul>li>a {
+  color: #005098 !important;
+  border-left: 2px solid #ECE5D7;
+  border-left-color: solid #ECE5D7;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+  color: #005098 !important;
+  font-weight: 600;
+  border-left: 2px solid #CBB879;
+  border-left-color: solid #CBB879;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a:hover, .sidebar nav[role=doc-toc] ul>li>ul>li>a:hover {
+  color: #005098 !important;
+  font-weight: 600;
+  border-left: 2px solid #CBB879;
+  border-left-color: solid #CBB879;
+}
+
+.nav-link {
+  color: #495057;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #96834a !important;
 }

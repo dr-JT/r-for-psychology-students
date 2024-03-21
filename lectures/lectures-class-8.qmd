@@ -20,7 +20,71 @@ Data visualization is an essential skill for anyone working with data and requir
 1)  **Data exploration**: It is difficult to fully understand your data just by looking at numbers on a screen arranged in rows and columns. Being skilled in the graphical visualization of data will help you better understand patterns and relationships that exist in your data.
 2)  **Explain and Communicate**: Data visualization is the most effective way of explaining and communicating your statistical findings to colleagues, in scientific presentations and publications, and especially to a broader non-academic audience.
 
-## ggplot2
+# Setup Quarto Document
+
+To follow along, you should create an empty Quarto document for this class.
+
+## YAML
+
+Setup the YAML section:
+
+```         
+---
+title: "Document Title"
+author: Your Name
+date: today
+theme: default
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-link: true
+    toc: true
+    toc-depth: 1
+    toc-location: left
+    page-layout: full
+    df-print: paged
+execute:
+  error: true
+  warning: true
+self-contained: true
+editor_options: 
+  chunk_output_type: console
+---
+```
+
+## Headers
+
+Create a level 1 header for a Setup section to load packages and import data
+
+```         
+# Setup
+```
+
+Then as you follow along you can create more level 1 and level 2 headers as you see fit.
+
+## R Code Chunks
+
+Add an R code chunk below the level 1 header
+
+> In the toolbar: Insert -\> Executable Cell -\> R
+
+or
+
+> Mac: ⌘⌥ I (Cmd + Option + I)
+>
+> Windows: ⌃⎇ I (Ctrl + Alt + I)
+
+Load the `palmerpenguins` and `ggplot2` packages and create a data frame in your environment `penguins` . `penguins` is loaded with `palmerpenguins` were are just explicitly making it visible in our environment.
+
+```{r}
+library(palmerpenguins)
+library(ggplot2)
+
+penguins <- penguins
+```
+
+# ggplot2
 
 In this class, we will learn about the fundamentals of data visualization using the `ggplot2` package. This is by far the most popular package for data visualization in R.
 
@@ -39,28 +103,25 @@ Let's take a look at how these elements work to create a simple visualization of
 
 ![](images/lter_penguins.png){fig-align="center" width="677"}
 
-Go ahead and load the `palmerpenguins` and `ggplot2` packages using `library()` . Additionally, let's make the `penguins` data set that is loaded with `palmerpenguins` visible in the environment by explicitly assigning it to an object.
-
 ```{r}
 #| echo: false
 #| eval: true
 
 library(palmerpenguins)
 library(ggplot2)
-
 ```
 
-```{r}
-penguins <- penguins
-```
-
-## Data layer
+# Data layer
 
 The Data Layer specifies the data object that is being plotted.
 
 ![](images/ge_data.png){width="400"}
 
 It is the first grammatical element that is required to create a plot:
+
+::: callout-note
+Create a new level 1 header and below it insert an R code chunk
+:::
 
 ```{r}
 #| eval: true
@@ -70,7 +131,7 @@ ggplot(data = penguins)
 
 You can see that we only have a blank square. This is because we have not added any other layers yet, we have only specified the data layer. `ggplot()` doesn't yet know how to map the variables onto the axis scales. That is where the aesthetic mapping layer comes in.
 
-## Aesthetics Layer
+# Aesthetics Layer
 
 The next grammatical element is the aesthetic layer, or **aes** for short. This layer specifies how we want to *map* our data onto the scales of the plot.
 
@@ -100,7 +161,7 @@ ggplot(penguins,
 
 You will notice that the plot has not changed. Species is not plotted by color. This is because `ggplot()` does not know the geometrical form the data should take - a bar plot, line plot, dot plot, etc.? It cannot add color to a geometrical form that is not specified yet. That is where the geometries layer comes in.
 
-## Geometries Layer
+# Geometries Layer
 
 The next *essential* grammatical element for graphical visualization is the geometries layer or **geom** for short. This layer specifies the visual elements that should be used to plot the actual data.
 
@@ -186,7 +247,7 @@ Besides the data, aesthetics, and geometries layers, there are often other types
 
 ![](images/ge_all.png){width="550"}
 
-## Facets Layer
+# Facets Layer
 
 The facets layer allows you to create panels of subplots within the same graphic object
 
@@ -214,7 +275,7 @@ You can see we are now conveying information about 4 different variables in our 
 
 See the ggplot2 documentation on [facet_grid](https://ggplot2.tidyverse.org/reference/facet_grid.html){target="_blank"} and [facet_wrap](https://ggplot2.tidyverse.org/reference/facet_wrap.html){target="_blank"}
 
-## Statistics Layer
+# Statistics Layer
 
 The statistics layer allows you plot aggregated statistical values calculated from your data
 
@@ -226,7 +287,7 @@ The statistics layer is used in combination with a **geom** to plot values that 
 
 -   `stat_smooth()`
 
-### geom\_(stat = "summary")
+## geom\_(stat = "summary")
 
 In the previous plots, we plotted the raw values for each individual penguin. However, statistics are often evaluated at the aggregate level (e.g., think mean differences between groups). We can calculate summary statistics inside inside of the **geom** functions using `stat = "summary"`. There are two main arguments you need to specify:
 
@@ -274,7 +335,7 @@ ggplot(penguins, aes(species, body_mass_g)) +
 
 ```
 
-### stat_smooth(method = "lm")
+## stat_smooth(method = "lm")
 
 `stat_smooth(method = "lm")` is used in scatterplots to plot the regression line on your data.
 
@@ -298,7 +359,7 @@ ggplot(penguins,
   stat_smooth(method = "lm")
 ```
 
-## Coordinates Layer
+# Coordinates Layer
 
 The coordinate layer allows you to adjust the x and y coordinates
 
@@ -310,7 +371,7 @@ There are two main groups of functions that are useful for adjusting the x and y
 
 -   `scale_x_` and `scale_y_` for setting the axis ticks and labels
 
-### axis limits
+## axis limits
 
 You can adjust limits (min and max) of the x and y axes using the `coord_cartesian(xlim = c(), ylim = c())` function.
 
@@ -392,7 +453,7 @@ plot1 + plot2
 ```
 :::
 
-### axis ticks and labels
+## axis ticks and labels
 
 You can adjust the scale (major and minor ticks) of the x and y axes using the `scale_x_` and `scale_y_` set of functions. The two main set of functions to know are for continuous and discrete scales:
 
@@ -425,7 +486,7 @@ p2 <- ggplot(female, aes(species, body_mass_g)) +
 p1 + labs(title = "male") + p2 + labs(title = "female")
 ```
 
-## Theme Layer
+# Theme Layer
 
 The theme layer refers to visual elements that are not mapped to the data but controls the overall design, colors, and labels on the plot
 
@@ -447,7 +508,7 @@ There are three main set of functions that we can use to control the theme layer
 
     -   `theme(legend.title = element_text(face = "bold"))`
 
-### Color
+## Color
 
 Changing the color theme can get complicated but is an important design element in your plot.
 
@@ -455,7 +516,7 @@ The `RColorBrewer` package offers several color palettes for R:
 
 ![](images/RColorBrewer.png){width="537"}
 
-### You can access these palettes using `scale_color_brewer(palette = "palette name")`
+You can access these palettes using `scale_color_brewer(palette = "palette name")`
 
 ```{r}
 #| eval: true
@@ -473,7 +534,7 @@ ggplot(penguins, aes(species, body_mass_g, color = sex)) +
 [Check out](https://nanx.me/ggsci/index.html){target="_blank"} the `ggsci` color palettes inspired by scientific journals, science fiction movies, and TV shows.
 :::
 
-### Labels
+## Labels
 
 Changing labels and adding titles is easy using `labs()`
 
@@ -509,7 +570,7 @@ ggplot(adelie, aes(species, body_mass_g,
   scale_color_brewer(palette = "Set1")
 ```
 
-### Theme templates
+## Theme templates
 
 Here are some themes that come loaded with `ggplot2`
 
@@ -540,7 +601,7 @@ ggplot(adelie, aes(species, body_mass_g,
   theme_classic()
 ```
 
-### Other theme elements
+## Other theme elements
 
 In addition to using a pre-defined theme template, you may also want to tweak other design elements on your plot. You will mostly due this using `theme()`
 
@@ -577,7 +638,7 @@ Obviously, there are a lot of different theme elements you can tweak and it is h
 
 [Here is the ggplot2 documentation on theme elements](https://ggplot2.tidyverse.org/reference/theme.html){target="_blank"}
 
-### Create your own theme template
+## Create your own theme template
 
 Often times you may want to apply the same customized theme elements to multiple plots and even across multiple projects.
 
@@ -689,9 +750,9 @@ ggplot(adelie, aes(species, body_mass_g,
 
 ```
 
-## Common Types of Plots
+# Common Types of Plots
 
-### Histogram
+## Histogram
 
 ```{r}
 #| eval: true
@@ -700,7 +761,7 @@ ggplot(penguins, aes(body_mass_g)) +
   geom_histogram(bins = 20, fill = "white", color = "black")
 ```
 
-### Bar, point, and line
+## Bar, point, and line
 
 When you have a categorical (nominal or ordinal) variable on the x-axis and you want to plot that against a continuous variable on the y-axis this is usually done in the form of a bar, point, or line plot.
 
@@ -756,7 +817,7 @@ ggplot(penguins, aes(species, body_mass_g)) +
              size = 4, color = "steelblue")
 ```
 
-### Scatterplot
+## Scatterplot
 
 When you have a continuous (interval or ratio) variable on the x-axis and you want to plot it against a continuous variable on the y-axis this is known as a **scatterplot**.
 

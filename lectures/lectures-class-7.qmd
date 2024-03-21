@@ -43,22 +43,53 @@ There are three types of content that form the structure of a Quarto document.
 
 -   R code chunks
 
-## YAML Header
+# YAML Header
 
 The YAML header contains metadata about how the document should be rendered and the output format. It is located at the very top of the document and is surrounded by lines of three dashes.
 
 ```         
 ---
 title: "Title of document"
-output: html_document
+format: html
 ---
 ```
 
 There are various metadata options you can specify, such as if you want to include a table of contents. To learn about a few of them [see the documentation here](https://quarto.org/docs/output-formats/html-basics.html){target="_blank"}.
 
-Go ahead and include the `output: html_document` line in the YAML of the empty document you opened.
+For generating a report document I typically like to use the following YAML options:
 
-## Markdown Text
+```         
+---
+title: "Document Title"
+author: Your Name
+date: today
+theme: default
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-link: true
+    toc: true
+    toc-depth: 1
+    toc-location: left
+    page-layout: full
+    df-print: paged
+execute:
+  error: true
+  warning: true
+self-contained: true
+editor_options: 
+  chunk_output_type: console
+---
+```
+
+I am not going to cover what all these options do - I describe some of them below in the [Additional Elements] section
+
+-   [Here is a list of all the HTML format YAML options](https://quarto.org/docs/reference/formats/html.html){target="_blank"}
+
+-   [Here is a user guide on creating HTML output](https://quarto.org/docs/output-formats/html-basics.html){target="_blank"}
+
+# Markdown Text
 
 The markdown text section is just as if you were writing content in Microsoft Word or Google Docs. You can write up paragraphs of text, create bullet or numbered lists, embed images or web links, create tables, and more.
 
@@ -76,11 +107,11 @@ Here is some sample text with a numbered list
 3. Third
 ```
 
-## R Code Chunks
+# R Code Chunks
 
 A Quarto document (.qmd) is a mixture of markdown text and R code chunks.
 
-### Create an R code chunk
+## Create an R code chunk
 
 R code chunks are enclosed with
 
@@ -138,7 +169,7 @@ ggplot(penguins, aes(species, body_mass_g, color = species)) +
   theme_classic()
 ```
 
-### Execute R code chunk
+## Execute R code chunk
 
 To run chunks of R code you can click on the green "play" button on the top right of the R code chunk.
 
@@ -146,7 +177,7 @@ To run chunks of R code you can click on the green "play" button on the top righ
 
 Go ahead and do so. You can see that the results of the R code chunks are now displayed in the document.
 
-## Visual Editor
+# Visual Editor
 
 By default, Quarto will open a new document in the [visual editor mode](https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch).){taget="\_blank"}. The Quarto visual editor provides a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM){target="_blank"} editing interface.
 
@@ -154,7 +185,7 @@ In **Source** mode, you will see the *raw* markdown and code elements. On occass
 
 ![](images/visual-editing-switch-modes.png)
 
-## Render Document
+# Render Document
 
 When you have finalized the content of a Quarto document you will then want to generate the document into the specified output format (e.g., HTML).
 
@@ -185,9 +216,9 @@ There are some advantages to using an HTML format:
 
 Let's take a look at some of these elements and more
 
-## Additional Elements
+# Additional Elements
 
-### Headers
+## Headers
 
 Headers are a great way to organize the content in a Quarto document. Use `#` to create different header levels:
 
@@ -201,7 +232,7 @@ Headers are a great way to organize the content in a Quarto document. Use `#` to
 
 Headers become even more useful with a table of contents and using tabs
 
-### Table of Contents
+## Table of Contents
 
 A table of contents is useful to navigate longer documents. It also provides an outline for the viewer to understand the document. You can specify the table of contents layout in the YAML header:
 
@@ -215,7 +246,7 @@ format:
 
 `toc-depth` will change how many header levels are displayed in the table of contents (toc).
 
-### Tabs
+## Tabs
 
 Tabs are a great way to add a lot of content while avoiding having to scroll endlessly through a large document. The syntax for a tabset is
 
@@ -257,7 +288,7 @@ More content!
 Hello!
 :::
 
-### Code Tools
+## Code Tools
 
 You can include a **Code** menu in the header of your document that provides various tools for readers to interact with the source code. Specify in the YAML
 
@@ -265,7 +296,7 @@ You can include a **Code** menu in the header of your document that provides v
 code-tools: true
 ```
 
-### Code Folding
+## Code Folding
 
 You may not always want to show the R code chunks in the HTML output. Or you might want to give the viewer a choice to show/hide R code chunks. You can specify code folding in the top-level YAML header or in each code chunk individually
 
@@ -279,7 +310,7 @@ code-fold: true
 | `true`  | Fold code (initially hidden) |
 | `show`  | Fold code (initially shown)  |
 
-### R Chunk Options
+## R Chunk Options
 
 Some settings you can change for individual R code chunks. The syntax to do this uses `#|` in the R code chunk:
 
@@ -297,7 +328,7 @@ Some settings you can change for individual R code chunks. The syntax to do this
 Some commone ones to change are:
 
 | Option    | Description                                                                                                                                                                                       |
-|----------------|--------------------------------------------------------|
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `eval`    | Evaluate the code chunk (if `false`, just echos the code into the output).                                                                                                                        |
 | `echo`    | Include the source code in output                                                                                                                                                                 |
 | `output`  | Include the results of executing the code in the output (`true`, `false`, or `asis` to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown). |
@@ -307,11 +338,11 @@ Some commone ones to change are:
 
 See the [Quarto Documentation](https://quarto.org/docs/computations/execution-options.html){target="_blank"} for more details
 
-### CSS Styling
+## CSS Styling
 
 You can also add CSS styling, either as a separate .css document or at the end of the Quarto document.
 
-For instance, I used the following styling options in the [sample report](/sample_report.html){target="_blank"}:
+For instance, here are some of the styling options I used in the [sample report](/sample_report.html){target="_blank"}:
 
 ```{css}
 #| eval: false
@@ -335,46 +366,5 @@ a {
 
 a:hover {
   color: #96834a !important;
-}
-
-.quarto-title-meta-heading {
-  color: #96834a;
-  font-weight: 600 !important;
-}
-
-.sidebar nav[role=doc-toc] ul>li>a, .sidebar nav[role=doc-toc] ul>li>ul>li>a {
-  color: #005098 !important;
-  border-left: 2px solid #ECE5D7;
-  border-left-color: solid #ECE5D7;
-}
-
-.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
-  color: #005098 !important;
-  font-weight: 600;
-  border-left: 2px solid #CBB879;
-  border-left-color: solid #CBB879;
-}
-
-.sidebar nav[role=doc-toc] ul>li>a:hover, .sidebar nav[role=doc-toc] ul>li>ul>li>a:hover {
-  color: #005098 !important;
-  font-weight: 600;
-  border-left: 2px solid #CBB879;
-  border-left-color: solid #CBB879;
-}
-
-.nav-link {
-  color: #495057;
-}
-
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-  color: #96834a !important;
-}
-
-.code-tools-button {
-  color: #96834a !important;
-}
-
-.dropdown-toggle {
-  color: #005098 !important;
 }
 ```
