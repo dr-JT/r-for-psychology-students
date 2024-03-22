@@ -9,7 +9,23 @@ The main objective of this class is to understand the steps typically involved i
 
 ## Outline
 
--   
+-   Setup Project
+
+-   Template R Script
+
+-   Import Data
+
+-   Data Cleaning
+
+    -   Attention Checks, Missing Data, Reaction Times: `filter()` and `mutate()`
+
+-   Data Scoring
+
+    -   Aggregating: `summarise(.by = )`
+
+    -   Restructure: `pivot_wider()`
+
+-   Save Data
 
 ## Class Materials
 

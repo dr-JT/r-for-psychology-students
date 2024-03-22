@@ -9,11 +9,31 @@ The main objective of this class is to learn how to perfom different types of re
 
 ## Outline
 
--   
+-   Setup
+
+-   Descriptives
+
+    -   Histograms
+
+-   Correlations
+
+    -   Tables and Scatterplots
+
+-   Regression
+
+    -   Simple Regression
+
+    -   Multiple Regression
+
+    -   Hierarchical Regression
+
+    -   Mediation
+
+    -   Moderation
 
 ## Class Materials
 
-📘 [Class 10: Statistical Analysis - ANOVA](/lectures/lectures-class-10.html)
+📘 [Class 10: Statistical Analysis - Regression](/lectures/lectures-class-10.html)
 
 🖥️ [Slides - Full Screen](/slides/slides-class-10.html){target="_blank"}
 

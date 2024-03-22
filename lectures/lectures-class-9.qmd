@@ -88,8 +88,6 @@ library(stringr)
 library(ggplot2)
 library(sjPlot)
 library(afex)
-library(lme4)
-library(lmerTest)
 library(parameters)
 library(effectsize)
 library(ggeffects)
@@ -155,7 +153,7 @@ data_import <- read_csv(here("data", "Recall_Data.csv"))
 ```{r}
 #| echo: false
 
-rmarkdown::paged_table(data_import)
+data_import
 
 ```
 
