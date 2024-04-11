@@ -87,17 +87,18 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 library(ggplot2)
+library(e1071)
 library(sjPlot)
 library(correlation)
 library(broom)
 library(performance)
 library(parameters)
-library(sandwich)
-#library(mediation) we will use as mediation::mediate() instead of loading here
-library(semTools)
-library(ggeffects)
-library(e1071)
 library(modeloutput)
+library(ggeffects)
+#library(mediation) we will use as mediation::mediate() instead of loading here
+library(lavaan)
+library(semTools)
+library(semPlot)
 library(semoutput)
 ```
 
@@ -212,7 +213,7 @@ happiness_data |>
             Skewness =
               skewness(value, na.rm = TRUE, type = 2),
             Kurtosis =
-              kurtosis(value, na.rm = TRUE, type = 2),
+              e1071::kurtosis(value, na.rm = TRUE, type = 2),
             '% Missing' =
               100 * (length(which(is.na(value))) / n()))
 ```
@@ -621,7 +622,7 @@ fit <- sem(model, data = happiness_data)
 ## R output
 
 ```{r}
-summary(fit)
+summary(fit, standardized = TRUE)
 ```
 
 ## semoutput
@@ -630,6 +631,20 @@ I also have a package, `semoutput` for displaying results from `lavaan` models:
 
 ```{r}
 sem_tables(fit)
+```
+
+## semPlot
+
+```{r}
+size <- .65
+semPaths(fit, whatLabels = "std", layout = "tree2", 
+         rotation = 2, style = "lisrel", optimizeLatRes = TRUE, 
+         structural = FALSE, layoutSplit = FALSE,
+         intercepts = FALSE, residuals = FALSE, 
+         curve = 1, curvature = 3, nCharNodes = 8, 
+         sizeLat = 11 * size, sizeMan = 11 * size, sizeMan2 = 4 * size, 
+         edge.label.cex = 1.2 * size, 
+         edge.color = "#000000", edge.label.position = .40)
 ```
 :::
 

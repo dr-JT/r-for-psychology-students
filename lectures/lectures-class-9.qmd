@@ -86,12 +86,12 @@ library(readr)
 library(dplyr)
 library(stringr)
 library(ggplot2)
-library(sjPlot)
 library(afex)
 library(parameters)
 library(effectsize)
-library(ggeffects)
 library(modelbased)
+library(sjPlot)
+library(ggeffects)
 library(modeloutput)
 ```
 
@@ -213,7 +213,7 @@ t_ms
 
 ## Table ouptut
 
-We can use `model_parameters()` , from `parameters`, to get the test statistics and `cohens_d()`, from `modelbased` to get the standardized effect size estimates and print a nice looking table using `display` from the `parameters` package.
+We can use `model_parameters()` , from `parameters`, to get the test statistics and `cohens_d()`, from `effectsize` to get the standardized effect size estimates and print a nice looking table using `display` from the `parameters` package.
 
 ```{r}
 model_parameters(t_ms) |>

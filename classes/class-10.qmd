@@ -7,9 +7,38 @@ editor: visual
 
 The main objective of this class is to learn how to perfom different types of regression models and generate tables and figures of those models.
 
+## Prepare
+
+-   Install packages for generating regression tables
+
+    -   `sjPlot`, `correlation`, `broom`, `performance`, `parameters`
+
+-   Install packages for regression analyses
+
+    -   `e1071`, `ggeffects`, `mediation`
+
+-   Install packages for path analysis
+
+    -   `lavaan`, `semTools`, `semPlot`
+
+-   Install my packages from GitHub for genearting model tables
+
+    -   First install: `devtools`
+
+    -   Then install packages from GitHub: `modeloutput` and `semoutput`
+
+        ```{r}
+        #| eval: false
+
+        install.packages("devtools")
+
+        devtools::install_github("dr-JT/modeloutput")
+        devtools::install_github("dr-JT/semoutput")
+        ```
+
 ## Outline
 
--   Setup
+-   Setup Quarto Document
 
 -   Descriptives
 
@@ -33,16 +62,4 @@ The main objective of this class is to learn how to perfom different types of re
 
 ## Class Materials
 
-📘 [Class 10: Statistical Analysis - Regression](/lectures/lectures-class-10.html)
-
-🖥️ [Slides - Full Screen](/slides/slides-class-10.html){target="_blank"}
-
-Press **M** on the slides to bring up the menu to access options such as navigating to different sections
-
-<div>
-
-```{=html}
-<iframe class="slide-deck" src="/slides/slides-class-10.html"></iframe>
-```
-
-</div>
+📘 [Lecture Content](/lectures/lectures-class-10.html)

@@ -109,7 +109,7 @@
     "href": "lectures/lectures-class-3.html#rowwise",
     "title": "Class 3: Data Transformation",
     "section": "rowwise()",
-    "text": "rowwise()\nWhile .by = is used when performing functions on groups of rows, rowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n26.000\n35.000\n14.000\n    2.000\n23.000\n44.000\n27.000\n    3.000\n45.000\n27.000\n15.000\n    4.000\n4.000\n23.000\n50.000\n    5.000\n36.000\n46.000\n44.000\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nHere is an example where we have a single row per participant with columns representing their responses to three different questions. Let’s say we want to calculate their mean response across these three columns.\n\n\n\n\n\n\nImportant\n\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()\n\n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n26.000\n35.000\n14.000\n25.000\n    2.000\n23.000\n44.000\n27.000\n31.333\n    3.000\n45.000\n27.000\n15.000\n29.000\n    4.000\n4.000\n23.000\n50.000\n25.667\n    5.000\n36.000\n46.000\n44.000\n42.000\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n26.000\n35.000\n14.000\n30.600\n    2.000\n23.000\n44.000\n27.000\n30.600\n    3.000\n45.000\n27.000\n15.000\n30.600\n    4.000\n4.000\n23.000\n50.000\n30.600\n    5.000\n36.000\n46.000\n44.000\n30.600\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\nWe can put all the dplyr functions together through a series of pipes:\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nLet’s also do one thing to the mnemonic data set and then row bind these two data sets into one data frame.\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)"
+    "text": "rowwise()\nWhile .by = is used when performing functions on groups of rows, rowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n14.000\n49.000\n39.000\n    2.000\n50.000\n20.000\n48.000\n    3.000\n7.000\n3.000\n3.000\n    4.000\n9.000\n10.000\n4.000\n    5.000\n38.000\n47.000\n24.000\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nHere is an example where we have a single row per participant with columns representing their responses to three different questions. Let’s say we want to calculate their mean response across these three columns.\n\n\n\n\n\n\nImportant\n\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()\n\n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n14.000\n49.000\n39.000\n34.000\n    2.000\n50.000\n20.000\n48.000\n39.333\n    3.000\n7.000\n3.000\n3.000\n4.333\n    4.000\n9.000\n10.000\n4.000\n7.667\n    5.000\n38.000\n47.000\n24.000\n36.333\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n14.000\n49.000\n39.000\n24.333\n    2.000\n50.000\n20.000\n48.000\n24.333\n    3.000\n7.000\n3.000\n3.000\n24.333\n    4.000\n9.000\n10.000\n4.000\n24.333\n    5.000\n38.000\n47.000\n24.000\n24.333\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\nWe can put all the dplyr functions together through a series of pipes:\n\nrepetition_data &lt;- repetition_import |&gt;\n  rename(participant_id = `subject number`,\n         word_list = List,\n         recall_correct = recallCorrect) |&gt;\n  filter(day != \"Thursday\", day != \"Friday\") |&gt;\n  select(participant_id, word_list, recall_correct) |&gt;\n  mutate(condition = \"spaced repetition\",\n         word_list = case_when(word_list == \"X\" ~ \"A\",\n                               word_list == \"Y\" ~ \"B\",\n                               word_list == \"Z\" ~ \"C\")) |&gt;\n  mutate(.by = word_list, \n         word_list_mean = mean(recall_correct))\n\nLet’s also do one thing to the mnemonic data set and then row bind these two data sets into one data frame.\n\nmnemonic_data &lt;- mnemonic_import |&gt;\n  select(participant_id, condition, word_list, recall_correct)\n\n\ndata_merged &lt;- bind_rows(mnemonic_data, repetition_data) |&gt;\n  select(-word_list_mean) |&gt;\n  arrange(participant_id)"
   },
   {
     "objectID": "lectures/lectures-class-1.html",
@@ -172,7 +172,7 @@
     "href": "lectures/lectures-class-9.html#r-code-chunks",
     "title": "Class 9: Statistical Analysis - ANOVA",
     "section": "R Code Chunks",
-    "text": "R Code Chunks\n\nAdd an R code chunk below the Required Packages header and load the following packages,\n\n\nlibrary(here)\nlibrary(readr)\nlibrary(dplyr)\nlibrary(stringr)\nlibrary(ggplot2)\nlibrary(sjPlot)\nlibrary(afex)\nlibrary(parameters)\nlibrary(effectsize)\nlibrary(ggeffects)\nlibrary(modelbased)\nlibrary(modeloutput)\n\n\nAdd an R code chunk below the Plot Theme header and set your own ggplot2 theme to automatically be used in the rest of the document.\n\nIn this example I am using the theme_classic() settings in addition to bolding the title elements. This custom theme will now automatically be applied to all ggplot2 objects by using theme_set()\n\ncustom_theme &lt;- theme_classic() +\n  theme(axis.title.x = element_text(face = \"bold\"),\n        axis.title.y = element_text(face = \"bold\"),\n        legend.title = element_text(face = \"bold\"),\n        plot.title = element_text(face = \"bold\"))\n\ntheme_set(custom_theme)"
+    "text": "R Code Chunks\n\nAdd an R code chunk below the Required Packages header and load the following packages,\n\n\nlibrary(here)\nlibrary(readr)\nlibrary(dplyr)\nlibrary(stringr)\nlibrary(ggplot2)\nlibrary(afex)\nlibrary(parameters)\nlibrary(effectsize)\nlibrary(modelbased)\nlibrary(sjPlot)\nlibrary(ggeffects)\nlibrary(modeloutput)\n\n\nAdd an R code chunk below the Plot Theme header and set your own ggplot2 theme to automatically be used in the rest of the document.\n\nIn this example I am using the theme_classic() settings in addition to bolding the title elements. This custom theme will now automatically be applied to all ggplot2 objects by using theme_set()\n\ncustom_theme &lt;- theme_classic() +\n  theme(axis.title.x = element_text(face = \"bold\"),\n        axis.title.y = element_text(face = \"bold\"),\n        legend.title = element_text(face = \"bold\"),\n        plot.title = element_text(face = \"bold\"))\n\ntheme_set(custom_theme)"
   },
   {
     "objectID": "lectures/lectures-class-9.html#specify-factor-levels",
@@ -186,7 +186,7 @@
     "href": "lectures/lectures-class-9.html#t-test---independent-samples",
     "title": "Class 9: Statistical Analysis - ANOVA",
     "section": "t-test - independent samples",
-    "text": "t-test - independent samples\nWe can perform a two-sample t-test for independent samples to compare recall performance for the group of subjects assigned to the rote repetition condition vs. those assigned to the visual imagery condition.\n\nt_ms &lt;- t.test(recall_data$Recall_Performance ~\n                 recall_data$Memory_Strategy, \n               var.equal = TRUE)\n\nThe default way to print output from statistical models in R is either by using a summary() function, or simply printing the statistical model object, t_ms , to the console:\n\nR outputTable ouptut\n\n\n\nt_ms\n\n\n    Two Sample t-test\n\ndata:  recall_data$Recall_Performance by recall_data$Memory_Strategy\nt = -10.289, df = 268, p-value &lt; 2.2e-16\nalternative hypothesis: true difference in means between group Rote Repetition and group Visual Imagery is not equal to 0\n95 percent confidence interval:\n -13.724492  -9.315508\nsample estimates:\nmean in group Rote Repetition  mean in group Visual Imagery \n                     13.70963                      25.22963 \n\n\n\n\nWe can use model_parameters() , from parameters, to get the test statistics and cohens_d(), from modelbased to get the standardized effect size estimates and print a nice looking table using display from the parameters package.\n\nmodel_parameters(t_ms) |&gt;\n  display(align = \"left\")\n\n\nTwo Sample t-test\n\n\n\n\n\n\n\n\n\n\n\n\nParameter\nGroup\nrecall_data\\(Memory_Strategy = Rote Repetition | recall_data\\)Memory_Strategy = Visual Imagery\nDifference\n95% CI\nt(268)\np\n\n\n\n\n\nrecall_data\\(Recall_Performance | recall_data\\)Memory_Strategy\n13.71\n25.23\n-11.52\n(-13.72, -9.32)\n-10.29\n&lt; .001\n\n\n\n\nAlternative hypothesis: true difference in means between group Rote Repetition and group Visual Imagery is not equal to 0\n\n\n\n\ncohens_d(t_ms) |&gt;\n  display(align = \"left\")\n\n\n\n\nCohen’s d\n95% CI\n\n\n\n\n-1.25\n[-1.51, -0.99]\n\n\n\nEstimated using pooled SD."
+    "text": "t-test - independent samples\nWe can perform a two-sample t-test for independent samples to compare recall performance for the group of subjects assigned to the rote repetition condition vs. those assigned to the visual imagery condition.\n\nt_ms &lt;- t.test(recall_data$Recall_Performance ~\n                 recall_data$Memory_Strategy, \n               var.equal = TRUE)\n\nThe default way to print output from statistical models in R is either by using a summary() function, or simply printing the statistical model object, t_ms , to the console:\n\nR outputTable ouptut\n\n\n\nt_ms\n\n\n    Two Sample t-test\n\ndata:  recall_data$Recall_Performance by recall_data$Memory_Strategy\nt = -10.289, df = 268, p-value &lt; 2.2e-16\nalternative hypothesis: true difference in means between group Rote Repetition and group Visual Imagery is not equal to 0\n95 percent confidence interval:\n -13.724492  -9.315508\nsample estimates:\nmean in group Rote Repetition  mean in group Visual Imagery \n                     13.70963                      25.22963 \n\n\n\n\nWe can use model_parameters() , from parameters, to get the test statistics and cohens_d(), from effectsize to get the standardized effect size estimates and print a nice looking table using display from the parameters package.\n\nmodel_parameters(t_ms) |&gt;\n  display(align = \"left\")\n\n\nTwo Sample t-test\n\n\n\n\n\n\n\n\n\n\n\n\nParameter\nGroup\nrecall_data\\(Memory_Strategy = Rote Repetition | recall_data\\)Memory_Strategy = Visual Imagery\nDifference\n95% CI\nt(268)\np\n\n\n\n\n\nrecall_data\\(Recall_Performance | recall_data\\)Memory_Strategy\n13.71\n25.23\n-11.52\n(-13.72, -9.32)\n-10.29\n&lt; .001\n\n\n\n\nAlternative hypothesis: true difference in means between group Rote Repetition and group Visual Imagery is not equal to 0\n\n\n\n\ncohens_d(t_ms) |&gt;\n  display(align = \"left\")\n\n\n\n\nCohen’s d\n95% CI\n\n\n\n\n-1.25\n[-1.51, -0.99]\n\n\n\nEstimated using pooled SD."
   },
   {
     "objectID": "lectures/lectures-class-9.html#t-test---dependent-samples",
@@ -1078,7 +1078,7 @@
     "href": "index.html#classes",
     "title": "Welcome!",
     "section": "Classes",
-    "text": "Classes\nThe landing page for each class contains the class materials:\n📘 the actual content of the class\n🖥️ slides\nand more\nClass 1: An Introduction to Working with Data in R\nClass 2: Importing, Merging, and Restructuring Data\nClass 3: Data Transformation\nClass 4: Reproducible Projects\nClass 5: Data Preparation\nClass 6: Data Scoring\nClass 7: Quarto Documents\nClass 8: Data Visualization\nClass 9: Statistical Analysis - ANOVA\nClass 10: Statistical Analysis - Regression",
+    "text": "Classes\nThe landing page for each class contains the class materials:\n📘 the actual content of the class\n✏️ a learning activity\n🖥️ slides\n \nClass 1: An Introduction to Working with Data in R\nClass 2: Importing, Merging, and Restructuring Data\nClass 3: Data Transformation\nClass 4: Reproducible Projects\nClass 5: Data Preparation\nClass 6: Data Scoring\nClass 7: Quarto Documents\nClass 8: Data Visualization\nClass 9: Statistical Analysis - ANOVA\nClass 10: Statistical Analysis - Regression",
     "crumbs": [
       "Home"
     ]
@@ -1095,11 +1095,22 @@
     ]
   },
   {
+    "objectID": "classes/class-10.html#prepare",
+    "href": "classes/class-10.html#prepare",
+    "title": "Class 10",
+    "section": "Prepare",
+    "text": "Prepare\n\nInstall packages for generating regression tables\n\nsjPlot, correlation, broom, performance, parameters\n\nInstall packages for regression analyses\n\ne1071, ggeffects, mediation\n\nInstall packages for path analysis\n\nlavaan, semTools, semPlot\n\nInstall my packages from GitHub for genearting model tables\n\nFirst install: devtools\nThen install packages from GitHub: modeloutput and semoutput\n\ninstall.packages(\"devtools\")\n\ndevtools::install_github(\"dr-JT/modeloutput\")\ndevtools::install_github(\"dr-JT/semoutput\")",
+    "crumbs": [
+      "Classes",
+      "Class 10"
+    ]
+  },
+  {
     "objectID": "classes/class-10.html#outline",
     "href": "classes/class-10.html#outline",
     "title": "Class 10",
     "section": "Outline",
-    "text": "Outline\n\nSetup\nDescriptives\n\nHistograms\n\nCorrelations\n\nTables and Scatterplots\n\nRegression\n\nSimple Regression\nMultiple Regression\nHierarchical Regression\nMediation\nModeration",
+    "text": "Outline\n\nSetup Quarto Document\nDescriptives\n\nHistograms\n\nCorrelations\n\nTables and Scatterplots\n\nRegression\n\nSimple Regression\nMultiple Regression\nHierarchical Regression\nMediation\nModeration",
     "crumbs": [
       "Classes",
       "Class 10"
@@ -1110,7 +1121,7 @@
     "href": "classes/class-10.html#class-materials",
     "title": "Class 10",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 10: Statistical Analysis - Regression\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content",
     "crumbs": [
       "Classes",
       "Class 10"
@@ -1128,11 +1139,22 @@
     ]
   },
   {
+    "objectID": "classes/class-9.html#prepare",
+    "href": "classes/class-9.html#prepare",
+    "title": "Class 9",
+    "section": "Prepare",
+    "text": "Prepare\n\nInstall packages to conduct ANOVA analyses\n\nafex\n\nInstall packages for generating ANOVA tables\n\nmodelbased, parameters , effectsize\n\nInstall packages for generating ANOVA plots\n\nggeffects, sjPlot\n\nInstall my package from GitHub for genearting model tables\n\nFirst install: devtools\nThen install package from GitHub: modeloutput\n\ninstall.packages(\"devtools\")\n\ndevtools::install_github(\"dr-JT/modeloutput\")",
+    "crumbs": [
+      "Classes",
+      "Class 9"
+    ]
+  },
+  {
     "objectID": "classes/class-9.html#outline",
     "href": "classes/class-9.html#outline",
     "title": "Class 9",
     "section": "Outline",
-    "text": "Outline\n\nSetup\nt-tests\n\nIndependent Samples\nDependent (paired) Samples\n\nANOVA\n\nBetween-Subjects\nWithin-Subjects\nMixed Factors",
+    "text": "Outline\n\nSetup Quarto Document\nt-tests\n\nIndependent Samples\nDependent (paired) Samples\n\nANOVA\n\nBetween-Subjects\nWithin-Subjects\nMixed Factors",
     "crumbs": [
       "Classes",
       "Class 9"
@@ -1143,7 +1165,7 @@
     "href": "classes/class-9.html#class-materials",
     "title": "Class 9",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 9: Statistical Analysis - ANOVA\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content",
     "crumbs": [
       "Classes",
       "Class 9"
@@ -1176,7 +1198,7 @@
     "href": "classes/class-5.html#class-materials",
     "title": "Class 5",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 5: Data Preparation",
+    "text": "Class Materials\n📘 Lecture Content",
     "crumbs": [
       "Classes",
       "Class 5"
@@ -1209,7 +1231,7 @@
     "href": "classes/class-6.html#class-materials",
     "title": "Class 6",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 6: Data Scoring",
+    "text": "Class Materials\n📘 Lecture Content",
     "crumbs": [
       "Classes",
       "Class 6"
@@ -1253,7 +1275,7 @@
     "href": "classes/class-3.html#class-materials",
     "title": "Class 3",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 3: Data Transformation\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content\n✏️ Learning Activity\n🖥️ Lecture Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
     "crumbs": [
       "Classes",
       "Class 3"
@@ -1315,7 +1337,7 @@
     "href": "classes/class-1.html#class-materials",
     "title": "Class 1",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 1: An Introduction to Working with Data in R\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content\n🖥️ Lecture Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
     "crumbs": [
       "Classes",
       "Class 1"
@@ -1359,7 +1381,7 @@
     "href": "classes/class-2.html#class-materials",
     "title": "Class 2",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 2: Importing, Merging, and Restructuring Data\n✏️ Learning Activity\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content\n✏️ Learning Activity\n🖥️ Lecture Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
     "crumbs": [
       "Classes",
       "Class 2"
@@ -1392,7 +1414,7 @@
     "href": "classes/class-7.html#class-materials",
     "title": "Class 7",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 7: Quarto Documents\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content\n🖥️ Lecture Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
     "crumbs": [
       "Classes",
       "Class 7"
@@ -1425,7 +1447,7 @@
     "href": "classes/class-4.html#class-materials",
     "title": "Class 4",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 4: Reproducible Projects\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content\n🖥️ Lecture Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
     "crumbs": [
       "Classes",
       "Class 4"
@@ -1458,7 +1480,7 @@
     "href": "classes/class-8.html#class-materials",
     "title": "Class 8",
     "section": "Class Materials",
-    "text": "Class Materials\n📘 Class 8: Data Visualization\n🖥️ Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
+    "text": "Class Materials\n📘 Lecture Content\n🖥️ Lecture Slides - Full Screen\nPress M on the slides to bring up the menu to access options such as navigating to different sections",
     "crumbs": [
       "Classes",
       "Class 8"
@@ -1835,21 +1857,21 @@
     "href": "slides/slides-class-3.html#rowwise",
     "title": "Class 3",
     "section": "rowwise()",
-    "text": "rowwise()\n \nrowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\n \n\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n3.000\n33.000\n15.000\n    2.000\n9.000\n16.000\n32.000\n    3.000\n50.000\n36.000\n46.000\n    4.000\n36.000\n37.000\n27.000\n    5.000\n24.000\n22.000\n44.000"
+    "text": "rowwise()\n \nrowwise() is used when you want to perform operations row by row, treating each row as a single group. This is useful when you want to aggregate data (e.g., mean()) across multiple columns.\n \n\nThe data set we are working with does not provide a good demonstration of this so let’s create a different set of data to look at how to use rowwise()\n\ndata_sample &lt;- data.frame(ID = 1:5,\n                          Q1 = sample(1:50, 5),\n                          Q2 = sample(1:50, 5),\n                          Q3 = sample(1:50, 5))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n    \n  \n  \n    1.000\n8.000\n14.000\n49.000\n    2.000\n31.000\n7.000\n14.000\n    3.000\n35.000\n8.000\n31.000\n    4.000\n11.000\n19.000\n43.000\n    5.000\n40.000\n2.000\n10.000"
   },
   {
     "objectID": "slides/slides-class-3.html#rowwise-1",
     "href": "slides/slides-class-3.html#rowwise-1",
     "title": "Class 3",
     "section": "rowwise()",
-    "text": "rowwise()\n \nLet’s say we want to calculate each participant’s mean response across these three columns.\n \n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n3.000\n33.000\n15.000\n17.000\n    2.000\n9.000\n16.000\n32.000\n19.000\n    3.000\n50.000\n36.000\n46.000\n44.000\n    4.000\n36.000\n37.000\n27.000\n33.333\n    5.000\n24.000\n22.000\n44.000\n30.000\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()"
+    "text": "rowwise()\n \nLet’s say we want to calculate each participant’s mean response across these three columns.\n \n\n\ndata_sample &lt;- data_sample |&gt;\n  rowwise() |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3))) |&gt;\n  ungroup()\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n8.000\n14.000\n49.000\n23.667\n    2.000\n31.000\n7.000\n14.000\n17.333\n    3.000\n35.000\n8.000\n31.000\n24.667\n    4.000\n11.000\n19.000\n43.000\n24.333\n    5.000\n40.000\n2.000\n10.000\n17.333\n  \n  \n  \n    \n       \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nYou NEED to ungroup() the data frame whenever you are done with rowwise()"
   },
   {
     "objectID": "slides/slides-class-3.html#rowwise-2",
     "href": "slides/slides-class-3.html#rowwise-2",
     "title": "Class 3",
     "section": "rowwise()",
-    "text": "rowwise()\n \nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n \n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n3.000\n33.000\n15.000\n28.667\n    2.000\n9.000\n16.000\n32.000\n28.667\n    3.000\n50.000\n36.000\n46.000\n28.667\n    4.000\n36.000\n37.000\n27.000\n28.667\n    5.000\n24.000\n22.000\n44.000\n28.667"
+    "text": "rowwise()\n \nNote the difference when you don’t use rowwise(), it calculates the mean across all rows in the data\n \n\ndata_sample &lt;- data_sample |&gt;\n  mutate(Q_mean = mean(c(Q1, Q2, Q3)))\n\n\n\n\n\n\n  \n    \n    \n      ID\n      Q1\n      Q2\n      Q3\n      Q_mean\n    \n  \n  \n    1.000\n8.000\n14.000\n49.000\n21.467\n    2.000\n31.000\n7.000\n14.000\n21.467\n    3.000\n35.000\n8.000\n31.000\n21.467\n    4.000\n11.000\n19.000\n43.000\n21.467\n    5.000\n40.000\n2.000\n10.000\n21.467"
   },
   {
     "objectID": "slides/slides-class-3.html#putting-it-all-together",
@@ -2305,7 +2327,7 @@
     "href": "lectures/lectures-class-10.html#r-code-chunks",
     "title": "Class 10: Statistical Analysis - Regression",
     "section": "R Code Chunks",
-    "text": "R Code Chunks\n\nAdd an R code chunk below the Required Packages header and load the following packages,\n\n\nlibrary(here)\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(stringr)\nlibrary(ggplot2)\nlibrary(sjPlot)\nlibrary(correlation)\nlibrary(broom)\nlibrary(performance)\nlibrary(parameters)\nlibrary(sandwich)\n#library(mediation) we will use as mediation::mediate() instead of loading here\nlibrary(semTools)\nlibrary(ggeffects)\nlibrary(e1071)\nlibrary(modeloutput)\nlibrary(semoutput)\n\n\nAdd an R code chunk below the Plot Theme header and set your own ggplot2 theme to automatically be used in the rest of the document.\n\nIn this example I am using the theme_classic() settings in addition to bolding the title elements. This custom theme will now automatically be applied to all ggplot2 objects by using theme_set()\n\ncustom_theme &lt;- theme_classic() +\n  theme(axis.title.x = element_text(face = \"bold\"),\n        axis.title.y = element_text(face = \"bold\"),\n        legend.title = element_text(face = \"bold\"),\n        plot.title = element_text(face = \"bold\"))\n\ntheme_set(custom_theme)"
+    "text": "R Code Chunks\n\nAdd an R code chunk below the Required Packages header and load the following packages,\n\n\nlibrary(here)\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(stringr)\nlibrary(ggplot2)\nlibrary(e1071)\nlibrary(sjPlot)\nlibrary(correlation)\nlibrary(broom)\nlibrary(performance)\nlibrary(parameters)\nlibrary(modeloutput)\nlibrary(ggeffects)\n#library(mediation) we will use as mediation::mediate() instead of loading here\nlibrary(lavaan)\nlibrary(semTools)\nlibrary(semPlot)\nlibrary(semoutput)\n\n\nAdd an R code chunk below the Plot Theme header and set your own ggplot2 theme to automatically be used in the rest of the document.\n\nIn this example I am using the theme_classic() settings in addition to bolding the title elements. This custom theme will now automatically be applied to all ggplot2 objects by using theme_set()\n\ncustom_theme &lt;- theme_classic() +\n  theme(axis.title.x = element_text(face = \"bold\"),\n        axis.title.y = element_text(face = \"bold\"),\n        legend.title = element_text(face = \"bold\"),\n        plot.title = element_text(face = \"bold\"))\n\ntheme_set(custom_theme)"
   },
   {
     "objectID": "lectures/lectures-class-10.html#specify-factor-levels",
@@ -2326,7 +2348,7 @@
     "href": "lectures/lectures-class-10.html#path-analysis",
     "title": "Class 10: Statistical Analysis - Regression",
     "section": "Path Analysis",
-    "text": "Path Analysis\nThere is a statistical modelling approach called path analysis that does allow for multiple dependent variables in a single model. Here is how to specify a path analysis model using the lavaan package.\nSee the lavaan website for how to conduct mediation in lavaan\nModel\n\nmodel &lt;- \"\n# a path\nEmotion_Regulation ~ a*Social_Support\n\n# b path\nHappiness ~ b*Emotion_Regulation\n\n# c prime path \nHappiness ~ c*Social_Support\n\n# indirect and total effects\nindirect := a*b\ntotal := c + a*b\n\"\n\nfit &lt;- sem(model, data = happiness_data)\n\n\nR outputsemoutput\n\n\n\nsummary(fit)\n\nlavaan 0.6.16 ended normally after 1 iteration\n\n  Estimator                                         ML\n  Optimization method                           NLMINB\n  Number of model parameters                         5\n\n  Number of observations                           152\n\nModel Test User Model:\n                                                      \n  Test statistic                                 0.000\n  Degrees of freedom                                 0\n\nParameter Estimates:\n\n  Standard errors                             Standard\n  Information                                 Expected\n  Information saturated (h1) model          Structured\n\nRegressions:\n                       Estimate  Std.Err  z-value  P(&gt;|z|)\n  Emotion_Regulation ~                                    \n    Socl_Spprt (a)        0.760    0.076    9.988    0.000\n  Happiness ~                                             \n    Emtn_Rgltn (b)        0.582    0.149    3.905    0.000\n    Socl_Spprt (c)        0.424    0.180    2.358    0.018\n\nVariances:\n                   Estimate  Std.Err  z-value  P(&gt;|z|)\n   .Emotion_Regltn  232.557   26.676    8.718    0.000\n   .Happiness       785.537   90.107    8.718    0.000\n\nDefined Parameters:\n                   Estimate  Std.Err  z-value  P(&gt;|z|)\n    indirect          0.442    0.122    3.637    0.000\n    total             0.866    0.147    5.909    0.000\n\n\n\n\nI also have a package, semoutput for displaying results from lavaan models:\n\nsem_tables(fit)\n\n\n\n\n  \n    \n      Model Significance\n    \n    \n    \n      N\n      χ2\n      df\n      p\n    \n  \n  \n    152 \n0.000\n0 \n\n  \n  \n  \n\n\n\n\n\n  \n    \n      Model Fit\n    \n    \n    \n      CFI\n      RMSEA\n      90% CI\n      TLI\n      SRMR\n      AIC\n      BIC\n    \n  \n  \n    1.000\n0.000\n0.000 — 0.000\n1.000\n0.000\n2714.271\n2729.391\n  \n  \n  \n\n\n\n\n\n  \n    \n      Regression Paths\n    \n    \n    \n      Predictor\n      DV\n      \n        Standardized\n      \n    \n    \n      β\n      95% CI\n      sig\n      SE\n      z\n      p\n    \n  \n  \n    Social_Support\nEmotion_Regulation\n0.629\n0.544 — 0.715\n***\n0.044\n14.356\n    0.000\n    Emotion_Regulation\nHappiness\n0.350\n0.181 — 0.520\n***\n0.086\n 4.057\n&lt;0.001\n    Social_Support\nHappiness\n0.212\n0.039 — 0.384\n*\n0.088\n 2.402\n    0.016\n    a*b\nindirect\n0.221\n0.109 — 0.333\n***\n0.057\n 3.859\n&lt;0.001\n    c+a*b\ntotal\n0.432\n0.309 — 0.555\n***\n0.063\n 6.882\n&lt;0.001\n  \n  \n  \n    \n       * p &lt; .05; ** p &lt; .01; *** p &lt; .001\n    \n  \n\n\n\n\n\n\n\nIt is highly advised to calculate bootstrapped and bias-corrected confidence intervals around the indirect effect:\n\nmonteCarloCI(fit, nRep = 1000, standardized = TRUE)"
+    "text": "Path Analysis\nThere is a statistical modelling approach called path analysis that does allow for multiple dependent variables in a single model. Here is how to specify a path analysis model using the lavaan package.\nSee the lavaan website for how to conduct mediation in lavaan\nModel\n\nmodel &lt;- \"\n# a path\nEmotion_Regulation ~ a*Social_Support\n\n# b path\nHappiness ~ b*Emotion_Regulation\n\n# c prime path \nHappiness ~ c*Social_Support\n\n# indirect and total effects\nindirect := a*b\ntotal := c + a*b\n\"\n\nfit &lt;- sem(model, data = happiness_data)\n\n\nR outputsemoutputsemPlot\n\n\n\nsummary(fit, standardized = TRUE)\n\nlavaan 0.6.16 ended normally after 1 iteration\n\n  Estimator                                         ML\n  Optimization method                           NLMINB\n  Number of model parameters                         5\n\n  Number of observations                           152\n\nModel Test User Model:\n                                                      \n  Test statistic                                 0.000\n  Degrees of freedom                                 0\n\nParameter Estimates:\n\n  Standard errors                             Standard\n  Information                                 Expected\n  Information saturated (h1) model          Structured\n\nRegressions:\n                       Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all\n  Emotion_Regulation ~                                                      \n    Socl_Spprt (a)        0.760    0.076    9.988    0.000    0.760    0.629\n  Happiness ~                                                               \n    Emtn_Rgltn (b)        0.582    0.149    3.905    0.000    0.582    0.350\n    Socl_Spprt (c)        0.424    0.180    2.358    0.018    0.424    0.212\n\nVariances:\n                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all\n   .Emotion_Regltn  232.557   26.676    8.718    0.000  232.557    0.604\n   .Happiness       785.537   90.107    8.718    0.000  785.537    0.739\n\nDefined Parameters:\n                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all\n    indirect          0.442    0.122    3.637    0.000    0.442    0.221\n    total             0.866    0.147    5.909    0.000    0.866    0.432\n\n\n\n\nI also have a package, semoutput for displaying results from lavaan models:\n\nsem_tables(fit)\n\n\n\n\n  \n    \n      Model Significance\n    \n    \n    \n      N\n      χ2\n      df\n      p\n    \n  \n  \n    152 \n0.000\n0 \n\n  \n  \n  \n\n\n\n\n\n  \n    \n      Model Fit\n    \n    \n    \n      CFI\n      RMSEA\n      90% CI\n      TLI\n      SRMR\n      AIC\n      BIC\n    \n  \n  \n    1.000\n0.000\n0.000 — 0.000\n1.000\n0.000\n2714.271\n2729.391\n  \n  \n  \n\n\n\n\n\n  \n    \n      Regression Paths\n    \n    \n    \n      Predictor\n      DV\n      \n        Standardized\n      \n    \n    \n      β\n      95% CI\n      sig\n      SE\n      z\n      p\n    \n  \n  \n    Social_Support\nEmotion_Regulation\n0.629\n0.544 — 0.715\n***\n0.044\n14.356\n    0.000\n    Emotion_Regulation\nHappiness\n0.350\n0.181 — 0.520\n***\n0.086\n 4.057\n&lt;0.001\n    Social_Support\nHappiness\n0.212\n0.039 — 0.384\n*\n0.088\n 2.402\n    0.016\n    a*b\nindirect\n0.221\n0.109 — 0.333\n***\n0.057\n 3.859\n&lt;0.001\n    c+a*b\ntotal\n0.432\n0.309 — 0.555\n***\n0.063\n 6.882\n&lt;0.001\n  \n  \n  \n    \n       * p &lt; .05; ** p &lt; .01; *** p &lt; .001\n    \n  \n\n\n\n\n\n\n\nsize &lt;- .65\nsemPaths(fit, whatLabels = \"std\", layout = \"tree2\", \n         rotation = 2, style = \"lisrel\", optimizeLatRes = TRUE, \n         structural = FALSE, layoutSplit = FALSE,\n         intercepts = FALSE, residuals = FALSE, \n         curve = 1, curvature = 3, nCharNodes = 8, \n         sizeLat = 11 * size, sizeMan = 11 * size, sizeMan2 = 4 * size, \n         edge.label.cex = 1.2 * size, \n         edge.color = \"#000000\", edge.label.position = .40)\n\n\n\n\n\n\n\n\n\n\n\nIt is highly advised to calculate bootstrapped and bias-corrected confidence intervals around the indirect effect:\n\nmonteCarloCI(fit, nRep = 1000, standardized = TRUE)"
   },
   {
     "objectID": "lectures/lectures-class-2.html",
@@ -2396,7 +2418,7 @@
     "href": "lectures/lectures-class-7.html#create-an-r-code-chunk",
     "title": "Class 7: Quarto Documents",
     "section": "Create an R code chunk",
-    "text": "Create an R code chunk\nR code chunks are enclosed with\n```{r}\n\n```\nOr might look like:\n\n{r}\n\na &lt;- 1 + 6\n\nYou can create R code chunks with the shortcut:\n\nMac: ⌘ ⌥ i (command + alt/opt + i)\nWindows: ⌃ ⌥ i (ctrl + alt + i)\n\nOr in the toolbar of the Quarto document (same section area as Source and Visual)\n\nInsert -&gt; Excecutable Cell -&gt; R\n\n\nNotice that there are a lot of other options to Insert all sorts of other content like Figure/Image…\nInsert the following code in the R code chunk\n\nlibrary(palmerpenguins)\n\nhead(penguins)\n\nCreate another R code chunk with the following code\n\nlibrary(ggplot2)\n\nggplot(penguins, aes(species, body_mass_g, color = species)) +\n  geom_jitter(alpha = .7, width = .05, color = \"gray\") +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE, size = 3) +\n  geom_errorbar(stat = \"summary\", fun.data = mean_cl_normal, na.rm = TRUE,\n                width = .2) +\n  scale_color_brewer(palette = \"Set1\", label = \"none\") +\n  guides(color = \"none\") +\n  labs(title = \"Body Mass of Penguin Species\", \n       x = \"Species\", y = \"Body Mass (g)\") +\n  theme_classic()"
+    "text": "Create an R code chunk\nR code chunks are enclosed with\n```{r}\na &lt;- 1 + 6\n```\nOr might look like:\n\n{r}\n\na &lt;- 1 + 6\n\nYou can create R code chunks with the shortcut:\n\nMac: ⌘ ⌥ i (command + alt/opt + i)\nWindows: ⌃ ⌥ i (ctrl + alt + i)\n\nOr in the toolbar of the Quarto document (same section area as Source and Visual)\n\nInsert -&gt; Excecutable Cell -&gt; R\n\n\nNotice that there are a lot of other options to Insert all sorts of other content like Figure/Image…\nInsert the following code in the R code chunk\n\nlibrary(palmerpenguins)\n\nhead(penguins)\n\nCreate another R code chunk with the following code\n\nlibrary(ggplot2)\n\nggplot(penguins, aes(species, body_mass_g, color = species)) +\n  geom_jitter(alpha = .7, width = .05, color = \"gray\") +\n  geom_point(stat = \"summary\", fun = mean, na.rm = TRUE, size = 3) +\n  geom_errorbar(stat = \"summary\", fun.data = mean_cl_normal, na.rm = TRUE,\n                width = .2) +\n  scale_color_brewer(palette = \"Set1\", label = \"none\") +\n  guides(color = \"none\") +\n  labs(title = \"Body Mass of Penguin Species\", \n       x = \"Species\", y = \"Body Mass (g)\") +\n  theme_classic()"
   },
   {
     "objectID": "lectures/lectures-class-7.html#execute-r-code-chunk",

@@ -21,9 +21,9 @@ The main objective of this class is to learn how to use Quarto Documents to crea
 
 ## Class Materials
 
-📘 [Class 7: Quarto Documents](/lectures/lectures-class-7.html)
+📘 [Lecture Content](/lectures/lectures-class-7.html)
 
-🖥️ [Slides - Full Screen](/slides/slides-class-7.html){target="_blank"}
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-7.html){target="_blank"}
 
 Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 

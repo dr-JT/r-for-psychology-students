@@ -24,9 +24,11 @@ The landing page for each class contains the class materials:
 
 📘 the actual content of the class
 
+✏️ a learning activity
+
 🖥️ slides
 
-and more
+ 
 
 [Class 1](/classes/class-1.html): An Introduction to Working with Data in R
 

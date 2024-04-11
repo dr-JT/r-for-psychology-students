@@ -19,9 +19,9 @@ The main objective of this class is to learn what it means to have a reproducibl
 
 ## Class Materials
 
-📘 [Class 4: Reproducible Projects](/lectures/lectures-class-4.html)
+📘 [Lecture Content](/lectures/lectures-class-4.html)
 
-🖥️ [Slides - Full Screen](/slides/slides-class-4.html){target="_blank"}
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-4.html){target="_blank"}
 
 Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 

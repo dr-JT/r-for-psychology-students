@@ -25,9 +25,9 @@ The main objective of this class is to get familiar with the basics of creating 
 
 ## Class Materials
 
-📘 [Class 8: Data Visualization](/lectures/lectures-class-8.html)
+📘 [Lecture Content](/lectures/lectures-class-8.html)
 
-🖥️ [Slides - Full Screen](/slides/slides-class-8.html){target="_blank"}
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-8.html){target="_blank"}
 
 Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 

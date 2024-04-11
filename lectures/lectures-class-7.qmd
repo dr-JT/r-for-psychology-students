@@ -116,7 +116,7 @@ A Quarto document (.qmd) is a mixture of markdown text and R code chunks.
 R code chunks are enclosed with
 
 ```{{r}}
-
+a <- 1 + 6
 ```
 
 Or might look like:
@@ -179,7 +179,7 @@ Go ahead and do so. You can see that the results of the R code chunks are now di
 
 # Visual Editor
 
-By default, Quarto will open a new document in the [visual editor mode](https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch).){taget="\_blank"}. The Quarto visual editor provides a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM){target="_blank"} editing interface.
+By default, Quarto will open a new document in the [visual editor mode](https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch){target="_blank"}. The Quarto visual editor provides a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM){target="_blank"} editing interface.
 
 In **Source** mode, you will see the *raw* markdown and code elements. On occassion you may find that it is easier to edit a document in Source mode rather than with the Visual editor. You can switch back and forth between the two easily at the top-left of the toolbar
 
@@ -328,7 +328,7 @@ Some settings you can change for individual R code chunks. The syntax to do this
 Some commone ones to change are:
 
 | Option    | Description                                                                                                                                                                                       |
-|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------|------------------------------------------------------------|
 | `eval`    | Evaluate the code chunk (if `false`, just echos the code into the output).                                                                                                                        |
 | `echo`    | Include the source code in output                                                                                                                                                                 |
 | `output`  | Include the results of executing the code in the output (`true`, `false`, or `asis` to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown). |

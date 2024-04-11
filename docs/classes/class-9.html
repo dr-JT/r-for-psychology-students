@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -68,6 +102,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -246,7 +282,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#prepare" id="toc-prepare" class="nav-link active" data-scroll-target="#prepare">Prepare</a></li>
+  <li><a href="#outline" id="toc-outline" class="nav-link" data-scroll-target="#outline">Outline</a></li>
   <li><a href="#class-materials" id="toc-class-materials" class="nav-link" data-scroll-target="#class-materials">Class Materials</a></li>
   </ul>
 </nav>
@@ -275,10 +312,37 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>The main objective of this class is to learn how to perfom different types of ANOVAs and generate tables and figures of statistical models.</p>
+<section id="prepare" class="level2">
+<h2 class="anchored" data-anchor-id="prepare">Prepare</h2>
+<ul>
+<li><p>Install packages to conduct ANOVA analyses</p>
+<ul>
+<li><code>afex</code></li>
+</ul></li>
+<li><p>Install packages for generating ANOVA tables</p>
+<ul>
+<li><code>modelbased</code>, <code>parameters</code> , <code>effectsize</code></li>
+</ul></li>
+<li><p>Install packages for generating ANOVA plots</p>
+<ul>
+<li><code>ggeffects</code>, <code>sjPlot</code></li>
+</ul></li>
+<li><p>Install my package from GitHub for genearting model tables</p>
+<ul>
+<li><p>First install: <code>devtools</code></p></li>
+<li><p>Then install package from GitHub: <code>modeloutput</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dr-JT/modeloutput"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ul></li>
+</ul>
+</section>
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
 <ul>
-<li><p>Setup</p></li>
+<li><p>Setup Quarto Document</p></li>
 <li><p>t-tests</p>
 <ul>
 <li><p>Independent Samples</p></li>
@@ -294,12 +358,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="class-materials" class="level2">
 <h2 class="anchored" data-anchor-id="class-materials">Class Materials</h2>
-<p>📘 <a href="../lectures/lectures-class-9.html">Class 9: Statistical Analysis - ANOVA</a></p>
-<p>🖥️ <a href="../slides/slides-class-9.html" target="_blank">Slides - Full Screen</a></p>
-<p>Press <strong>M</strong> on the slides to bring up the menu to access options such as navigating to different sections</p>
-<div>
-<iframe class="slide-deck" src="../slides/slides-class-9.html"></iframe>
-</div>
+<p>📘 <a href="../lectures/lectures-class-9.html">Lecture Content</a></p>
 
 
 </section>

@@ -29,4 +29,4 @@ The main objective of this class is to understand the steps typically involved i
 
 ## Class Materials
 
-📘 [Class 6: Data Scoring](/lectures/lectures-class-6.html)
+📘 [Lecture Content](/lectures/lectures-class-6.html)

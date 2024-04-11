@@ -35,9 +35,11 @@ Download sample data files:
 
 ## Class Materials
 
-📘 [Class 3: Data Transformation](/lectures/lectures-class-3.html)
+📘 [Lecture Content](/lectures/lectures-class-3.html)
 
-🖥️ [Slides - Full Screen](/slides/slides-class-3.html){target="_blank"}
+✏️ [Learning Activity](/activities/activities-class-3.html)
+
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-3.html){target="_blank"}
 
 Press **M** on the slides to bring up the menu to access options such as navigating to different sections
 

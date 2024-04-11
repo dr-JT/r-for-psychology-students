@@ -25,4 +25,4 @@ The main objective of this class is to understand the steps typically involved i
 
 ## Class Materials
 
-📘 [Class 5: Data Preparation](/lectures/lectures-class-5.html)
+📘 [Lecture Content](/lectures/lectures-class-5.html)
