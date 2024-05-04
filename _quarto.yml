@@ -50,8 +50,12 @@ website:
             text: "Class 10: Regression"
       - section: "Supplemental"
         contents:
-          - href: supplemental/tips-tricks.qmd
-            text: "Tips & Tricks"
+          - href: supplemental/r-basics.qmd
+            text: "R Basics"
+          - href: supplemental/r-intermediate.qmd
+            text: "R Intermediate"
+          - href: supplemental/tips.qmd
+            text: "Useful Tips"
           - href: supplemental/pipe-operator.qmd
             text: "Pipe Operator"
           - href: supplemental/github_copilot.qmd

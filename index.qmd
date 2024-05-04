@@ -14,6 +14,14 @@ Before starting the course you should read the following sections
 
 📖 [Prerequisites](prerequisites.html)
 
+**Optional**: For a more extensive introduction to R see the supplemental materials
+
+📖 [R Basics](/supplemental/r-basics.html)
+
+📖 [R Intermediate](/supplemental/r-intermediate.html)
+
+## Navigation
+
 You can navigate to different sections of the course on the left sidebar.
 
 Most pages will also have a page navigation on the right sidebar where you can navigate to different sections of the page you are currently on.

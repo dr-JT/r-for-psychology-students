@@ -1,0 +1,278 @@
+---
+title: "R Intermediate"
+execute:
+  echo: true
+  eval: true
+  message: false
+  warning: false
+---
+
+This will cover more intermediate R programming such as creating functions and for loops.
+
+Save your empty script somewhere on your computer
+
+# Creating Your Own Functions
+
+Even if you do not want to get too proficient in R, it can be a good idea to know how to create your own function. It also helps you better understand how functions actually work.
+
+We are going to create a function that calculates an average of values.
+
+To define a function you use the `function()` and assign the output of `function()` to an object, which becomes the name of the function. For instance,
+
+```{r}
+#| eval: false
+
+function_name <- function() {
+  
+}
+```
+
+This is a blank function so it is useless. Before we put stuff inside of a function let's work out the steps to calculate an average.
+
+Let's say we have an array `a` that has 10 elements
+
+```{r}
+a <- c(1,7,4,3,8,8,7,9,2,4)
+a
+```
+
+To calculate an average we want to take the sum of all the values in `a` and divide it by the number of elements in `a`. To do this we can use the `sum()` and `length()` functions.
+
+```{r}
+sum(a)
+length(a)
+
+sum(a)/length(a)
+```
+
+Easy! So now we can just put this into a function.
+
+```{r}
+average <- function(x) {
+  avg <- sum(x)/length(x)
+  return(avg)
+}
+```
+
+When creating a function, you need to specify what input arguments the function is able to take. Here were are specifying the argument `x`. You can use whatever letter or string of letters you want, but a common notation is to use `x` for the object that is going to be evaluated by the function. Then, inside the function we use the same letter `x` to calculate the `sum()` and `length()` of `x`. What this means is that **Arguments specified in a function become objects (or variables) passed inside the function**
+
+You can create new objects inside a function. For instance we are creating an object, `avg`. However, these objects are created only inside the environment of the function. You cannot use those objects outside the function and they will not appear in your Environment window. To pass the value of an object outside of the function, you need to specify what you want to `return()` or what is the output of the function. In this case it is the object `avg` that we created inside the function.
+
+Let's see the function in action
+
+```{r}
+average(a)
+```
+
+Cool! You created your first function. Because the function only takes one argument `x` it knows that whatever object we specify in `average()` is the object we want to evaluate.
+
+But what if our vector contains missing values?
+
+```{r}
+b <- c(1,NA,4,2,7,NA,8,4,9,3)
+average(b)
+```
+
+Uh oh. Here the vector `b` contains two missing values and the function `average(b)` returns `NA`. This is because in our function we use the function `sum()` without specifying to ignore missing values. If you type in the console `?sum` you will see that there is an argument to specify whether missing values should be removed or not. The default value of this argument is `FALSE` so if we want to remove the missing values we need to specify `na.rm = TRUE`.
+
+It is a good idea to make your functions as flexible as possible. Allow the user to decide what they want to happen. For instance, it might be the case that the user wants a value of `NA` returned when a vector contains missing values. So we can add an argument to our `average()` function that allows the user to decide what they want to happen; ignore missing values or return `NA` if missing values are present.
+
+Let's label this argument `na.ignore`. We could label it `na.rm` like the `sum()` function but for the sake of this Tutorial I want you to learn that you can label these arguments however you want, it is arbitrary. The label should make sense however.
+
+Before we write the function let's think about what we need to change inside the function. Basically we want our new argument `na.ignore` to change the value of `na.rm` in the `sum()` function. If `na.ignore` is `TRUE` then we want `na.rm = TRUE`. Remember that arguments become objects inside of a function. So we will want to change:
+
+```{r}
+#| eval: false
+
+avg <- sum(x)/length(x)
+```
+
+to
+
+```{r}
+#| eval: false
+
+avg <- sum(x, na.rm = na.ignore)/length(x)
+```
+
+Let's try this out on our vector `b`
+
+```{r}
+na.ignore <- TRUE
+sum(b, na.rm = na.ignore)/length(b)
+```
+
+We can test if our average function is calculating this correctly by using the actual base R function `mean()`.
+
+```{r}
+mean(b, na.rm = TRUE)
+```
+
+Uh oh. We are getting different values. This is because `length()` is also not ignoring missing values. The length of `b`, is `r length(b)`. The length of `b` ignoring missing values is `r length(b[!is.na(b)])`.
+
+Unfortunately, `length()` does not have an argument to specify we want to ignore missing values. How we can tell `length()` to ignore missing values is by
+
+```{r}
+length(b[!is.na(b)])
+```
+
+This is saying, evaluate the length of elements in `b` that are not missing.
+
+Now we can modify our function with
+
+```{r}
+na.ignore <- TRUE
+sum(b, na.rm = na.ignore)/length(b[!is.na(b)])
+```
+
+to get
+
+```{r}
+average <- function(x, na.ignore = FALSE) {
+  avg <- sum(x, na.rm = na.ignore)/length(x[!is.na(x)])
+  return(avg)
+}
+```
+
+```{r}
+average(b, na.ignore = TRUE)
+```
+
+```{r}
+mean(b, na.rm = TRUE)
+```
+
+Walla! You did it. You created a function. Notice that we set the default value of `na.ignore` to `FALSE`. If we had set it as `TRUE` then we would not need to specify `average(na.ignore = TRUE)` since `TRUE` would have been the default.
+
+**When using functions it is important to know what the default values are**
+
+# For Loops
+
+For loops allow you iterate the same line of code over multiple instances.
+
+Let's say we have a vector of numerical values
+
+```{r}
+c <- c(1,6,3,8,2,9)
+c
+```
+
+and want perform an if...then operation on each of the elements. Let's use the same if...then statement we used above. If the element is greater than 3, then multiply it by 2 - else set it to missing. Let's put the results of this if...then statement into a new vector `d`
+
+What we need to do is **loop** this if...then statement **for** each element in `c`
+
+We can start out by writing the for loop statement
+
+```{r}
+for (i in seq_along(c)) {
+  
+}
+```
+
+This is how it works. The statement inside of parentheses after `for` contains two statements separated by `in`. The first statement is the variable that is going to change it's value over each iteration of the `loop`. **You can name this whatever you want**. In this case I chose the label `i`. The second statement defines all the values that will be used at each iteration. The second statement will always be a vector. In this case the vector is `seq_along(c)`.
+
+`seq_along()` is a function that creates a vector that contains a sequence of numbers from 1 to the length of the object. In this case the object is the vector `c`, which has a length of `6` elements. Therefore `seq_along(c)`, creates a vector containing `r seq_along(c)`.
+
+The `for` `loop` will start with `i` defined as `1`, then on the next iteration the value of `i` will be `2` ... and so until the last element of `seq_along(c)`, which is `6`. We can see how this is working by printing 'i' on each iteration.
+
+```{r}
+for (i in seq_along(c)) {
+ print(i) 
+}
+```
+
+You can see how on each iteration it prints the values of `seq_along(c)` from the first element to the last element.
+
+What we will want to do is, on each iteration of the for loop, access the `i`th element of the vector `c`.
+
+Recall, you can access the element in a vector with `[ ]`, for instance `c[1]`. Let's print each `i`th element of `c`.
+
+```{r}
+for (i in seq_along(c)) {
+ print(c[i]) 
+}
+```
+
+Now instead of printing `i` the for loop is printing each element of vector `c`.
+
+Let's use the same if...then statement as above
+
+```{r}
+a <- 5
+if (a > 3) {
+  a <- a*2
+} else {
+  a <- NA
+}
+a
+```
+
+But instead we need to replace a with `c[i]`
+
+For now let's just `print()` the output of the if... then statement.
+
+```{r}
+for (i in seq_along(c)) {
+  if (c[i] > 3) {
+    print(c[i]*2)
+  } else {
+    print(NA)
+  }
+}
+```
+
+Now for each element in `c`, if it is is greater than 3, then multiply it by 2 - else set as missing value. You can see that on each iteration the output is either the `i`th element of c multiplied by 2 or `NA`.
+
+But just printing things to the console is useless! Let's overwrite the old values in `c` with the new values.
+
+```{r}
+for (i in seq_along(c)) {
+  if (c[i] > 3) {
+    c[i] <- c[i]*2
+  } else {
+    c[i] <- NA
+  }
+}
+```
+
+But what if we want to preserve the original vector `c`? Well we need to put it into a new vector, let's call it vector `d`. This get's a little more complicated but is something you might find yourself doing fairly often so it is good to understand how this works.
+
+But if you are going to do this to a "new" vector that is not yet created you will run into an error.
+
+```{r}
+#| error: true
+
+c <- c(1,6,3,8,2,9)
+for (i in seq_along(c)) {
+  if (c[i] > 3) {
+    d[i] <- c[i]*2
+  } else {
+    d[i] <- NA
+  }
+}
+```
+
+You first need to create vector `d` - in this case we can create an empty vector.
+
+```{r}
+d <- c()
+```
+
+So the logic of our for loop, if...then statement is such that; on the `i`th iteration - if `c[i]` is greater than 3, then set `d[i]` to `c[i]*2` - else set `d[i]` to `NA`.
+
+```{r}
+c <- c(1,6,3,8,2,9)
+d <- c()
+for (i in seq_along(c)) {
+  if (c[i] > 3) {
+    d[i] <- c[i]*2
+  } else {
+    d[i] <- NA
+  }
+}
+
+c
+d
+```
+
+Yay! Good job.

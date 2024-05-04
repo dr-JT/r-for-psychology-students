@@ -1,0 +1,46 @@
+---
+title: "Useful Tips"
+---
+
+## Helper Function
+
+When working with functions, it can be difficult to remember the argument names and values you need to specify. There is a helper function that can make this process much easier: `?`. By typing `?function_name()` in the console, you can access the function's documentation and quickly figure out what arguments you need to provide. This can save you a lot of time and frustration, especially when working with complex functions.
+
+```{r}
+#| eval: false
+?seq()
+```
+
+## Generative AI
+
+Generative AI can be a useful assistant to both learning and writing R code. It will make mistakes but that is what actually makes it a useful learning tool, it can also help you discover ways of doing things you wouldn't have thought of before.
+
+Be specific about what functions and/or packages (i.e. tidyverse) you want the AI to generate code using.
+
+## Google Search
+
+This section may be less relevant now, given the rise of generative AI models. However, Google can still be a valuable tool for finding R solutions quickly. To get more targeted results, try including the name of the package or function you think might help you in your search phrase. If you use `dplyr` frequently, for example, use `dplyr` in your search phrase to find solutions that are consistent with your preferred way of working.
+
+If you're unsure of which function to use, try including the function name in your search phrase. You can also use Google to find more detailed documentation for specific packages or functions. However, it's best to avoid links that start with `https://cran.r-project.org` or `https://www.rdocumentation.org`, as these are usually just copies of the `?` help documentation.
+
+Instead, look for links that include `https://github.com`. GitHub repos often include links to more extensive documentation, such as the GitHub repo for the popular `dplyr` package (<https://github.com/tidyverse/dplyr>), which has a link on the right side of the repo page to detailed documentation on all the functions in the package.
+
+## Store Frequently Used Code For Reuse
+
+If you find yourself using the same or similar sequences of code repeatedly, it can be incredibly helpful to have a central location where you can store your frequently used code and easily retrieve it at any time. While GitHub is a popular option for this, it requires learning a new system. Notion is a program I personally use and recommend, but a simple folder on your desktop with R scripts is also a viable option.
+
+Without a central location for frequently used code, you may find yourself spending a significant amount of time and effort searching through previous projects to locate the code you need. This can be a daunting task, requiring a good memory and a lot of time. Having a singular place to go to for all your frequently used code can make this process much easier and save you time and energy in the long run.
+
+## Use Templates!
+
+Creating your own templates and/or templates for your lab is highly recommended. This will save you a significant amount of time and effort, enabling you to start working with your data more quickly and set up new data analysis projects with ease. Additionally, consider creating an R package that include Quarto documents for analyses and reports. This will help streamline your workflow even further.
+
+I have developed several R packages for the lab that contain useful templates and documents. Please make use of them.
+
+## Limit Number of Packages
+
+When using R, it's recommended to limit the number of packages you use. You may be surprised at how much you can accomplish with just a few packages. Limiting your package usage makes it easier to manage your installed packages, and also helps with the learning curve, as you don't have to memorize functions from a large number of packages.
+
+## Explore Functions in a Package
+
+Additionally, there may be functions in the packages you already use that you have yet to discover. Take some time to explore all the different functions within a package, particularly those that you use frequently. The GitHub repository for a package is a great resource for exploring all of its functions. To access it, simply type the name of the package followed by the term "GitHub" into a search engine.

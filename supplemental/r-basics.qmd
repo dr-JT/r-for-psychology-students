@@ -1,0 +1,383 @@
+---
+title: "R Basics"
+execute:
+  echo: true
+  eval: true
+  message: false
+  warning: false
+---
+
+Open a new R script file. To create a new R script go to
+
+**File** -\> **New File** -\> **R Script**
+
+This should have opened a blank **Script** window called **Untitled**.
+
+The **Script** window is a file where you are saving your code. This is where you will write, edit, delete, and re-write your code.
+
+To follow along with the tutorial, you should type (for now, resist just copying and pasting) the lines of code I display in the tutorial into your script.
+
+Save your empty script somewhere on your computer
+
+------------------------------------------------------------------------
+
+# Creating R objects
+
+In R, everything that exists is an object and everything you do to objects are functions. You can define an object using the assignment operator `<-`.
+
+Everything on the left hand side of the `<-` assignment operator is an object. Everything on the right hand side of `<-` are functions or values. Go ahead and type the following two lines of code in your script
+
+```{r}
+string <- "hello"
+string
+```
+
+You can execute/run a line of code by placing the cursor anywhere on the line and press `Ctrl + Enter`. Go ahead an run the two lines of code.
+
+In this example, the first line creates a new object called `string` with a value of "`r string`". The second line simply prints the output of `string` to the **Console window**. In the second line there is no assignment operator. When there is no `<-` this means you are essentially just printing to the console. You can't do anything with stuff that is just printed to the console, it is just for viewing purposes.
+
+For instance, if I wanted to calculate `1 + 2` I could do this by printing it to the console
+
+```{r}
+1 + 2
+```
+
+However, if I wanted to do something else with the result of that calculation then I would not be able to unless I assigned the result to an object using `<-`
+
+```{r}
+result <- 1 + 2
+result <- result * 5
+
+result
+```
+
+The point is, you are almost always going to assign the result of some function or value to an object. Printing to the console is not very useful. Almost every line of code, then, will have an object name on the left hand side of `<-` and a function or value on the right hand side of `<-`
+
+In the first example above, notice how I included `" "` around `r string`. This tells R that `r string` is a string, not an object. If I were to not include `" "`, then R would think I am calling an object. And since there is no object with the name `r string` it will print an error
+
+```{r}
+#| error: true
+
+string <- hello
+```
+
+Do not use `" "` for Numerical values
+
+```{r}
+#| error: true
+
+a <- "5" + "1"
+```
+
+You can execute lines of code by:
+
+1.  Typing them directly into the Console window
+
+2.  Typing them into the Script window and then on that line of code pressing **Ctrl+Enter**. With **Ctrl+Enter** you can execute one line of your code at a time.
+
+3.  Clicking on **Source** at the top right of the Script window. This will run ALL the lines of code contained in the script file.
+
+It is important to know that EVERYTHING in R is **case sensitive**.
+
+```{r}
+#| error: true
+
+a <- 5
+
+a + 5
+A + 5
+```
+
+# Classes
+
+Classes are types of values that exist in R:
+
+-   character `"hello"`, `"19"`
+
+-   numeric (or double) `2`, `32.55`
+
+-   integer `5`, `99`
+
+-   logical `TRUE`, `FALSE`
+
+To evaluate the class of an object you can use the `typeof()`
+
+```{r}
+typeof(a)
+```
+
+To change the class of values in an object you can use the function `as.character()` , `as.numeric()` , `as.double()` , `as.integer()` , `as.logical()` functions.
+
+```{r}
+as.integer(a)
+```
+
+```{r}
+as.character(a)
+```
+
+```{r}
+as.numeric("hello")
+```
+
+# Vectors
+
+Okay so now I want to talk about creating more interesting objects than just `a <- 5`. If you are going to do anything in R it is important that you understand the different data types and data structures you can use in R. I will not cover all of them in this tutorial. For more information on data types and structures see this nice [Introduction to R](https://ramnathv.github.io/pycon2014-r/learn/structures.html){target="_blank"}
+
+Vectors contain elements of data. The length of a vector is the number of elements in the vector. For instance, the variable `a` we created earlier is actually a vector of length 1. It contains one element with a value of `r a`. Now let's create a vector with more than one element.
+
+```{r}
+b <- c(1,3,5)
+```
+
+`c()` is a function. Functions contain arguments that are inputs for the function. Arguments are separated by commas. In this example the `c()` function concatenates the arguments (`1, 3, 5`) into a vector. We are passing the result of this function to the object b. What do you think the output of b will look like?
+
+```{r}
+b
+```
+
+You can see that we now have a vector that contains 3 elements; `1, 3, 5`. If you want to reference the value of specific elements of a vector you use brackets `[ ]`. For instance,
+
+```{r}
+b[2]
+```
+
+The value of the second element in vector `b` is `r b[2]`. Let's say we want to grab only the 2nd and 3rd elements. We can do this at least two different ways.
+
+```{r}
+b[2:3]
+b[-1]
+```
+
+Now, it is important to note that we have not been changing vector `b`. If we display the output of `b`, we can see that it still contains the 3 elements.
+
+```{r}
+b
+```
+
+To change vector `b` we need to define `b` as vector `b` with the first element removed
+
+```{r}
+b <- b[-1]
+b
+```
+
+Vector `b` no longer contains 3 elements. Now, let's say we want to add an element to vector `b`.
+
+```{r}
+c(5,b)
+```
+
+Here the `c()` function created a vector with the value 5 as the first element followed by the values in vector `b`
+
+Or we can use the variable `a` that has a value of 5. Let's add this to vector `b`
+
+```{r}
+b <- c(a,b)
+b
+```
+
+What if you want to create a long vector with many elements? If there is a pattern to the sequence of elements in the vector then you can create the vector using `seq()`
+
+```{r}
+seq(0, 1000, by = 4)
+```
+
+Vectors can only contain elements of the same "class".
+
+```{r}
+d <- c(1, "2", 5, 9)
+d
+```
+
+```{r}
+as.numeric(d)
+```
+
+# Factors
+
+Factors are special types of vectors that can represent categorical data. You can change a vector into a factor object using `factor()`
+
+```{r}
+factor(c("male", "female", "male", "male", "female"))
+```
+
+```{r}
+factor(c("high", "low", "medium", "high", "low"))
+```
+
+```{r}
+f <- factor(c("high", "low", "medium", "high", "low"), 
+            levels = c("high", "medium", "low"))
+f
+```
+
+# Lists
+
+Lists are containers of objects. Unlike Vectors, Lists can hold different classes of objects.
+
+```{r}
+list(1, "2", 2, 4, 9, "hello")
+```
+
+You might have noticed that there are not only single brackets, but double brackets `[[ ]]`
+
+This is because Lists can hold not only single elements but can hold vectors, factors, lists, data frames, and pretty much any kind of object.
+
+```{r}
+l <- list(c(1,2,3,4), "2", "hello", c("a", "b", "c"))
+l
+```
+
+You can see that the length of each element in a list does not have to be the same. To reference the elements in a list you need to use the double brackets `[[ ]]`.
+
+```{r}
+l[[1]]
+```
+
+To reference elements within list elements you use double brackets followed by a single bracket
+
+```{r}
+l[[4]][2]
+```
+
+You can even give names to the list elements
+
+```{r}
+person <- list(name = "Jason", 
+               phone = "123-456-7890", 
+               age = 23, 
+               favorite_colors = c("blue", "red", "brown"))
+person
+```
+
+And you can use the names to reference elements in a list
+
+```{r}
+person[["name"]]
+person[["favorite_colors"]][3]
+```
+
+# Data Frames
+
+You are probably already familiar with data frames. SPSS and Excel uses this type of structure. It is just rows and columns of data. A data table! This is the format that is used to perform statistical analyses on.
+
+So let's create a data frame so you can see what one looks like in RStudio
+
+```{r}
+data <- data.frame(id = 1:10, 
+                   x = c("a", "b"), 
+                   y = seq(10,100, by = 10))
+data
+```
+
+You can view the Data Frame by clicking on the object in the **Environment** window or by executing the command `View(data)`
+
+Notice that it created three columns labeled `id`, `x`, and `y`. Also notice that since we only specified a vector of length 2 for `x` this column is coerced into 10 rows of repeating "a" and "b". All columns in a data frame must have the same number of rows.
+
+You can use the `$` notation to reference just one of the columns in the data frame
+
+```{r}
+data$y
+```
+
+Alternatively you can use
+
+```{r}
+data["y"]
+```
+
+To reference only certain rows within a column
+
+```{r}
+data$y[1:5]
+data[1:5,"y"]
+```
+
+# If...then Statements
+
+If...then statements are useful for when you need to execute code only if a certain statement is TRUE. For instance,...
+
+First we need to know how to perform logical operations in R
+
+```{r}
+#| label: fig-logical-operators
+#| echo: false
+#| out-width: 30%
+#| fig-align: left
+#| fig-cap-location: top
+#| fig-cap: >
+#|  List of logical operators in R
+
+knitr::include_graphics(rep("images/logical-operations.png"))
+```
+
+Okay, we have this variable `a`
+
+```{r}
+a <- 5
+```
+
+Now let's say we want to determine if the value of `a` is greater than 3
+
+```{r}
+a > 3
+```
+
+You can see that the output of this statement `a > 3` is `TRUE`
+
+Now let's write an if...then statement. If `a` is greater than 3, then multiply `a` by 2.
+
+```{r}
+if (a > 3) {
+  a <- a*2
+}
+a
+```
+
+The expression that is being tested is contained in parentheses, right after the `if` statement. If this expression is evaluated as `TRUE` then it will perform the next line(s) of code.
+
+The `{` is just a way of encasing multiple lines of code within one if statement. The lines of code then need to be closed of with `}`. In this case, since we only had one line of code `b <- a*2` we could have just written it as.
+
+```{r}
+a <- 5
+if (a > 3) a <- a*2
+a
+```
+
+What if we want to do something to `a` if `a` is NOT greater than 3? In other words... if `a` is greater than 3, then multiple `a` by 2 else set `a` to `missing`
+
+```{r}
+a <- 5
+if (a > 3) {
+  a <- a*2
+} else {
+  a <- NA
+}
+a
+```
+
+You can keep on chaining if...then... else... if... then statements together.
+
+```{r}
+a <- 5
+if (is.na(a)) {
+  print("Missing Value")
+} else if (a < 0) {
+  print("A is less than 0")
+} else if (a > 3) {
+  print("A is greater than 3")
+}
+```
+
+# More Resources
+
+For additional tips in the basics of coding R see:
+
+<https://r4ds.hadley.nz>
+
+<https://ramnathv.github.io/pycon2014-r/visualize/README.html>
+
+<https://www.datacamp.com/courses/free-introduction-to-r/?tap_a=5644-dce66f&tap_s=10907-287229>
+
+<http://compcogscisydney.org/psyr/>
