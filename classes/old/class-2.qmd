@@ -1,0 +1,38 @@
+---
+title: "Import, Merge, and Restructure Data"
+subtitle: "Class 2"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to get a basic handling on importing data, merging multiple data frames, and restructuring data frames between wide and long formats.
+
+## Prepare
+
+Before starting this class:
+
+📦 Install `readr`, `dplyr`, `tidyr`, `ggplot2` , `Hmisc` , `RColorBrewer`
+
+Download sample data files:
+
+⬇️ <a href="/data/class_2_cog_data.csv" download="class_2_cog_data.csv">class_2_cog_data.csv</a>
+
+⬇️ <a href="/data/class_2_mood_data.txt" download="class_2_mood_data.txt">class_2_mood_data.txt</a>
+
+## Class Materials
+
+📘 [Lecture Content](/lectures/lectures-class-2.html)
+
+✏️ [Learning Activity](/activities/activities-class-2.html)
+
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-2.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-2.html"></iframe>
+```
+
+</div>

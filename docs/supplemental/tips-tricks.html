@@ -63,7 +63,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../supplemental/github_copilot.html" rel="next">
+<link href="../supplemental/pipe-operator.html" rel="next">
 <link href="../classes/class-10.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -184,61 +184,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 1</span></a>
+ <span class="menu-text">Class 1: An Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 2</span></a>
+ <span class="menu-text">Class 2: Import, Merge, Restructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 3</span></a>
+ <span class="menu-text">Class 3: Data Transformation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 4</span></a>
+ <span class="menu-text">Class 4: Reproducible Projects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 5</span></a>
+ <span class="menu-text">Class 5: Data Preparation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 6</span></a>
+ <span class="menu-text">Class 6: Data Scoring</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 7</span></a>
+ <span class="menu-text">Class 7: Quarto Documents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 8</span></a>
+ <span class="menu-text">Class 8: Data Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 9</span></a>
+ <span class="menu-text">Class 9: ANOVA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 10</span></a>
+ <span class="menu-text">Class 10: Regression</span></a>
   </div>
 </li>
       </ul>
@@ -256,6 +256,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../supplemental/tips-tricks.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Tips &amp; Tricks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../supplemental/pipe-operator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipe Operator</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -284,11 +290,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#helper-function" id="toc-helper-function" class="nav-link active" data-scroll-target="#helper-function">Helper Function</a></li>
   <li><a href="#generative-ai" id="toc-generative-ai" class="nav-link" data-scroll-target="#generative-ai">Generative AI</a></li>
+  <li><a href="#google-search" id="toc-google-search" class="nav-link" data-scroll-target="#google-search">Google Search</a></li>
   <li><a href="#store-frequently-used-code-for-reuse" id="toc-store-frequently-used-code-for-reuse" class="nav-link" data-scroll-target="#store-frequently-used-code-for-reuse">Store Frequently Used Code For Reuse</a></li>
   <li><a href="#use-templates" id="toc-use-templates" class="nav-link" data-scroll-target="#use-templates">Use Templates!</a></li>
   <li><a href="#limit-number-of-packages" id="toc-limit-number-of-packages" class="nav-link" data-scroll-target="#limit-number-of-packages">Limit Number of Packages</a></li>
-  <li><a href="#ask-a-friend" id="toc-ask-a-friend" class="nav-link" data-scroll-target="#ask-a-friend">Ask a Friend</a></li>
-  <li><a href="#google-search" id="toc-google-search" class="nav-link" data-scroll-target="#google-search">Google Search</a></li>
   <li><a href="#explore-functions-in-a-package" id="toc-explore-functions-in-a-package" class="nav-link" data-scroll-target="#explore-functions-in-a-package">Explore Functions in a Package</a></li>
   </ul>
 </nav>
@@ -317,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="helper-function" class="level2">
 <h2 class="anchored" data-anchor-id="helper-function">Helper Function</h2>
-<p>When working with functions, it can be difficult to remember the argument names and values you need to specify. However, there is a helper function that can make this process much easier: ?. By typing ?function_name() in the console, you can access the function’s documentation and quickly figure out what arguments you need to provide. This can save you a lot of time and frustration, especially when working with complex functions.</p>
+<p>When working with functions, it can be difficult to remember the argument names and values you need to specify. There is a helper function that can make this process much easier: <code>?</code>. By typing <code>?function_name()</code> in the console, you can access the function’s documentation and quickly figure out what arguments you need to provide. This can save you a lot of time and frustration, especially when working with complex functions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>?<span class="fu">seq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -325,8 +330,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="generative-ai" class="level2">
 <h2 class="anchored" data-anchor-id="generative-ai">Generative AI</h2>
 <p>Generative AI can be a useful assistant to both learning and writing R code. It will make mistakes but that is what actually makes it a useful learning tool, it can also help you discover ways of doing things you wouldn’t have thought of before.</p>
-<p>Start out small, if you are not immediately sure how to proceed with writing R code for something you want to do then prompt an AI model to write some code and provide an explanation for you. Continuing prompting it and/or edit the code to suit your specific need.</p>
-<p>You should also start using AI models to assist you in other areas of your work as well. Again, just start out small. Get in the habit and setup a workflow where an AI model is right at your fingertips, just a few clicks of the mouse or keyboard away.</p>
+<p>Be specific about what functions and/or packages (i.e.&nbsp;tidyverse) you want the AI to generate code using.</p>
+</section>
+<section id="google-search" class="level2">
+<h2 class="anchored" data-anchor-id="google-search">Google Search</h2>
+<p>This section may be less relevant now, given the rise of generative AI models. However, Google can still be a valuable tool for finding R solutions quickly. To get more targeted results, try including the name of the package or function you think might help you in your search phrase. If you use <code>dplyr</code> frequently, for example, use <code>dplyr</code> in your search phrase to find solutions that are consistent with your preferred way of working.</p>
+<p>If you’re unsure of which function to use, try including the function name in your search phrase. You can also use Google to find more detailed documentation for specific packages or functions. However, it’s best to avoid links that start with <code>https://cran.r-project.org</code> or <code>https://www.rdocumentation.org</code>, as these are usually just copies of the <code>?</code> help documentation.</p>
+<p>Instead, look for links that include <code>https://github.com</code>. GitHub repos often include links to more extensive documentation, such as the GitHub repo for the popular <code>dplyr</code> package (<a href="https://github.com/tidyverse/dplyr" class="uri">https://github.com/tidyverse/dplyr</a>), which has a link on the right side of the repo page to detailed documentation on all the functions in the package.</p>
 </section>
 <section id="store-frequently-used-code-for-reuse" class="level2">
 <h2 class="anchored" data-anchor-id="store-frequently-used-code-for-reuse">Store Frequently Used Code For Reuse</h2>
@@ -341,16 +351,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="limit-number-of-packages" class="level2">
 <h2 class="anchored" data-anchor-id="limit-number-of-packages">Limit Number of Packages</h2>
 <p>When using R, it’s recommended to limit the number of packages you use. You may be surprised at how much you can accomplish with just a few packages. Limiting your package usage makes it easier to manage your installed packages, and also helps with the learning curve, as you don’t have to memorize functions from a large number of packages.</p>
-</section>
-<section id="ask-a-friend" class="level2">
-<h2 class="anchored" data-anchor-id="ask-a-friend">Ask a Friend</h2>
-<p>While there are many functions available for most tasks, finding the right one can be a challenge. Instead of spending time on long and convoluted solutions, consider asking friends or colleagues if they know of a package or function that could help you accomplish what you need. Collaborating with others is a great way to discover new functions and tools that you may not have known existed.</p>
-</section>
-<section id="google-search" class="level2">
-<h2 class="anchored" data-anchor-id="google-search">Google Search</h2>
-<p>This section may be less relevant now, given the rise of generative AI models. However, Google can still be a valuable tool for finding R solutions quickly. To get more targeted results, try including the name of the package or function you think might help you in your search phrase. If you use <code>dplyr</code> frequently, for example, use <code>dplyr</code> in your search phrase to find solutions that are consistent with your preferred way of working.</p>
-<p>If you’re unsure of which function to use, try including the function name in your search phrase. You can also use Google to find more detailed documentation for specific packages or functions. However, it’s best to avoid links that start with <code>https://cran.r-project.org</code> or <code>https://www.rdocumentation.org</code>, as these are usually just copies of the <code>?</code> help documentation.</p>
-<p>Instead, look for links that include <code>https://github.com</code>. GitHub repos often include links to more extensive documentation, such as the GitHub repo for the popular <code>dplyr</code> package (<a href="https://github.com/tidyverse/dplyr" class="uri">https://github.com/tidyverse/dplyr</a>), which has a link on the right side of the repo page to detailed documentation on all the functions in the package.</p>
 </section>
 <section id="explore-functions-in-a-package" class="level2">
 <h2 class="anchored" data-anchor-id="explore-functions-in-a-package">Explore Functions in a Package</h2>
@@ -771,13 +771,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../classes/class-10.html" class="pagination-link" aria-label="Class 10">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Class 10</span>
+      <a href="../classes/class-10.html" class="pagination-link" aria-label="Class 10: Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Class 10: Regression</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../supplemental/github_copilot.html" class="pagination-link" aria-label="GitHub Copilot">
-        <span class="nav-page-text">GitHub Copilot</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../supplemental/pipe-operator.html" class="pagination-link" aria-label="Pipe Operator">
+        <span class="nav-page-text">Pipe Operator</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

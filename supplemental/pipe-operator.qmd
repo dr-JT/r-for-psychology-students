@@ -1,0 +1,41 @@
+---
+title: "Pipe Operator"
+execute:
+  eval: false
+---
+
+::: callout-note
+There are actually two pipe operators now. The original `dplyr` pipe operator, `%>%` , and the newer base R pipe operator, `|>` . You can use either one.
+:::
+
+The pipe operator allows you to chain together a set of functions to conduct a sequence of manipulations on it. Conceptually, here’s what code written using the pipe operator looks like
+
+```{r}
+data |>
+  step1 |>
+  step2 |>
+  step3
+```
+
+We start with our data. Then we do step1. Then we do step2. Then we do step3. The pipe ties it all together, enabling us to do multiple things to our data, all in one execution of code.
+
+There are different approaches to writing code that performs multiple functions on the same object. Here is the standard, non-pipe operator way:
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- filter(data, y != "c")
+data_new <- mutate(data_new, x_mean = mean(x))
+data_new <- select(data_new, y, x_mean)
+```
+
+An alternative is to use the pipe operator `|>`
+
+```{r}
+# three steps: filter, calculate a mean, then select only some columns to keep
+data_new <- data |>
+  filter(y != "c") |>
+  mutate(x_mean = mean(x)) |>
+  select(y, x_mean)
+```
+
+With the pipe operator, the result of the previous line gets passed (or piped) onto the next function. The first line in this example is simply specifying the data frame that is being passed from one line to the next. Notice how I did not have to specify `data` inside the `filter()`, `mutate()`, and `select()`, functions. This makes the code more concise and easier to read. The end result of the last function, then gets assigned to `data_new <-`.

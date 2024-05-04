@@ -20,19 +20,9 @@ Most pages will also have a page navigation on the right sidebar where you can n
 
 ## Classes
 
-The landing page for each class contains the class materials:
-
-📘 the actual content of the class
-
-✏️ a learning activity
-
-🖥️ slides
-
- 
-
 [Class 1](/classes/class-1.html): An Introduction to Working with Data in R
 
-[Class 2](/classes/class-2.html): Importing, Merging, and Restructuring Data
+[Class 2](/classes/class-2.html): Import, Merge, and Restructure Data
 
 [Class 3](/classes/class-3.html): Data Transformation
 

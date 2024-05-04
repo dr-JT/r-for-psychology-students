@@ -1,0 +1,24 @@
+---
+title: "Reproducible Projects"
+subtitle: "Class 4"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to learn what it means to have a reproducible project and how to organize a project to meet reproducibility requirements.
+
+## Class Materials
+
+📘 [Lecture Content](/lectures/lectures-class-4.html)
+
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-4.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-4.html"></iframe>
+```
+
+</div>

@@ -464,7 +464,7 @@ And actually, you can have a **mix of wide and long** formatted data in a single
  
 
 | **Participant ID** | **Session** | **Stress Level** | **Creativity** | **Memory** |
-|---------------|---------------|---------------|---------------|---------------|
+|--------------------|-------------|------------------|----------------|------------|
 | 1                  | 1           | 5                | 7              | 8          |
 | 1                  | 2           | 4                | 8              | 9          |
 | 1                  | 3           | 3                | 9              | 10         |
@@ -678,4 +678,4 @@ This can be very useful in functions like `pivot_longer()`. In the examples prov
 To learn more about what tidy select functions are available and what they do read the [tidy select documentation](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html){target="_blank"}.
 :::
 
-# ✏️ [Start Learning Activity -\>](/activities/activities-class-2.html){target="_blank"}
+# ✏️ [Start Learning Activity ➜](/classes/class-2.html#learning-activity){target="_blank"}

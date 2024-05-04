@@ -1,0 +1,38 @@
+---
+title: "Data Transformation"
+subtitle: "Class 3"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to get familiar with the basic functions in `dplyr` for performing basic data transformations.
+
+## Prepare
+
+Before starting this class:
+
+📦 Install the `gt` package
+
+Download sample data files:
+
+⬇️ <a href="/data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a>
+
+⬇️ <a href="/data/class_3_mnemonic_rawdata.csv" download="class_3_mnemonic_rawdata.csv">class_3_mnemonic_rawdata.csv</a>
+
+## Class Content
+
+📘 [Lecture Content](/lectures/lectures-class-3.html)
+
+✏️ [Learning Activity](/activities/activities-class-3.html)
+
+🖥️ [Lecture Slides - Full Screen](/slides/slides-class-3.html){target="_blank"}
+
+Press **M** on the slides to bring up the menu to access options such as navigating to different sections
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/slides-class-3.html"></iframe>
+```
+
+</div>

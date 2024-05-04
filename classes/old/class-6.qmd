@@ -1,0 +1,12 @@
+---
+title: "Data Scoring"
+subtitle: "Class 6"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to understand the steps typically involved in the data scoring stage: creating a data file with aggregated scores for measures and/or conditions that is ready for statistical analysis.
+
+## Class Materials
+
+📘 [Lecture Content](/lectures/lectures-class-6.html)

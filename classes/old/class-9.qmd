@@ -1,0 +1,58 @@
+---
+title: "Class 9"
+subtitle: "Statistical Analysis - ANOVA"
+slide-format: revealjs
+editor: visual
+---
+
+The main objective of this class is to learn how to perfom different types of ANOVAs and generate tables and figures of statistical models.
+
+## Prepare
+
+-   Install packages to conduct ANOVA analyses
+
+    -   `afex`
+
+-   Install packages for generating ANOVA tables
+
+    -   `modelbased`, `parameters` , `effectsize`
+
+-   Install packages for generating ANOVA plots
+
+    -   `ggeffects`, `sjPlot`
+
+-   Install my package from GitHub for genearting model tables
+
+    -   First install: `devtools`
+
+    -   Then install package from GitHub: `modeloutput`
+
+        ```{r}
+        #| eval: false
+
+        install.packages("devtools")
+
+        devtools::install_github("dr-JT/modeloutput")
+        ```
+
+## Outline
+
+-   Setup Quarto Document
+
+-   t-tests
+
+    -   Independent Samples
+
+    -   Dependent (paired) Samples
+
+-   ANOVA
+
+    -   Between-Subjects
+
+    -   Within-Subjects
+
+    -   Mixed Factors
+
+## Class Materials
+
+📘 [Lecture Content](/lectures/lectures-class-9.html)

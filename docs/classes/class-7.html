@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student – Class 7</title>
+<title>R for the Psychology Student – Quarto Documents</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -68,6 +102,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -82,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-7.html">Class 7</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-7.html">Class 7: Quarto Documents</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -148,61 +184,61 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 1</span></a>
+ <span class="menu-text">Class 1: An Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 2</span></a>
+ <span class="menu-text">Class 2: Import, Merge, Restructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 3</span></a>
+ <span class="menu-text">Class 3: Data Transformation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 4</span></a>
+ <span class="menu-text">Class 4: Reproducible Projects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 5</span></a>
+ <span class="menu-text">Class 5: Data Preparation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 6</span></a>
+ <span class="menu-text">Class 6: Data Scoring</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-7.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Class 7</span></a>
+ <span class="menu-text">Class 7: Quarto Documents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 8</span></a>
+ <span class="menu-text">Class 8: Data Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 9</span></a>
+ <span class="menu-text">Class 9: ANOVA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 10</span></a>
+ <span class="menu-text">Class 10: Regression</span></a>
   </div>
 </li>
       </ul>
@@ -220,6 +256,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../supplemental/tips-tricks.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tips &amp; Tricks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../supplemental/pipe-operator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipe Operator</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -246,18 +288,36 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
-  <li><a href="#class-materials" id="toc-class-materials" class="nav-link" data-scroll-target="#class-materials">Class Materials</a></li>
+  <li><a href="#prepare" id="toc-prepare" class="nav-link active" data-scroll-target="#prepare">Prepare</a></li>
+  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link" data-scroll-target="#yaml-header">YAML Header</a></li>
+  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text">Markdown Text</a></li>
+  <li><a href="#r-code-chunks" id="toc-r-code-chunks" class="nav-link" data-scroll-target="#r-code-chunks">R Code Chunks</a>
+  <ul class="collapse">
+  <li><a href="#create-an-r-code-chunk" id="toc-create-an-r-code-chunk" class="nav-link" data-scroll-target="#create-an-r-code-chunk">Create an R code chunk</a></li>
+  <li><a href="#execute-r-code-chunk" id="toc-execute-r-code-chunk" class="nav-link" data-scroll-target="#execute-r-code-chunk">Execute R code chunk</a></li>
+  </ul></li>
+  <li><a href="#visual-editor" id="toc-visual-editor" class="nav-link" data-scroll-target="#visual-editor">Visual Editor</a></li>
+  <li><a href="#render-document" id="toc-render-document" class="nav-link" data-scroll-target="#render-document">Render Document</a></li>
+  <li><a href="#additional-elements" id="toc-additional-elements" class="nav-link" data-scroll-target="#additional-elements">Additional Elements</a>
+  <ul class="collapse">
+  <li><a href="#headers" id="toc-headers" class="nav-link" data-scroll-target="#headers">Headers</a></li>
+  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
+  <li><a href="#tabs" id="toc-tabs" class="nav-link" data-scroll-target="#tabs">Tabs</a></li>
+  <li><a href="#code-tools" id="toc-code-tools" class="nav-link" data-scroll-target="#code-tools">Code Tools</a></li>
+  <li><a href="#code-folding" id="toc-code-folding" class="nav-link" data-scroll-target="#code-folding">Code Folding</a></li>
+  <li><a href="#r-chunk-options" id="toc-r-chunk-options" class="nav-link" data-scroll-target="#r-chunk-options">R Chunk Options</a></li>
+  <li><a href="#css-styling" id="toc-css-styling" class="nav-link" data-scroll-target="#css-styling">CSS Styling</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-7.html">Class 7</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-7.html">Class 7: Quarto Documents</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Class 7</h1>
-<p class="subtitle lead">Quarto Documents</p>
+<h1 class="title">Quarto Documents</h1>
+<p class="subtitle lead">Class 7</p>
 </div>
 
 
@@ -275,26 +335,355 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>The main objective of this class is to learn how to use Quarto Documents to create an HTML report that contains data visualizations and statistical analyses.</p>
-<section id="outline" class="level2">
-<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<section id="prepare" class="level1">
+<h1>Prepare</h1>
+<p>Before starting this class:</p>
+<p>🛠️ Install the <a href="https://quarto.org/docs/download/" target="_blank">latest version of Quarto</a></p>
+<hr>
+<p><a href="https://quarto.org" target="_blank">Quarto documents</a> are a versatile way to create production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, ePub, and more. In fact, this R Workshop was created using Quarto documents.</p>
+<p>In this class, you will learn how to use Quarto documents to create an HTML report that contains data visualizations and statistical analyses. View a <a href="../sample_report.html" target="_blank">sample report</a> to see an example of this kind of document.</p>
+<p><strong>R Scripts vs.&nbsp;Quarto Documents</strong></p>
 <ul>
-<li><p>YAML Header</p></li>
-<li><p>Markdown</p></li>
-<li><p>R Code Chunks</p></li>
-<li><p>Render Document</p></li>
-<li><p>Additional Elements</p></li>
+<li><p>R scripts are for processing data</p></li>
+<li><p>Quarto documents are for generating reports that contain figures, tables, and statistical analyses</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may want to watch this <a href="https://quarto.org/docs/blog/posts/2023-05-15-get-started/" target="_blank">video</a> for a brief intro to Quarto</p>
+</div>
+</div>
+<p>To open a Quarto document:</p>
+<blockquote class="blockquote">
+<p>File -&gt; New File -&gt; Quarto Document…</p>
+<p>Click <strong>Create Empty Document</strong></p>
+</blockquote>
+<p>There are three types of content that form the structure of a Quarto document.</p>
+<ul>
+<li><p>A YAML header</p></li>
+<li><p>Markdown formatted text</p></li>
+<li><p>R code chunks</p></li>
 </ul>
 </section>
-<section id="class-materials" class="level2">
-<h2 class="anchored" data-anchor-id="class-materials">Class Materials</h2>
-<p>📘 <a href="../lectures/lectures-class-7.html">Lecture Content</a></p>
-<p>🖥️ <a href="../slides/slides-class-7.html" target="_blank">Lecture Slides - Full Screen</a></p>
-<p>Press <strong>M</strong> on the slides to bring up the menu to access options such as navigating to different sections</p>
-<div>
-<iframe class="slide-deck" src="../slides/slides-class-7.html"></iframe>
+<section id="yaml-header" class="level1">
+<h1>YAML Header</h1>
+<p>The YAML header contains metadata about how the document should be rendered and the output format. It is located at the very top of the document and is surrounded by lines of three dashes.</p>
+<pre data-code-line-numbers=""><code>---
+title: "Title of document"
+format: html
+---</code></pre>
+<p>There are various metadata options you can specify, such as if you want to include a table of contents. To learn about a few of them <a href="https://quarto.org/docs/output-formats/html-basics.html" target="_blank">see the documentation here</a>.</p>
+<p>For generating a report document I typically like to use the following YAML options:</p>
+<pre data-code-line-numbers=""><code>---
+title: "Document Title"
+author: Your Name
+date: today
+theme: default
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-link: true
+    toc: true
+    toc-depth: 1
+    toc-location: left
+    page-layout: full
+    df-print: paged
+execute:
+  error: true
+  warning: true
+self-contained: true
+editor_options: 
+  chunk_output_type: console
+---</code></pre>
+<p>I am not going to cover what all these options do - I describe some of them below in the <a href="#additional-elements">Additional Elements</a> section</p>
+<ul>
+<li><p><a href="https://quarto.org/docs/reference/formats/html.html" target="_blank">Here is a list of all the HTML format YAML options</a></p></li>
+<li><p><a href="https://quarto.org/docs/output-formats/html-basics.html" target="_blank">Here is a user guide on creating HTML output</a></p></li>
+</ul>
+</section>
+<section id="markdown-text" class="level1">
+<h1>Markdown Text</h1>
+<p>The markdown text section is just as if you were writing content in Microsoft Word or Google Docs. You can write up paragraphs of text, create bullet or numbered lists, embed images or web links, create tables, and more.</p>
+<p>The text is formatted using a language known as <strong>Markdown</strong>. Markdown is a convenient and flexible way to format text. When a Markdown document is rendered into some output (such as HTML or PDF), the text will be formatted as specified by Markdown syntax.</p>
+<p>There are a lot of guides on how to use Markdown syntax. I will not cover this so you should check them out on your own. Here is one I reference often: <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheatsheet</a></p>
+<p>Add some markdown text below the YAML header in your open Quarto document</p>
+<pre data-code-line-numbers=""><code>Here is some sample text with a numbered list
+
+1. This is first
+2. Second
+3. Third</code></pre>
+</section>
+<section id="r-code-chunks" class="level1">
+<h1>R Code Chunks</h1>
+<p>A Quarto document (.qmd) is a mixture of markdown text and R code chunks.</p>
+<section id="create-an-r-code-chunk" class="level2">
+<h2 class="anchored" data-anchor-id="create-an-r-code-chunk">Create an R code chunk</h2>
+<p>R code chunks are enclosed with</p>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">a &lt;- 1 + 6</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or might look like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>{r}</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can create R code chunks with the shortcut:</p>
+<blockquote class="blockquote">
+<p>Mac: ⌘ ⌥ i (command + alt/opt + i)</p>
+<p>Windows: ⌃ ⌥ i (ctrl + alt + i)</p>
+</blockquote>
+<p>Or in the toolbar of the Quarto document (same section area as Source and Visual)</p>
+<blockquote class="blockquote">
+<p>Insert -&gt; Excecutable Cell -&gt; R</p>
+</blockquote>
+<p><img src="images/quarto_toolbar.png" class="img-fluid" width="569"></p>
+<p>Notice that there are a lot of other options to <strong>Insert</strong> all sorts of other content like Figure/Image…</p>
+<p>Insert the following code in the R code chunk</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create another R code chunk with the following code</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(species, body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">width =</span> .<span class="dv">05</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> mean_cl_normal, <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">label =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Body Mass of Penguin Species"</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="execute-r-code-chunk" class="level2">
+<h2 class="anchored" data-anchor-id="execute-r-code-chunk">Execute R code chunk</h2>
+<p>To run chunks of R code you can click on the green “play” button on the top right of the R code chunk.</p>
+<p><img src="images/excecute_code_chunk.png" class="img-fluid" width="293"></p>
+<p>Go ahead and do so. You can see that the results of the R code chunks are now displayed in the document.</p>
+</section>
+</section>
+<section id="visual-editor" class="level1">
+<h1>Visual Editor</h1>
+<p>By default, Quarto will open a new document in the <a href="https://quarto.org/docs/visual-editor/#:~:text=To%20switch%20into%20visual%20mode,be%20preserved%20when%20you%20switch" target="_blank">visual editor mode</a>. The Quarto visual editor provides a <a href="https://en.wikipedia.org/wiki/WYSIWYM" target="_blank">WYSIWYM</a> editing interface.</p>
+<p>In <strong>Source</strong> mode, you will see the <em>raw</em> markdown and code elements. On occassion you may find that it is easier to edit a document in Source mode rather than with the Visual editor. You can switch back and forth between the two easily at the top-left of the toolbar</p>
+<p><img src="images/visual-editing-switch-modes.png" class="img-fluid"></p>
+</section>
+<section id="render-document" class="level1">
+<h1>Render Document</h1>
+<p>When you have finalized the content of a Quarto document you will then want to generate the document into the specified output format (e.g., HTML).</p>
+<p>To render a Quarto document click on <strong>Render</strong> at the top. This will</p>
+<ol type="1">
+<li>Generate a preview of the document in the Viewer pane</li>
+<li>Create an HTML file</li>
+</ol>
+<p>Go ahead and render the document you just created. Find the generated HTML file and open it. You will notice that it will open in your default web browser.</p>
+<p>There are some advantages to using an HTML format:</p>
+<ul>
+<li><p>Easily shareable, anyone can open it in a web browser (does not require some other application that might cost money like Microsoft Word)</p></li>
+<li><p>Can include elements like</p>
+<ul>
+<li><p>Table of contents</p></li>
+<li><p>Tabs - can include a lot more content without taking up a lot of space and saves on scrolling through large documents</p></li>
+<li><p>Code folding - code chunks can be toggled to hide/show them</p></li>
+<li><p>Code download - link to download the Quarto document</p></li>
+<li><p>CSS styling</p></li>
+<li><p>and more</p></li>
+</ul></li>
+</ul>
+<p>Let’s take a look at some of these elements and more</p>
+</section>
+<section id="additional-elements" class="level1">
+<h1>Additional Elements</h1>
+<section id="headers" class="level2">
+<h2 class="anchored" data-anchor-id="headers">Headers</h2>
+<p>Headers are a great way to organize the content in a Quarto document. Use <code>#</code> to create different header levels:</p>
+<pre data-code-line-numbers=""><code># This is a level 1 header
+
+## A level 2 header
+
+### And level 3 header</code></pre>
+<p>Headers become even more useful with a table of contents and using tabs</p>
+</section>
+<section id="table-of-contents" class="level2">
+<h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
+<p>A table of contents is useful to navigate longer documents. It also provides an outline for the viewer to understand the document. You can specify the table of contents layout in the YAML header:</p>
+<pre data-code-line-numbers=""><code>format:
+  html:
+    toc: true
+    toc-depth: 1
+    toc-location: left</code></pre>
+<p><code>toc-depth</code> will change how many header levels are displayed in the table of contents (toc).</p>
+</section>
+<section id="tabs" class="level2">
+<h2 class="anchored" data-anchor-id="tabs">Tabs</h2>
+<p>Tabs are a great way to add a lot of content while avoiding having to scroll endlessly through a large document. The syntax for a tabset is</p>
+<pre data-code-line-numbers=""><code>::: panel-tabset
+## First tab
+
+Here is some content
+
+## A second tab
+
+More content!
+
+## And third tab
+
+Hello!
+:::</code></pre>
+<p>The second level headers will be used to label the tabs in the document (see below)</p>
+<p>You can also add multiple tabs easily by going to</p>
+<blockquote class="blockquote">
+<p>Insert -&gt; Tabset…</p>
+</blockquote>
+<p>Tabs look like this:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">First tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">A second tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">And third tab</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Here is some content</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>More content!</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Hello!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="code-tools" class="level2">
+<h2 class="anchored" data-anchor-id="code-tools">Code Tools</h2>
+<p>You can include a&nbsp;<strong>Code</strong>&nbsp;menu in the header of your document that provides various tools for readers to interact with the source code. Specify in the YAML</p>
+<pre data-code-line-numbers=""><code>code-tools: true</code></pre>
+</section>
+<section id="code-folding" class="level2">
+<h2 class="anchored" data-anchor-id="code-folding">Code Folding</h2>
+<p>You may not always want to show the R code chunks in the HTML output. Or you might want to give the viewer a choice to show/hide R code chunks. You can specify code folding in the top-level YAML header or in each code chunk individually</p>
+<pre data-code-line-numbers=""><code>code-fold: true</code></pre>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>false</code></td>
+<td>No folding (default)</td>
+</tr>
+<tr class="even">
+<td><code>true</code></td>
+<td>Fold code (initially hidden)</td>
+</tr>
+<tr class="odd">
+<td><code>show</code></td>
+<td>Fold code (initially shown)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-chunk-options" class="level2">
+<h2 class="anchored" data-anchor-id="r-chunk-options">R Chunk Options</h2>
+<p>Some settings you can change for individual R code chunks. The syntax to do this uses <code>#|</code> in the R code chunk:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Hide the code!</summary>
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: show</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Hide the code!"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="in">1 + 1</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Some commone ones to change are:</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>eval</code></td>
+<td>Evaluate the code chunk (if&nbsp;<code>false</code>, just echos the code into the output).</td>
+</tr>
+<tr class="even">
+<td><code>echo</code></td>
+<td>Include the source code in output</td>
+</tr>
+<tr class="odd">
+<td><code>output</code></td>
+<td>Include the results of executing the code in the output (<code>true</code>,&nbsp;<code>false</code>, or&nbsp;<code>asis</code>&nbsp;to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown).</td>
+</tr>
+<tr class="even">
+<td><code>warning</code></td>
+<td>Include warnings in the output.</td>
+</tr>
+<tr class="odd">
+<td><code>error</code></td>
+<td>Include errors in the output (note that this implies that errors executing code will not halt processing of the document).</td>
+</tr>
+<tr class="even">
+<td><code>include</code></td>
+<td>Catch all for preventing any output (code or results) from being included (e.g.&nbsp;<code>include: false</code>&nbsp;suppresses all output from the code block).</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="https://quarto.org/docs/computations/execution-options.html" target="_blank">Quarto Documentation</a> for more details</p>
+</section>
+<section id="css-styling" class="level2">
+<h2 class="anchored" data-anchor-id="css-styling">CSS Styling</h2>
+<p>You can also add CSS styling, either as a separate .css document or at the end of the Quarto document.</p>
+<p>For instance, here are some of the styling options I used in the <a href="../sample_report.html" target="_blank">sample report</a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tab-content</span> {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-style</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>h1 {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span><span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>h2 {</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">600</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>a {</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#005098</span><span class="op">;</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>a<span class="in">:hover</span> {</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#96834a</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -709,13 +1098,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../classes/class-6.html" class="pagination-link" aria-label="Class 6">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Class 6</span>
+      <a href="../classes/class-6.html" class="pagination-link" aria-label="Class 6: Data Scoring">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Class 6: Data Scoring</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../classes/class-8.html" class="pagination-link" aria-label="Class 8">
-        <span class="nav-page-text">Class 8</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../classes/class-8.html" class="pagination-link" aria-label="Class 8: Data Visualization">
+        <span class="nav-page-text">Class 8: Data Visualization</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

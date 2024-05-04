@@ -29,29 +29,31 @@ website:
       - section: "Classes"
         contents:
           - href: classes/class-1.qmd
-            text: "Class 1"
+            text: "Class 1: An Introduction"
           - href: classes/class-2.qmd
-            text: "Class 2"
+            text: "Class 2: Import, Merge, Restructure"
           - href: classes/class-3.qmd
-            text: "Class 3"
+            text: "Class 3: Data Transformation"
           - href: classes/class-4.qmd
-            text: "Class 4"
+            text: "Class 4: Reproducible Projects"
           - href: classes/class-5.qmd
-            text: "Class 5"
+            text: "Class 5: Data Preparation"
           - href: classes/class-6.qmd
-            text: "Class 6"
+            text: "Class 6: Data Scoring"
           - href: classes/class-7.qmd
-            text: "Class 7"
+            text: "Class 7: Quarto Documents"
           - href: classes/class-8.qmd
-            text: "Class 8"
+            text: "Class 8: Data Visualization"
           - href: classes/class-9.qmd
-            text: "Class 9"
+            text: "Class 9: ANOVA"
           - href: classes/class-10.qmd
-            text: "Class 10"
+            text: "Class 10: Regression"
       - section: "Supplemental"
         contents:
           - href: supplemental/tips-tricks.qmd
             text: "Tips & Tricks"
+          - href: supplemental/pipe-operator.qmd
+            text: "Pipe Operator"
           - href: supplemental/github_copilot.qmd
             text: "GitHub Copilot"
           - href: supplemental/data-prep-qualtrics.qmd
@@ -69,6 +71,8 @@ format:
     code-overflow: wrap
     toc: true
     df-print: paged
+    grid:
+      sidebar-width: 315px
     
 filters:
   - line-highlight

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for the Psychology Student – Class 1</title>
+<title>R for the Psychology Student – An Introduction to Working with Data in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -68,6 +102,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -82,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-1.html">Class 1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-1.html">Class 1: An Introduction</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -148,61 +184,61 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Class 1</span></a>
+ <span class="menu-text">Class 1: An Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 2</span></a>
+ <span class="menu-text">Class 2: Import, Merge, Restructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 3</span></a>
+ <span class="menu-text">Class 3: Data Transformation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 4</span></a>
+ <span class="menu-text">Class 4: Reproducible Projects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 5</span></a>
+ <span class="menu-text">Class 5: Data Preparation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 6</span></a>
+ <span class="menu-text">Class 6: Data Scoring</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 7</span></a>
+ <span class="menu-text">Class 7: Quarto Documents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 8</span></a>
+ <span class="menu-text">Class 8: Data Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 9</span></a>
+ <span class="menu-text">Class 9: ANOVA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../classes/class-10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 10</span></a>
+ <span class="menu-text">Class 10: Regression</span></a>
   </div>
 </li>
       </ul>
@@ -220,6 +256,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../supplemental/tips-tricks.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tips &amp; Tricks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../supplemental/pipe-operator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipe Operator</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -247,18 +289,34 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#prepare" id="toc-prepare" class="nav-link active" data-scroll-target="#prepare">Prepare</a></li>
-  <li><a href="#outline" id="toc-outline" class="nav-link" data-scroll-target="#outline">Outline</a></li>
-  <li><a href="#class-materials" id="toc-class-materials" class="nav-link" data-scroll-target="#class-materials">Class Materials</a></li>
+  <li><a href="#new-script-file" id="toc-new-script-file" class="nav-link" data-scroll-target="#new-script-file">New Script File</a></li>
+  <li><a href="#running-r-code" id="toc-running-r-code" class="nav-link" data-scroll-target="#running-r-code">Running R Code</a></li>
+  <li><a href="#creating-r-objects" id="toc-creating-r-objects" class="nav-link" data-scroll-target="#creating-r-objects">Creating R Objects</a></li>
+  <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using Functions</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a>
+  <ul class="collapse">
+  <li><a href="#install-and-load-packages" id="toc-install-and-load-packages" class="nav-link" data-scroll-target="#install-and-load-packages">Install and Load Packages</a></li>
+  </ul></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames">Data Frames</a>
+  <ul class="collapse">
+  <li><a href="#viewing-the-data" id="toc-viewing-the-data" class="nav-link" data-scroll-target="#viewing-the-data">Viewing the Data</a></li>
+  <li><a href="#types-of-values" id="toc-types-of-values" class="nav-link" data-scroll-target="#types-of-values">Types of Values</a></li>
+  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors">Factors</a></li>
+  </ul></li>
+  <li><a href="#transforming-data" id="toc-transforming-data" class="nav-link" data-scroll-target="#transforming-data">Transforming Data</a></li>
+  <li><a href="#visualizing-data" id="toc-visualizing-data" class="nav-link" data-scroll-target="#visualizing-data">Visualizing Data</a></li>
+  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">Statistical Analysis</a></li>
+  <li><a href="#class-1-reproducible-script" id="toc-class-1-reproducible-script" class="nav-link" data-scroll-target="#class-1-reproducible-script">Class 1: Reproducible Script</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-1.html">Class 1</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classes/class-1.html">Classes</a></li><li class="breadcrumb-item"><a href="../classes/class-1.html">Class 1: An Introduction</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Class 1</h1>
-<p class="subtitle lead">An Introduction to Working with Data in R</p>
+<h1 class="title">An Introduction to Working with Data in R</h1>
+<p class="subtitle lead">Class 1</p>
 </div>
 
 
@@ -276,27 +334,429 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>The main objective of this class is to get you a basic level of understanding of how to work with data in R.</p>
-<section id="prepare" class="level2">
-<h2 class="anchored" data-anchor-id="prepare">Prepare</h2>
+<p>🖥️ <a href="../slides/slides-class-1.html" target="_blank">Slides</a></p>
+<section id="prepare" class="level1">
+<h1>Prepare</h1>
 <p>Before starting this class:</p>
 <p>📖 Read the <a href="../prerequisites.html">Prerequisites</a> page</p>
+<hr>
+<p>This course does not require that you already have experience with R, but it would greatly benefit you to have at least a basic understanding of how R works. In this first class we will only cover the bare bones that will be needed to get you started. For a more complete intro to the basics of R see the page on R Basics.</p>
+<p>As you go through the classes in this course, I encourage you to experiment. If you are curious what happens if you write the code slightly differently, go ahead and try it out. See what happens. If it is not what you expected spend some time figuring out why.</p>
 </section>
-<section id="outline" class="level2">
-<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<section id="new-script-file" class="level1">
+<h1>New Script File</h1>
+<p>To create a new R script go to</p>
+<p><strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong></p>
+<p>This should have opened a blank <strong>Script</strong> window called <strong>Untitled</strong>.</p>
+<p>The <strong>Script</strong> window is a file where you are saving your code. This is where you will write, edit, delete, and re-write your code.</p>
+<p>This course will refer to two types of R script files:</p>
 <ul>
-<li><p>Basics of using R</p></li>
-<li><p>Data Frames</p></li>
-<li><p>Brief intro to data transformation, graphical visualization, and staistical computation</p></li>
+<li><p><strong>Reproducible script file</strong>: Script file for actually processing and analyzing your data. Can reproduce your steps of processing and analysis.</p>
+<ul>
+<li>The purpose of the <strong>Reproducible script file</strong> is to create a document, that can be saved on your computer and shared with others. It should only include code that is necessary to process your data. Therefore, you only want to type in code in the R script file that you intend to save and is necessary for processing your data.</li>
+</ul></li>
+<li><p><strong>Scratchpad script file</strong>: A script file for testing, debugging, and exploring your data.</p>
+<ul>
+<li>Often saved as <strong>Untitled.R</strong> or not saved at all</li>
+<li>The purpose of the scratchpad script file is to write R code that is not intended to be saved and is not a necessary step for processing your data. For instance, you might want to view a data frame (more on that later), check what are the unique values in a column, get the names of all the columns in a data frame. These will help you to write your R code, but are not necessary steps for actually processing your data once you have the R code written. Therefore, you can just write the code directly in the R Console window and execute the code there - that way it won’t clutter up your Reproducible script file.</li>
+</ul></li>
 </ul>
-</section>
-<section id="class-materials" class="level2">
-<h2 class="anchored" data-anchor-id="class-materials">Class Materials</h2>
-<p>📘 <a href="../lectures/lectures-class-1.html">Lecture Content</a></p>
-<p>🖥️ <a href="../slides/slides-class-1.html" target="_blank">Lecture Slides - Full Screen</a></p>
-<p>Press <strong>M</strong> on the slides to bring up the menu to access options such as navigating to different sections</p>
-<div>
-<iframe class="slide-deck" src="../slides/slides-class-1.html"></iframe>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create two script files for this class.</p>
+<ul>
+<li><p>One will be a reproducible script file you can save at the end of the class to reproduce same data processing, visualization, and statistics we will do at the end.</p></li>
+<li><p>The other will be a scratchpad script file. You can choose whether you want to save that script or not.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="running-r-code" class="level1">
+<h1>Running R Code</h1>
+<p>Throughout this course you will be introduced to several ways of executing or “running” R code. For now, you need to be aware of two ways of doing so.</p>
+<ol type="1">
+<li>Typing code in an R script file and executing R code line-by-line <code>Ctrl + Enter</code></li>
+<li>Typing code directly in the console window</li>
+</ol>
+<p>To execute R code in an R script file line-by-line you just need to type in some R code, put the cursor anywhere on that line, and hit <code>Ctrl + Enter.</code></p>
+<p>In a scratchpad script file, run each line one-by-one.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> <span class="dv">9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice how the lines of code and their output were printed to the Console window. No matter how you execute R code it gets passed to the Console window anyways.</p>
+<p>Type the same lines of code as above but this time directly in the Console window, one at a time, and hit enter.</p>
+</section>
+<section id="creating-r-objects" class="level1">
+<h1>Creating R Objects</h1>
+<p>In R, you will create what are called <strong>objects</strong> that store some information. That could be a single value like <code>5</code>, an entire table of data with rows and columns, and even more complex objects. Objects are created using the assignment operator, <code>&lt;-</code>.</p>
+<p>Everything on the left hand side of the assignment operator <code>&lt;-</code> is an object. Everything on the right hand side of <code>&lt;-</code> are functions or values. Go ahead and execute the following lines of code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_first_object <span class="ot">&lt;-</span> <span class="st">"hello"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_first_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] "hello"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_second_object <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>my_second_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] 5 6 7 8</code></pre>
+</div>
+</div>
+<p>You just assigned the value <code>"hello"</code> to an object named <code>my_first_object</code>. Note that R is case sensitive, <code>my_first_object</code> would be considered a different object as <code>my_First_object.</code></p>
+<p>You also created <code>my_second_object</code> that stores a <strong>vector</strong> of four values: 5, 6, 7, and 8. The <code>c()</code> function can be used to create a vector of values.</p>
+</section>
+<section id="using-functions" class="level1">
+<h1>Using Functions</h1>
+<p>Anything you do in R is by using <strong>functions</strong>. In fact, learning R is just learning what functions are available and how to use them.</p>
+<p>Functions start with the name of the function followed by parentheses <code>function_name()</code>. Inside the <code>()</code> is where you specify certain arguments separated by commas <code>,</code> . Some arguments are optional and some are required for the function to work.</p>
+<p>For example, there is a function to create a sequence of numbers, <code>seq()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code> [1]  1 11 21 31 41 51 61 71 81 91</code></pre>
+</div>
+</div>
+<p>In the <code>seq()</code> function above we specified three arguments, separated by commas. The first two arguments were set without specifying the argument name, however the third argument we used the argument name <code>by</code> to define <code>seq(by = 10)</code>. If you don’t explicitly use the argument name it will implicitly assume an argument <strong>based on the order it is entered</strong>, depending on how the author created the function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Helper Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A handy tip is to frequently make use of the helper function, <code>?</code>. Type <code>?seq</code> into the R console. Helper documentation will be provided for that function and as you can see, the first argument defined is <code>from</code> and the second argument is <code>to</code>.</p>
+</div>
+</div>
+<p><strong>The order of arguments only matters if you do not specify argument names</strong></p>
+<p>Specifying the actual argument names, the above code is identical to the three following examples:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>, <span class="at">from =</span> <span class="dv">1</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are also default values that arguments take, which means if you don’t define an argument it will take on the default value. The helper documentation shows that the <code>from</code> argument has a default of <code>from = 1</code>, therefore we could even leave out the <code>from =</code> argument because we were using the default value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What this means is that it can be important to know what the default values are for functions you are using and you can figure that out with the helper function <code>?</code></p>
+</section>
+<section id="r-packages" class="level1">
+<h1>R Packages</h1>
+<p>The community of R users have developed a vast number of functions that expand on the functions that come with R. Many of the functions developed by R users allow you to do more complicated things with your data without having to be an advanced R programmer. And the great thing is that as more psychology researchers use R, the more functions there are specifically for psychological research.</p>
+<p>Functions that R users develop are collected in what are called <strong>packages</strong>. Most R packages are hosted on The Comprehensive R Archive Network - <strong>CRAN</strong>. Some other packages, ones that are in more developmental stages and may not be as stable, are hosted on GitHub.</p>
+<section id="install-and-load-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-and-load-packages">Install and Load Packages</h2>
+<p>To install packages from <strong>CRAN</strong> is easy. Simply type into the console window: <code>install.packages("packagename")</code></p>
+<p>For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once you have a package installed, you can load that package into your current environment. Your <strong>R Environment</strong> consists of things such as objects (variables) you have created, data you have imported, and functions you have loaded. Your R Environment are like the tools and objects you have available to you and are working with.</p>
+<p>When you load a package you are bringing the functions from that package into your <strong>environment</strong> so you can start using them. To load a package is easy: <code>library(package_name)</code></p>
+<p>For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="data-frames" class="level1">
+<h1>Data Frames</h1>
+<p>The main type of R object that you will be working with are data frames. You are probably already familiar with data frames. Excel uses this type of data structure, it is just rows and columns of data.</p>
+<p>Many R packages come loaded with data sets. Let’s take a look at a fun data set from the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html" target="_blank">palmerpenguins</a> package, do some simple transformations of the data, visualize, and do a simple statistical analysis.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/lter_penguins.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="677"></p>
+</figure>
+</div>
+<p>First, install the package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palmerpenguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The install function should just be typed into the Console because this is a step that you only need to perform once. Go ahead and install <code>dplyr</code> and <code>ggplot2</code> packages as well.</p>
+<p>The <code>library()</code> function to load packages, however, is a necessary step for processing the data, therefore, it needs to be included in the reproducible script file.</p>
+<p>Load <code>palmerpenguins</code> , <code>dplyr</code> , and <code>ggplot2</code> packages. We will use <code>dplyr</code> to do some simple transformation of the data and <code>ggplot2</code> to visualize the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you load <code>palmerpenguins</code> there is a data frame now available in your environment called <code>penguins</code>. However, it is not explicitly listed in your environment because it came from a package and not something you created. This is not required, but for the sake of being able to see the data frame in the Environment window, let’s assign the <code>penguins</code> data frame to a new data frame called <code>data_import</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I prefer to name data frames that I import with “import” that way it is clear which data frame is the original one. Then I create new data frames (R objects) with a different name. This allows me to easily identify and go back to the original data after I have done some transformations on it.</p>
+</div>
+</div>
+<section id="viewing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="viewing-the-data">Viewing the Data</h2>
+<p>Let’s first get to know this data, how it is structured, and what kind of values it stores. You can view a data frame by selecting it in the Environment window or by using the <code>View()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(data_import)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do you think <code>View()</code> should be included in the R script or just typed directly into the Console?</p>
+</div>
+</div>
+<p>By viewing the data we can see that there are columns that contain information such as the species of the penguin, the island it belongs to, some size dimensions, and more.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice how the column names are simple but also convey useful information for someone to easily understand this data. For instance, the the column <code>bill_length_mm</code> is not only straightforward but conveys the unit of measurement. It is not always possible to create both concise and information rich column names like these. When that is the case you can go on the side of being concise while providing documentation elsewhere that provides more detail.</p>
+<p>This principle of <strong>easy to understand</strong> is important and something we will keep coming back to.</p>
+</div>
+</div>
+<p>This data frame has a small number of columns so they are all easy to see. However, some data sets you work with will have a lot more columns that are difficult to view on a single page. In those cases, it can be useful to get a list of the column names printed to the Console. This can be done using the <code>colnames()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_import)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Doing so also allows you to copy and paste the column names from the console into your R script. This is a good strategy to avoid typos that can cause you headaches when writing R code.</p>
+<p>It is important to understand what are the values and types of values stored in each column of your data. To get an initial peak at the data, you can use the <code>head()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_import)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can only see the first 10 rows, but you can already see some useful information. For instance, the <strong>type of values</strong> are noted in gray below the column names between <code>&lt; &gt;</code>. We will discuss these in more detail soon, but notice that the column <code>year</code> is of type <code>&lt;int&gt;</code> meaning <strong>integer</strong>. Integers are simple numbers with no decimal places.</p>
+<p>You may also notice that some columns contain <code>NA</code> values. These are missing values and are important to know if you have any in your data.</p>
+<p>To get more information as to the values in each column you can use the <code>unique()</code> function along with a <code>$</code> notation. <code>$</code> is a notation to reference a certain column in a data frame. For example, to reference the <code>species</code> column in <code>data_import</code> you would specify <code>data_import$species</code>. <code>unique()</code> will get the unique set of values in a column of data. This is useful to evaluate what values are contained in a column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(data_import<span class="sc">$</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It looks like there are three unique values in the <code>species</code> column, Adelie, Gentoo, and Chinstrap. The <code>species</code> column is a type or class of values that are known as <strong>factors</strong>, again more on this in a bit. You could see this when we used <code>head()</code> with the notation <code>&lt;fct&gt;</code> meaning <strong>factor</strong>. But you can also see this because <code>unique()</code> also displayed the <strong>levels</strong> of the factor. Levels mean that there is a specified order to the values.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What are the unique values in the <code>year</code> column? Does this column seem like it is a factor? What about <code>sex</code>?</p>
+</div>
+</div>
+</section>
+<section id="types-of-values" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-values">Types of Values</h2>
+<p>Classes are types of values that exist in R. Here are a list of some common value types:</p>
+<ul>
+<li><p>character (or non-numeric) <code>"hello"</code>, <code>"goodbye"</code></p></li>
+<li><p>double (or numeric) <code>2</code>, <code>32.55</code></p></li>
+<li><p>integer <code>5</code>, <code>99</code></p></li>
+<li><p>logical <code>TRUE</code>, <code>FALSE</code></p></li>
+<li><p>missing <code>NA</code> <code>NaN</code></p></li>
+</ul>
+<p>To evaluate the type of values in a column you can use <code>typeof()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(data_import<span class="sc">$</span>bill_depth_mm)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(data_import<span class="sc">$</span>flipper_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To change the class of values in an object you can use <code>as.character()</code> , <code>as.numeric()</code> , <code>as.double()</code> , <code>as.integer()</code> , <code>as.logical()</code> functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(data_import<span class="sc">$</span>bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="factors" class="level2">
+<h2 class="anchored" data-anchor-id="factors">Factors</h2>
+<p>Notice that if you evaluate the type of values in <code>species</code> you get an “integer”. This is probably surprising to you because 1) They look like character values (non-numeric), and 2) I told you earlier that the <code>species</code> column is a <strong>factor</strong>. Factors are a special type of column, that represent levels of a category with an order to those levels. The actual values in Factors can be of type character, double, integer, or logical. However, they are represented as integers corresponding to the order of the levels. Factors become especially important in data visualization and statistical analysis.</p>
+<p>You can set a column of values as a factor by using <code>factor()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(data_import<span class="sc">$</span>year, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">2007</span>, <span class="dv">2008</span>, <span class="dv">2009</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that this line of code does not actually change the values in data_import (neither did the <code>as.character(data_import$bill_depth_mm)</code> line of code above). Don’t believe me? Run <code>unique(data_import$year)</code> or <code>head(data_import)</code>.</p>
+<p>Why do you think this is the case?</p>
+<p>It is because we did not use the assignment operator. We simply printed the result of this function to the Console. In order to actually change the values in a data frame you need to assign <code>&lt;-</code> the result of the function <code>factor()</code> to a column in the data frame. In this case, to the values in the column <code>species</code> in the <code>data_import</code> object, <code>data_import$species</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How did I know how to use the argument name <code>levels =</code> in <code>factor()</code>? You can learn about arguments a function can take, and what they do using the helper function <code>?</code>. For instance type <code>?factor()</code> in the console. In the Help window, you can see there are a number of arguments that can be specified in <code>factor()</code>. For <code>levels</code>, it states that it is an optional vector of the unique values that x might have taken. This tells us we need to supply a vector of unique values. You can use the <code>c()</code> function to create a vector of values. Type <code>c(2007, 2008, 2009)</code> in the Console. You can see there are three elements in the vector for each year. We specify this vector in the <code>levels</code> argument to tell <code>factor()</code> that these are the unique values in the <code>data_import$year</code> column.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="transforming-data" class="level1">
+<h1>Transforming Data</h1>
+<p>Just for the fun of it, let’s do a simple transformation on the data, visualize a relationship between three variables, and statistically test a relationship between two variables. Three variables that we will look at are <code>species</code>, <code>flipper_length_mm</code> , and <code>body_mass_g</code>.</p>
+<p>First, let’s compute the mean <strong>flipper length</strong> and <strong>body mass</strong> for each species of penguin and store them in columns in the data frame. Because we are now changing the original data frame, let’s go ahead and call it something different. Because this is the data frame we will eventually plot, why not call it <code>data_plot</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> data_import <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.by =</span> species,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">flipper_length_mm.mean =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">body_mass_g.mean =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>mutate()</code> comes from the <code>dplyr</code> package and allows you to modify the values in existing columns or create new columns. We will learn more about this function and other functions in <code>dplyr</code> in the next class. But without even knowing much about it you can reasonably guess that we are creating new columns containing the mean of our two variables of interest. Further, we are calculating the mean separately <strong>by</strong> species. You can view the data frame and see that each species has a different mean value.</p>
+<p>What about that first line of code? The <code>|&gt;</code> notation at the end of the line says pass <code>data_import</code> into the <code>mutate()</code> function. This is how <code>mutate()</code> knows where these columns <code>species</code>, <code>flipper_length_mm</code> , and <code>body_mass_g</code> come from. Then the result of <code>mutate()</code> is assigned to a new object, <code>data_plot</code>.</p>
+<p>Go ahead and view <code>data_plot</code>. You can see that it is the same as <code>data_import</code> except it has two new columns, <code>flipper_length_mm.mean</code> and <code>body_mass_g.mean</code>.</p>
+</section>
+<section id="visualizing-data" class="level1">
+<h1>Visualizing Data</h1>
+<p>We will use the <code>ggplot2</code> package to visualize the relationship between <code>species</code>, <code>flipper_length_mm</code> , and <code>body_mass_g</code>. Let’s do this step-by-step. First let’s build the <strong>data</strong> and <strong>aesthetic</strong> layers. These layers tell <code>ggplot()</code> what data to plot and how we map them onto the scales (e.g., x-axis and y-axis) of the graphic.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_plot, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> species, <span class="at">shape =</span> species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class-1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that this only creates the overall structure of the graphic, no data is plotted yet. That is because there are a lot of different ways to visualize the data and we need to specify these visual elements in the <strong>geometries</strong> or <strong>geom</strong> layer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_plot, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> species, <span class="at">shape =</span> species)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class-1_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note how it mapped species onto the color and shape of the data points.</p>
+<p>Let’s make the plot a littler prettier by using a customized theme, <code>theme_classic()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_plot, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> species, <span class="at">shape =</span> species)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class-1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Optional: We can also add horizontal and vertical lines corresponding to the mean for each species that we calculated earlier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_plot, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> species, <span class="at">shape =</span> species)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> body_mass_g.mean, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> flipper_length_mm.mean, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class-1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-analysis" class="level1">
+<h1>Statistical Analysis</h1>
+<p>Based on the graphic visualization, it looks like there is a strong relationship between <strong>body mass</strong> and <strong>flipper length</strong>, perhaps unsurprisingly. Let’s calculate the correlation between these two variables and test whether it is statistically significant or not.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(data_import<span class="sc">$</span>body_mass_g, data_import<span class="sc">$</span>flipper_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>
+    Pearson's product-moment correlation
+
+data:  data_import$body_mass_g and data_import$flipper_length_mm
+t = 32.722, df = 340, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.843041 0.894599
+sample estimates:
+      cor 
+0.8712018 </code></pre>
+</div>
+</div>
+<p><strong>The correlation is <em>r</em> = .87 and is statistically significant, <em>p</em> &lt; .05.</strong></p>
+<p>That was easy!</p>
+</section>
+<section id="class-1-reproducible-script" class="level1">
+<h1>Class 1: Reproducible Script</h1>
+<p>&nbsp;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>data_import <span class="ot">&lt;-</span> penguins</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># transform data</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> data_import <span class="sc">|&gt;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.by =</span> species,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">flipper_length_mm.mean =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">body_mass_g.mean =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize data</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_plot, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g,</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> species, <span class="at">shape =</span> species)) <span class="sc">+</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> body_mass_g.mean, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> flipper_length_mm.mean, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="co"># statistical analysis</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(data_import<span class="sc">$</span>body_mass_g, data_import<span class="sc">$</span>flipper_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>In the rest of the course, we will go into greater depth on transforming data, data visualization, and statistical analysis.</p>
 
 
 </section>
@@ -718,8 +1178,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../classes/class-2.html" class="pagination-link" aria-label="Class 2">
-        <span class="nav-page-text">Class 2</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../classes/class-2.html" class="pagination-link" aria-label="Class 2: Import, Merge, Restructure">
+        <span class="nav-page-text">Class 2: Import, Merge, Restructure</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

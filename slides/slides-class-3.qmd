@@ -113,7 +113,7 @@ For more information on these functions [Visit the dplyr webpage](https://dplyr.
 
  
 
-Use what you learned in [Class 2](/lectures/lectures-class-2.html){target="_blank"} and import the two data files:
+Use what you learned in [Class](/classes/class-2.html){target="_blank"}[ 2](/lectures/lectures-class-2.html){target="_blank"} and import the two data files:
 
 ⬇️ <a href="/data/class_3_repetition_rawdata.txt" download="class_3_repetition_rawdata.txt">class_3_repetition_rawdata.txt</a>
 
@@ -162,7 +162,7 @@ These data come from a hypothetical (I made it up) research study to compare the
 
  
 
-Use what you learned from [Class 1](/lectures/lectures-class-1.html){target="_blank"} to explore the data
+Use what you learned from [Class](/classes/class-1.html){target="_blank"}[ 1](/lectures/lectures-class-1.html){target="_blank"} to explore the data
 
 ::: nonincremental
 -   what are the column names?
@@ -772,4 +772,4 @@ ggplot(data_scores, aes(condition, recall_correct_mean)) +
         axis.text.y = element_text(size = 12))
 ```
 
-# ✏️ [Start Learning Activity -\>](/activities/activities-class-3.html){target="_blank"}
+# ✏️ [Start Learning Activity ➜](/classes/class-3.html#learning-activity){target="_blank"} 

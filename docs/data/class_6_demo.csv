@@ -1,0 +1,17 @@
+ID,Procedure,Trial,Condition,Response,Correct_Response,Accuracy,RT
+1,practice,1,word_mismatch,yes,yes,1,560
+1,practice,2,word_mismatch,no,yes,0,670
+1,practice,3,word_match,yes,no,0,400
+1,real,1,word_mismatch,yes,yes,1,431
+1,real,2,word_match,no,no,1,23
+1,real,3,word_match,yes,no,0,643
+1,real,4,word_mismatch,yes,yes,1,742
+1,real,5,word_mismatch,yes,no,0,9452
+2,practice,1,word_mismatch,yes,yes,1,332
+2,practice,2,word_match,yes,yes,1,434
+2,practice,3,word_mismatch,no,no,1,536
+2,real,1,word_mismatch,yes,yes,1,455
+2,real,2,word_mismatch,yes,no,0,743
+2,real,3,word_match,yes,no,0,456
+2,real,4,word_mismatch,yes,yes,1,186
+2,real,5,word_mismatch,yes,no,0,342
